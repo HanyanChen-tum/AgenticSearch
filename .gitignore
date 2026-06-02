@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+logs/*.log
+results/*.json
+!results/.gitkeep
+data/raw/spider/database/
+data/databases/
+*.sqlite
+*.db
+.ipynb_checkpoints/
