@@ -1,1 +1,11 @@
+Convert the following natural language question into one executable SQLite SQL query.
 
+Use only the retrieved schema below. Do not inspect table contents, do not explain your reasoning, and do not return Markdown.
+
+Retrieved schema:
+{retrieved_schema}
+
+Question:
+{question}
+
+SQL:

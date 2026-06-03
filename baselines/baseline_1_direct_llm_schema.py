@@ -34,8 +34,14 @@ logger = setup_logger(METHOD_NAME, LOG_PATH)
 
 
 def clean_sql(text: str) -> str:
+    """清理 LLM 输出中的 Markdown 代码块，只保留 SQL。
+
+    Clean Markdown code fences from the LLM output and keep only SQL.
+    """
     sql = text.strip()
     if sql.startswith("```"):
+        # 去掉 ```sql ... ``` 这类 Markdown 包裹。
+        # Remove Markdown fences such as ```sql ... ```.
         lines = sql.splitlines()
         if lines and lines[0].startswith("```"):
             lines = lines[1:]
@@ -46,13 +52,26 @@ def clean_sql(text: str) -> str:
 
 
 def build_prompt(question: str, schema: str, prompt_template: str) -> str:
+    """把问题和完整 schema 填入 prompt 模板。
+
+    Fill the prompt template with the question and full database schema.
+    """
     return prompt_template.format(question=question, schema=schema)
 
 
 def run_one(example: dict[str, Any], prompt_template: str, database_dir: Path) -> dict[str, Any]:
+    """运行并评测单条样本。
+
+    Run and evaluate one example by prompting the LLM with the question plus
+    full schema, executing both predicted and gold SQL, then comparing answers.
+    """
+    # 根据样本所属数据库 ID 找到对应 SQLite 文件。
+    # Locate the SQLite database file for this example's database ID.
     db_id = example["db_id"]
     db_path = get_database_path(database_dir, db_id)
 
+    # 初始化本条样本的运行状态和计时器。
+    # Initialize per-example runtime state and latency timer.
     started_at = time.perf_counter()
     predicted_sql = ""
     input_tokens: int | None = None
@@ -60,6 +79,8 @@ def run_one(example: dict[str, Any], prompt_template: str, database_dir: Path) -
     generation_error: str | None = None
 
     try:
+        # Baseline 1 的核心输入：自然语言问题 + 完整数据库 schema。
+        # Core baseline 1 input: natural-language question + full DB schema.
         schema = extract_schema_text(db_path)
         prompt = build_prompt(example["question"], schema, prompt_template)
         llm_response = generate_sql(prompt)
@@ -69,16 +90,22 @@ def run_one(example: dict[str, Any], prompt_template: str, database_dir: Path) -
     except Exception as e:
         generation_error = str(e)
 
+    # 只在成功生成 SQL 后执行预测 SQL；生成失败时记录错误。
+    # Execute predicted SQL only after successful generation; otherwise record the error.
     predicted_exec = (
         execute_sql(db_path, predicted_sql)
         if predicted_sql and generation_error is None
         else {"answer": None, "error": generation_error or "No SQL generated"}
     )
+    # 执行数据集提供的标准 SQL，用作答案对照。
+    # Execute the dataset-provided gold SQL as the answer reference.
     gold_exec = execute_sql(db_path, example["gold_sql"])
 
     latency_seconds = time.perf_counter() - started_at
     error = predicted_exec["error"] or gold_exec["error"]
 
+    # correct 比较的是执行结果，不是 SQL 字符串本身。
+    # correct compares execution results, not raw SQL strings.
     return {
         "id": example["id"],
         "method": METHOD_NAME,
@@ -106,6 +133,13 @@ def run_baseline(
     database_dir: str | Path = config.DATABASE_DIR,
     limit: int | None = None,
 ) -> list[dict[str, Any]]:
+    """批量运行 baseline 1 并保存结果。
+
+    Run baseline 1 over a dataset, save per-example results, and log execution
+    accuracy.
+    """
+    # 读取问题列表；limit 用于快速小规模调试。
+    # Load examples; limit is useful for quick small-scale debugging.
     questions = load_questions(dataset_path)
     if limit is not None:
         questions = questions[:limit]
@@ -115,12 +149,16 @@ def run_baseline(
     logger.info("Database dir: %s", database_dir)
     logger.info("Output: %s", output_path)
 
+    # 同一个 prompt 模板会被复用于所有样本。
+    # The same prompt template is reused for all examples.
     prompt_template = read_text(PROMPT_PATH)
     results = [
         run_one(example, prompt_template, Path(database_dir))
         for example in tqdm(questions, desc=METHOD_NAME)
     ]
 
+    # 保存逐条结果，并在日志中记录整体执行准确率。
+    # Save per-example results and log aggregate execution accuracy.
     write_json(output_path, results)
     total = len(results)
     correct = sum(1 for row in results if row["correct"])
@@ -136,6 +174,10 @@ def run_baseline(
 
 
 def parse_args() -> argparse.Namespace:
+    """解析命令行参数。
+
+    Parse command-line arguments for running baseline 1.
+    """
     parser = argparse.ArgumentParser(description="Run baseline 1: Direct LLM + full schema.")
     parser.add_argument("--dataset", default=str(config.DEFAULT_DATASET_PATH))
     parser.add_argument("--output", default=str(OUTPUT_PATH))
@@ -145,6 +187,10 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """命令行入口函数。
+
+    Command-line entry point for baseline 1.
+    """
     args = parse_args()
     run_baseline(
         dataset_path=args.dataset,

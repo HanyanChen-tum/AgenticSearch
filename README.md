@@ -1,5 +1,3 @@
-
-````markdown
 # Recursive DB-RLM: Recursive Language Model for Structured Database Reasoning
 
 ## Overview
@@ -24,7 +22,7 @@ LLM
     |
     v
 SQL
-````
+```
 
 However, complex database questions often require:
 
@@ -69,7 +67,9 @@ Final SQL / Answer
 
 We compare four methods:
 
-## Baseline 1: Direct LLM + Schema
+## Baseline 1: Direct LLM + Full Schema
+
+Standard text-to-SQL baseline.
 
 The model receives only:
 
@@ -97,21 +97,38 @@ Allowed:
 
 Not allowed:
 
-* database content inspection
+* table content inspection
 * SQL execution feedback
 * recursive reasoning
 * retry
 
+Research question:
+
+```text
+Is full-schema, one-pass reasoning enough?
+```
+
 ---
 
-## Baseline 2: Direct Text-to-SQL
+## Baseline 2: One-shot Schema Retrieval + Text-to-SQL
 
-A standard direct generation baseline.
+The model first retrieves a small schema subset, then performs ordinary
+text-to-SQL generation in one pass. The retrieved column subset keeps the
+top-k relevant columns and also preserves primary-key / foreign-key columns
+needed for joins.
 
 Pipeline:
 
 ```text
 Question
+
+↓
+
+Retrieve top-k tables / columns
+
+↓
+
+Retrieved Schema
 
 ↓
 
@@ -125,19 +142,38 @@ SQL
 Allowed:
 
 * natural language question
-* minimal database information
+* one-shot schema retrieval
+* retrieved top-k tables / columns
+* primary-key / foreign-key columns for retrieved tables
 
 Not allowed:
 
-* database exploration
-* execution feedback
-* recursion
+* database content inspection
+* SQL execution feedback
+* recursive reasoning
+* retry
+
+Research question:
+
+```text
+If the schema scope is reduced first, is ordinary text-to-SQL already enough?
+```
 
 ---
 
-## Baseline 3: Non-recursive Database Agent
+## Baseline 3: Non-recursive DB Agent
 
-A database agent that can interact with the database.
+A non-recursive database agent that can call database tools over multiple
+steps.
+
+Available tools:
+
+```text
+SHOW_TABLES()
+DESCRIBE_TABLE()
+SAMPLE_ROWS()
+EXECUTE_SQL()
+```
 
 Pipeline:
 
@@ -154,7 +190,7 @@ Inspect Schema
 
 ↓
 
-Execute SQL
+Sample Rows / Execute SQL
 
 ↓
 
@@ -168,17 +204,25 @@ Final SQL
 Allowed:
 
 * schema inspection
+* table content sampling
 * SQL execution
-* iterative reasoning
+* database observation
+* multi-step reasoning
 
 Not allowed:
 
 * recursive sub-agent calls
-* recursive decomposition
+* recursive problem decomposition
+
+Research question:
+
+```text
+Is multi-step tool exploration alone enough?
+```
 
 ---
 
-## Proposed Method: Recursive DB-RLM
+## Ours: Recursive DB-RLM
 
 Our method extends RLM-style recursive reasoning to databases.
 
@@ -223,28 +267,24 @@ Allowed:
 * sub-agent reasoning
 * intermediate evidence aggregation
 
+Research question:
+
+```text
+Is recursive decomposition with independent sub-exploration stronger than a normal multi-step agent?
+```
+
 ---
 
 # Dataset
 
-We use:
+We use the Spider Text-to-SQL benchmark.
 
-## Spider Text-to-SQL Dataset
-
-Spider provides:
+It contains:
 
 ```text
 Natural language questions
 
-+
-
 SQLite databases
-
-+
-
-Database schemas
-
-+
 
 Ground-truth SQL queries
 ```
@@ -369,8 +409,13 @@ Columns:
 Used by:
 
 * Baseline 1
+* Baseline 2
 * Baseline 3
 * Recursive DB-RLM
+
+Baseline 2 retrieves a top-k subset from this extracted schema instead of
+passing the full schema to the LLM. It preserves primary-key and foreign-key
+columns for retrieved tables so join paths remain available.
 
 ---
 
@@ -465,6 +510,16 @@ Every method outputs:
 }
 ```
 
+Baseline 2 may include additional retrieval metadata such as:
+
+```json
+{
+    "retrieved_schema": "Table: ...",
+    "top_k_tables": 5,
+    "top_k_columns": 8
+}
+```
+
 ---
 
 # Model Configuration
@@ -550,8 +605,8 @@ Specifically:
 # Status
 
 * [ ] Dataset preparation
-* [ ] Baseline 1 implementation
-* [ ] Baseline 2 implementation
+* [x] Baseline 1 implementation
+* [x] Baseline 2 implementation
 * [ ] Baseline 3 implementation
 * [ ] Recursive DB-RLM implementation
 * [ ] Evaluation
@@ -562,4 +617,3 @@ Specifically:
 # Contributors
 
 TBD
-

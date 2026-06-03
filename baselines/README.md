@@ -20,7 +20,8 @@ Research question:
 
 - Input: user question
 - Step 1: retrieve top-k relevant tables / columns
-- Step 2: provide retrieved schema + question to the LLM
+- Step 2: keep primary-key / foreign-key columns for retrieved tables
+- Step 3: provide retrieved schema + question to the LLM
 - Output: SQL
 
 Research question:
@@ -78,10 +79,10 @@ Before implementing different baselines, define common interfaces and rules to m
 
 The following parts must be shared across:
 
-- Baseline 1: Direct LLM + Schema
-- Baseline 2: Direct Text-to-SQL
+- Baseline 1: Direct LLM + Full Schema
+- Baseline 2: One-shot Schema Retrieval + Text-to-SQL
 - Baseline 3: Non-recursive DB Agent
-- Our Method: Recursive DB-RLM
+- Ours: Recursive DB-RLM
 
 ```text
 Part A:
@@ -182,6 +183,17 @@ Only these fields should differ between methods:
 - `latency_seconds`
 - `input_tokens`
 - `output_tokens`
+
+Methods may also include method-specific diagnostic metadata. For example,
+Baseline 2 records the retrieved schema subset:
+
+```json
+{
+  "retrieved_schema": "Table: ...",
+  "top_k_tables": 5,
+  "top_k_columns": 8
+}
+```
 
 ### 4. Unified Method Names
 
@@ -342,7 +354,7 @@ The final output must always be executable SQL.
 
 ### 10. Unified Baseline Constraints
 
-#### Baseline 1: Direct LLM + Schema
+#### Baseline 1: Direct LLM + Full Schema
 
 Allowed:
 
@@ -374,21 +386,21 @@ LLM
 SQL
 ```
 
-#### Baseline 2: Direct Text-to-SQL
+#### Baseline 2: One-shot Schema Retrieval + Text-to-SQL
 
 Allowed:
 
 ```text
 Question
 +
-minimal database information
+Retrieved top-k tables / columns
 ```
 
 Not allowed:
 
 ```text
-Database execution
-Exploration
+Database content inspection
+SQL execution feedback
 Recursive reasoning
 Retry
 ```
@@ -397,6 +409,10 @@ Pipeline:
 
 ```text
 Question
+  |
+Schema retrieval
+  |
+Retrieved schema
   |
 LLM
   |
@@ -409,6 +425,7 @@ Allowed:
 
 ```text
 Schema inspection
+Table content sampling
 SQL execution
 Database observation
 Multi-step reasoning
@@ -437,7 +454,7 @@ Observe result
 Final SQL
 ```
 
-#### Our Method: Recursive DB-RLM
+#### Ours: Recursive DB-RLM
 
 Allowed:
 
@@ -609,8 +626,13 @@ Columns:
 This generated schema is used by:
 
 - Baseline 1
+- Baseline 2
 - Baseline 3
 - Recursive DB-RLM
+
+Baseline 2 retrieves a top-k subset from this generated schema before
+prompting the LLM. It preserves primary-key and foreign-key columns for
+retrieved tables so join paths remain available.
 
 Do not manually write schema descriptions.
 
