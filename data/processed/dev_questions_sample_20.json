@@ -1,0 +1,122 @@
+[
+  {
+    "id": "dev_000228",
+    "db_id": "flight_2",
+    "question": "Give the code of the airport with the least flights.",
+    "gold_sql": "SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1"
+  },
+  {
+    "id": "dev_000051",
+    "db_id": "pets_1",
+    "question": "Find number of pets owned by students who are older than 20.",
+    "gold_sql": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20"
+  },
+  {
+    "id": "dev_000563",
+    "db_id": "student_transcripts_tracking",
+    "question": "On average, when were the transcripts printed?",
+    "gold_sql": "SELECT avg(transcript_date) FROM Transcripts"
+  },
+  {
+    "id": "dev_000501",
+    "db_id": "battle_death",
+    "question": "What are the distinct battle names which are between bulgarian commander 'Kaloyan' and latin commander 'Baldwin I'?",
+    "gold_sql": "SELECT name FROM battle WHERE bulgarian_commander  =  'Kaloyan' AND latin_commander  =  'Baldwin I'"
+  },
+  {
+    "id": "dev_000457",
+    "db_id": "wta_1",
+    "question": "List the first and last name of all players who are left / L hand in the order of birth date.",
+    "gold_sql": "SELECT first_name ,  last_name FROM players WHERE hand  =  'L' ORDER BY birth_date"
+  },
+  {
+    "id": "dev_000285",
+    "db_id": "employee_hire_evaluation",
+    "question": "Find the name of the shops that do not hire any employee.",
+    "gold_sql": "SELECT name FROM shop WHERE shop_id NOT IN (SELECT shop_id FROM hiring)"
+  },
+  {
+    "id": "dev_000209",
+    "db_id": "flight_2",
+    "question": "How many flights arriving in Aberdeen city?",
+    "gold_sql": "SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.City  =  \"Aberdeen\""
+  },
+  {
+    "id": "dev_000178",
+    "db_id": "car_1",
+    "question": "What are the ids and names of all countries that either have more than 3 car makers or produce fiats?",
+    "gold_sql": "SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.countryId HAVING count(*)  >  3 UNION SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country JOIN MODEL_LIST AS T3 ON T2.Id  =  T3.Maker WHERE T3.Model  =  'fiat';"
+  },
+  {
+    "id": "dev_000864",
+    "db_id": "network_1",
+    "question": "Show the names and grades of each high schooler.",
+    "gold_sql": "SELECT name ,  grade FROM Highschooler"
+  },
+  {
+    "id": "dev_000065",
+    "db_id": "pets_1",
+    "question": "Find the first name and age of students who have a dog but do not have a cat as a pet.",
+    "gold_sql": "SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')"
+  },
+  {
+    "id": "dev_000061",
+    "db_id": "pets_1",
+    "question": "Find the major and age of students who do not have a cat pet.",
+    "gold_sql": "SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')"
+  },
+  {
+    "id": "dev_000191",
+    "db_id": "flight_2",
+    "question": "How many flights do we have?",
+    "gold_sql": "SELECT count(*) FROM FLIGHTS"
+  },
+  {
+    "id": "dev_000447",
+    "db_id": "wta_1",
+    "question": "List the names of all winners who played in both 2013 and 2016.",
+    "gold_sql": "SELECT winner_name FROM matches WHERE YEAR  =  2013 INTERSECT SELECT winner_name FROM matches WHERE YEAR  =  2016"
+  },
+  {
+    "id": "dev_000476",
+    "db_id": "wta_1",
+    "question": "What is the code of the country with the most players?",
+    "gold_sql": "SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) DESC LIMIT 1"
+  },
+  {
+    "id": "dev_000054",
+    "db_id": "pets_1",
+    "question": "How many dog pets are raised by female students?",
+    "gold_sql": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'"
+  },
+  {
+    "id": "dev_000407",
+    "db_id": "course_teach",
+    "question": "Show names of teachers that teach at least two courses.",
+    "gold_sql": "SELECT T2.Name FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name HAVING COUNT(*)  >=  2"
+  },
+  {
+    "id": "dev_000859",
+    "db_id": "orchestra",
+    "question": "Count the number of orchestras that have CD or DVD as their record format.",
+    "gold_sql": "SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format  =  \"CD\" OR Major_Record_Format  =  \"DVD\""
+  },
+  {
+    "id": "dev_000451",
+    "db_id": "wta_1",
+    "question": "What are the country code and first name of the players who won in both tourney WTA Championships and Australian Open?",
+    "gold_sql": "SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'WTA Championships' INTERSECT SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'Australian Open'"
+  },
+  {
+    "id": "dev_000919",
+    "db_id": "dog_kennels",
+    "question": "Find the states where both owners and professionals live.",
+    "gold_sql": "SELECT state FROM Owners INTERSECT SELECT state FROM Professionals"
+  },
+  {
+    "id": "dev_000569",
+    "db_id": "student_transcripts_tracking",
+    "question": "What is the last transcript release date?",
+    "gold_sql": "SELECT transcript_date FROM Transcripts ORDER BY transcript_date DESC LIMIT 1"
+  }
+]
