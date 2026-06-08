@@ -2,3 +2,4 @@ google-genai
 tqdm
 numpy
 pandas
+groq

@@ -13,3 +13,17 @@ data/databases/
 *.sqlite
 *.db
 .ipynb_checkpoints/
+*.pyc
+
+# Local Spider/raw dataset extras
+data/raw/spider_copy/
+data/raw/spider/*.sql
+data/raw/spider/train_others.json
+data/raw/spider/README.txt
+
+# Python/cache
+__pycache__/
+*.pyc
+
+# Local secrets
+.env
