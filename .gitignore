@@ -1,5 +1,6 @@
 __pycache__/
 *.py[cod]
+.DS_Store
 .venv/
 venv/
 .env
@@ -10,6 +11,8 @@ results/*.json
 !results/.gitkeep
 data/raw/spider/database/
 data/databases/
+data/spider_data/
+data/spider_data.zip
 *.sqlite
 *.db
 .ipynb_checkpoints/
