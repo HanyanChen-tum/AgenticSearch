@@ -292,18 +292,54 @@ Ground-truth SQL queries
 Original structure:
 
 ```text
-spider/
+data/spider_data/
 
 ├── train_spider.json
 ├── dev.json
 ├── tables.json
 
 └── database/
-    |
     ├── concert_singer/
-    │
+    │   └── concert_singer.sqlite
     └── other databases
 ```
+
+The Spider download is not stored in Git because it is large and contains
+files above GitHub's 100 MB file-size limit. After cloning this repository,
+download and extract Spider so that the files above are under
+`data/spider_data/`.
+
+Prepare all project inputs with one command:
+
+```bash
+python scripts/prepare_spider.py
+```
+
+This command:
+
+1. Converts `train_spider.json` and `dev.json` to the unified project format.
+2. Writes them to `data/processed/train_questions.json` and
+   `data/processed/dev_questions.json`.
+3. Creates database links under
+   `data/databases/{db_id}/{db_id}.sqlite`.
+
+Symbolic links are used by default, so preparing the data does not duplicate
+the downloaded databases. To copy the databases instead, for example on a
+system where symbolic links are unavailable, run:
+
+```bash
+python scripts/prepare_spider.py --database-mode copy
+```
+
+If Spider was extracted somewhere else, provide its directory:
+
+```bash
+python scripts/prepare_spider.py --spider-dir /path/to/spider
+```
+
+The source directory must contain `train_spider.json`, `dev.json`, and
+`database/`. The command is safe to run again: existing prepared databases are
+reused.
 
 ---
 
@@ -545,6 +581,10 @@ Prepare dataset:
 ```bash
 python scripts/prepare_spider.py
 ```
+
+The command expects the downloaded Spider dataset in `data/spider_data/`.
+See the [Dataset](#dataset) section for the required layout and alternative
+options.
 
 Run baselines:
 
