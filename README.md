@@ -524,16 +524,33 @@ Baseline 2 may include additional retrieval metadata such as:
 
 # Model Configuration
 
-All LLM methods use identical settings:
+All LLM methods read the same settings from `.env`. To use Gemini:
 
-```python
-MODEL = "gpt-4o-mini"
+```dotenv
+LLM_PROVIDER=gemini
+MODEL=gemini-2.0-flash
+GEMINI_API_KEY=your_gemini_api_key_here
+TEMPERATURE=0
+MAX_TOKENS=1024
+```
 
-TEMPERATURE = 0
+To use a locally deployed Qwen model through an OpenAI-compatible endpoint:
 
-MAX_TOKENS = 1024
+```dotenv
+LLM_PROVIDER=openai_compatible
+MODEL=Qwen/Qwen2.5-Coder-7B-Instruct
+LLM_BASE_URL=http://localhost:8000/v1
+LLM_API_KEY=
+TEMPERATURE=0
+MAX_TOKENS=1024
+```
 
-N_ATTEMPTS = 1
+Common endpoint values:
+
+```text
+vLLM:      http://localhost:8000/v1
+Ollama:    http://localhost:11434/v1
+LM Studio: http://localhost:1234/v1
 ```
 
 ---
