@@ -7,8 +7,7 @@ venv/
 .env.*
 !.env.example
 logs/*.log
-results/*.json
-!results/.gitkeep
+
 data/raw/spider/database/
 data/databases/
 data/spider_data/
