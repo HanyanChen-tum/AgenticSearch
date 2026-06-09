@@ -635,6 +635,32 @@ python scripts/run_baseline_2.py
 python scripts/run_baseline_3.py
 ```
 
+Run all three baselines sequentially over the complete development set:
+
+```bash
+python scripts/run_all_baselines.py
+```
+
+For a small smoke test before the full experiment:
+
+```bash
+python scripts/run_all_baselines.py --limit 10
+```
+
+The unified runner writes all three result files and
+`results/summary_metrics.json`. It also accepts `--top-k-tables`,
+`--top-k-columns`, `--max-steps`, and `--results-dir`.
+
+Baseline 3 runs a single non-recursive agent for multiple database-tool steps.
+Use `--max-steps` to control its exploration budget:
+
+```bash
+python scripts/run_baseline_3.py --limit 10 --max-steps 8
+```
+
+Its result rows include `agent_steps`, `tool_calls`, `termination_reason`, and
+`tool_trace` diagnostics in addition to the unified evaluation fields.
+
 Run Recursive DB-RLM:
 
 ```bash
@@ -686,7 +712,7 @@ Specifically:
 * [ ] Dataset preparation
 * [x] Baseline 1 implementation
 * [x] Baseline 2 implementation
-* [ ] Baseline 3 implementation
+* [x] Baseline 3 implementation
 * [ ] Recursive DB-RLM implementation
 * [ ] Evaluation
 * [ ] Error analysis

@@ -32,6 +32,13 @@ def safe_sum(values: list[Any]) -> int | None:
     return int(sum(numeric_values))
 
 
+def safe_average(values: list[Any]) -> float | None:
+    numeric_values = [value for value in values if isinstance(value, (int, float))]
+    if not numeric_values:
+        return None
+    return round(sum(numeric_values) / len(numeric_values), 4)
+
+
 def summarize_results(method: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
     total = len(rows)
     correct = sum(1 for row in rows if row.get("correct") is True)
@@ -54,6 +61,8 @@ def summarize_results(method: str, rows: list[dict[str, Any]]) -> dict[str, Any]
         "avg_latency_seconds": round(sum(latencies) / len(latencies), 4) if latencies else None,
         "total_input_tokens": safe_sum([row.get("input_tokens") for row in rows]),
         "total_output_tokens": safe_sum([row.get("output_tokens") for row in rows]),
+        "total_tool_calls": safe_sum([row.get("tool_calls") for row in rows]),
+        "avg_tool_calls": safe_average([row.get("tool_calls") for row in rows]),
         "error_counts": dict(errors),
     }
 
@@ -74,6 +83,8 @@ def compare_results(results_dir: str | Path = config.RESULTS_DIR) -> list[dict[s
                     "avg_latency_seconds": None,
                     "total_input_tokens": None,
                     "total_output_tokens": None,
+                    "total_tool_calls": None,
+                    "avg_tool_calls": None,
                     "error_counts": {"missing_result_file": 1},
                 }
             )
@@ -97,6 +108,8 @@ def print_summary(summary: list[dict[str, Any]]) -> None:
         "avg_latency_seconds",
         "total_input_tokens",
         "total_output_tokens",
+        "total_tool_calls",
+        "avg_tool_calls",
     ]
     widths = {
         header: max(

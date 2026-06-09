@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import json
+from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -26,16 +27,26 @@ class LLMResponse:
     output_tokens: int | None = None
 
 
-def _generate_with_gemini(prompt: str) -> LLMResponse:
+def _generate_with_gemini(
+    messages: list[dict[str, str]],
+    system_instruction: str,
+) -> LLMResponse:
     if not config.GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY is not set. Add it to .env or your shell environment.")
 
     client = genai.Client(api_key=config.GEMINI_API_KEY)
+    contents = [
+        types.Content(
+            role="model" if message["role"] == "assistant" else "user",
+            parts=[types.Part.from_text(text=message["content"])],
+        )
+        for message in messages
+    ]
     response = client.models.generate_content(
         model=config.MODEL,
-        contents=prompt,
+        contents=contents,
         config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_INSTRUCTION,
+            system_instruction=system_instruction,
             temperature=config.TEMPERATURE,
             max_output_tokens=config.MAX_TOKENS,
         ),
@@ -49,15 +60,19 @@ def _generate_with_gemini(prompt: str) -> LLMResponse:
     )
 
 
-def _generate_with_openai_compatible(prompt: str) -> LLMResponse:
+def _generate_with_openai_compatible(
+    messages: list[dict[str, str]],
+    system_instruction: str,
+) -> LLMResponse:
     url = f"{config.LLM_BASE_URL}/chat/completions"
+    request_messages: list[dict[str, Any]] = [
+        {"role": "system", "content": system_instruction},
+        *messages,
+    ]
     payload = json.dumps(
         {
             "model": config.MODEL,
-            "messages": [
-                {"role": "system", "content": SYSTEM_INSTRUCTION},
-                {"role": "user", "content": prompt},
-            ],
+            "messages": request_messages,
             "temperature": config.TEMPERATURE,
             "max_tokens": config.MAX_TOKENS,
         }
@@ -92,13 +107,23 @@ def _generate_with_openai_compatible(prompt: str) -> LLMResponse:
     )
 
 
-def generate_sql(prompt: str) -> LLMResponse:
+def generate_chat(
+    messages: list[dict[str, str]],
+    system_instruction: str = SYSTEM_INSTRUCTION,
+) -> LLMResponse:
     provider = config.LLM_PROVIDER.lower()
     if provider == "gemini":
-        return _generate_with_gemini(prompt)
+        return _generate_with_gemini(messages, system_instruction)
     if provider in {"openai_compatible", "local", "qwen"}:
-        return _generate_with_openai_compatible(prompt)
+        return _generate_with_openai_compatible(messages, system_instruction)
     raise ValueError(
         f"Unsupported LLM_PROVIDER: {config.LLM_PROVIDER}. "
         "Use 'gemini' or 'openai_compatible'."
+    )
+
+
+def generate_sql(prompt: str) -> LLMResponse:
+    return generate_chat(
+        [{"role": "user", "content": prompt}],
+        system_instruction=SYSTEM_INSTRUCTION,
     )

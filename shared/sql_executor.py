@@ -7,9 +7,16 @@ from pathlib import Path
 from typing import Any
 
 
-def execute_sql(db_path: str | Path, sql: str) -> dict[str, Any]:
+def execute_sql(
+    db_path: str | Path,
+    sql: str,
+    *,
+    read_only: bool = False,
+) -> dict[str, Any]:
     try:
-        with sqlite3.connect(db_path) as conn:
+        path = Path(db_path).resolve()
+        connection_target = f"{path.as_uri()}?mode=ro" if read_only else str(path)
+        with sqlite3.connect(connection_target, uri=read_only) as conn:
             cursor = conn.cursor()
             cursor.execute(sql)
             result = cursor.fetchall()
