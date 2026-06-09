@@ -306,8 +306,30 @@ data/spider_data/
 
 The Spider download is not stored in Git because it is large and contains
 files above GitHub's 100 MB file-size limit. After cloning this repository,
-download and extract Spider so that the files above are under
-`data/spider_data/`.
+download **Spider 1.0** from the official Yale page:
+
+- Dataset page: https://yale-lily.github.io/spider
+- Official code and evaluation repository: https://github.com/taoyds/spider
+
+On the dataset page, use the **Spider Dataset** link in the **Getting Started**
+section. It opens the official Google Drive download. This project uses Spider
+1.0, not Spider 2.0.
+
+After downloading the archive, extract it and place the extracted dataset at
+`data/spider_data/`. The final layout must be:
+
+```text
+AgenticSearch/
+└── data/
+    └── spider_data/
+        ├── train_spider.json
+        ├── dev.json
+        ├── tables.json
+        └── database/
+            ├── concert_singer/
+            │   └── concert_singer.sqlite
+            └── ...
+```
 
 Prepare all project inputs with one command:
 
