@@ -1,1 +1,21 @@
+Solve the current database exploration task by selecting exactly one action.
 
+Available actions and required arguments:
+
+1. {"action":"list_tables","arguments":{}}
+2. {"action":"describe_table","arguments":{"table":"table_name"}}
+3. {"action":"sample_rows","arguments":{"table":"table_name","limit":5}}
+4. {"action":"execute_sql","arguments":{"sql":"SELECT ..."}}
+5. {"action":"spawn_subagent","arguments":{"task":"A focused, independently useful database sub-question"}}
+6. {"action":"finish","arguments":{"summary":"Evidence-backed findings for the parent","candidate_sql":"Optional complete SQL for this task"}}
+
+Rules:
+
+- Return one JSON object only.
+- Inspect schema before relying on table or column names.
+- Use execute_sql to validate important joins, filters, grouping, or candidate SQL.
+- Spawn a child only when a focused independent sub-task will reduce uncertainty.
+- Child tasks must be narrower than the current task.
+- Do not repeat an action whose result is already in the state.
+- Finish when the evidence is sufficient or the remaining budget is low.
+- Never invent schema, values, or query results.

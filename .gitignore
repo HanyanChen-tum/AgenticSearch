@@ -15,3 +15,8 @@ data/spider_data.zip
 *.sqlite
 *.db
 .ipynb_checkpoints/
+
+# Local Chinese documentation
+README_zh.md
+Timeline_zh.md
+baselines/README_zh.md

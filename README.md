@@ -664,8 +664,14 @@ Its result rows include `agent_steps`, `tool_calls`, `termination_reason`, and
 Run Recursive DB-RLM:
 
 ```bash
-python scripts/run_ours.py
+python scripts/run_ours.py --limit 10 --max-depth 2 --max-actions 24
 ```
+
+The recursive method exposes bounded read-only tools (`list_tables`,
+`describe_table`, `sample_rows`, and `execute_sql`). Agents can delegate
+focused sub-questions up to `--max-depth`; all agents share the same global
+action and token budgets. Each result records the recursive tree and complete
+tool trace for later analysis.
 
 Evaluate:
 
@@ -713,7 +719,7 @@ Specifically:
 * [x] Baseline 1 implementation
 * [x] Baseline 2 implementation
 * [x] Baseline 3 implementation
-* [ ] Recursive DB-RLM implementation
+* [x] Recursive DB-RLM implementation
 * [ ] Evaluation
 * [ ] Error analysis
 
