@@ -14,6 +14,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from shared import config
+from shared.evaluator import build_evaluation_fields
 from shared.io_utils import read_json, write_json
 
 
@@ -39,9 +40,48 @@ def safe_average(values: list[Any]) -> float | None:
     return round(sum(numeric_values) / len(numeric_values), 4)
 
 
+def safe_accuracy(matches: int, total: int) -> float | None:
+    return round(matches / total, 4) if total else None
+
+
+def get_tool_calls(row: dict[str, Any]) -> int | None:
+    value = row.get("tool_calls", row.get("actions_used"))
+    return value if isinstance(value, int) else 0
+
+
+def get_evaluation_fields(row: dict[str, Any]) -> dict[str, Any]:
+    if {
+        "sql_valid",
+        "execution_correct",
+        "exact_match",
+        "component_match",
+        "component_match_correct",
+        "failure_type",
+    }.issubset(row):
+        return {
+            "sql_valid": row["sql_valid"],
+            "execution_correct": row["execution_correct"],
+            "exact_match": row["exact_match"],
+            "component_match": row["component_match"],
+            "component_match_correct": row["component_match_correct"],
+            "failure_type": row["failure_type"],
+        }
+
+    execution_correct = row.get("execution_correct", row.get("correct") is True)
+    error = row.get("error") if row.get("correct") is not True else None
+    return build_evaluation_fields(
+        row.get("predicted_sql") or "",
+        row.get("gold_sql") or "",
+        predicted_error=error,
+        gold_error=None,
+        execution_correct=execution_correct,
+    )
+
+
 def summarize_results(method: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
     total = len(rows)
     correct = sum(1 for row in rows if row.get("correct") is True)
+    evaluation_rows = [get_evaluation_fields(row) for row in rows]
     latencies = [
         row.get("latency_seconds")
         for row in rows
@@ -52,18 +92,58 @@ def summarize_results(method: str, rows: list[dict[str, Any]]) -> dict[str, Any]
         for row in rows
         if row.get("correct") is not True
     )
+    failure_types = Counter(
+        row.get("failure_type") or "none"
+        for row in evaluation_rows
+        if row.get("execution_correct") is not True
+    )
+    component_names = ["tables", "columns", "joins", "aggregations"]
+    component_accuracy = {
+        name: safe_accuracy(
+            sum(
+                1
+                for row in evaluation_rows
+                if isinstance(row.get("component_match"), dict)
+                and row["component_match"].get(name) is True
+            ),
+            total,
+        )
+        for name in component_names
+    }
 
     return {
         "method": method,
         "total": total,
         "correct": correct,
-        "execution_accuracy": round(correct / total, 4) if total else None,
+        "execution_accuracy": safe_accuracy(correct, total),
+        "sql_valid_rate": safe_accuracy(
+            sum(1 for row in evaluation_rows if row.get("sql_valid") is True),
+            total,
+        ),
+        "error_rate": safe_accuracy(
+            sum(1 for row in evaluation_rows if row.get("sql_valid") is not True),
+            total,
+        ),
+        "exact_match_accuracy": safe_accuracy(
+            sum(1 for row in evaluation_rows if row.get("exact_match") is True),
+            total,
+        ),
+        "component_match_accuracy": safe_accuracy(
+            sum(
+                1
+                for row in evaluation_rows
+                if row.get("component_match_correct") is True
+            ),
+            total,
+        ),
+        "component_accuracy": component_accuracy,
         "avg_latency_seconds": round(sum(latencies) / len(latencies), 4) if latencies else None,
         "total_input_tokens": safe_sum([row.get("input_tokens") for row in rows]),
         "total_output_tokens": safe_sum([row.get("output_tokens") for row in rows]),
-        "total_tool_calls": safe_sum([row.get("tool_calls") for row in rows]),
-        "avg_tool_calls": safe_average([row.get("tool_calls") for row in rows]),
+        "total_tool_calls": safe_sum([get_tool_calls(row) for row in rows]),
+        "avg_tool_calls": safe_average([get_tool_calls(row) for row in rows]),
         "error_counts": dict(errors),
+        "failure_type_counts": dict(failure_types),
     }
 
 
@@ -80,12 +160,23 @@ def compare_results(results_dir: str | Path = config.RESULTS_DIR) -> list[dict[s
                     "total": 0,
                     "correct": 0,
                     "execution_accuracy": None,
+                    "sql_valid_rate": None,
+                    "error_rate": None,
+                    "exact_match_accuracy": None,
+                    "component_match_accuracy": None,
+                    "component_accuracy": {
+                        "tables": None,
+                        "columns": None,
+                        "joins": None,
+                        "aggregations": None,
+                    },
                     "avg_latency_seconds": None,
                     "total_input_tokens": None,
                     "total_output_tokens": None,
                     "total_tool_calls": None,
                     "avg_tool_calls": None,
                     "error_counts": {"missing_result_file": 1},
+                    "failure_type_counts": {"missing_result_file": 1},
                 }
             )
             continue
@@ -105,6 +196,10 @@ def print_summary(summary: list[dict[str, Any]]) -> None:
         "total",
         "correct",
         "execution_accuracy",
+        "sql_valid_rate",
+        "error_rate",
+        "exact_match_accuracy",
+        "component_match_accuracy",
         "avg_latency_seconds",
         "total_input_tokens",
         "total_output_tokens",

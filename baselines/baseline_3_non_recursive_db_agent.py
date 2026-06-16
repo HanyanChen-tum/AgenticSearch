@@ -13,7 +13,7 @@ from tqdm import tqdm
 
 from shared import config
 from shared.data_loader import load_questions
-from shared.evaluator import is_correct
+from shared.evaluator import build_result_evaluation
 from shared.io_utils import read_text, write_json
 from shared.llm_client import generate_chat
 from shared.logging_utils import setup_logger
@@ -341,7 +341,14 @@ def run_one(
     )
     gold_exec = execute_sql(db_path, example["gold_sql"], read_only=True)
     latency_seconds = time.perf_counter() - started_at
-    error = predicted_exec["error"] or gold_exec["error"]
+    evaluation_fields = build_result_evaluation(
+        predicted_sql,
+        example["gold_sql"],
+        predicted_answer=predicted_exec["answer"],
+        gold_answer=gold_exec["answer"],
+        predicted_error=predicted_exec["error"],
+        gold_error=gold_exec["error"],
+    )
 
     return {
         "id": example["id"],
@@ -352,12 +359,7 @@ def run_one(
         "predicted_answer": predicted_exec["answer"],
         "gold_sql": example["gold_sql"],
         "gold_answer": gold_exec["answer"],
-        "correct": (
-            predicted_exec["error"] is None
-            and gold_exec["error"] is None
-            and is_correct(predicted_exec["answer"], gold_exec["answer"])
-        ),
-        "error": error,
+        **evaluation_fields,
         "latency_seconds": round(latency_seconds, 4),
         "input_tokens": input_tokens,
         "output_tokens": output_tokens,

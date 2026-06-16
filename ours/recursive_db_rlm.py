@@ -15,7 +15,7 @@ from ours.recursive_controller import RecursionConfig, RecursiveController
 from ours.subquestion_agent import AgentResult, LLMCallable, SubquestionAgent
 from shared import config
 from shared.data_loader import load_questions
-from shared.evaluator import is_correct
+from shared.evaluator import build_result_evaluation
 from shared.io_utils import read_text, write_json
 from shared.llm_client import LLMResponse, generate_response
 from shared.logging_utils import setup_logger
@@ -215,7 +215,14 @@ def run_one(
 
     gold_exec = execute_sql(db_path, example["gold_sql"])
     predicted_error = solution["execution_error"] or generation_error
-    error = predicted_error or gold_exec["error"]
+    evaluation_fields = build_result_evaluation(
+        solution["predicted_sql"],
+        example["gold_sql"],
+        predicted_answer=solution["predicted_answer"],
+        gold_answer=gold_exec["answer"],
+        predicted_error=predicted_error,
+        gold_error=gold_exec["error"],
+    )
 
     return {
         "id": example["id"],
@@ -226,15 +233,11 @@ def run_one(
         "predicted_answer": solution["predicted_answer"],
         "gold_sql": example["gold_sql"],
         "gold_answer": gold_exec["answer"],
-        "correct": (
-            predicted_error is None
-            and gold_exec["error"] is None
-            and is_correct(solution["predicted_answer"], gold_exec["answer"])
-        ),
-        "error": error,
+        **evaluation_fields,
         "latency_seconds": round(time.perf_counter() - started_at, 4),
         "input_tokens": solution["input_tokens"],
         "output_tokens": solution["output_tokens"],
+        "tool_calls": solution["actions_used"],
         "llm_calls": solution["llm_calls"],
         "actions_used": solution["actions_used"],
         "max_depth_reached": solution["max_depth_reached"],

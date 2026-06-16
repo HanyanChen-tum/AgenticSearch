@@ -1,0 +1,145 @@
+[
+  {
+    "method": "baseline_1_direct_llm_schema",
+    "total": 200,
+    "correct": 136,
+    "execution_accuracy": 0.68,
+    "sql_valid_rate": 0.82,
+    "error_rate": 0.18,
+    "exact_match_accuracy": 0.175,
+    "component_match_accuracy": 0.505,
+    "component_accuracy": {
+      "tables": 0.815,
+      "columns": 0.905,
+      "joins": 0.57,
+      "aggregations": 0.935
+    },
+    "avg_latency_seconds": 2.7833,
+    "total_input_tokens": 56414,
+    "total_output_tokens": 6706,
+    "total_tool_calls": 0,
+    "avg_tool_calls": 0.0,
+    "error_counts": {
+      "none": 28,
+      "no such column: T3.Model": 1,
+      "no such column: T1.MakeId": 25,
+      "no such column: T2.MakeId": 2,
+      "no such column: T2.FullName": 1,
+      "no such column: T2.Weight": 1,
+      "no such column: T2.Horsepower": 2,
+      "no such column: T1.Weight": 1,
+      "no such column: T2.MPG": 1,
+      "ambiguous column name: Maker": 1,
+      "no such column: CountryId": 1
+    },
+    "failure_type_counts": {
+      "wrong_aggregation": 4,
+      "wrong_result": 6,
+      "wrong_table": 15,
+      "wrong_join": 3,
+      "invalid_sql": 36
+    }
+  },
+  {
+    "method": "baseline_2_direct_text_to_sql",
+    "total": 200,
+    "correct": 140,
+    "execution_accuracy": 0.7,
+    "sql_valid_rate": 0.96,
+    "error_rate": 0.04,
+    "exact_match_accuracy": 0.195,
+    "component_match_accuracy": 0.49,
+    "component_accuracy": {
+      "tables": 0.795,
+      "columns": 0.89,
+      "joins": 0.55,
+      "aggregations": 0.935
+    },
+    "avg_latency_seconds": 2.7397,
+    "total_input_tokens": 50313,
+    "total_output_tokens": 6808,
+    "total_tool_calls": 0,
+    "avg_tool_calls": 0.0,
+    "error_counts": {
+      "none": 52,
+      "no such column: PetAge": 1,
+      "no such column: T2.ContinentName": 1,
+      "no such column: T2.Continent": 1,
+      "no such column: T3.Model": 2,
+      "no such column: T2.Maker": 1,
+      "no such column: T2.Make": 1,
+      "no such column: MakerId": 1
+    },
+    "failure_type_counts": {
+      "wrong_aggregation": 4,
+      "wrong_table": 29,
+      "wrong_result": 9,
+      "wrong_join": 10,
+      "invalid_sql": 8
+    }
+  },
+  {
+    "method": "baseline_3_non_recursive_db_agent",
+    "total": 200,
+    "correct": 129,
+    "execution_accuracy": 0.645,
+    "sql_valid_rate": 0.96,
+    "error_rate": 0.04,
+    "exact_match_accuracy": 0.18,
+    "component_match_accuracy": 0.47,
+    "component_accuracy": {
+      "tables": 0.76,
+      "columns": 0.78,
+      "joins": 0.555,
+      "aggregations": 0.9
+    },
+    "avg_latency_seconds": 14.5655,
+    "total_input_tokens": 643201,
+    "total_output_tokens": 24784,
+    "total_tool_calls": 922,
+    "avg_tool_calls": 4.61,
+    "error_counts": {
+      "none": 63,
+      "no such column: Pets.PetType": 1,
+      "no such column: ModelName": 1,
+      "no such column: T2.MakeId": 2,
+      "no such column: T2.Model": 2,
+      "no such column: T1.MakeName": 1,
+      "no such column: cd.MakeId": 1
+    },
+    "failure_type_counts": {
+      "wrong_result": 14,
+      "wrong_aggregation": 3,
+      "wrong_table": 36,
+      "wrong_join": 10,
+      "invalid_sql": 8
+    }
+  },
+  {
+    "method": "ours_recursive_db_rlm",
+    "total": 0,
+    "correct": 0,
+    "execution_accuracy": null,
+    "sql_valid_rate": null,
+    "error_rate": null,
+    "exact_match_accuracy": null,
+    "component_match_accuracy": null,
+    "component_accuracy": {
+      "tables": null,
+      "columns": null,
+      "joins": null,
+      "aggregations": null
+    },
+    "avg_latency_seconds": null,
+    "total_input_tokens": null,
+    "total_output_tokens": null,
+    "total_tool_calls": null,
+    "avg_tool_calls": null,
+    "error_counts": {
+      "missing_result_file": 1
+    },
+    "failure_type_counts": {
+      "missing_result_file": 1
+    }
+  }
+]
