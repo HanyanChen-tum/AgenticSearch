@@ -1,0 +1,21 @@
+Instance id: {instance_id}
+Database id: {db_id}
+
+Question:
+{question}
+
+External knowledge:
+{external_knowledge}
+
+Retrieved database schema:
+{retrieved_schema}
+
+Mandatory rules:
+- Use only tables and columns that appear in the retrieved DDL above.
+- Use the exact table full name shown in the schema context, e.g. DATABASE.SCHEMA.TABLE.
+- Do not use bare table names unless the DDL itself only provides a bare table name.
+- Do not invent table names, column names, schemas, functions, or placeholder names.
+- If the retrieved schema is insufficient, still return the best query using only retrieved DDL objects.
+
+Write one executable Snowflake SQL query that answers the question.
+Return only SQL.

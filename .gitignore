@@ -8,6 +8,16 @@ venv/
 !.env.example
 logs/*.log
 
+# Generated experiment logs and outputs
+/logs/
+/results/spider1/
+/results/spider1_full_dev/
+/results/spider1_smoke/
+/results/spider2_snow*/
+
+# Separate upstream repository; do not record it as an embedded git repository
+/Spider2/
+
 data/raw/spider/database/
 data/databases/
 data/spider_data/

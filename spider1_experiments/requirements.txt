@@ -1,0 +1,7 @@
+google-genai
+tqdm
+numpy
+pandas
+ipykernel
+nbconvert
+sqlglot
