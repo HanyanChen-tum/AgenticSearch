@@ -77,22 +77,32 @@ def _generate_with_openai_compatible(
             "max_tokens": config.MAX_TOKENS,
         }
     ).encode("utf-8")
-    headers = {"Content-Type": "application/json"}
+    headers = {
+        "Content-Type": "application/json",
+        "User-Agent": "OpenAI/Python 1.0.0",
+    }
     if config.LLM_API_KEY:
         headers["Authorization"] = f"Bearer {config.LLM_API_KEY}"
 
     request = Request(url, data=payload, headers=headers, method="POST")
-    try:
-        with urlopen(request, timeout=300) as response:
-            result = json.loads(response.read().decode("utf-8"))
-    except HTTPError as error:
-        details = error.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"Local LLM request failed ({error.code}): {details}") from error
-    except URLError as error:
-        raise RuntimeError(
-            f"Cannot connect to local LLM at {config.LLM_BASE_URL}. "
-            "Check that the server is running and LLM_BASE_URL is correct."
-        ) from error
+    import time as _time
+    for attempt in range(5):
+        try:
+            with urlopen(request, timeout=300) as response:
+                result = json.loads(response.read().decode("utf-8"))
+            break
+        except HTTPError as error:
+            if error.code == 429 and attempt < 4:
+                wait = 2 ** attempt * 10  # 10, 20, 40, 80s
+                _time.sleep(wait)
+                continue
+            details = error.read().decode("utf-8", errors="replace")
+            raise RuntimeError(f"Local LLM request failed ({error.code}): {details}") from error
+        except URLError as error:
+            raise RuntimeError(
+                f"Cannot connect to local LLM at {config.LLM_BASE_URL}. "
+                "Check that the server is running and LLM_BASE_URL is correct."
+            ) from error
 
     try:
         text = result["choices"][0]["message"]["content"]

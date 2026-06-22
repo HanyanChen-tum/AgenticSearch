@@ -4,3 +4,5 @@ numpy
 pandas
 ipykernel
 nbconvert
+litellm
+RestrictedPython

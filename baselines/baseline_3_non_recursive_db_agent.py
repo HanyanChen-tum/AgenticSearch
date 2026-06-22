@@ -180,6 +180,7 @@ def run_agent(
     db_path: Path,
     prompt_template: str,
     max_steps: int,
+    step_sleep: float = 0,
 ) -> dict[str, Any]:
     system_instruction = prompt_template.replace("{max_steps}", str(max_steps))
     messages = [
@@ -205,6 +206,8 @@ def run_agent(
                 }
             )
 
+        if step > 1 and step_sleep > 0:
+            time.sleep(step_sleep)
         response = generate_chat(messages, system_instruction=system_instruction)
         input_tokens = add_optional_tokens(input_tokens, response.input_tokens)
         output_tokens = add_optional_tokens(output_tokens, response.output_tokens)
@@ -308,6 +311,7 @@ def run_one(
     prompt_template: str,
     database_dir: Path,
     max_steps: int = DEFAULT_MAX_STEPS,
+    step_sleep: float = 0,
 ) -> dict[str, Any]:
     db_id = example["db_id"]
     db_path = get_database_path(database_dir, db_id)
@@ -325,6 +329,7 @@ def run_one(
             db_path,
             prompt_template,
             max_steps=max_steps,
+            step_sleep=step_sleep,
         )
         predicted_sql = agent_result["sql"]
         trace = agent_result["trace"]
@@ -379,6 +384,8 @@ def run_baseline(
     database_dir: str | Path = config.DATABASE_DIR,
     limit: int | None = None,
     max_steps: int = DEFAULT_MAX_STEPS,
+    sleep: float = 0,
+    step_sleep: float = 5,
 ) -> list[dict[str, Any]]:
     if max_steps < 1:
         raise ValueError("max_steps must be at least 1")
@@ -394,17 +401,30 @@ def run_baseline(
     logger.info("max_steps=%d", max_steps)
 
     prompt_template = read_text(PROMPT_PATH)
-    results = [
-        run_one(
+
+    output_path = Path(output_path)
+    results: list[dict[str, Any]] = []
+    done_ids: set[str] = set()
+    if output_path.exists():
+        import json
+        existing = json.loads(output_path.read_text())
+        results = existing
+        done_ids = {r["id"] for r in results}
+        logger.info("Resuming — %d already done", len(done_ids))
+    questions = [q for q in questions if q["id"] not in done_ids]
+
+    for example in tqdm(questions, desc=METHOD_NAME):
+        results.append(run_one(
             example,
             prompt_template,
             Path(database_dir),
             max_steps=max_steps,
-        )
-        for example in tqdm(questions, desc=METHOD_NAME)
-    ]
+            step_sleep=step_sleep,
+        ))
+        write_json(output_path, results)
+        if sleep > 0:
+            time.sleep(sleep)
 
-    write_json(output_path, results)
     total = len(results)
     correct = sum(1 for row in results if row["correct"])
     accuracy = correct / total if total else 0
@@ -429,6 +449,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--database-dir", default=str(config.DATABASE_DIR))
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--max-steps", type=int, default=DEFAULT_MAX_STEPS)
+    parser.add_argument("--sleep", type=float, default=0, help="Sleep between questions")
+    parser.add_argument("--step-sleep", type=float, default=5, help="Sleep between agent steps (prevents rate limits)")
     return parser.parse_args()
 
 
@@ -440,6 +462,8 @@ def main() -> None:
         database_dir=args.database_dir,
         limit=args.limit,
         max_steps=args.max_steps,
+        sleep=args.sleep,
+        step_sleep=args.step_sleep,
     )
 
 

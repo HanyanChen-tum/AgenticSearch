@@ -1,0 +1,7377 @@
+[
+  {
+    "id": "dev_000228",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "flight_2",
+    "question": "Give the code of the airport with the least flights.",
+    "predicted_sql": "SELECT DestAirport \nFROM flights \nGROUP BY DestAirport \nORDER BY COUNT(*) \nLIMIT 1",
+    "predicted_answer": [
+      [
+        " AID"
+      ]
+    ],
+    "gold_sql": "SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1",
+    "gold_answer": [],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.2928,
+    "input_tokens": 241,
+    "output_tokens": 21
+  },
+  {
+    "id": "dev_000051",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "pets_1",
+    "question": "Find number of pets owned by students who are older than 20.",
+    "predicted_sql": "SELECT COUNT(T1.PetID) \nFROM Has_Pet AS T1 \nINNER JOIN Student AS T2 \nON T1.StuID = T2.StuID \nWHERE T2.Age > 20",
+    "predicted_answer": [
+      [
+        0
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20",
+    "gold_answer": [
+      [
+        0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3271,
+    "input_tokens": 255,
+    "output_tokens": 45
+  },
+  {
+    "id": "dev_000563",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "student_transcripts_tracking",
+    "question": "On average, when were the transcripts printed?",
+    "predicted_sql": "SELECT AVG(strftime('%J', transcript_date)) FROM Transcripts",
+    "predicted_answer": [
+      [
+        2448053.8884891975
+      ]
+    ],
+    "gold_sql": "SELECT avg(transcript_date) FROM Transcripts",
+    "gold_answer": [
+      [
+        1989.9333333333334
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.6308,
+    "input_tokens": 754,
+    "output_tokens": 14
+  },
+  {
+    "id": "dev_000501",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "battle_death",
+    "question": "What are the distinct battle names which are between bulgarian commander 'Kaloyan' and latin commander 'Baldwin I'?",
+    "predicted_sql": "SELECT DISTINCT name FROM battle WHERE bulgarian_commander = 'Kaloyan' AND latin_commander = 'Baldwin I'",
+    "predicted_answer": [
+      [
+        "Battle of Adrianople"
+      ]
+    ],
+    "gold_sql": "SELECT name FROM battle WHERE bulgarian_commander  =  'Kaloyan' AND latin_commander  =  'Baldwin I'",
+    "gold_answer": [
+      [
+        "Battle of Adrianople"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1894,
+    "input_tokens": 282,
+    "output_tokens": 29
+  },
+  {
+    "id": "dev_000457",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "wta_1",
+    "question": "List the first and last name of all players who are left / L hand in the order of birth date.",
+    "predicted_sql": "SELECT first_name, last_name FROM players WHERE hand = 'L' ORDER BY birth_date",
+    "predicted_answer": [
+      [
+        "Ann",
+        "Jones"
+      ],
+      [
+        "Wendy",
+        "Gilchrist"
+      ],
+      [
+        "Martina",
+        "Navratilova"
+      ],
+      [
+        "Mary",
+        "Carillo"
+      ],
+      [
+        "Katerina",
+        "Bohmova"
+      ],
+      [
+        "Petra",
+        "Delhees Jauch"
+      ],
+      [
+        "Nancy",
+        "Loeffler Caro"
+      ],
+      [
+        "Lise",
+        "Gregory"
+      ],
+      [
+        "Rene",
+        "Collins"
+      ],
+      [
+        "Nicole",
+        "Arendt"
+      ],
+      [
+        "Florencia",
+        "Labat"
+      ],
+      [
+        "Sabine",
+        "Appelmans"
+      ],
+      [
+        "Andreea",
+        "Ehritt Vanc"
+      ],
+      [
+        "Monica",
+        "Seles"
+      ],
+      [
+        "Gala",
+        "Leon Garcia"
+      ],
+      [
+        "Karen",
+        "Cross"
+      ],
+      [
+        "Julie",
+        "Pullin"
+      ],
+      [
+        "Vanessa",
+        "Webb"
+      ],
+      [
+        "Elena",
+        "Tatarkova"
+      ],
+      [
+        "Anca",
+        "Barna"
+      ],
+      [
+        "Francesca",
+        "Lubiani"
+      ],
+      [
+        "Gaelle",
+        "Widmer"
+      ],
+      [
+        "Amanda",
+        "Keen"
+      ],
+      [
+        "Amanda",
+        "Augustus"
+      ],
+      [
+        "Rita",
+        "Kuti Kis"
+      ],
+      [
+        "Amelie",
+        "Cocheteux"
+      ],
+      [
+        "Amelie",
+        "Castera"
+      ],
+      [
+        "Saori",
+        "Obata"
+      ],
+      [
+        "Marine",
+        "Nizri Spiegel"
+      ],
+      [
+        "Patty",
+        "Schnyder"
+      ],
+      [
+        "Julie",
+        "Ditty"
+      ],
+      [
+        "Joana",
+        "Cortez"
+      ],
+      [
+        "Barbara",
+        "Schwartz"
+      ],
+      [
+        "Ludmilla",
+        "Varmuza"
+      ],
+      [
+        "Magui",
+        "Serna"
+      ],
+      [
+        "Amanda",
+        "Grahame"
+      ],
+      [
+        "Kim",
+        "Kilsdonk"
+      ],
+      [
+        "Emilie",
+        "Loit"
+      ],
+      [
+        "Erika",
+        "Pineider"
+      ],
+      [
+        "Anne Gaelle",
+        "Sidot"
+      ],
+      [
+        "Erica",
+        "Biro"
+      ],
+      [
+        "Stephanie",
+        "Kovacic"
+      ],
+      [
+        "Sybille",
+        "Bammer"
+      ],
+      [
+        "Lisa",
+        "Fritz"
+      ],
+      [
+        "Maja",
+        "Matevzic"
+      ],
+      [
+        "Leanne",
+        "Baker"
+      ],
+      [
+        "Aurelie",
+        "Vedy"
+      ],
+      [
+        "Carla",
+        "Tiene"
+      ],
+      [
+        "Erika",
+        "Venere"
+      ],
+      [
+        "Jelena",
+        "Kostanic Tosic"
+      ],
+      [
+        "Clarisa",
+        "Fernandez"
+      ],
+      [
+        "Ansley",
+        "Cargill"
+      ],
+      [
+        "Dimana",
+        "Krastevitch"
+      ],
+      [
+        "Maria Jose",
+        "Martinez Sanchez"
+      ],
+      [
+        "Zerene",
+        "Reyes"
+      ],
+      [
+        "Melinda",
+        "Czink"
+      ],
+      [
+        "Sandra",
+        "Klemenschits"
+      ],
+      [
+        "Maria Elizabeth",
+        "Lopez"
+      ],
+      [
+        "Salome",
+        "Llaguno"
+      ],
+      [
+        "Lindsay",
+        "Cox"
+      ],
+      [
+        "Iveta",
+        "Benesova"
+      ],
+      [
+        "Eugenia",
+        "Chialvo"
+      ],
+      [
+        "Chun Yan",
+        "He"
+      ],
+      [
+        "Maria Fernanda",
+        "Alves"
+      ],
+      [
+        "Emily",
+        "Quin"
+      ],
+      [
+        "Fernanda",
+        "Oliveira Da Silva"
+      ],
+      [
+        "Annabel",
+        "Blow"
+      ],
+      [
+        "Julia",
+        "Smith"
+      ],
+      [
+        "Ana Lucia",
+        "Migliarini De Leon"
+      ],
+      [
+        "Elizabeth",
+        "Bondi"
+      ],
+      [
+        "Galina",
+        "Fokina"
+      ],
+      [
+        "Elise",
+        "Tamaela"
+      ],
+      [
+        "Bit Na",
+        "Lee"
+      ],
+      [
+        "Sonia",
+        "Iacovacci"
+      ],
+      [
+        "Mariana Pires",
+        "Junqueira"
+      ],
+      [
+        "Natalia",
+        "Bogdanova"
+      ],
+      [
+        "Irina",
+        "Smirnova"
+      ],
+      [
+        "Meghha",
+        "Vakaria"
+      ],
+      [
+        "Angela",
+        "Haynes"
+      ],
+      [
+        "Karly",
+        "Olson"
+      ],
+      [
+        "Casey",
+        "Dellacqua"
+      ],
+      [
+        "Kathrin",
+        "Hegel"
+      ],
+      [
+        "Beatrix",
+        "Csordas"
+      ],
+      [
+        "Zsuzsanna",
+        "Babos"
+      ],
+      [
+        "Emily",
+        "Applegate"
+      ],
+      [
+        "Olga",
+        "Pasichnichenko"
+      ],
+      [
+        "Theresa",
+        "Logar"
+      ],
+      [
+        "Jin A",
+        "Lee"
+      ],
+      [
+        "Hannah",
+        "Kuervers"
+      ],
+      [
+        "Andreea",
+        "Novaceanu"
+      ],
+      [
+        "Valentina",
+        "Tizzano"
+      ],
+      [
+        "Helen",
+        "Fritche"
+      ],
+      [
+        "Sandra",
+        "Sasidharan"
+      ],
+      [
+        "Isha",
+        "Lakhani"
+      ],
+      [
+        "Krushmi",
+        "Chheda"
+      ],
+      [
+        "Ljubica",
+        "Avramovic"
+      ],
+      [
+        "Avel Romaly",
+        "Coronado"
+      ],
+      [
+        "Shadisha",
+        "Robinson"
+      ],
+      [
+        "Carla",
+        "Zabaleta"
+      ],
+      [
+        "Diana",
+        "Arutyunova"
+      ],
+      [
+        "Cecile",
+        "Baijot"
+      ],
+      [
+        "Laura",
+        "Rocchi"
+      ],
+      [
+        "Rie",
+        "Imai"
+      ],
+      [
+        "Danielle",
+        "Harmsen"
+      ],
+      [
+        "Alejandra",
+        "Obregon"
+      ],
+      [
+        "Ariela",
+        "Perez"
+      ],
+      [
+        "Vasilisa",
+        "Davydova"
+      ],
+      [
+        "Emilia",
+        "Yorio"
+      ],
+      [
+        "Lizaan",
+        "Du Plessis"
+      ],
+      [
+        "Claire",
+        "Feuerstein"
+      ],
+      [
+        "Alexandria",
+        "Liles"
+      ],
+      [
+        "Katharine",
+        "Baker"
+      ],
+      [
+        "Emma",
+        "Laine"
+      ],
+      [
+        "Geraldine",
+        "Roma"
+      ],
+      [
+        "Aya",
+        "El Akkad"
+      ],
+      [
+        "Alexandra",
+        "Kazanova"
+      ],
+      [
+        "Allison",
+        "Baker"
+      ],
+      [
+        "Lucy",
+        "Fletcher"
+      ],
+      [
+        "Monika",
+        "Musilova"
+      ],
+      [
+        "Jitka",
+        "Gavdunova"
+      ],
+      [
+        "Elena",
+        "Petrucciano"
+      ],
+      [
+        "Varvara",
+        "Lepchenko"
+      ],
+      [
+        "Claire",
+        "De Gubernatis"
+      ],
+      [
+        "Seheno",
+        "Razafindramaso"
+      ],
+      [
+        "Karolina",
+        "Soor"
+      ],
+      [
+        "Melisa",
+        "Cabrera Handt"
+      ],
+      [
+        "Shraddha",
+        "Lodha"
+      ],
+      [
+        "Sylvia",
+        "Krywacz"
+      ],
+      [
+        "Amina",
+        "El Sahn"
+      ],
+      [
+        "Hendrike Lea",
+        "Heitmann"
+      ],
+      [
+        "Dunja",
+        "Antunovic"
+      ],
+      [
+        "Micaela",
+        "Acosta"
+      ],
+      [
+        "Katerina",
+        "Bohmova"
+      ],
+      [
+        "Catherine",
+        "Grotz"
+      ],
+      [
+        "Yurika",
+        "Sema"
+      ],
+      [
+        "Sheng Nan",
+        "Sun"
+      ],
+      [
+        "Lucie",
+        "Safarova"
+      ],
+      [
+        "Jitka",
+        "Kleisnerova"
+      ],
+      [
+        "Carolina",
+        "Escamilla"
+      ],
+      [
+        "Tapiwa",
+        "Marobela"
+      ],
+      [
+        "Punam",
+        "Reddy"
+      ],
+      [
+        "Katia",
+        "Sabate Orera"
+      ],
+      [
+        "Shana",
+        "Claes"
+      ],
+      [
+        "Chrissie",
+        "Seredni"
+      ],
+      [
+        "Yui",
+        "Nagasawa"
+      ],
+      [
+        "Marcela",
+        "Vojtiskova"
+      ],
+      [
+        "Seul Ki",
+        "Chin"
+      ],
+      [
+        "Nina",
+        "Munch Soegaard"
+      ],
+      [
+        "Hannah",
+        "Grady"
+      ],
+      [
+        "Karen",
+        "Castiblanco"
+      ],
+      [
+        "Angelique",
+        "Kerber"
+      ],
+      [
+        "Lauren",
+        "Lui"
+      ],
+      [
+        "Rana",
+        "Tharwat Hafez"
+      ],
+      [
+        "Nicole",
+        "Grunwald"
+      ],
+      [
+        "Ana",
+        "Veselinovic"
+      ],
+      [
+        "Sanaa",
+        "Bhambri"
+      ],
+      [
+        "Diana Andreea",
+        "Gae"
+      ],
+      [
+        "Ana",
+        "Beltran Trigueros"
+      ],
+      [
+        "Barbora",
+        "Bozkova"
+      ],
+      [
+        "Camila",
+        "Belassi"
+      ],
+      [
+        "Violette",
+        "Huck"
+      ],
+      [
+        "Megumi",
+        "Fukui"
+      ],
+      [
+        "Rita",
+        "Gouveia"
+      ],
+      [
+        "Mihaela",
+        "Buzarnescu"
+      ],
+      [
+        "Liset",
+        "Brito Herrera"
+      ],
+      [
+        "Paulina",
+        "Jorquera"
+      ],
+      [
+        "Ekaterina",
+        "Makarova"
+      ],
+      [
+        "Dessislava",
+        "Mladenova"
+      ],
+      [
+        "Sanaz",
+        "Marand"
+      ],
+      [
+        "Cristina",
+        "Greco Naccarato"
+      ],
+      [
+        "Cagla",
+        "Urcu"
+      ],
+      [
+        "Liege",
+        "Vieira"
+      ],
+      [
+        "Chang",
+        "Xu"
+      ],
+      [
+        "Jessica",
+        "Sweeting"
+      ],
+      [
+        "Yi Fan",
+        "Xu"
+      ],
+      [
+        "Eloisa Maria",
+        "Compostizo De Andres"
+      ],
+      [
+        "Karina",
+        "Porushkevich"
+      ],
+      [
+        "Ornella",
+        "Gentile"
+      ],
+      [
+        "Valeria",
+        "Casillo"
+      ],
+      [
+        "Bianca Ioana",
+        "Bonifate"
+      ],
+      [
+        "Michelle",
+        "Russ"
+      ],
+      [
+        "Monika",
+        "Lalewicz"
+      ],
+      [
+        "Amandine",
+        "Cazeaux"
+      ],
+      [
+        "Fatima",
+        "El Allami"
+      ],
+      [
+        "Simonetta",
+        "Miori"
+      ],
+      [
+        "Gabriela",
+        "Roux"
+      ],
+      [
+        "Sherazad",
+        "Benamar"
+      ],
+      [
+        "Sherazad",
+        "Reix"
+      ],
+      [
+        "Zora",
+        "Vlckova"
+      ],
+      [
+        "Naomi",
+        "Cavaday"
+      ],
+      [
+        "Nathalia",
+        "Rossi"
+      ],
+      [
+        "Maria Eugenia",
+        "Roca Recarey"
+      ],
+      [
+        "Lauren",
+        "Jones"
+      ],
+      [
+        "Roxane",
+        "Vaisemberg"
+      ],
+      [
+        "Ivana",
+        "Belejova"
+      ],
+      [
+        "Petra",
+        "Vogel"
+      ],
+      [
+        "Majdouline",
+        "Akrate"
+      ],
+      [
+        "Laura",
+        "Sadria"
+      ],
+      [
+        "Ia",
+        "Jikia"
+      ],
+      [
+        "Alessandra",
+        "Caprara"
+      ],
+      [
+        "Guadalupe",
+        "Moreno"
+      ],
+      [
+        "Lucie",
+        "Sipkova"
+      ],
+      [
+        "Xenia",
+        "Samoilova"
+      ],
+      [
+        "Kotomi",
+        "Takahata"
+      ],
+      [
+        "Stephanie",
+        "Theiler"
+      ],
+      [
+        "Maria",
+        "Prishlyak"
+      ],
+      [
+        "Grace",
+        "Leake"
+      ],
+      [
+        "Ioana Alexandra",
+        "Oprea"
+      ],
+      [
+        "Sanne",
+        "Bakker"
+      ],
+      [
+        "Katerina",
+        "Vankova"
+      ],
+      [
+        "Kristy",
+        "Frilling"
+      ],
+      [
+        "Tatiana",
+        "Bua"
+      ],
+      [
+        "Anastasia",
+        "Kontratevidi"
+      ],
+      [
+        "Chane",
+        "Hines"
+      ],
+      [
+        "Julia",
+        "Gavenko"
+      ],
+      [
+        "Yuuki",
+        "Tanaka"
+      ],
+      [
+        "Petra",
+        "Kvitova"
+      ],
+      [
+        "Leticia",
+        "Costas"
+      ],
+      [
+        "Sandra",
+        "Roma"
+      ],
+      [
+        "Nina",
+        "Mujezinovic"
+      ],
+      [
+        "Stella",
+        "Papaspyrou"
+      ],
+      [
+        "Chinami",
+        "Ogi"
+      ],
+      [
+        "Martina",
+        "Balogova"
+      ],
+      [
+        "Xinyun",
+        "Han"
+      ],
+      [
+        "Nicole",
+        "Riner"
+      ],
+      [
+        "Lara",
+        "Meccico"
+      ],
+      [
+        "Mai",
+        "Iwasaki"
+      ],
+      [
+        "Oksana",
+        "Kalashnikova"
+      ],
+      [
+        "Dipti",
+        "Srivastava"
+      ],
+      [
+        "Claudia",
+        "Mercado"
+      ],
+      [
+        "Margarita",
+        "Lazareva"
+      ],
+      [
+        "Shaozhuo",
+        "Liu"
+      ],
+      [
+        "Ana Maria",
+        "Chavez Franco"
+      ],
+      [
+        "Arantxa",
+        "Rus"
+      ],
+      [
+        "Ekaterina",
+        "Kamendova"
+      ],
+      [
+        "Monika",
+        "Tumova"
+      ],
+      [
+        "Gabriella",
+        "Boboc"
+      ],
+      [
+        "Ganna",
+        "Lukianchykova"
+      ],
+      [
+        "Sofia",
+        "Medina"
+      ],
+      [
+        "Ekaterina",
+        "Abaeva"
+      ],
+      [
+        "Andressa",
+        "Garcia"
+      ],
+      [
+        "Giulia",
+        "Bruzzone"
+      ],
+      [
+        "Catia",
+        "Rodrigues"
+      ],
+      [
+        "Danielle",
+        "Mills"
+      ],
+      [
+        "Flavia",
+        "Borges"
+      ],
+      [
+        "Misaki",
+        "Doi"
+      ],
+      [
+        "Veronika",
+        "Domagala"
+      ],
+      [
+        "Cindy",
+        "Chala"
+      ],
+      [
+        "Ksenia",
+        "Pervak"
+      ],
+      [
+        "Bianca",
+        "Botto"
+      ],
+      [
+        "Marianna",
+        "Natali"
+      ],
+      [
+        "Carolina",
+        "Orsi"
+      ],
+      [
+        "Aleksandra",
+        "Vukadinovic"
+      ],
+      [
+        "Elixane",
+        "Lechemia"
+      ],
+      [
+        "Sonya",
+        "Dayal"
+      ],
+      [
+        "Francesca",
+        "Campigotto"
+      ],
+      [
+        "Cristina Bianca",
+        "Danaila"
+      ],
+      [
+        "Tereza",
+        "Budilova"
+      ],
+      [
+        "Gemma",
+        "Praditngam"
+      ],
+      [
+        "Ekaterine",
+        "Gorgodze"
+      ],
+      [
+        "Dejana",
+        "Raickovic"
+      ],
+      [
+        "Alena",
+        "Gerasimova"
+      ],
+      [
+        "Quirine",
+        "Lemoine"
+      ],
+      [
+        "Chieh Yu",
+        "Hsu"
+      ],
+      [
+        "Anastasiya",
+        "Vasylyeva"
+      ],
+      [
+        "Alexia",
+        "Quartetto"
+      ],
+      [
+        "Joanna",
+        "Bougon"
+      ],
+      [
+        "Kristyna",
+        "Pliskova"
+      ],
+      [
+        "Elena",
+        "Bogdan"
+      ],
+      [
+        "Fiorella",
+        "Jerardino"
+      ],
+      [
+        "Julie",
+        "Gonzalez Rodriguez"
+      ],
+      [
+        "Alejandra",
+        "Barragan"
+      ],
+      [
+        "Renata",
+        "Bakieva"
+      ],
+      [
+        "Ashley",
+        "Krysiak"
+      ],
+      [
+        "Sarah Rebecca",
+        "Sekulic"
+      ],
+      [
+        "Na Lae",
+        "Han"
+      ],
+      [
+        "Natali",
+        "Coronel"
+      ],
+      [
+        "Kristyna",
+        "Hancarova"
+      ],
+      [
+        "Doroteja",
+        "Eric"
+      ],
+      [
+        "Chanel",
+        "Simmonds"
+      ],
+      [
+        "Kobkanok",
+        "Upapong"
+      ],
+      [
+        "Annie",
+        "Sullivan"
+      ],
+      [
+        "Jenny Thuy",
+        "Le"
+      ],
+      [
+        "Xenia",
+        "Knoll"
+      ],
+      [
+        "Francisca",
+        "Matos"
+      ],
+      [
+        "Christina",
+        "Madenoglou"
+      ],
+      [
+        "Alexandra",
+        "Avirvarei"
+      ],
+      [
+        "Georgina",
+        "Fedosenkova"
+      ],
+      [
+        "Alicia",
+        "Doms Golobart"
+      ],
+      [
+        "Amy",
+        "Hoburn"
+      ],
+      [
+        "Monica",
+        "Turewicz"
+      ],
+      [
+        "Martina",
+        "Zerbola"
+      ],
+      [
+        "Mashaal",
+        "Hameed"
+      ],
+      [
+        "Sabrina",
+        "Dos Reis"
+      ],
+      [
+        "Maria Sol",
+        "Carrasco"
+      ],
+      [
+        "Ruxandra",
+        "Ababii"
+      ],
+      [
+        "Daniella",
+        "Patton"
+      ],
+      [
+        "Veronika",
+        "Zavodska"
+      ],
+      [
+        "Briar",
+        "Preston"
+      ],
+      [
+        "Gabriela",
+        "Ce"
+      ],
+      [
+        "Amanda",
+        "Rodgers"
+      ],
+      [
+        "Constanze",
+        "Lotz"
+      ],
+      [
+        "Paula",
+        "Mocete Talamantes"
+      ],
+      [
+        "Verena",
+        "Gantschnig"
+      ],
+      [
+        "Ainhoa",
+        "Atucha Gomez"
+      ],
+      [
+        "Katarzyna",
+        "Kossowska"
+      ],
+      [
+        "Julia",
+        "Stamatova"
+      ],
+      [
+        "Vorranavaporn",
+        "Vorrarattanamongkol"
+      ],
+      [
+        "Michaela",
+        "Jasenakova"
+      ],
+      [
+        "Agustina Sol",
+        "Eskenazi"
+      ],
+      [
+        "Maja",
+        "Mladenovic"
+      ],
+      [
+        "Sandra",
+        "Garriga Catala"
+      ],
+      [
+        "Rita",
+        "Vilaca"
+      ],
+      [
+        "Zanmarie",
+        "Pienaar"
+      ],
+      [
+        "Julia",
+        "Kimmelmann"
+      ],
+      [
+        "Martina",
+        "Trevisan"
+      ],
+      [
+        "Charitomeni",
+        "Matoula"
+      ],
+      [
+        "Andreea",
+        "Istrate"
+      ],
+      [
+        "Sowjanya",
+        "Bavisetti"
+      ],
+      [
+        "Gabrielle",
+        "Moxey"
+      ],
+      [
+        "Viktoryia",
+        "Kisialeva"
+      ],
+      [
+        "Sarahi",
+        "Garcia Carrera"
+      ],
+      [
+        "Rachel",
+        "Girard"
+      ],
+      [
+        "Laura",
+        "Robson"
+      ],
+      [
+        "Kate",
+        "Vialle"
+      ],
+      [
+        "Anna",
+        "Montserrat Sanchez"
+      ],
+      [
+        "Elena Teodora",
+        "Cadar"
+      ],
+      [
+        "Carol",
+        "Augustine Benito"
+      ],
+      [
+        "Kamila",
+        "Pavelkova"
+      ],
+      [
+        "Arantxa",
+        "Sanchez"
+      ],
+      [
+        "Ana Sofia",
+        "Sanchez"
+      ],
+      [
+        "Julia",
+        "Wachaczyk"
+      ],
+      [
+        "Ecaterina",
+        "Oproiu"
+      ],
+      [
+        "Snigdha",
+        "Padamata"
+      ],
+      [
+        "Rona",
+        "Berisha"
+      ],
+      [
+        "Olga",
+        "Doroshina"
+      ],
+      [
+        "So Ra",
+        "Lee"
+      ],
+      [
+        "Brandy",
+        "Mina"
+      ],
+      [
+        "Natalie",
+        "Novakova"
+      ],
+      [
+        "Storm",
+        "Sanders"
+      ],
+      [
+        "Alexandra",
+        "Martinez"
+      ],
+      [
+        "Ysaline",
+        "Bonaventure"
+      ],
+      [
+        "Barbora",
+        "Trestikova"
+      ],
+      [
+        "Stefania",
+        "Hristov"
+      ],
+      [
+        "Ana Maria",
+        "Crisan"
+      ],
+      [
+        "Elpida",
+        "Papanelopoulou"
+      ],
+      [
+        "Tereza",
+        "Jankovska"
+      ],
+      [
+        "Rebecca",
+        "Andrade"
+      ],
+      [
+        "Kelly",
+        "Williford"
+      ],
+      [
+        "Tina",
+        "Rupert"
+      ],
+      [
+        "Mia Nicole",
+        "Eklund"
+      ],
+      [
+        "Bernarda",
+        "Pera"
+      ],
+      [
+        "Montserrat",
+        "Alonso"
+      ],
+      [
+        "Rosalie",
+        "Van Der Hoek"
+      ],
+      [
+        "Hedda",
+        "Odegaard"
+      ],
+      [
+        "Samira",
+        "Radjaa"
+      ],
+      [
+        "Zuzanna",
+        "Maciejewska"
+      ],
+      [
+        "Saumya",
+        "Vig"
+      ],
+      [
+        "Marie",
+        "Benoit"
+      ],
+      [
+        "Iga",
+        "Odrzywolek"
+      ],
+      [
+        "Shakhlo",
+        "Saidova"
+      ],
+      [
+        "Irina",
+        "Khromacheva"
+      ],
+      [
+        "Yuliya",
+        "Lysa"
+      ],
+      [
+        "Sophie",
+        "Blom"
+      ],
+      [
+        "Jennifer",
+        "Zerbone"
+      ],
+      [
+        "Kristina",
+        "Chasovskikh"
+      ],
+      [
+        "Maria Camila",
+        "Trujillo Hoyos"
+      ],
+      [
+        "Karina",
+        "Rovira"
+      ],
+      [
+        "Teodora Adina",
+        "Ardeleanu"
+      ],
+      [
+        "Yasmine",
+        "Rashad"
+      ],
+      [
+        "Judit",
+        "Vives Joan"
+      ],
+      [
+        "Sarah Beth",
+        "Askew"
+      ],
+      [
+        "Yasmine",
+        "Xantos"
+      ],
+      [
+        "Lea",
+        "Tholey"
+      ],
+      [
+        "Hikari",
+        "Yamamoto"
+      ],
+      [
+        "Ines Miren",
+        "De Pablo"
+      ],
+      [
+        "Stuti",
+        "Singh Tomar"
+      ],
+      [
+        "Naomi",
+        "Totka"
+      ],
+      [
+        "Polina",
+        "Bezsmertnaya"
+      ],
+      [
+        "Hannah",
+        "King"
+      ],
+      [
+        "Gabriele",
+        "Bertasiute"
+      ],
+      [
+        "Rebecca",
+        "Smaller"
+      ],
+      [
+        "Busra",
+        "Kayrun"
+      ],
+      [
+        "Stephani",
+        "Rodriguez"
+      ],
+      [
+        "Raquel",
+        "Montalvo"
+      ],
+      [
+        "Oana",
+        "Irimescu"
+      ],
+      [
+        "Taylor",
+        "Townsend"
+      ],
+      [
+        "Carmen",
+        "Blasco Robaina"
+      ],
+      [
+        "Giulia",
+        "Della Cioppa"
+      ],
+      [
+        "Nadege",
+        "Jorda"
+      ],
+      [
+        "Beatriz",
+        "Haddad Maia"
+      ],
+      [
+        "Nelise",
+        "Verster"
+      ],
+      [
+        "Eleonore",
+        "Barrere"
+      ],
+      [
+        "Anastasia",
+        "Prokopenko"
+      ],
+      [
+        "Dzina",
+        "Milovanovic"
+      ],
+      [
+        "Isabelle",
+        "Wallace"
+      ],
+      [
+        "Katelyn",
+        "Jackson"
+      ],
+      [
+        "Polina",
+        "Novoselova"
+      ],
+      [
+        "Maite",
+        "Cano"
+      ],
+      [
+        "Ria",
+        "Vaidya"
+      ],
+      [
+        "Ana Lorena",
+        "Garcia Navas"
+      ],
+      [
+        "Aayushi",
+        "Chouhan"
+      ],
+      [
+        "Ivona",
+        "Cudina"
+      ],
+      [
+        "Karina",
+        "Gurgenyan"
+      ],
+      [
+        "Maria",
+        "Patrascu"
+      ],
+      [
+        "Denisa",
+        "Chereches"
+      ],
+      [
+        "Mirabelle",
+        "Njoze"
+      ],
+      [
+        "Vasanti",
+        "Shinde"
+      ],
+      [
+        "Amanda",
+        "Schneider"
+      ],
+      [
+        "Katharina",
+        "Herpertz"
+      ],
+      [
+        "Tayisiya",
+        "Morderger"
+      ],
+      [
+        "Tamara",
+        "Tomic"
+      ],
+      [
+        "Maria Fernanda",
+        "Herazo Gonzalez"
+      ],
+      [
+        "Andra Maria",
+        "Nitescu"
+      ],
+      [
+        "Micheline",
+        "Aubuchon"
+      ],
+      [
+        "Ilayda",
+        "Yondem"
+      ],
+      [
+        "Birgit",
+        "Burk"
+      ],
+      [
+        "Kanako",
+        "Osafune"
+      ],
+      [
+        "Anastasiya",
+        "Komardina"
+      ],
+      [
+        "Nina",
+        "Holanova"
+      ],
+      [
+        "Jil Belen",
+        "Teichmann"
+      ],
+      [
+        "Francesca",
+        "Di Lorenzo"
+      ],
+      [
+        "Natsuho",
+        "Arakawa"
+      ],
+      [
+        "Emerald",
+        "Able"
+      ],
+      [
+        "Manca",
+        "Pislak"
+      ],
+      [
+        "Irys",
+        "Ekani"
+      ],
+      [
+        "Veronica",
+        "Miroshnichenko"
+      ],
+      [
+        "Martina",
+        "Capurro Taborda"
+      ],
+      [
+        "Mariam",
+        "Bolkvadze"
+      ],
+      [
+        "Diana",
+        "Valverde"
+      ],
+      [
+        "Do Hee",
+        "Bae"
+      ],
+      [
+        "Daniela",
+        "Morales Beckmann"
+      ],
+      [
+        "Ioana Diana",
+        "Pietroiu"
+      ],
+      [
+        "Luisa Fernanda",
+        "Echeverry Rodriguez"
+      ],
+      [
+        "Mayuka",
+        "Aikawa"
+      ],
+      [
+        "Nicole",
+        "Frenkel"
+      ],
+      [
+        "Daria",
+        "Kruzhkova"
+      ],
+      [
+        "Alejandra",
+        "Tamayo Gomez"
+      ],
+      [
+        "Tereza",
+        "Koplova"
+      ],
+      [
+        "Chiara",
+        "Lommer"
+      ],
+      [
+        "Laura",
+        "Illanes"
+      ],
+      [
+        "Olga",
+        "Fridman"
+      ],
+      [
+        "Ana Paula",
+        "Leal"
+      ],
+      [
+        "Shiraz",
+        "Bronstein"
+      ],
+      [
+        "Nicole",
+        "Bunea"
+      ],
+      [
+        "Charlotte",
+        "Robillard Millette"
+      ],
+      [
+        "Ashley",
+        "Kratzer"
+      ],
+      [
+        "Momoka",
+        "Chimura"
+      ],
+      [
+        "Anna",
+        "Slovakova"
+      ],
+      [
+        "Ai Qi",
+        "Chen"
+      ],
+      [
+        "Jiaying",
+        "He"
+      ],
+      [
+        "Ysabel",
+        "Gonzalez Rico"
+      ],
+      [
+        "Andreea",
+        "Stanescu"
+      ],
+      [
+        "Marketa",
+        "Vondrousova"
+      ],
+      [
+        "Ecaterina",
+        "Ivasco"
+      ],
+      [
+        "Ivon",
+        "Mihaleva"
+      ],
+      [
+        "Jasmine",
+        "Boyd"
+      ],
+      [
+        "Andrea",
+        "Arratia Fernandez"
+      ],
+      [
+        "Kayla",
+        "Day"
+      ],
+      [
+        "Ekaterina",
+        "Davletova"
+      ],
+      [
+        "Irina",
+        "Cantos Siemers"
+      ],
+      [
+        "Oceane",
+        "Mialon"
+      ],
+      [
+        "Watsachol",
+        "Sawasdee"
+      ],
+      [
+        "Ellen",
+        "Ashley"
+      ],
+      [
+        "Mila",
+        "Mejic"
+      ],
+      [
+        "Natalia",
+        "Nikolopoulou"
+      ],
+      [
+        "Marta",
+        "Del Pino Maturano"
+      ],
+      [
+        "Jayci",
+        "Goldsmith"
+      ],
+      [
+        "Yang",
+        "Lee"
+      ],
+      [
+        "Isabella",
+        "Tcherkes Zade"
+      ],
+      [
+        "Mara",
+        "Vidal"
+      ],
+      [
+        "Taylor",
+        "Johnson"
+      ],
+      [
+        "Julia",
+        "Vulpio"
+      ],
+      [
+        "Dagmar",
+        "Zdrubecka"
+      ],
+      [
+        "Olga",
+        "Danilovic"
+      ],
+      [
+        "Xiyu",
+        "Wang"
+      ],
+      [
+        "Lina",
+        "Shokry"
+      ],
+      [
+        "Ya Hsin",
+        "Lee"
+      ],
+      [
+        "Ruxandra",
+        "Schech"
+      ],
+      [
+        "Yasmina",
+        "Karimjanova"
+      ],
+      [
+        "Lara",
+        "Biter"
+      ],
+      [
+        "Najah",
+        "Dawson"
+      ],
+      [
+        "Giulia",
+        "Morlet"
+      ],
+      [
+        "Matilde",
+        "Mariani"
+      ],
+      [
+        "Isabella",
+        "Nunez"
+      ],
+      [
+        "Betina",
+        "Tokac"
+      ],
+      [
+        "Noa",
+        "Krznaric"
+      ]
+    ],
+    "gold_sql": "SELECT first_name ,  last_name FROM players WHERE hand  =  'L' ORDER BY birth_date",
+    "gold_answer": [
+      [
+        "Ann",
+        "Jones"
+      ],
+      [
+        "Wendy",
+        "Gilchrist"
+      ],
+      [
+        "Martina",
+        "Navratilova"
+      ],
+      [
+        "Mary",
+        "Carillo"
+      ],
+      [
+        "Katerina",
+        "Bohmova"
+      ],
+      [
+        "Petra",
+        "Delhees Jauch"
+      ],
+      [
+        "Nancy",
+        "Loeffler Caro"
+      ],
+      [
+        "Lise",
+        "Gregory"
+      ],
+      [
+        "Rene",
+        "Collins"
+      ],
+      [
+        "Nicole",
+        "Arendt"
+      ],
+      [
+        "Florencia",
+        "Labat"
+      ],
+      [
+        "Sabine",
+        "Appelmans"
+      ],
+      [
+        "Andreea",
+        "Ehritt Vanc"
+      ],
+      [
+        "Monica",
+        "Seles"
+      ],
+      [
+        "Gala",
+        "Leon Garcia"
+      ],
+      [
+        "Karen",
+        "Cross"
+      ],
+      [
+        "Julie",
+        "Pullin"
+      ],
+      [
+        "Vanessa",
+        "Webb"
+      ],
+      [
+        "Elena",
+        "Tatarkova"
+      ],
+      [
+        "Anca",
+        "Barna"
+      ],
+      [
+        "Francesca",
+        "Lubiani"
+      ],
+      [
+        "Gaelle",
+        "Widmer"
+      ],
+      [
+        "Amanda",
+        "Keen"
+      ],
+      [
+        "Amanda",
+        "Augustus"
+      ],
+      [
+        "Rita",
+        "Kuti Kis"
+      ],
+      [
+        "Amelie",
+        "Cocheteux"
+      ],
+      [
+        "Amelie",
+        "Castera"
+      ],
+      [
+        "Saori",
+        "Obata"
+      ],
+      [
+        "Marine",
+        "Nizri Spiegel"
+      ],
+      [
+        "Patty",
+        "Schnyder"
+      ],
+      [
+        "Julie",
+        "Ditty"
+      ],
+      [
+        "Joana",
+        "Cortez"
+      ],
+      [
+        "Barbara",
+        "Schwartz"
+      ],
+      [
+        "Ludmilla",
+        "Varmuza"
+      ],
+      [
+        "Magui",
+        "Serna"
+      ],
+      [
+        "Amanda",
+        "Grahame"
+      ],
+      [
+        "Kim",
+        "Kilsdonk"
+      ],
+      [
+        "Emilie",
+        "Loit"
+      ],
+      [
+        "Erika",
+        "Pineider"
+      ],
+      [
+        "Anne Gaelle",
+        "Sidot"
+      ],
+      [
+        "Erica",
+        "Biro"
+      ],
+      [
+        "Stephanie",
+        "Kovacic"
+      ],
+      [
+        "Sybille",
+        "Bammer"
+      ],
+      [
+        "Lisa",
+        "Fritz"
+      ],
+      [
+        "Maja",
+        "Matevzic"
+      ],
+      [
+        "Leanne",
+        "Baker"
+      ],
+      [
+        "Aurelie",
+        "Vedy"
+      ],
+      [
+        "Carla",
+        "Tiene"
+      ],
+      [
+        "Erika",
+        "Venere"
+      ],
+      [
+        "Jelena",
+        "Kostanic Tosic"
+      ],
+      [
+        "Clarisa",
+        "Fernandez"
+      ],
+      [
+        "Ansley",
+        "Cargill"
+      ],
+      [
+        "Dimana",
+        "Krastevitch"
+      ],
+      [
+        "Maria Jose",
+        "Martinez Sanchez"
+      ],
+      [
+        "Zerene",
+        "Reyes"
+      ],
+      [
+        "Melinda",
+        "Czink"
+      ],
+      [
+        "Sandra",
+        "Klemenschits"
+      ],
+      [
+        "Maria Elizabeth",
+        "Lopez"
+      ],
+      [
+        "Salome",
+        "Llaguno"
+      ],
+      [
+        "Lindsay",
+        "Cox"
+      ],
+      [
+        "Iveta",
+        "Benesova"
+      ],
+      [
+        "Eugenia",
+        "Chialvo"
+      ],
+      [
+        "Chun Yan",
+        "He"
+      ],
+      [
+        "Maria Fernanda",
+        "Alves"
+      ],
+      [
+        "Emily",
+        "Quin"
+      ],
+      [
+        "Fernanda",
+        "Oliveira Da Silva"
+      ],
+      [
+        "Annabel",
+        "Blow"
+      ],
+      [
+        "Julia",
+        "Smith"
+      ],
+      [
+        "Ana Lucia",
+        "Migliarini De Leon"
+      ],
+      [
+        "Elizabeth",
+        "Bondi"
+      ],
+      [
+        "Galina",
+        "Fokina"
+      ],
+      [
+        "Elise",
+        "Tamaela"
+      ],
+      [
+        "Bit Na",
+        "Lee"
+      ],
+      [
+        "Sonia",
+        "Iacovacci"
+      ],
+      [
+        "Mariana Pires",
+        "Junqueira"
+      ],
+      [
+        "Natalia",
+        "Bogdanova"
+      ],
+      [
+        "Irina",
+        "Smirnova"
+      ],
+      [
+        "Meghha",
+        "Vakaria"
+      ],
+      [
+        "Angela",
+        "Haynes"
+      ],
+      [
+        "Karly",
+        "Olson"
+      ],
+      [
+        "Casey",
+        "Dellacqua"
+      ],
+      [
+        "Kathrin",
+        "Hegel"
+      ],
+      [
+        "Beatrix",
+        "Csordas"
+      ],
+      [
+        "Zsuzsanna",
+        "Babos"
+      ],
+      [
+        "Emily",
+        "Applegate"
+      ],
+      [
+        "Olga",
+        "Pasichnichenko"
+      ],
+      [
+        "Theresa",
+        "Logar"
+      ],
+      [
+        "Jin A",
+        "Lee"
+      ],
+      [
+        "Hannah",
+        "Kuervers"
+      ],
+      [
+        "Andreea",
+        "Novaceanu"
+      ],
+      [
+        "Valentina",
+        "Tizzano"
+      ],
+      [
+        "Helen",
+        "Fritche"
+      ],
+      [
+        "Sandra",
+        "Sasidharan"
+      ],
+      [
+        "Isha",
+        "Lakhani"
+      ],
+      [
+        "Krushmi",
+        "Chheda"
+      ],
+      [
+        "Ljubica",
+        "Avramovic"
+      ],
+      [
+        "Avel Romaly",
+        "Coronado"
+      ],
+      [
+        "Shadisha",
+        "Robinson"
+      ],
+      [
+        "Carla",
+        "Zabaleta"
+      ],
+      [
+        "Diana",
+        "Arutyunova"
+      ],
+      [
+        "Cecile",
+        "Baijot"
+      ],
+      [
+        "Laura",
+        "Rocchi"
+      ],
+      [
+        "Rie",
+        "Imai"
+      ],
+      [
+        "Danielle",
+        "Harmsen"
+      ],
+      [
+        "Alejandra",
+        "Obregon"
+      ],
+      [
+        "Ariela",
+        "Perez"
+      ],
+      [
+        "Vasilisa",
+        "Davydova"
+      ],
+      [
+        "Emilia",
+        "Yorio"
+      ],
+      [
+        "Lizaan",
+        "Du Plessis"
+      ],
+      [
+        "Claire",
+        "Feuerstein"
+      ],
+      [
+        "Alexandria",
+        "Liles"
+      ],
+      [
+        "Katharine",
+        "Baker"
+      ],
+      [
+        "Emma",
+        "Laine"
+      ],
+      [
+        "Geraldine",
+        "Roma"
+      ],
+      [
+        "Aya",
+        "El Akkad"
+      ],
+      [
+        "Alexandra",
+        "Kazanova"
+      ],
+      [
+        "Allison",
+        "Baker"
+      ],
+      [
+        "Lucy",
+        "Fletcher"
+      ],
+      [
+        "Monika",
+        "Musilova"
+      ],
+      [
+        "Jitka",
+        "Gavdunova"
+      ],
+      [
+        "Elena",
+        "Petrucciano"
+      ],
+      [
+        "Varvara",
+        "Lepchenko"
+      ],
+      [
+        "Claire",
+        "De Gubernatis"
+      ],
+      [
+        "Seheno",
+        "Razafindramaso"
+      ],
+      [
+        "Karolina",
+        "Soor"
+      ],
+      [
+        "Melisa",
+        "Cabrera Handt"
+      ],
+      [
+        "Shraddha",
+        "Lodha"
+      ],
+      [
+        "Sylvia",
+        "Krywacz"
+      ],
+      [
+        "Amina",
+        "El Sahn"
+      ],
+      [
+        "Hendrike Lea",
+        "Heitmann"
+      ],
+      [
+        "Dunja",
+        "Antunovic"
+      ],
+      [
+        "Micaela",
+        "Acosta"
+      ],
+      [
+        "Katerina",
+        "Bohmova"
+      ],
+      [
+        "Catherine",
+        "Grotz"
+      ],
+      [
+        "Yurika",
+        "Sema"
+      ],
+      [
+        "Sheng Nan",
+        "Sun"
+      ],
+      [
+        "Lucie",
+        "Safarova"
+      ],
+      [
+        "Jitka",
+        "Kleisnerova"
+      ],
+      [
+        "Carolina",
+        "Escamilla"
+      ],
+      [
+        "Tapiwa",
+        "Marobela"
+      ],
+      [
+        "Punam",
+        "Reddy"
+      ],
+      [
+        "Katia",
+        "Sabate Orera"
+      ],
+      [
+        "Shana",
+        "Claes"
+      ],
+      [
+        "Chrissie",
+        "Seredni"
+      ],
+      [
+        "Yui",
+        "Nagasawa"
+      ],
+      [
+        "Marcela",
+        "Vojtiskova"
+      ],
+      [
+        "Seul Ki",
+        "Chin"
+      ],
+      [
+        "Nina",
+        "Munch Soegaard"
+      ],
+      [
+        "Hannah",
+        "Grady"
+      ],
+      [
+        "Karen",
+        "Castiblanco"
+      ],
+      [
+        "Angelique",
+        "Kerber"
+      ],
+      [
+        "Lauren",
+        "Lui"
+      ],
+      [
+        "Rana",
+        "Tharwat Hafez"
+      ],
+      [
+        "Nicole",
+        "Grunwald"
+      ],
+      [
+        "Ana",
+        "Veselinovic"
+      ],
+      [
+        "Sanaa",
+        "Bhambri"
+      ],
+      [
+        "Diana Andreea",
+        "Gae"
+      ],
+      [
+        "Ana",
+        "Beltran Trigueros"
+      ],
+      [
+        "Barbora",
+        "Bozkova"
+      ],
+      [
+        "Camila",
+        "Belassi"
+      ],
+      [
+        "Violette",
+        "Huck"
+      ],
+      [
+        "Megumi",
+        "Fukui"
+      ],
+      [
+        "Rita",
+        "Gouveia"
+      ],
+      [
+        "Mihaela",
+        "Buzarnescu"
+      ],
+      [
+        "Liset",
+        "Brito Herrera"
+      ],
+      [
+        "Paulina",
+        "Jorquera"
+      ],
+      [
+        "Ekaterina",
+        "Makarova"
+      ],
+      [
+        "Dessislava",
+        "Mladenova"
+      ],
+      [
+        "Sanaz",
+        "Marand"
+      ],
+      [
+        "Cristina",
+        "Greco Naccarato"
+      ],
+      [
+        "Cagla",
+        "Urcu"
+      ],
+      [
+        "Liege",
+        "Vieira"
+      ],
+      [
+        "Chang",
+        "Xu"
+      ],
+      [
+        "Jessica",
+        "Sweeting"
+      ],
+      [
+        "Yi Fan",
+        "Xu"
+      ],
+      [
+        "Eloisa Maria",
+        "Compostizo De Andres"
+      ],
+      [
+        "Karina",
+        "Porushkevich"
+      ],
+      [
+        "Ornella",
+        "Gentile"
+      ],
+      [
+        "Valeria",
+        "Casillo"
+      ],
+      [
+        "Bianca Ioana",
+        "Bonifate"
+      ],
+      [
+        "Michelle",
+        "Russ"
+      ],
+      [
+        "Monika",
+        "Lalewicz"
+      ],
+      [
+        "Amandine",
+        "Cazeaux"
+      ],
+      [
+        "Fatima",
+        "El Allami"
+      ],
+      [
+        "Simonetta",
+        "Miori"
+      ],
+      [
+        "Gabriela",
+        "Roux"
+      ],
+      [
+        "Sherazad",
+        "Benamar"
+      ],
+      [
+        "Sherazad",
+        "Reix"
+      ],
+      [
+        "Zora",
+        "Vlckova"
+      ],
+      [
+        "Naomi",
+        "Cavaday"
+      ],
+      [
+        "Nathalia",
+        "Rossi"
+      ],
+      [
+        "Maria Eugenia",
+        "Roca Recarey"
+      ],
+      [
+        "Lauren",
+        "Jones"
+      ],
+      [
+        "Roxane",
+        "Vaisemberg"
+      ],
+      [
+        "Ivana",
+        "Belejova"
+      ],
+      [
+        "Petra",
+        "Vogel"
+      ],
+      [
+        "Majdouline",
+        "Akrate"
+      ],
+      [
+        "Laura",
+        "Sadria"
+      ],
+      [
+        "Ia",
+        "Jikia"
+      ],
+      [
+        "Alessandra",
+        "Caprara"
+      ],
+      [
+        "Guadalupe",
+        "Moreno"
+      ],
+      [
+        "Lucie",
+        "Sipkova"
+      ],
+      [
+        "Xenia",
+        "Samoilova"
+      ],
+      [
+        "Kotomi",
+        "Takahata"
+      ],
+      [
+        "Stephanie",
+        "Theiler"
+      ],
+      [
+        "Maria",
+        "Prishlyak"
+      ],
+      [
+        "Grace",
+        "Leake"
+      ],
+      [
+        "Ioana Alexandra",
+        "Oprea"
+      ],
+      [
+        "Sanne",
+        "Bakker"
+      ],
+      [
+        "Katerina",
+        "Vankova"
+      ],
+      [
+        "Kristy",
+        "Frilling"
+      ],
+      [
+        "Tatiana",
+        "Bua"
+      ],
+      [
+        "Anastasia",
+        "Kontratevidi"
+      ],
+      [
+        "Chane",
+        "Hines"
+      ],
+      [
+        "Julia",
+        "Gavenko"
+      ],
+      [
+        "Yuuki",
+        "Tanaka"
+      ],
+      [
+        "Petra",
+        "Kvitova"
+      ],
+      [
+        "Leticia",
+        "Costas"
+      ],
+      [
+        "Sandra",
+        "Roma"
+      ],
+      [
+        "Nina",
+        "Mujezinovic"
+      ],
+      [
+        "Stella",
+        "Papaspyrou"
+      ],
+      [
+        "Chinami",
+        "Ogi"
+      ],
+      [
+        "Martina",
+        "Balogova"
+      ],
+      [
+        "Xinyun",
+        "Han"
+      ],
+      [
+        "Nicole",
+        "Riner"
+      ],
+      [
+        "Lara",
+        "Meccico"
+      ],
+      [
+        "Mai",
+        "Iwasaki"
+      ],
+      [
+        "Oksana",
+        "Kalashnikova"
+      ],
+      [
+        "Dipti",
+        "Srivastava"
+      ],
+      [
+        "Claudia",
+        "Mercado"
+      ],
+      [
+        "Margarita",
+        "Lazareva"
+      ],
+      [
+        "Shaozhuo",
+        "Liu"
+      ],
+      [
+        "Ana Maria",
+        "Chavez Franco"
+      ],
+      [
+        "Arantxa",
+        "Rus"
+      ],
+      [
+        "Ekaterina",
+        "Kamendova"
+      ],
+      [
+        "Monika",
+        "Tumova"
+      ],
+      [
+        "Gabriella",
+        "Boboc"
+      ],
+      [
+        "Ganna",
+        "Lukianchykova"
+      ],
+      [
+        "Sofia",
+        "Medina"
+      ],
+      [
+        "Ekaterina",
+        "Abaeva"
+      ],
+      [
+        "Andressa",
+        "Garcia"
+      ],
+      [
+        "Giulia",
+        "Bruzzone"
+      ],
+      [
+        "Catia",
+        "Rodrigues"
+      ],
+      [
+        "Danielle",
+        "Mills"
+      ],
+      [
+        "Flavia",
+        "Borges"
+      ],
+      [
+        "Misaki",
+        "Doi"
+      ],
+      [
+        "Veronika",
+        "Domagala"
+      ],
+      [
+        "Cindy",
+        "Chala"
+      ],
+      [
+        "Ksenia",
+        "Pervak"
+      ],
+      [
+        "Bianca",
+        "Botto"
+      ],
+      [
+        "Marianna",
+        "Natali"
+      ],
+      [
+        "Carolina",
+        "Orsi"
+      ],
+      [
+        "Aleksandra",
+        "Vukadinovic"
+      ],
+      [
+        "Elixane",
+        "Lechemia"
+      ],
+      [
+        "Sonya",
+        "Dayal"
+      ],
+      [
+        "Francesca",
+        "Campigotto"
+      ],
+      [
+        "Cristina Bianca",
+        "Danaila"
+      ],
+      [
+        "Tereza",
+        "Budilova"
+      ],
+      [
+        "Gemma",
+        "Praditngam"
+      ],
+      [
+        "Ekaterine",
+        "Gorgodze"
+      ],
+      [
+        "Dejana",
+        "Raickovic"
+      ],
+      [
+        "Alena",
+        "Gerasimova"
+      ],
+      [
+        "Quirine",
+        "Lemoine"
+      ],
+      [
+        "Chieh Yu",
+        "Hsu"
+      ],
+      [
+        "Anastasiya",
+        "Vasylyeva"
+      ],
+      [
+        "Alexia",
+        "Quartetto"
+      ],
+      [
+        "Joanna",
+        "Bougon"
+      ],
+      [
+        "Kristyna",
+        "Pliskova"
+      ],
+      [
+        "Elena",
+        "Bogdan"
+      ],
+      [
+        "Fiorella",
+        "Jerardino"
+      ],
+      [
+        "Julie",
+        "Gonzalez Rodriguez"
+      ],
+      [
+        "Alejandra",
+        "Barragan"
+      ],
+      [
+        "Renata",
+        "Bakieva"
+      ],
+      [
+        "Ashley",
+        "Krysiak"
+      ],
+      [
+        "Sarah Rebecca",
+        "Sekulic"
+      ],
+      [
+        "Na Lae",
+        "Han"
+      ],
+      [
+        "Natali",
+        "Coronel"
+      ],
+      [
+        "Kristyna",
+        "Hancarova"
+      ],
+      [
+        "Doroteja",
+        "Eric"
+      ],
+      [
+        "Chanel",
+        "Simmonds"
+      ],
+      [
+        "Kobkanok",
+        "Upapong"
+      ],
+      [
+        "Annie",
+        "Sullivan"
+      ],
+      [
+        "Jenny Thuy",
+        "Le"
+      ],
+      [
+        "Xenia",
+        "Knoll"
+      ],
+      [
+        "Francisca",
+        "Matos"
+      ],
+      [
+        "Christina",
+        "Madenoglou"
+      ],
+      [
+        "Alexandra",
+        "Avirvarei"
+      ],
+      [
+        "Georgina",
+        "Fedosenkova"
+      ],
+      [
+        "Alicia",
+        "Doms Golobart"
+      ],
+      [
+        "Amy",
+        "Hoburn"
+      ],
+      [
+        "Monica",
+        "Turewicz"
+      ],
+      [
+        "Martina",
+        "Zerbola"
+      ],
+      [
+        "Mashaal",
+        "Hameed"
+      ],
+      [
+        "Sabrina",
+        "Dos Reis"
+      ],
+      [
+        "Maria Sol",
+        "Carrasco"
+      ],
+      [
+        "Ruxandra",
+        "Ababii"
+      ],
+      [
+        "Daniella",
+        "Patton"
+      ],
+      [
+        "Veronika",
+        "Zavodska"
+      ],
+      [
+        "Briar",
+        "Preston"
+      ],
+      [
+        "Gabriela",
+        "Ce"
+      ],
+      [
+        "Amanda",
+        "Rodgers"
+      ],
+      [
+        "Constanze",
+        "Lotz"
+      ],
+      [
+        "Paula",
+        "Mocete Talamantes"
+      ],
+      [
+        "Verena",
+        "Gantschnig"
+      ],
+      [
+        "Ainhoa",
+        "Atucha Gomez"
+      ],
+      [
+        "Katarzyna",
+        "Kossowska"
+      ],
+      [
+        "Julia",
+        "Stamatova"
+      ],
+      [
+        "Vorranavaporn",
+        "Vorrarattanamongkol"
+      ],
+      [
+        "Michaela",
+        "Jasenakova"
+      ],
+      [
+        "Agustina Sol",
+        "Eskenazi"
+      ],
+      [
+        "Maja",
+        "Mladenovic"
+      ],
+      [
+        "Sandra",
+        "Garriga Catala"
+      ],
+      [
+        "Rita",
+        "Vilaca"
+      ],
+      [
+        "Zanmarie",
+        "Pienaar"
+      ],
+      [
+        "Julia",
+        "Kimmelmann"
+      ],
+      [
+        "Martina",
+        "Trevisan"
+      ],
+      [
+        "Charitomeni",
+        "Matoula"
+      ],
+      [
+        "Andreea",
+        "Istrate"
+      ],
+      [
+        "Sowjanya",
+        "Bavisetti"
+      ],
+      [
+        "Gabrielle",
+        "Moxey"
+      ],
+      [
+        "Viktoryia",
+        "Kisialeva"
+      ],
+      [
+        "Sarahi",
+        "Garcia Carrera"
+      ],
+      [
+        "Rachel",
+        "Girard"
+      ],
+      [
+        "Laura",
+        "Robson"
+      ],
+      [
+        "Kate",
+        "Vialle"
+      ],
+      [
+        "Anna",
+        "Montserrat Sanchez"
+      ],
+      [
+        "Elena Teodora",
+        "Cadar"
+      ],
+      [
+        "Carol",
+        "Augustine Benito"
+      ],
+      [
+        "Kamila",
+        "Pavelkova"
+      ],
+      [
+        "Arantxa",
+        "Sanchez"
+      ],
+      [
+        "Ana Sofia",
+        "Sanchez"
+      ],
+      [
+        "Julia",
+        "Wachaczyk"
+      ],
+      [
+        "Ecaterina",
+        "Oproiu"
+      ],
+      [
+        "Snigdha",
+        "Padamata"
+      ],
+      [
+        "Rona",
+        "Berisha"
+      ],
+      [
+        "Olga",
+        "Doroshina"
+      ],
+      [
+        "So Ra",
+        "Lee"
+      ],
+      [
+        "Brandy",
+        "Mina"
+      ],
+      [
+        "Natalie",
+        "Novakova"
+      ],
+      [
+        "Storm",
+        "Sanders"
+      ],
+      [
+        "Alexandra",
+        "Martinez"
+      ],
+      [
+        "Ysaline",
+        "Bonaventure"
+      ],
+      [
+        "Barbora",
+        "Trestikova"
+      ],
+      [
+        "Stefania",
+        "Hristov"
+      ],
+      [
+        "Ana Maria",
+        "Crisan"
+      ],
+      [
+        "Elpida",
+        "Papanelopoulou"
+      ],
+      [
+        "Tereza",
+        "Jankovska"
+      ],
+      [
+        "Rebecca",
+        "Andrade"
+      ],
+      [
+        "Kelly",
+        "Williford"
+      ],
+      [
+        "Tina",
+        "Rupert"
+      ],
+      [
+        "Mia Nicole",
+        "Eklund"
+      ],
+      [
+        "Bernarda",
+        "Pera"
+      ],
+      [
+        "Montserrat",
+        "Alonso"
+      ],
+      [
+        "Rosalie",
+        "Van Der Hoek"
+      ],
+      [
+        "Hedda",
+        "Odegaard"
+      ],
+      [
+        "Samira",
+        "Radjaa"
+      ],
+      [
+        "Zuzanna",
+        "Maciejewska"
+      ],
+      [
+        "Saumya",
+        "Vig"
+      ],
+      [
+        "Marie",
+        "Benoit"
+      ],
+      [
+        "Iga",
+        "Odrzywolek"
+      ],
+      [
+        "Shakhlo",
+        "Saidova"
+      ],
+      [
+        "Irina",
+        "Khromacheva"
+      ],
+      [
+        "Yuliya",
+        "Lysa"
+      ],
+      [
+        "Sophie",
+        "Blom"
+      ],
+      [
+        "Jennifer",
+        "Zerbone"
+      ],
+      [
+        "Kristina",
+        "Chasovskikh"
+      ],
+      [
+        "Maria Camila",
+        "Trujillo Hoyos"
+      ],
+      [
+        "Karina",
+        "Rovira"
+      ],
+      [
+        "Teodora Adina",
+        "Ardeleanu"
+      ],
+      [
+        "Yasmine",
+        "Rashad"
+      ],
+      [
+        "Judit",
+        "Vives Joan"
+      ],
+      [
+        "Sarah Beth",
+        "Askew"
+      ],
+      [
+        "Yasmine",
+        "Xantos"
+      ],
+      [
+        "Lea",
+        "Tholey"
+      ],
+      [
+        "Hikari",
+        "Yamamoto"
+      ],
+      [
+        "Ines Miren",
+        "De Pablo"
+      ],
+      [
+        "Stuti",
+        "Singh Tomar"
+      ],
+      [
+        "Naomi",
+        "Totka"
+      ],
+      [
+        "Polina",
+        "Bezsmertnaya"
+      ],
+      [
+        "Hannah",
+        "King"
+      ],
+      [
+        "Gabriele",
+        "Bertasiute"
+      ],
+      [
+        "Rebecca",
+        "Smaller"
+      ],
+      [
+        "Busra",
+        "Kayrun"
+      ],
+      [
+        "Stephani",
+        "Rodriguez"
+      ],
+      [
+        "Raquel",
+        "Montalvo"
+      ],
+      [
+        "Oana",
+        "Irimescu"
+      ],
+      [
+        "Taylor",
+        "Townsend"
+      ],
+      [
+        "Carmen",
+        "Blasco Robaina"
+      ],
+      [
+        "Giulia",
+        "Della Cioppa"
+      ],
+      [
+        "Nadege",
+        "Jorda"
+      ],
+      [
+        "Beatriz",
+        "Haddad Maia"
+      ],
+      [
+        "Nelise",
+        "Verster"
+      ],
+      [
+        "Eleonore",
+        "Barrere"
+      ],
+      [
+        "Anastasia",
+        "Prokopenko"
+      ],
+      [
+        "Dzina",
+        "Milovanovic"
+      ],
+      [
+        "Isabelle",
+        "Wallace"
+      ],
+      [
+        "Katelyn",
+        "Jackson"
+      ],
+      [
+        "Polina",
+        "Novoselova"
+      ],
+      [
+        "Maite",
+        "Cano"
+      ],
+      [
+        "Ria",
+        "Vaidya"
+      ],
+      [
+        "Ana Lorena",
+        "Garcia Navas"
+      ],
+      [
+        "Aayushi",
+        "Chouhan"
+      ],
+      [
+        "Ivona",
+        "Cudina"
+      ],
+      [
+        "Karina",
+        "Gurgenyan"
+      ],
+      [
+        "Maria",
+        "Patrascu"
+      ],
+      [
+        "Denisa",
+        "Chereches"
+      ],
+      [
+        "Mirabelle",
+        "Njoze"
+      ],
+      [
+        "Vasanti",
+        "Shinde"
+      ],
+      [
+        "Amanda",
+        "Schneider"
+      ],
+      [
+        "Katharina",
+        "Herpertz"
+      ],
+      [
+        "Tayisiya",
+        "Morderger"
+      ],
+      [
+        "Tamara",
+        "Tomic"
+      ],
+      [
+        "Maria Fernanda",
+        "Herazo Gonzalez"
+      ],
+      [
+        "Andra Maria",
+        "Nitescu"
+      ],
+      [
+        "Micheline",
+        "Aubuchon"
+      ],
+      [
+        "Ilayda",
+        "Yondem"
+      ],
+      [
+        "Birgit",
+        "Burk"
+      ],
+      [
+        "Kanako",
+        "Osafune"
+      ],
+      [
+        "Anastasiya",
+        "Komardina"
+      ],
+      [
+        "Nina",
+        "Holanova"
+      ],
+      [
+        "Jil Belen",
+        "Teichmann"
+      ],
+      [
+        "Francesca",
+        "Di Lorenzo"
+      ],
+      [
+        "Natsuho",
+        "Arakawa"
+      ],
+      [
+        "Emerald",
+        "Able"
+      ],
+      [
+        "Manca",
+        "Pislak"
+      ],
+      [
+        "Irys",
+        "Ekani"
+      ],
+      [
+        "Veronica",
+        "Miroshnichenko"
+      ],
+      [
+        "Martina",
+        "Capurro Taborda"
+      ],
+      [
+        "Mariam",
+        "Bolkvadze"
+      ],
+      [
+        "Diana",
+        "Valverde"
+      ],
+      [
+        "Do Hee",
+        "Bae"
+      ],
+      [
+        "Daniela",
+        "Morales Beckmann"
+      ],
+      [
+        "Ioana Diana",
+        "Pietroiu"
+      ],
+      [
+        "Luisa Fernanda",
+        "Echeverry Rodriguez"
+      ],
+      [
+        "Mayuka",
+        "Aikawa"
+      ],
+      [
+        "Nicole",
+        "Frenkel"
+      ],
+      [
+        "Daria",
+        "Kruzhkova"
+      ],
+      [
+        "Alejandra",
+        "Tamayo Gomez"
+      ],
+      [
+        "Tereza",
+        "Koplova"
+      ],
+      [
+        "Chiara",
+        "Lommer"
+      ],
+      [
+        "Laura",
+        "Illanes"
+      ],
+      [
+        "Olga",
+        "Fridman"
+      ],
+      [
+        "Ana Paula",
+        "Leal"
+      ],
+      [
+        "Shiraz",
+        "Bronstein"
+      ],
+      [
+        "Nicole",
+        "Bunea"
+      ],
+      [
+        "Charlotte",
+        "Robillard Millette"
+      ],
+      [
+        "Ashley",
+        "Kratzer"
+      ],
+      [
+        "Momoka",
+        "Chimura"
+      ],
+      [
+        "Anna",
+        "Slovakova"
+      ],
+      [
+        "Ai Qi",
+        "Chen"
+      ],
+      [
+        "Jiaying",
+        "He"
+      ],
+      [
+        "Ysabel",
+        "Gonzalez Rico"
+      ],
+      [
+        "Andreea",
+        "Stanescu"
+      ],
+      [
+        "Marketa",
+        "Vondrousova"
+      ],
+      [
+        "Ecaterina",
+        "Ivasco"
+      ],
+      [
+        "Ivon",
+        "Mihaleva"
+      ],
+      [
+        "Jasmine",
+        "Boyd"
+      ],
+      [
+        "Andrea",
+        "Arratia Fernandez"
+      ],
+      [
+        "Kayla",
+        "Day"
+      ],
+      [
+        "Ekaterina",
+        "Davletova"
+      ],
+      [
+        "Irina",
+        "Cantos Siemers"
+      ],
+      [
+        "Oceane",
+        "Mialon"
+      ],
+      [
+        "Watsachol",
+        "Sawasdee"
+      ],
+      [
+        "Ellen",
+        "Ashley"
+      ],
+      [
+        "Mila",
+        "Mejic"
+      ],
+      [
+        "Natalia",
+        "Nikolopoulou"
+      ],
+      [
+        "Marta",
+        "Del Pino Maturano"
+      ],
+      [
+        "Jayci",
+        "Goldsmith"
+      ],
+      [
+        "Yang",
+        "Lee"
+      ],
+      [
+        "Isabella",
+        "Tcherkes Zade"
+      ],
+      [
+        "Mara",
+        "Vidal"
+      ],
+      [
+        "Taylor",
+        "Johnson"
+      ],
+      [
+        "Julia",
+        "Vulpio"
+      ],
+      [
+        "Dagmar",
+        "Zdrubecka"
+      ],
+      [
+        "Olga",
+        "Danilovic"
+      ],
+      [
+        "Xiyu",
+        "Wang"
+      ],
+      [
+        "Lina",
+        "Shokry"
+      ],
+      [
+        "Ya Hsin",
+        "Lee"
+      ],
+      [
+        "Ruxandra",
+        "Schech"
+      ],
+      [
+        "Yasmina",
+        "Karimjanova"
+      ],
+      [
+        "Lara",
+        "Biter"
+      ],
+      [
+        "Najah",
+        "Dawson"
+      ],
+      [
+        "Giulia",
+        "Morlet"
+      ],
+      [
+        "Matilde",
+        "Mariani"
+      ],
+      [
+        "Isabella",
+        "Nunez"
+      ],
+      [
+        "Betina",
+        "Tokac"
+      ],
+      [
+        "Noa",
+        "Krznaric"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.257,
+    "input_tokens": 405,
+    "output_tokens": 19
+  },
+  {
+    "id": "dev_000285",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "employee_hire_evaluation",
+    "question": "Find the name of the shops that do not hire any employee.",
+    "predicted_sql": "SELECT Name FROM shop WHERE Shop_ID NOT IN (SELECT Shop_ID FROM hiring)",
+    "predicted_answer": [
+      [
+        "FC Honka"
+      ],
+      [
+        "KuPS"
+      ],
+      [
+        "IFK Mariehamn"
+      ]
+    ],
+    "gold_sql": "SELECT name FROM shop WHERE shop_id NOT IN (SELECT shop_id FROM hiring)",
+    "gold_answer": [
+      [
+        "FC Honka"
+      ],
+      [
+        "KuPS"
+      ],
+      [
+        "IFK Mariehamn"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2113,
+    "input_tokens": 276,
+    "output_tokens": 17
+  },
+  {
+    "id": "dev_000209",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "flight_2",
+    "question": "How many flights arriving in Aberdeen city?",
+    "predicted_sql": "SELECT COUNT(*) \nFROM flights \nWHERE DestAirport IN (SELECT AirportCode \n                       FROM airports \n                       WHERE City = 'Aberdeen')",
+    "predicted_answer": [
+      [
+        0
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.City  =  \"Aberdeen\"",
+    "gold_answer": [
+      [
+        0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3159,
+    "input_tokens": 238,
+    "output_tokens": 30
+  },
+  {
+    "id": "dev_000178",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "car_1",
+    "question": "What are the ids and names of all countries that either have more than 3 car makers or produce fiat model ?",
+    "predicted_sql": "SELECT T1.CountryId, T1.CountryName \nFROM countries AS T1 \nWHERE T1.CountryId IN (\n    SELECT T2.Country \n    FROM car_makers AS T2 \n    GROUP BY T2.Country \n    HAVING COUNT(T2.Id) > 3\n)\nOR T1.CountryName IN (\n    SELECT T3.CountryName \n    FROM countries AS T3 \n    JOIN car_makers AS T4 ON T3.CountryId = T4.Country \n    JOIN model_list AS T5 ON T4.Id = T5.Maker \n    WHERE T5.Model = 'fiat'\n)",
+    "predicted_answer": [
+      [
+        1,
+        "usa"
+      ],
+      [
+        2,
+        "germany"
+      ],
+      [
+        4,
+        "japan"
+      ],
+      [
+        5,
+        "italy"
+      ]
+    ],
+    "gold_sql": "select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  3 union select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country join model_list as t3 on t2.id  =  t3.maker where t3.model  =  'fiat';",
+    "gold_answer": [
+      [
+        1,
+        "usa"
+      ],
+      [
+        2,
+        "germany"
+      ],
+      [
+        4,
+        "japan"
+      ],
+      [
+        5,
+        "italy"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.5196,
+    "input_tokens": 349,
+    "output_tokens": 127
+  },
+  {
+    "id": "dev_000864",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "network_1",
+    "question": "Show the names and grades of each high schooler.",
+    "predicted_sql": "SELECT name, grade FROM Highschooler",
+    "predicted_answer": [
+      [
+        "Jordan",
+        9
+      ],
+      [
+        "Gabriel",
+        9
+      ],
+      [
+        "Tiffany",
+        9
+      ],
+      [
+        "Cassandra",
+        9
+      ],
+      [
+        "Haley",
+        10
+      ],
+      [
+        "Andrew",
+        10
+      ],
+      [
+        "Kris",
+        10
+      ],
+      [
+        "Brittany",
+        10
+      ],
+      [
+        "Alexis",
+        11
+      ],
+      [
+        "Austin",
+        11
+      ],
+      [
+        "Gabriel",
+        11
+      ],
+      [
+        "Jessica",
+        11
+      ],
+      [
+        "Jordan",
+        12
+      ],
+      [
+        "John",
+        12
+      ],
+      [
+        "Kyle",
+        12
+      ],
+      [
+        "Logan",
+        12
+      ]
+    ],
+    "gold_sql": "SELECT name ,  grade FROM Highschooler",
+    "gold_answer": [
+      [
+        "Jordan",
+        9
+      ],
+      [
+        "Gabriel",
+        9
+      ],
+      [
+        "Tiffany",
+        9
+      ],
+      [
+        "Cassandra",
+        9
+      ],
+      [
+        "Haley",
+        10
+      ],
+      [
+        "Andrew",
+        10
+      ],
+      [
+        "Kris",
+        10
+      ],
+      [
+        "Brittany",
+        10
+      ],
+      [
+        "Alexis",
+        11
+      ],
+      [
+        "Austin",
+        11
+      ],
+      [
+        "Gabriel",
+        11
+      ],
+      [
+        "Jessica",
+        11
+      ],
+      [
+        "Jordan",
+        12
+      ],
+      [
+        "John",
+        12
+      ],
+      [
+        "Kyle",
+        12
+      ],
+      [
+        "Logan",
+        12
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1677,
+    "input_tokens": 233,
+    "output_tokens": 9
+  },
+  {
+    "id": "dev_000065",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "pets_1",
+    "question": "Find the first name and age of students who have a dog but do not have a cat as a pet.",
+    "predicted_sql": "SELECT S.Fname, S.Age \nFROM Student S \nWHERE S.StuID IN (\n    SELECT H.StuID \n    FROM Has_Pet H \n    JOIN Pets P ON H.PetID = P.PetID \n    WHERE P.PetType = 'dog'\n) \nAND S.StuID NOT IN (\n    SELECT H.StuID \n    FROM Has_Pet H \n    JOIN Pets P ON H.PetID = P.PetID \n    WHERE P.PetType = 'cat'\n)",
+    "predicted_answer": [
+      [
+        "Tracy",
+        19
+      ]
+    ],
+    "gold_sql": "SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+    "gold_answer": [
+      [
+        "Tracy",
+        19
+      ],
+      [
+        "Tracy",
+        19
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.4678,
+    "input_tokens": 263,
+    "output_tokens": 109
+  },
+  {
+    "id": "dev_000061",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "pets_1",
+    "question": "Find the major and age of students who do not have a cat pet.",
+    "predicted_sql": "SELECT T1.Major, T1.Age \nFROM Student AS T1 \nWHERE T1.StuID NOT IN (\n    SELECT T2.StuID \n    FROM Has_Pet AS T2 \n    INNER JOIN Pets AS T3 \n    ON T2.PetID = T3.PetID \n    WHERE T3.PetType = 'cat'\n)",
+    "predicted_answer": [
+      [
+        600,
+        19
+      ],
+      [
+        600,
+        21
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        26
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        19
+      ],
+      [
+        600,
+        17
+      ],
+      [
+        600,
+        22
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        16
+      ],
+      [
+        600,
+        17
+      ],
+      [
+        600,
+        27
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        520,
+        22
+      ],
+      [
+        520,
+        19
+      ],
+      [
+        540,
+        17
+      ],
+      [
+        520,
+        20
+      ],
+      [
+        540,
+        18
+      ],
+      [
+        520,
+        18
+      ],
+      [
+        520,
+        19
+      ],
+      [
+        520,
+        18
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        100,
+        17
+      ],
+      [
+        550,
+        21
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        550,
+        18
+      ],
+      [
+        50,
+        18
+      ],
+      [
+        50,
+        26
+      ]
+    ],
+    "gold_sql": "SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+    "gold_answer": [
+      [
+        600,
+        19
+      ],
+      [
+        600,
+        21
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        26
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        19
+      ],
+      [
+        600,
+        17
+      ],
+      [
+        600,
+        22
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        16
+      ],
+      [
+        600,
+        17
+      ],
+      [
+        600,
+        27
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        520,
+        22
+      ],
+      [
+        520,
+        19
+      ],
+      [
+        540,
+        17
+      ],
+      [
+        520,
+        20
+      ],
+      [
+        540,
+        18
+      ],
+      [
+        520,
+        18
+      ],
+      [
+        520,
+        19
+      ],
+      [
+        520,
+        18
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        100,
+        17
+      ],
+      [
+        550,
+        21
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        550,
+        18
+      ],
+      [
+        50,
+        18
+      ],
+      [
+        50,
+        26
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4215,
+    "input_tokens": 256,
+    "output_tokens": 77
+  },
+  {
+    "id": "dev_000191",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "flight_2",
+    "question": "How many flights do we have?",
+    "predicted_sql": "SELECT COUNT(*) FROM flights",
+    "predicted_answer": [
+      [
+        1200
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM FLIGHTS",
+    "gold_answer": [
+      [
+        1200
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1542,
+    "input_tokens": 237,
+    "output_tokens": 6
+  },
+  {
+    "id": "dev_000447",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "wta_1",
+    "question": "List the names of all winners who played in both 2013 and 2016.",
+    "predicted_sql": "SELECT DISTINCT T1.winner_name \nFROM matches AS T1 \nWHERE T1.year = 2013 \nAND T1.winner_id IN (\n  SELECT T2.winner_id \n  FROM matches AS T2 \n  WHERE T2.year = 2016\n) \nUNION \nSELECT DISTINCT T1.winner_name \nFROM matches AS T1 \nWHERE T1.year = 2016 \nAND T1.winner_id IN (\n  SELECT T2.winner_id \n  FROM matches AS T2 \n  WHERE T2.year = 2013\n)",
+    "predicted_answer": [
+      [
+        "Angelique Kerber"
+      ],
+      [
+        "Petra Kvitova"
+      ],
+      [
+        "Sara Errani"
+      ],
+      [
+        "Serena Williams"
+      ],
+      [
+        "Victoria Azarenka"
+      ]
+    ],
+    "gold_sql": "SELECT winner_name FROM matches WHERE YEAR  =  2013 INTERSECT SELECT winner_name FROM matches WHERE YEAR  =  2016",
+    "gold_answer": [
+      [
+        "Angelique Kerber"
+      ],
+      [
+        "Petra Kvitova"
+      ],
+      [
+        "Sara Errani"
+      ],
+      [
+        "Serena Williams"
+      ],
+      [
+        "Victoria Azarenka"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4831,
+    "input_tokens": 401,
+    "output_tokens": 119
+  },
+  {
+    "id": "dev_000476",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "wta_1",
+    "question": "What is the code of the country with the most players?",
+    "predicted_sql": "SELECT country_code FROM players GROUP BY country_code ORDER BY COUNT(player_id) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "USA"
+      ]
+    ],
+    "gold_sql": "SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "USA"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2564,
+    "input_tokens": 395,
+    "output_tokens": 20
+  },
+  {
+    "id": "dev_000054",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "pets_1",
+    "question": "How many dog pets are raised by female students?",
+    "predicted_sql": "SELECT COUNT(T1.PetID) \nFROM Has_Pet AS T1 \nINNER JOIN Student AS T2 \nON T1.StuID = T2.StuID \nINNER JOIN Pets AS T3 \nON T1.PetID = T3.PetID \nWHERE T2.Sex = 'F' AND T3.PetType = 'dog'",
+    "predicted_answer": [
+      [
+        2
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'",
+    "gold_answer": [
+      [
+        2
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3896,
+    "input_tokens": 251,
+    "output_tokens": 77
+  },
+  {
+    "id": "dev_000407",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "course_teach",
+    "question": "Show names of teachers that teach at least two courses.",
+    "predicted_sql": "SELECT T2.Name \nFROM course_arrange AS T1 \nINNER JOIN teacher AS T2 \nON T1.Teacher_ID = T2.Teacher_ID \nGROUP BY T2.Teacher_ID \nHAVING COUNT(T1.Course_ID) >= 2",
+    "predicted_answer": [
+      [
+        "Anne Walker"
+      ]
+    ],
+    "gold_sql": "SELECT T2.Name FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name HAVING COUNT(*)  >=  2",
+    "gold_answer": [
+      [
+        "Anne Walker"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4098,
+    "input_tokens": 226,
+    "output_tokens": 53
+  },
+  {
+    "id": "dev_000859",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "orchestra",
+    "question": "Count the number of orchestras that have CD or DVD as their record format.",
+    "predicted_sql": "SELECT COUNT(Orchestra_ID) FROM orchestra WHERE Major_Record_Format = 'CD' OR Major_Record_Format = 'DVD'",
+    "predicted_answer": [
+      [
+        11
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format  =  \"CD\" OR Major_Record_Format  =  \"DVD\"",
+    "gold_answer": [
+      [
+        11
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3124,
+    "input_tokens": 320,
+    "output_tokens": 26
+  },
+  {
+    "id": "dev_000451",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "wta_1",
+    "question": "What are the country code and first name of the players who won in both tourney WTA Championships and Australian Open?",
+    "predicted_sql": "SELECT T1.country_code, T1.first_name \nFROM players AS T1 \nINNER JOIN matches AS T2 \nON T1.player_id = T2.winner_id \nWHERE T2.tourney_name IN ('WTA Championships', 'Australian Open') \nGROUP BY T1.country_code, T1.first_name \nHAVING COUNT(DISTINCT T2.tourney_name) = 2",
+    "predicted_answer": [
+      [
+        "GER",
+        "Angelique"
+      ],
+      [
+        "USA",
+        "Serena"
+      ]
+    ],
+    "gold_sql": "SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'WTA Championships' INTERSECT SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'Australian Open'",
+    "gold_answer": [
+      [
+        "GER",
+        "Angelique"
+      ],
+      [
+        "USA",
+        "Serena"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.416,
+    "input_tokens": 407,
+    "output_tokens": 81
+  },
+  {
+    "id": "dev_000919",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "dog_kennels",
+    "question": "Find the states where both owners and professionals live.",
+    "predicted_sql": "SELECT state FROM Owners INTERSECT SELECT state FROM Professionals",
+    "predicted_answer": [
+      [
+        "Indiana"
+      ],
+      [
+        "Mississippi"
+      ],
+      [
+        "Wisconsin"
+      ]
+    ],
+    "gold_sql": "SELECT state FROM Owners INTERSECT SELECT state FROM Professionals",
+    "gold_answer": [
+      [
+        "Indiana"
+      ],
+      [
+        "Mississippi"
+      ],
+      [
+        "Wisconsin"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.247,
+    "input_tokens": 619,
+    "output_tokens": 12
+  },
+  {
+    "id": "dev_000569",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "student_transcripts_tracking",
+    "question": "What is the last transcript release date?",
+    "predicted_sql": "SELECT MAX(transcript_date) FROM Transcripts",
+    "predicted_answer": [
+      [
+        "2013-06-30 13:01:40"
+      ]
+    ],
+    "gold_sql": "SELECT transcript_date FROM Transcripts ORDER BY transcript_date DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "2013-06-30 13:01:40"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3795,
+    "input_tokens": 753,
+    "output_tokens": 10
+  },
+  {
+    "id": "dev_000013",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "concert_singer",
+    "question": "What are all the song names by singers who are older than average?",
+    "predicted_sql": "SELECT Song_Name FROM singer WHERE Age > (SELECT AVG(Age) FROM singer)",
+    "predicted_answer": [
+      [
+        "You"
+      ],
+      [
+        "Sun"
+      ],
+      [
+        "Gentleman"
+      ]
+    ],
+    "gold_sql": "SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)",
+    "gold_answer": [
+      [
+        "You"
+      ],
+      [
+        "Sun"
+      ],
+      [
+        "Gentleman"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1981,
+    "input_tokens": 297,
+    "output_tokens": 18
+  },
+  {
+    "id": "dev_000326",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "cre_Doc_Template_Mgt",
+    "question": "Count the number of templates of the type CV.",
+    "predicted_sql": "SELECT COUNT(Template_ID) FROM Templates WHERE Template_Type_Code = 'CV'",
+    "predicted_answer": [
+      [
+        2
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM Templates WHERE template_type_code  =  \"CV\"",
+    "gold_answer": [
+      [
+        2
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2339,
+    "input_tokens": 336,
+    "output_tokens": 17
+  },
+  {
+    "id": "dev_000865",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "network_1",
+    "question": "What are the names and grades for each high schooler?",
+    "predicted_sql": "SELECT name, grade FROM Highschooler",
+    "predicted_answer": [
+      [
+        "Jordan",
+        9
+      ],
+      [
+        "Gabriel",
+        9
+      ],
+      [
+        "Tiffany",
+        9
+      ],
+      [
+        "Cassandra",
+        9
+      ],
+      [
+        "Haley",
+        10
+      ],
+      [
+        "Andrew",
+        10
+      ],
+      [
+        "Kris",
+        10
+      ],
+      [
+        "Brittany",
+        10
+      ],
+      [
+        "Alexis",
+        11
+      ],
+      [
+        "Austin",
+        11
+      ],
+      [
+        "Gabriel",
+        11
+      ],
+      [
+        "Jessica",
+        11
+      ],
+      [
+        "Jordan",
+        12
+      ],
+      [
+        "John",
+        12
+      ],
+      [
+        "Kyle",
+        12
+      ],
+      [
+        "Logan",
+        12
+      ]
+    ],
+    "gold_sql": "SELECT name ,  grade FROM Highschooler",
+    "gold_answer": [
+      [
+        "Jordan",
+        9
+      ],
+      [
+        "Gabriel",
+        9
+      ],
+      [
+        "Tiffany",
+        9
+      ],
+      [
+        "Cassandra",
+        9
+      ],
+      [
+        "Haley",
+        10
+      ],
+      [
+        "Andrew",
+        10
+      ],
+      [
+        "Kris",
+        10
+      ],
+      [
+        "Brittany",
+        10
+      ],
+      [
+        "Alexis",
+        11
+      ],
+      [
+        "Austin",
+        11
+      ],
+      [
+        "Gabriel",
+        11
+      ],
+      [
+        "Jessica",
+        11
+      ],
+      [
+        "Jordan",
+        12
+      ],
+      [
+        "John",
+        12
+      ],
+      [
+        "Kyle",
+        12
+      ],
+      [
+        "Logan",
+        12
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1493,
+    "input_tokens": 234,
+    "output_tokens": 9
+  },
+  {
+    "id": "dev_000696",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "voter_1",
+    "question": "What are the number of votes from state 'NY' or 'CA'?",
+    "predicted_sql": "SELECT COUNT(vote_id) FROM VOTES WHERE state IN ('NY', 'CA')",
+    "predicted_answer": [
+      [
+        3
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM votes WHERE state  =  'NY' OR state  =  'CA'",
+    "gold_answer": [
+      [
+        3
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1821,
+    "input_tokens": 256,
+    "output_tokens": 19
+  },
+  {
+    "id": "dev_000318",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "cre_Doc_Template_Mgt",
+    "question": "Count the number of templates.",
+    "predicted_sql": "SELECT COUNT(Template_ID) FROM Templates",
+    "predicted_answer": [
+      [
+        20
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM Templates",
+    "gold_answer": [
+      [
+        20
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2004,
+    "input_tokens": 332,
+    "output_tokens": 9
+  },
+  {
+    "id": "dev_000440",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "wta_1",
+    "question": "What is the best rank of losers across all matches?",
+    "predicted_sql": "SELECT MIN loser_rank FROM matches",
+    "predicted_answer": null,
+    "gold_sql": "SELECT min(loser_rank) FROM matches",
+    "gold_answer": [
+      [
+        1
+      ]
+    ],
+    "correct": false,
+    "error": "no such column: MIN",
+    "latency_seconds": 0.3162,
+    "input_tokens": 394,
+    "output_tokens": 7
+  },
+  {
+    "id": "dev_000689",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "voter_1",
+    "question": "List the vote ids, phone numbers and states of all votes.",
+    "predicted_sql": "SELECT vote_id, phone_number, state FROM VOTES",
+    "predicted_answer": [
+      [
+        1,
+        7182887233,
+        "NY"
+      ],
+      [
+        2,
+        7148407040,
+        "NY"
+      ],
+      [
+        3,
+        6209222712,
+        "CA"
+      ],
+      [
+        5,
+        5112677315,
+        "NJ\n"
+      ]
+    ],
+    "gold_sql": "SELECT vote_id ,  phone_number ,  state FROM votes",
+    "gold_answer": [
+      [
+        1,
+        7182887233,
+        "NY"
+      ],
+      [
+        2,
+        7148407040,
+        "NY"
+      ],
+      [
+        3,
+        6209222712,
+        "CA"
+      ],
+      [
+        5,
+        5112677315,
+        "NJ\n"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2081,
+    "input_tokens": 253,
+    "output_tokens": 12
+  },
+  {
+    "id": "dev_000189",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "flight_2",
+    "question": "How many airports do we have?",
+    "predicted_sql": "SELECT COUNT(AirportCode) FROM airports",
+    "predicted_answer": [
+      [
+        100
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM AIRPORTS",
+    "gold_answer": [
+      [
+        100
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1599,
+    "input_tokens": 237,
+    "output_tokens": 10
+  },
+  {
+    "id": "dev_000778",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "world_1",
+    "question": "What are the country codes for countries that do not speak English?",
+    "predicted_sql": "SELECT Code FROM country WHERE Code NOT IN (SELECT CountryCode FROM countrylanguage WHERE Language = 'English')",
+    "predicted_answer": [
+      [
+        "AFG"
+      ],
+      [
+        "AGO"
+      ],
+      [
+        "ALB"
+      ],
+      [
+        "AND"
+      ],
+      [
+        "ARE"
+      ],
+      [
+        "ARG"
+      ],
+      [
+        "ARM"
+      ],
+      [
+        "ATA"
+      ],
+      [
+        "ATF"
+      ],
+      [
+        "AUT"
+      ],
+      [
+        "AZE"
+      ],
+      [
+        "BDI"
+      ],
+      [
+        "BEL"
+      ],
+      [
+        "BEN"
+      ],
+      [
+        "BFA"
+      ],
+      [
+        "BGD"
+      ],
+      [
+        "BGR"
+      ],
+      [
+        "BHS"
+      ],
+      [
+        "BIH"
+      ],
+      [
+        "BLR"
+      ],
+      [
+        "BOL"
+      ],
+      [
+        "BRA"
+      ],
+      [
+        "BTN"
+      ],
+      [
+        "BVT"
+      ],
+      [
+        "BWA"
+      ],
+      [
+        "CAF"
+      ],
+      [
+        "CHE"
+      ],
+      [
+        "CHL"
+      ],
+      [
+        "CHN"
+      ],
+      [
+        "CIV"
+      ],
+      [
+        "CMR"
+      ],
+      [
+        "COD"
+      ],
+      [
+        "COG"
+      ],
+      [
+        "COL"
+      ],
+      [
+        "COM"
+      ],
+      [
+        "CPV"
+      ],
+      [
+        "CRI"
+      ],
+      [
+        "CUB"
+      ],
+      [
+        "CYP"
+      ],
+      [
+        "CZE"
+      ],
+      [
+        "DEU"
+      ],
+      [
+        "DJI"
+      ],
+      [
+        "DMA"
+      ],
+      [
+        "DOM"
+      ],
+      [
+        "DZA"
+      ],
+      [
+        "ECU"
+      ],
+      [
+        "EGY"
+      ],
+      [
+        "ERI"
+      ],
+      [
+        "ESH"
+      ],
+      [
+        "ESP"
+      ],
+      [
+        "EST"
+      ],
+      [
+        "ETH"
+      ],
+      [
+        "FIN"
+      ],
+      [
+        "FJI"
+      ],
+      [
+        "FRA"
+      ],
+      [
+        "FRO"
+      ],
+      [
+        "FSM"
+      ],
+      [
+        "GAB"
+      ],
+      [
+        "GEO"
+      ],
+      [
+        "GHA"
+      ],
+      [
+        "GIN"
+      ],
+      [
+        "GLP"
+      ],
+      [
+        "GMB"
+      ],
+      [
+        "GNB"
+      ],
+      [
+        "GNQ"
+      ],
+      [
+        "GRC"
+      ],
+      [
+        "GRD"
+      ],
+      [
+        "GRL"
+      ],
+      [
+        "GTM"
+      ],
+      [
+        "GUF"
+      ],
+      [
+        "GUY"
+      ],
+      [
+        "HMD"
+      ],
+      [
+        "HND"
+      ],
+      [
+        "HRV"
+      ],
+      [
+        "HTI"
+      ],
+      [
+        "HUN"
+      ],
+      [
+        "IDN"
+      ],
+      [
+        "IND"
+      ],
+      [
+        "IOT"
+      ],
+      [
+        "IRN"
+      ],
+      [
+        "IRQ"
+      ],
+      [
+        "ISR"
+      ],
+      [
+        "ITA"
+      ],
+      [
+        "JAM"
+      ],
+      [
+        "JOR"
+      ],
+      [
+        "KAZ"
+      ],
+      [
+        "KEN"
+      ],
+      [
+        "KGZ"
+      ],
+      [
+        "KHM"
+      ],
+      [
+        "KIR"
+      ],
+      [
+        "KOR"
+      ],
+      [
+        "LAO"
+      ],
+      [
+        "LBN"
+      ],
+      [
+        "LBR"
+      ],
+      [
+        "LBY"
+      ],
+      [
+        "LIE"
+      ],
+      [
+        "LKA"
+      ],
+      [
+        "LTU"
+      ],
+      [
+        "LUX"
+      ],
+      [
+        "LVA"
+      ],
+      [
+        "MAR"
+      ],
+      [
+        "MDA"
+      ],
+      [
+        "MDG"
+      ],
+      [
+        "MEX"
+      ],
+      [
+        "MKD"
+      ],
+      [
+        "MLI"
+      ],
+      [
+        "MMR"
+      ],
+      [
+        "MNG"
+      ],
+      [
+        "MOZ"
+      ],
+      [
+        "MRT"
+      ],
+      [
+        "MTQ"
+      ],
+      [
+        "MUS"
+      ],
+      [
+        "MWI"
+      ],
+      [
+        "MYT"
+      ],
+      [
+        "NAM"
+      ],
+      [
+        "NCL"
+      ],
+      [
+        "NER"
+      ],
+      [
+        "NGA"
+      ],
+      [
+        "NIC"
+      ],
+      [
+        "NLD"
+      ],
+      [
+        "NPL"
+      ],
+      [
+        "OMN"
+      ],
+      [
+        "PAK"
+      ],
+      [
+        "PAN"
+      ],
+      [
+        "PCN"
+      ],
+      [
+        "PER"
+      ],
+      [
+        "PHL"
+      ],
+      [
+        "PNG"
+      ],
+      [
+        "POL"
+      ],
+      [
+        "PRK"
+      ],
+      [
+        "PRT"
+      ],
+      [
+        "PRY"
+      ],
+      [
+        "PSE"
+      ],
+      [
+        "PYF"
+      ],
+      [
+        "QAT"
+      ],
+      [
+        "REU"
+      ],
+      [
+        "ROM"
+      ],
+      [
+        "RUS"
+      ],
+      [
+        "RWA"
+      ],
+      [
+        "SAU"
+      ],
+      [
+        "SDN"
+      ],
+      [
+        "SEN"
+      ],
+      [
+        "SGP"
+      ],
+      [
+        "SGS"
+      ],
+      [
+        "SJM"
+      ],
+      [
+        "SLB"
+      ],
+      [
+        "SLE"
+      ],
+      [
+        "SLV"
+      ],
+      [
+        "SMR"
+      ],
+      [
+        "SOM"
+      ],
+      [
+        "SPM"
+      ],
+      [
+        "STP"
+      ],
+      [
+        "SUR"
+      ],
+      [
+        "SVK"
+      ],
+      [
+        "SVN"
+      ],
+      [
+        "SWE"
+      ],
+      [
+        "SWZ"
+      ],
+      [
+        "SYR"
+      ],
+      [
+        "TCD"
+      ],
+      [
+        "TGO"
+      ],
+      [
+        "THA"
+      ],
+      [
+        "TJK"
+      ],
+      [
+        "TKM"
+      ],
+      [
+        "TMP"
+      ],
+      [
+        "TUN"
+      ],
+      [
+        "TUR"
+      ],
+      [
+        "TWN"
+      ],
+      [
+        "TZA"
+      ],
+      [
+        "UGA"
+      ],
+      [
+        "UKR"
+      ],
+      [
+        "URY"
+      ],
+      [
+        "UZB"
+      ],
+      [
+        "VAT"
+      ],
+      [
+        "VEN"
+      ],
+      [
+        "VNM"
+      ],
+      [
+        "WLF"
+      ],
+      [
+        "YEM"
+      ],
+      [
+        "YUG"
+      ],
+      [
+        "ZMB"
+      ]
+    ],
+    "gold_sql": "SELECT CountryCode FROM countrylanguage EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  \"English\"",
+    "gold_answer": [
+      [
+        "AFG"
+      ],
+      [
+        "AGO"
+      ],
+      [
+        "ALB"
+      ],
+      [
+        "AND"
+      ],
+      [
+        "ARE"
+      ],
+      [
+        "ARG"
+      ],
+      [
+        "ARM"
+      ],
+      [
+        "AUT"
+      ],
+      [
+        "AZE"
+      ],
+      [
+        "BDI"
+      ],
+      [
+        "BEL"
+      ],
+      [
+        "BEN"
+      ],
+      [
+        "BFA"
+      ],
+      [
+        "BGD"
+      ],
+      [
+        "BGR"
+      ],
+      [
+        "BHS"
+      ],
+      [
+        "BIH"
+      ],
+      [
+        "BLR"
+      ],
+      [
+        "BOL"
+      ],
+      [
+        "BRA"
+      ],
+      [
+        "BTN"
+      ],
+      [
+        "BWA"
+      ],
+      [
+        "CAF"
+      ],
+      [
+        "CHE"
+      ],
+      [
+        "CHL"
+      ],
+      [
+        "CHN"
+      ],
+      [
+        "CIV"
+      ],
+      [
+        "CMR"
+      ],
+      [
+        "COD"
+      ],
+      [
+        "COG"
+      ],
+      [
+        "COL"
+      ],
+      [
+        "COM"
+      ],
+      [
+        "CPV"
+      ],
+      [
+        "CRI"
+      ],
+      [
+        "CUB"
+      ],
+      [
+        "CYP"
+      ],
+      [
+        "CZE"
+      ],
+      [
+        "DEU"
+      ],
+      [
+        "DJI"
+      ],
+      [
+        "DMA"
+      ],
+      [
+        "DOM"
+      ],
+      [
+        "DZA"
+      ],
+      [
+        "ECU"
+      ],
+      [
+        "EGY"
+      ],
+      [
+        "ERI"
+      ],
+      [
+        "ESH"
+      ],
+      [
+        "ESP"
+      ],
+      [
+        "EST"
+      ],
+      [
+        "ETH"
+      ],
+      [
+        "FIN"
+      ],
+      [
+        "FJI"
+      ],
+      [
+        "FRA"
+      ],
+      [
+        "FRO"
+      ],
+      [
+        "FSM"
+      ],
+      [
+        "GAB"
+      ],
+      [
+        "GEO"
+      ],
+      [
+        "GHA"
+      ],
+      [
+        "GIN"
+      ],
+      [
+        "GLP"
+      ],
+      [
+        "GMB"
+      ],
+      [
+        "GNB"
+      ],
+      [
+        "GNQ"
+      ],
+      [
+        "GRC"
+      ],
+      [
+        "GRD"
+      ],
+      [
+        "GRL"
+      ],
+      [
+        "GTM"
+      ],
+      [
+        "GUF"
+      ],
+      [
+        "GUY"
+      ],
+      [
+        "HND"
+      ],
+      [
+        "HRV"
+      ],
+      [
+        "HTI"
+      ],
+      [
+        "HUN"
+      ],
+      [
+        "IDN"
+      ],
+      [
+        "IND"
+      ],
+      [
+        "IRN"
+      ],
+      [
+        "IRQ"
+      ],
+      [
+        "ISR"
+      ],
+      [
+        "ITA"
+      ],
+      [
+        "JAM"
+      ],
+      [
+        "JOR"
+      ],
+      [
+        "KAZ"
+      ],
+      [
+        "KEN"
+      ],
+      [
+        "KGZ"
+      ],
+      [
+        "KHM"
+      ],
+      [
+        "KIR"
+      ],
+      [
+        "KOR"
+      ],
+      [
+        "LAO"
+      ],
+      [
+        "LBN"
+      ],
+      [
+        "LBR"
+      ],
+      [
+        "LBY"
+      ],
+      [
+        "LIE"
+      ],
+      [
+        "LKA"
+      ],
+      [
+        "LTU"
+      ],
+      [
+        "LUX"
+      ],
+      [
+        "LVA"
+      ],
+      [
+        "MAR"
+      ],
+      [
+        "MDA"
+      ],
+      [
+        "MDG"
+      ],
+      [
+        "MEX"
+      ],
+      [
+        "MKD"
+      ],
+      [
+        "MLI"
+      ],
+      [
+        "MMR"
+      ],
+      [
+        "MNG"
+      ],
+      [
+        "MOZ"
+      ],
+      [
+        "MRT"
+      ],
+      [
+        "MTQ"
+      ],
+      [
+        "MUS"
+      ],
+      [
+        "MWI"
+      ],
+      [
+        "MYT"
+      ],
+      [
+        "NAM"
+      ],
+      [
+        "NCL"
+      ],
+      [
+        "NER"
+      ],
+      [
+        "NGA"
+      ],
+      [
+        "NIC"
+      ],
+      [
+        "NLD"
+      ],
+      [
+        "NPL"
+      ],
+      [
+        "OMN"
+      ],
+      [
+        "PAK"
+      ],
+      [
+        "PAN"
+      ],
+      [
+        "PCN"
+      ],
+      [
+        "PER"
+      ],
+      [
+        "PHL"
+      ],
+      [
+        "PNG"
+      ],
+      [
+        "POL"
+      ],
+      [
+        "PRK"
+      ],
+      [
+        "PRT"
+      ],
+      [
+        "PRY"
+      ],
+      [
+        "PSE"
+      ],
+      [
+        "PYF"
+      ],
+      [
+        "QAT"
+      ],
+      [
+        "REU"
+      ],
+      [
+        "ROM"
+      ],
+      [
+        "RUS"
+      ],
+      [
+        "RWA"
+      ],
+      [
+        "SAU"
+      ],
+      [
+        "SDN"
+      ],
+      [
+        "SEN"
+      ],
+      [
+        "SGP"
+      ],
+      [
+        "SJM"
+      ],
+      [
+        "SLB"
+      ],
+      [
+        "SLE"
+      ],
+      [
+        "SLV"
+      ],
+      [
+        "SMR"
+      ],
+      [
+        "SOM"
+      ],
+      [
+        "SPM"
+      ],
+      [
+        "STP"
+      ],
+      [
+        "SUR"
+      ],
+      [
+        "SVK"
+      ],
+      [
+        "SVN"
+      ],
+      [
+        "SWE"
+      ],
+      [
+        "SWZ"
+      ],
+      [
+        "SYR"
+      ],
+      [
+        "TCD"
+      ],
+      [
+        "TGO"
+      ],
+      [
+        "THA"
+      ],
+      [
+        "TJK"
+      ],
+      [
+        "TKM"
+      ],
+      [
+        "TMP"
+      ],
+      [
+        "TUN"
+      ],
+      [
+        "TUR"
+      ],
+      [
+        "TWN"
+      ],
+      [
+        "TZA"
+      ],
+      [
+        "UGA"
+      ],
+      [
+        "UKR"
+      ],
+      [
+        "URY"
+      ],
+      [
+        "UZB"
+      ],
+      [
+        "VAT"
+      ],
+      [
+        "VEN"
+      ],
+      [
+        "VNM"
+      ],
+      [
+        "WLF"
+      ],
+      [
+        "YEM"
+      ],
+      [
+        "YUG"
+      ],
+      [
+        "ZMB"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.373,
+    "input_tokens": 432,
+    "output_tokens": 22
+  },
+  {
+    "id": "dev_000198",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "flight_2",
+    "question": "Give the city and country for the Alton airport.",
+    "predicted_sql": "SELECT City, Country FROM airports WHERE AirportName = 'Alton'",
+    "predicted_answer": [],
+    "gold_sql": "SELECT City ,  Country FROM AIRPORTS WHERE AirportName  =  \"Alton\"",
+    "gold_answer": [],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.215,
+    "input_tokens": 241,
+    "output_tokens": 15
+  },
+  {
+    "id": "dev_000735",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "world_1",
+    "question": "How many different forms of governments are there in Africa?",
+    "predicted_sql": "SELECT COUNT(DISTINCT GovernmentForm) FROM country WHERE Continent = 'Africa'",
+    "predicted_answer": [
+      [
+        10
+      ]
+    ],
+    "gold_sql": "SELECT count(DISTINCT GovernmentForm) FROM country WHERE Continent  =  \"Africa\"",
+    "gold_answer": [
+      [
+        10
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2044,
+    "input_tokens": 430,
+    "output_tokens": 17
+  },
+  {
+    "id": "dev_000704",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "world_1",
+    "question": "How many countries have a republic as their form of government?",
+    "predicted_sql": "SELECT COUNT(Code) FROM country WHERE GovernmentForm = 'Republic'",
+    "predicted_answer": [
+      [
+        122
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM country WHERE GovernmentForm  =  \"Republic\"",
+    "gold_answer": [
+      [
+        122
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2005,
+    "input_tokens": 431,
+    "output_tokens": 14
+  },
+  {
+    "id": "dev_000541",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "student_transcripts_tracking",
+    "question": "Which student has enrolled for the most times in any program? List the id, first name, middle name, last name, the number of enrollments and student id.",
+    "predicted_sql": "SELECT T1.student_id, T2.first_name, T2.middle_name, T2.last_name, COUNT(T1.student_enrolment_id) AS num_enrollments, T2.student_id \nFROM Student_Enrolment AS T1 \nINNER JOIN Students AS T2 \nON T1.student_id = T2.student_id \nGROUP BY T1.student_id \nORDER BY num_enrollments DESC \nLIMIT 1",
+    "predicted_answer": [
+      [
+        7,
+        "Frida",
+        "Aisha",
+        "Huel",
+        3,
+        7
+      ]
+    ],
+    "gold_sql": "SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(*) ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        7,
+        "Frida",
+        "Aisha",
+        "Huel",
+        3,
+        7
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4435,
+    "input_tokens": 779,
+    "output_tokens": 88
+  },
+  {
+    "id": "dev_000088",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "car_1",
+    "question": "What is the number of continents?",
+    "predicted_sql": "SELECT COUNT(ContId) FROM continents",
+    "predicted_answer": [
+      [
+        5
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM CONTINENTS;",
+    "gold_answer": [
+      [
+        5
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1944,
+    "input_tokens": 333,
+    "output_tokens": 9
+  },
+  {
+    "id": "dev_000940",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "dog_kennels",
+    "question": "Which owner has paid the largest amount of money in total for their dogs? Show the owner id and zip code.",
+    "predicted_sql": "SELECT T1.owner_id, T1.zip_code \nFROM Owners AS T1 \nINNER JOIN Dogs AS T2 \nON T1.owner_id = T2.owner_id \nINNER JOIN Treatments AS T3 \nON T2.dog_id = T3.dog_id \nGROUP BY T1.owner_id, T1.zip_code \nORDER BY SUM(T3.cost_of_treatment) DESC \nLIMIT 1",
+    "predicted_answer": [
+      [
+        3,
+        "02647"
+      ]
+    ],
+    "gold_sql": "SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        3,
+        "02647"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4238,
+    "input_tokens": 632,
+    "output_tokens": 84
+  },
+  {
+    "id": "dev_000255",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "flight_2",
+    "question": "Find the number of flights landing in the city of Aberdeen or Abilene.",
+    "predicted_sql": "SELECT COUNT(*) FROM flights AS f INNER JOIN airports AS a ON f.DestAirport = a.AirportCode WHERE a.City = 'Aberdeen' OR a.City = 'Abilene'",
+    "predicted_answer": [
+      [
+        0
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM Flights AS T1 JOIN Airports AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.city  =  \"Aberdeen\" OR T2.city  =  \"Abilene\"",
+    "gold_answer": [
+      [
+        0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3199,
+    "input_tokens": 246,
+    "output_tokens": 42
+  },
+  {
+    "id": "dev_000775",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "world_1",
+    "question": "Which African countries have a smaller population than that of any country in Asia?",
+    "predicted_sql": "SELECT Name \nFROM country \nWHERE Continent = 'Africa' \nAND Population < (SELECT MAX(Population) \n                   FROM country \n                   WHERE Continent = 'Asia')",
+    "predicted_answer": [
+      [
+        "Angola"
+      ],
+      [
+        "Burundi"
+      ],
+      [
+        "Benin"
+      ],
+      [
+        "Burkina Faso"
+      ],
+      [
+        "Botswana"
+      ],
+      [
+        "Central African Republic"
+      ],
+      [
+        "Côte d’Ivoire"
+      ],
+      [
+        "Cameroon"
+      ],
+      [
+        "Congo, The Democratic Republic of the"
+      ],
+      [
+        "Congo"
+      ],
+      [
+        "Comoros"
+      ],
+      [
+        "Cape Verde"
+      ],
+      [
+        "Djibouti"
+      ],
+      [
+        "Algeria"
+      ],
+      [
+        "Egypt"
+      ],
+      [
+        "Eritrea"
+      ],
+      [
+        "Western Sahara"
+      ],
+      [
+        "Ethiopia"
+      ],
+      [
+        "Gabon"
+      ],
+      [
+        "Ghana"
+      ],
+      [
+        "Guinea"
+      ],
+      [
+        "Gambia"
+      ],
+      [
+        "Guinea-Bissau"
+      ],
+      [
+        "Equatorial Guinea"
+      ],
+      [
+        "British Indian Ocean Territory"
+      ],
+      [
+        "Kenya"
+      ],
+      [
+        "Liberia"
+      ],
+      [
+        "Libyan Arab Jamahiriya"
+      ],
+      [
+        "Lesotho"
+      ],
+      [
+        "Morocco"
+      ],
+      [
+        "Madagascar"
+      ],
+      [
+        "Mali"
+      ],
+      [
+        "Mozambique"
+      ],
+      [
+        "Mauritania"
+      ],
+      [
+        "Mauritius"
+      ],
+      [
+        "Malawi"
+      ],
+      [
+        "Mayotte"
+      ],
+      [
+        "Namibia"
+      ],
+      [
+        "Niger"
+      ],
+      [
+        "Nigeria"
+      ],
+      [
+        "Réunion"
+      ],
+      [
+        "Rwanda"
+      ],
+      [
+        "Sudan"
+      ],
+      [
+        "Senegal"
+      ],
+      [
+        "Saint Helena"
+      ],
+      [
+        "Sierra Leone"
+      ],
+      [
+        "Somalia"
+      ],
+      [
+        "Sao Tome and Principe"
+      ],
+      [
+        "Swaziland"
+      ],
+      [
+        "Seychelles"
+      ],
+      [
+        "Chad"
+      ],
+      [
+        "Togo"
+      ],
+      [
+        "Tunisia"
+      ],
+      [
+        "Tanzania"
+      ],
+      [
+        "Uganda"
+      ],
+      [
+        "South Africa"
+      ],
+      [
+        "Zambia"
+      ],
+      [
+        "Zimbabwe"
+      ]
+    ],
+    "gold_sql": "SELECT Name FROM country WHERE Continent  =  \"Africa\"  AND population  <  (SELECT min(population) FROM country WHERE Continent  =  \"Asia\")",
+    "gold_answer": [
+      [
+        "British Indian Ocean Territory"
+      ],
+      [
+        "Mayotte"
+      ],
+      [
+        "Saint Helena"
+      ],
+      [
+        "Sao Tome and Principe"
+      ],
+      [
+        "Seychelles"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.3198,
+    "input_tokens": 434,
+    "output_tokens": 36
+  },
+  {
+    "id": "dev_000161",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "car_1",
+    "question": "How many countries has more than 2 car makers ?",
+    "predicted_sql": "SELECT COUNT(T1.CountryId) \nFROM countries AS T1 \nJOIN car_makers AS T2 ON T1.CountryId = T2.Country \nGROUP BY T1.CountryId \nHAVING COUNT(T2.Id) > 2",
+    "predicted_answer": [
+      [
+        4
+      ],
+      [
+        4
+      ],
+      [
+        3
+      ],
+      [
+        5
+      ]
+    ],
+    "gold_sql": "select count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2",
+    "gold_answer": [
+      [
+        4
+      ],
+      [
+        4
+      ],
+      [
+        3
+      ],
+      [
+        5
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3039,
+    "input_tokens": 337,
+    "output_tokens": 49
+  },
+  {
+    "id": "dev_000600",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "tvshow",
+    "question": "What is the content of the series Sky Radio?",
+    "predicted_sql": "SELECT Content FROM TV_Channel WHERE series_name = 'Sky Radio'",
+    "predicted_answer": [
+      [
+        "music"
+      ]
+    ],
+    "gold_sql": "SELECT Content FROM TV_Channel WHERE series_name = \"Sky Radio\";",
+    "gold_answer": [
+      [
+        "music"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2213,
+    "input_tokens": 304,
+    "output_tokens": 14
+  },
+  {
+    "id": "dev_000740",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "world_1",
+    "question": "What is name of the country that speaks the largest number of languages?",
+    "predicted_sql": "SELECT T1.Name \nFROM country AS T1 \nJOIN countrylanguage AS T2 \nON T1.Code = T2.CountryCode \nGROUP BY T1.Name \nORDER BY COUNT(T2.Language) DESC \nLIMIT 1",
+    "predicted_answer": [
+      [
+        "United States"
+      ]
+    ],
+    "gold_sql": "SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "United States"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.265,
+    "input_tokens": 433,
+    "output_tokens": 47
+  },
+  {
+    "id": "dev_000393",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "course_teach",
+    "question": "Show different hometown of teachers and the number of teachers from each hometown.",
+    "predicted_sql": "SELECT Hometown, COUNT(Teacher_ID) FROM teacher GROUP BY Hometown",
+    "predicted_answer": [
+      [
+        "Blackrod Urban District",
+        1
+      ],
+      [
+        "Bolton County Borough",
+        1
+      ],
+      [
+        "Farnworth Municipal Borough",
+        1
+      ],
+      [
+        "Horwich Urban District",
+        1
+      ],
+      [
+        "Kearsley Urban District",
+        1
+      ],
+      [
+        "Little Lever Urban District",
+        1
+      ],
+      [
+        "Turton Urban District",
+        1
+      ]
+    ],
+    "gold_sql": "SELECT Hometown ,  COUNT(*) FROM teacher GROUP BY Hometown",
+    "gold_answer": [
+      [
+        "Blackrod Urban District",
+        1
+      ],
+      [
+        "Bolton County Borough",
+        1
+      ],
+      [
+        "Farnworth Municipal Borough",
+        1
+      ],
+      [
+        "Horwich Urban District",
+        1
+      ],
+      [
+        "Kearsley Urban District",
+        1
+      ],
+      [
+        "Little Lever Urban District",
+        1
+      ],
+      [
+        "Turton Urban District",
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2023,
+    "input_tokens": 229,
+    "output_tokens": 16
+  },
+  {
+    "id": "dev_000142",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "car_1",
+    "question": "What model has the most different versions?",
+    "predicted_sql": "SELECT Model, COUNT(DISTINCT MakeId) as count FROM car_names GROUP BY Model ORDER BY count DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "ford",
+        53
+      ]
+    ],
+    "gold_sql": "SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) DESC LIMIT 1;",
+    "gold_answer": [
+      [
+        "ford"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.2584,
+    "input_tokens": 334,
+    "output_tokens": 26
+  },
+  {
+    "id": "dev_000093",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "car_1",
+    "question": "How many models does each car maker produce? List maker full name, id and the number.",
+    "predicted_sql": "SELECT T1.FullName, T1.Id, COUNT(T2.Model) \nFROM car_makers AS T1 \nLEFT JOIN model_list AS T2 \nON T1.Id = T2.Maker \nGROUP BY T1.FullName, T1.Id \nORDER BY T1.Id",
+    "predicted_answer": [
+      [
+        "American Motor Company",
+        1,
+        1
+      ],
+      [
+        "Volkswagen",
+        2,
+        2
+      ],
+      [
+        "BMW",
+        3,
+        1
+      ],
+      [
+        "General Motors",
+        4,
+        5
+      ],
+      [
+        "Ford Motor Company",
+        5,
+        3
+      ],
+      [
+        "Chrysler",
+        6,
+        4
+      ],
+      [
+        "Citroen",
+        7,
+        1
+      ],
+      [
+        "Nissan Motors",
+        8,
+        2
+      ],
+      [
+        "Fiat",
+        9,
+        1
+      ],
+      [
+        "Honda",
+        11,
+        1
+      ],
+      [
+        "Mazda",
+        12,
+        1
+      ],
+      [
+        "Daimler Benz",
+        13,
+        2
+      ],
+      [
+        "Opel",
+        14,
+        1
+      ],
+      [
+        "Peugeaut",
+        15,
+        1
+      ],
+      [
+        "Renault",
+        16,
+        1
+      ],
+      [
+        "Saab",
+        17,
+        1
+      ],
+      [
+        "Subaru",
+        18,
+        1
+      ],
+      [
+        "Toyota",
+        19,
+        2
+      ],
+      [
+        "Triumph",
+        20,
+        1
+      ],
+      [
+        "Volvo",
+        21,
+        1
+      ],
+      [
+        "Kia Motors",
+        22,
+        1
+      ],
+      [
+        "Hyundai",
+        23,
+        1
+      ]
+    ],
+    "gold_sql": "SELECT T1.FullName ,  T1.Id ,  count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id;",
+    "gold_answer": [
+      [
+        "American Motor Company",
+        1,
+        1
+      ],
+      [
+        "Volkswagen",
+        2,
+        2
+      ],
+      [
+        "BMW",
+        3,
+        1
+      ],
+      [
+        "General Motors",
+        4,
+        5
+      ],
+      [
+        "Ford Motor Company",
+        5,
+        3
+      ],
+      [
+        "Chrysler",
+        6,
+        4
+      ],
+      [
+        "Citroen",
+        7,
+        1
+      ],
+      [
+        "Nissan Motors",
+        8,
+        2
+      ],
+      [
+        "Fiat",
+        9,
+        1
+      ],
+      [
+        "Honda",
+        11,
+        1
+      ],
+      [
+        "Mazda",
+        12,
+        1
+      ],
+      [
+        "Daimler Benz",
+        13,
+        2
+      ],
+      [
+        "Opel",
+        14,
+        1
+      ],
+      [
+        "Peugeaut",
+        15,
+        1
+      ],
+      [
+        "Renault",
+        16,
+        1
+      ],
+      [
+        "Saab",
+        17,
+        1
+      ],
+      [
+        "Subaru",
+        18,
+        1
+      ],
+      [
+        "Toyota",
+        19,
+        2
+      ],
+      [
+        "Triumph",
+        20,
+        1
+      ],
+      [
+        "Volvo",
+        21,
+        1
+      ],
+      [
+        "Kia Motors",
+        22,
+        1
+      ],
+      [
+        "Hyundai",
+        23,
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3395,
+    "input_tokens": 345,
+    "output_tokens": 57
+  },
+  {
+    "id": "dev_000466",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "wta_1",
+    "question": "What is the name of the winner with the most rank points who participated in the Australian Open tournament?",
+    "predicted_sql": "SELECT T1.first_name, T1.last_name \nFROM players AS T1 \nINNER JOIN matches AS T2 \nON T1.player_id = T2.winner_id \nWHERE T2.tourney_name = 'Australian Open' \nORDER BY T2.winner_rank_points DESC \nLIMIT 1",
+    "predicted_answer": [
+      [
+        "Serena",
+        "Williams"
+      ]
+    ],
+    "gold_sql": "SELECT winner_name FROM matches WHERE tourney_name  =  'Australian Open' ORDER BY winner_rank_points DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "Serena Williams"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.3878,
+    "input_tokens": 403,
+    "output_tokens": 62
+  },
+  {
+    "id": "dev_000592",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "tvshow",
+    "question": "What is the name and directors of all the cartoons that are ordered by air date?",
+    "predicted_sql": "SELECT Title, Directed_by FROM Cartoon ORDER BY Original_air_date",
+    "predicted_answer": [
+      [
+        "Invasion of the Secret Santas!",
+        "Brandon Vietti"
+      ],
+      [
+        "Evil Under the Sea!",
+        "Michael Chang"
+      ],
+      [
+        "Return of the Fearsome Fangs!",
+        "Brandon Vietti"
+      ],
+      [
+        "Deep Cover for Batman!",
+        "Michael Chang"
+      ],
+      [
+        "The Eyes of Despero!",
+        "Ben Jones"
+      ],
+      [
+        "Dawn of the Dead Man!",
+        "Ben Jones"
+      ],
+      [
+        "Day of the Dark Knight!",
+        "Ben Jones"
+      ],
+      [
+        "Fall of the Blue Beetle!",
+        "Brandon Vietti"
+      ],
+      [
+        "Journey to the Center of the Bat!",
+        "Michael Chang"
+      ],
+      [
+        "Enter the Outsiders!",
+        "Michael Chang"
+      ],
+      [
+        "The Rise of the Blue Beetle!",
+        "Ben Jones"
+      ],
+      [
+        "Terror on Dinosaur Island!",
+        "Brandon Vietti"
+      ]
+    ],
+    "gold_sql": "SELECT title ,  Directed_by FROM Cartoon ORDER BY Original_air_date",
+    "gold_answer": [
+      [
+        "Invasion of the Secret Santas!",
+        "Brandon Vietti"
+      ],
+      [
+        "Evil Under the Sea!",
+        "Michael Chang"
+      ],
+      [
+        "Return of the Fearsome Fangs!",
+        "Brandon Vietti"
+      ],
+      [
+        "Deep Cover for Batman!",
+        "Michael Chang"
+      ],
+      [
+        "The Eyes of Despero!",
+        "Ben Jones"
+      ],
+      [
+        "Dawn of the Dead Man!",
+        "Ben Jones"
+      ],
+      [
+        "Day of the Dark Knight!",
+        "Ben Jones"
+      ],
+      [
+        "Fall of the Blue Beetle!",
+        "Brandon Vietti"
+      ],
+      [
+        "Journey to the Center of the Bat!",
+        "Michael Chang"
+      ],
+      [
+        "Enter the Outsiders!",
+        "Michael Chang"
+      ],
+      [
+        "The Rise of the Blue Beetle!",
+        "Ben Jones"
+      ],
+      [
+        "Terror on Dinosaur Island!",
+        "Brandon Vietti"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1852,
+    "input_tokens": 311,
+    "output_tokens": 13
+  },
+  {
+    "id": "dev_000163",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "car_1",
+    "question": "How many cars has over 6 cylinders?",
+    "predicted_sql": "SELECT COUNT(Id) FROM cars_data WHERE Cylinders > 6",
+    "predicted_answer": [
+      [
+        108
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(*) FROM CARS_DATA WHERE Cylinders  >  6;",
+    "gold_answer": [
+      [
+        108
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2395,
+    "input_tokens": 335,
+    "output_tokens": 15
+  },
+  {
+    "id": "dev_000206",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "flight_2",
+    "question": "Count the number of flights into ATO.",
+    "predicted_sql": "SELECT COUNT(*) FROM flights WHERE DestAirport = 'ATO'",
+    "predicted_answer": [
+      [
+        0
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM FLIGHTS WHERE DestAirport  =  \"ATO\"",
+    "gold_answer": [
+      [
+        0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2046,
+    "input_tokens": 239,
+    "output_tokens": 13
+  },
+  {
+    "id": "dev_000928",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "dog_kennels",
+    "question": "Which professional did not operate any treatment on dogs? List the professional's id, role and email.",
+    "predicted_sql": "SELECT professional_id, role_code, email_address \nFROM Professionals \nWHERE professional_id NOT IN (SELECT professional_id FROM Treatments)",
+    "predicted_answer": [
+      [
+        1,
+        "Employee",
+        "deanna.schuster@example.com"
+      ],
+      [
+        2,
+        "Employee",
+        "lucile.shanahan@example.org"
+      ],
+      [
+        3,
+        "Employee",
+        "uboehm@example.org"
+      ],
+      [
+        11,
+        "Employee",
+        "west.eula@example.net"
+      ],
+      [
+        12,
+        "Veterenarian",
+        "marquardt.furman@example.org"
+      ],
+      [
+        13,
+        "Veterenarian",
+        "delphine29@example.com"
+      ],
+      [
+        15,
+        "Employee",
+        "jeichmann@example.com"
+      ]
+    ],
+    "gold_sql": "SELECT professional_id ,  role_code ,  email_address FROM Professionals EXCEPT SELECT T1.professional_id ,  T1.role_code ,  T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id",
+    "gold_answer": [
+      [
+        1,
+        "Employee",
+        "deanna.schuster@example.com"
+      ],
+      [
+        2,
+        "Employee",
+        "lucile.shanahan@example.org"
+      ],
+      [
+        3,
+        "Employee",
+        "uboehm@example.org"
+      ],
+      [
+        11,
+        "Employee",
+        "west.eula@example.net"
+      ],
+      [
+        12,
+        "Veterenarian",
+        "marquardt.furman@example.org"
+      ],
+      [
+        13,
+        "Veterenarian",
+        "delphine29@example.com"
+      ],
+      [
+        15,
+        "Employee",
+        "jeichmann@example.com"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3243,
+    "input_tokens": 629,
+    "output_tokens": 27
+  },
+  {
+    "id": "dev_000747",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "world_1",
+    "question": "Give the names of nations that speak both English and French.",
+    "predicted_sql": "SELECT T1.Name \nFROM country AS T1 \nJOIN countrylanguage AS T2 \nON T1.Code = T2.CountryCode \nWHERE T2.Language = 'English' \nAND T1.Code IN ( \n    SELECT T3.CountryCode \n    FROM countrylanguage AS T3 \n    WHERE T3.Language = 'French'\n)",
+    "predicted_answer": [
+      [
+        "Canada"
+      ],
+      [
+        "Monaco"
+      ],
+      [
+        "Seychelles"
+      ],
+      [
+        "United States"
+      ],
+      [
+        "Virgin Islands, U.S."
+      ],
+      [
+        "Vanuatu"
+      ]
+    ],
+    "gold_sql": "SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"French\"",
+    "gold_answer": [
+      [
+        "Canada"
+      ],
+      [
+        "Monaco"
+      ],
+      [
+        "Seychelles"
+      ],
+      [
+        "United States"
+      ],
+      [
+        "Vanuatu"
+      ],
+      [
+        "Virgin Islands, U.S."
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4123,
+    "input_tokens": 431,
+    "output_tokens": 70
+  },
+  {
+    "id": "dev_000333",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "cre_Doc_Template_Mgt",
+    "question": "Show all template type codes with less than three templates.",
+    "predicted_sql": "SELECT Template_Type_Code FROM Templates GROUP BY Template_Type_Code HAVING COUNT(Template_ID) < 3",
+    "predicted_answer": [
+      [
+        "CV"
+      ]
+    ],
+    "gold_sql": "SELECT template_type_code FROM Templates GROUP BY template_type_code HAVING count(*)  <  3",
+    "gold_answer": [
+      [
+        "CV"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2957,
+    "input_tokens": 337,
+    "output_tokens": 22
+  }
+]
