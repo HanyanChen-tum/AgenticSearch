@@ -661,10 +661,54 @@ python scripts/run_baseline_3.py --limit 10 --max-steps 8
 Its result rows include `agent_steps`, `tool_calls`, `termination_reason`, and
 `tool_trace` diagnostics in addition to the unified evaluation fields.
 
-Run Recursive DB-RLM:
+Run DB-RLM ablations:
 
 ```bash
 python scripts/run_ours.py
+```
+
+The `ours` runner is designed for incremental ablations. It starts from a
+simple DB agent configuration and lets you enable one feature at a time:
+
+```bash
+# DB agent without recursive sub-questions
+python scripts/run_ours.py --limit 10 --no-recursion --prompt-version basic
+
+# Add metadata extraction
+python scripts/run_ours.py --limit 10 --no-recursion --prompt-version basic --use-metadata
+
+# Add RLM-style recursive sub-questions
+python scripts/run_ours.py --limit 10 --use-metadata
+
+# Add an evidence workspace
+python scripts/run_ours.py --limit 10 --use-metadata --use-workspace --prompt-version workspace
+```
+
+Recursive DB-RLM uses the same database tools as the non-recursive DB agent.
+When recursion is enabled, it also exposes this helper to the root agent:
+
+```python
+answer_subquestion("focused database sub-question")
+```
+
+When metadata is enabled, pre-extracted table, column, row-count, and foreign
+key metadata is included before online schema exploration. When workspace is
+enabled, the agent can store and review compact evidence during the run.
+
+Each result row records its `ablation_config`. If `--output` is omitted, the
+runner writes a variant-specific result file such as:
+
+```text
+results/ours_no_rlm_prompt_basic.json
+results/ours_metadata_no_rlm_prompt_basic.json
+results/ours_metadata_rlm.json
+results/ours_metadata_rlm_workspace_prompt_workspace.json
+```
+
+You can still provide an explicit output path:
+
+```bash
+python scripts/run_ours.py --use-metadata --output results/ours_metadata_rlm.json
 ```
 
 Evaluate:
@@ -672,6 +716,34 @@ Evaluate:
 ```bash
 python scripts/evaluate_results.py
 ```
+
+For ablation comparisons, pass the specific result files:
+
+```bash
+python scripts/evaluate_results.py \
+  --result-files \
+  results/baseline_3_non_recursive_db_agent.json \
+  results/ours_no_rlm_prompt_basic.json \
+  results/ours_metadata_no_rlm_prompt_basic.json \
+  results/ours_metadata_rlm.json
+```
+
+Analyze errors:
+
+```bash
+python scripts/analyze_errors.py
+```
+
+The error analysis script writes:
+
+```text
+results/error_analysis.json
+```
+
+For ablation runs, `scripts/run_ours.py` writes variant-specific files such as
+`ours_no_rlm_prompt_basic.json`, `ours_metadata_no_rlm_prompt_basic.json`,
+`ours_metadata_rlm.json`, and
+`ours_metadata_rlm_workspace_prompt_workspace.json`.
 
 ---
 
@@ -709,13 +781,18 @@ Specifically:
 
 # Status
 
-* [ ] Dataset preparation
+* [x] Dataset preparation script
+* [ ] Local Spider databases available in `data/databases/`
 * [x] Baseline 1 implementation
 * [x] Baseline 2 implementation
 * [x] Baseline 3 implementation
-* [ ] Recursive DB-RLM implementation
-* [ ] Evaluation
-* [ ] Error analysis
+* [x] Recursive DB-RLM implementation
+* [x] DB-RLM ablation switches
+* [x] Metadata extraction module
+* [x] Evidence workspace module
+* [x] Evaluation script
+* [x] Error analysis script
+* [ ] Full Recursive DB-RLM experiment run
 
 ---
 

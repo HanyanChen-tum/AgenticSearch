@@ -1,0 +1,222 @@
+[
+  {
+    "id": "dev_000228",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "flight_2",
+    "question": "Give the code of the airport with the least flights.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1",
+    "gold_answer": null,
+    "correct": false,
+    "error": "Database not found: C:\\Users\\Irene\\AgenticSearch\\data\\databases\\flight_2\\flight_2.sqlite",
+    "latency_seconds": 0.001,
+    "llm_calls": 0,
+    "iterations": 0,
+    "termination": "FileNotFoundError",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "dev_000051",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "pets_1",
+    "question": "Find number of pets owned by students who are older than 20.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20",
+    "gold_answer": null,
+    "correct": false,
+    "error": "Database not found: C:\\Users\\Irene\\AgenticSearch\\data\\databases\\pets_1\\pets_1.sqlite",
+    "latency_seconds": 0.0011,
+    "llm_calls": 0,
+    "iterations": 0,
+    "termination": "FileNotFoundError",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "dev_000563",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "student_transcripts_tracking",
+    "question": "On average, when were the transcripts printed?",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT avg(transcript_date) FROM Transcripts",
+    "gold_answer": null,
+    "correct": false,
+    "error": "Database not found: C:\\Users\\Irene\\AgenticSearch\\data\\databases\\student_transcripts_tracking\\student_transcripts_tracking.sqlite",
+    "latency_seconds": 0.0009,
+    "llm_calls": 0,
+    "iterations": 0,
+    "termination": "FileNotFoundError",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "dev_000501",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "battle_death",
+    "question": "What are the distinct battle names which are between bulgarian commander 'Kaloyan' and latin commander 'Baldwin I'?",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT name FROM battle WHERE bulgarian_commander  =  'Kaloyan' AND latin_commander  =  'Baldwin I'",
+    "gold_answer": null,
+    "correct": false,
+    "error": "Database not found: C:\\Users\\Irene\\AgenticSearch\\data\\databases\\battle_death\\battle_death.sqlite",
+    "latency_seconds": 0.001,
+    "llm_calls": 0,
+    "iterations": 0,
+    "termination": "FileNotFoundError",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "dev_000457",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "wta_1",
+    "question": "List the first and last name of all players who are left / L hand in the order of birth date.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT first_name ,  last_name FROM players WHERE hand  =  'L' ORDER BY birth_date",
+    "gold_answer": null,
+    "correct": false,
+    "error": "Database not found: C:\\Users\\Irene\\AgenticSearch\\data\\databases\\wta_1\\wta_1.sqlite",
+    "latency_seconds": 0.0009,
+    "llm_calls": 0,
+    "iterations": 0,
+    "termination": "FileNotFoundError",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "dev_000285",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "employee_hire_evaluation",
+    "question": "Find the name of the shops that do not hire any employee.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT name FROM shop WHERE shop_id NOT IN (SELECT shop_id FROM hiring)",
+    "gold_answer": null,
+    "correct": false,
+    "error": "Database not found: C:\\Users\\Irene\\AgenticSearch\\data\\databases\\employee_hire_evaluation\\employee_hire_evaluation.sqlite",
+    "latency_seconds": 0.001,
+    "llm_calls": 0,
+    "iterations": 0,
+    "termination": "FileNotFoundError",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "dev_000209",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "flight_2",
+    "question": "How many flights arriving in Aberdeen city?",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.City  =  \"Aberdeen\"",
+    "gold_answer": null,
+    "correct": false,
+    "error": "Database not found: C:\\Users\\Irene\\AgenticSearch\\data\\databases\\flight_2\\flight_2.sqlite",
+    "latency_seconds": 0.001,
+    "llm_calls": 0,
+    "iterations": 0,
+    "termination": "FileNotFoundError",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "dev_000178",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "car_1",
+    "question": "What are the ids and names of all countries that either have more than 3 car makers or produce fiat model ?",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  3 union select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country join model_list as t3 on t2.id  =  t3.maker where t3.model  =  'fiat';",
+    "gold_answer": null,
+    "correct": false,
+    "error": "Database not found: C:\\Users\\Irene\\AgenticSearch\\data\\databases\\car_1\\car_1.sqlite",
+    "latency_seconds": 0.0011,
+    "llm_calls": 0,
+    "iterations": 0,
+    "termination": "FileNotFoundError",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "dev_000864",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "network_1",
+    "question": "Show the names and grades of each high schooler.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT name ,  grade FROM Highschooler",
+    "gold_answer": null,
+    "correct": false,
+    "error": "Database not found: C:\\Users\\Irene\\AgenticSearch\\data\\databases\\network_1\\network_1.sqlite",
+    "latency_seconds": 0.0009,
+    "llm_calls": 0,
+    "iterations": 0,
+    "termination": "FileNotFoundError",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "dev_000065",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "pets_1",
+    "question": "Find the first name and age of students who have a dog but do not have a cat as a pet.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+    "gold_answer": null,
+    "correct": false,
+    "error": "Database not found: C:\\Users\\Irene\\AgenticSearch\\data\\databases\\pets_1\\pets_1.sqlite",
+    "latency_seconds": 0.0013,
+    "llm_calls": 0,
+    "iterations": 0,
+    "termination": "FileNotFoundError",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  }
+]

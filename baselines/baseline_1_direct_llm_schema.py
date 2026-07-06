@@ -118,7 +118,11 @@ def run_one(example: dict[str, Any], prompt_template: str, database_dir: Path) -
         "correct": (
             predicted_exec["error"] is None
             and gold_exec["error"] is None
-            and is_correct(predicted_exec["answer"], gold_exec["answer"])
+            and is_correct(
+                predicted_exec["answer"],
+                gold_exec["answer"],
+                gold_sql=example["gold_sql"],
+            )
         ),
         "error": error,
         "latency_seconds": round(latency_seconds, 4),

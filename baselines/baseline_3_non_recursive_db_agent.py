@@ -360,7 +360,11 @@ def run_one(
         "correct": (
             predicted_exec["error"] is None
             and gold_exec["error"] is None
-            and is_correct(predicted_exec["answer"], gold_exec["answer"])
+            and is_correct(
+                predicted_exec["answer"],
+                gold_exec["answer"],
+                gold_sql=example["gold_sql"],
+            )
         ),
         "error": error,
         "latency_seconds": round(latency_seconds, 4),

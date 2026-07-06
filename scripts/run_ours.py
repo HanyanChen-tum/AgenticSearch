@@ -24,6 +24,18 @@ from shared.evaluator import is_correct
 from shared.sql_executor import execute_sql
 
 
+def build_variant_name(args: argparse.Namespace) -> str:
+    parts = ["ours"]
+    if args.use_metadata:
+        parts.append("metadata")
+    parts.append("rlm" if args.use_recursion else "no_rlm")
+    if args.use_workspace:
+        parts.append("workspace")
+    if args.prompt_version != "recursive":
+        parts.append(f"prompt_{args.prompt_version}")
+    return "_".join(parts)
+
+
 def run_one(example: dict, database_dir: Path, agent: DBRLM) -> dict:
     import time
     db_path = get_db_path(database_dir, example["db_id"])
@@ -60,13 +72,18 @@ def run_one(example: dict, database_dir: Path, agent: DBRLM) -> dict:
         "correct": (
             predicted_exec.get("error") is None
             and gold_exec.get("error") is None
-            and is_correct(predicted_exec.get("answer"), gold_exec.get("answer"))
+            and is_correct(
+                predicted_exec.get("answer"),
+                gold_exec.get("answer"),
+                gold_sql=example["gold_sql"],
+            )
         ),
         "error": predicted_exec.get("error") or gold_exec.get("error"),
         "latency_seconds": round(time.perf_counter() - started, 4),
         "llm_calls": agent.stats["llm_calls"],
         "iterations": agent.stats["iterations"],
         "termination": termination,
+        "ablation_config": agent.experiment_config.to_dict(),
     }
 
 
@@ -74,11 +91,22 @@ def main():
     parser = argparse.ArgumentParser(description="Run recursive DB-RLM on Spider")
     parser.add_argument("--dataset",      default=str(PROJECT_ROOT / "data/processed/dev_questions_sample_50.json"))
     parser.add_argument("--database-dir", default=str(PROJECT_ROOT / "data/databases"))
-    parser.add_argument("--output",       default=str(PROJECT_ROOT / "results/ours_groq_test.json"))
+    parser.add_argument("--output",       default=None)
     parser.add_argument("--model",        default="groq/llama-3.3-70b-versatile")
+    parser.add_argument("--recursive-model", default=None)
     parser.add_argument("--api-base",     default=None, help="API base URL (e.g. http://localhost:11434 for Ollama)")
     parser.add_argument("--limit",        type=int, default=None)
     parser.add_argument("--max-iterations", type=int, default=8)
+    parser.add_argument("--max-depth", type=int, default=3)
+    parser.add_argument("--use-metadata", action="store_true")
+    parser.add_argument("--use-recursion", dest="use_recursion", action="store_true", default=True)
+    parser.add_argument("--no-recursion", dest="use_recursion", action="store_false")
+    parser.add_argument("--use-workspace", action="store_true")
+    parser.add_argument(
+        "--prompt-version",
+        choices=("basic", "recursive", "workspace"),
+        default="recursive",
+    )
     parser.add_argument("--sleep", type=float, default=0, help="Seconds between questions (set ~20 for Groq free tier)")
     args = parser.parse_args()
 
@@ -97,13 +125,19 @@ def main():
 
     agent = DBRLM(
         model=args.model,
+        recursive_model=args.recursive_model or args.model,
         api_key=api_key,
         api_base=args.api_base,
         max_iterations=args.max_iterations,
+        max_depth=args.max_depth,
+        use_metadata=args.use_metadata,
+        use_recursion=args.use_recursion,
+        use_workspace=args.use_workspace,
+        prompt_version=args.prompt_version,
         temperature=0,
     )
 
-    output_path = Path(args.output)
+    output_path = Path(args.output) if args.output else PROJECT_ROOT / "results" / f"{build_variant_name(args)}.json"
     output_path.parent.mkdir(exist_ok=True)
 
     # Resume from partial results if file already exists
@@ -116,6 +150,8 @@ def main():
 
     questions = [q for q in questions if q["id"] not in done_ids]
     print(f"Running {len(questions)} questions with {args.model}")
+    print(f"Ablation config: {agent.experiment_config.to_dict()}")
+    print(f"Output: {output_path}")
 
     for ex in tqdm(questions, desc="DB-RLM"):
         agent._llm_calls = 0
@@ -123,7 +159,7 @@ def main():
         try:
             results.append(run_one(ex, Path(args.database_dir), agent))
         except KeyboardInterrupt:
-            print(f"\nInterrupted — {len(results)} results saved to {args.output}")
+            print(f"\nInterrupted - {len(results)} results saved to {output_path}")
             output_path.write_text(json.dumps(results, indent=2))
             break
         output_path.write_text(json.dumps(results, indent=2))
@@ -132,7 +168,7 @@ def main():
     total = len(results)
     correct = sum(1 for r in results if r["correct"])
     print(f"\nAccuracy: {correct}/{total} = {correct/total:.2%}")
-    print(f"Results saved to {args.output}")
+    print(f"Results saved to {output_path}")
 
 
 if __name__ == "__main__":

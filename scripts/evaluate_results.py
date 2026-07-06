@@ -99,6 +99,40 @@ def compare_results(results_dir: str | Path = config.RESULTS_DIR) -> list[dict[s
     return summary
 
 
+def compare_result_files(paths: list[str | Path]) -> list[dict[str, Any]]:
+    summary = []
+    for raw_path in paths:
+        path = Path(raw_path)
+        if not path.exists():
+            summary.append(
+                {
+                    "method": path.stem,
+                    "total": 0,
+                    "correct": 0,
+                    "execution_accuracy": None,
+                    "avg_latency_seconds": None,
+                    "total_input_tokens": None,
+                    "total_output_tokens": None,
+                    "total_tool_calls": None,
+                    "avg_tool_calls": None,
+                    "error_counts": {"missing_result_file": 1},
+                }
+            )
+            continue
+
+        rows = read_json(path)
+        if not isinstance(rows, list):
+            raise ValueError(f"Expected result list in {path}")
+        method = rows[0].get("method") if rows else path.stem
+        ablation = rows[0].get("ablation_config") if rows else None
+        method_name = path.stem if ablation else str(method)
+        row = summarize_results(method_name, rows)
+        if ablation:
+            row["ablation_config"] = ablation
+        summary.append(row)
+    return summary
+
+
 def print_summary(summary: list[dict[str, Any]]) -> None:
     headers = [
         "method",
@@ -133,12 +167,22 @@ def parse_args() -> argparse.Namespace:
         default=str(config.RESULTS_DIR / "summary_metrics.json"),
         help="Path for summary metrics JSON.",
     )
+    parser.add_argument(
+        "--result-files",
+        nargs="+",
+        default=None,
+        help="Specific result JSON files to compare. Overrides the default method list.",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    summary = compare_results(args.results_dir)
+    summary = (
+        compare_result_files(args.result_files)
+        if args.result_files
+        else compare_results(args.results_dir)
+    )
     write_json(args.output, summary)
     print_summary(summary)
 
