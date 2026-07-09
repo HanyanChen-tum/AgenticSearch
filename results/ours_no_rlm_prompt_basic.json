@@ -218,5 +218,4037 @@
       "use_workspace": false,
       "prompt_version": "basic"
     }
+  },
+  {
+    "id": "bird_mini_dev_000000",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?\n\nEvidence: ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0975,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000001",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "In 2012, who had the least consumption in LAM?\n\nEvidence: Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+    "gold_answer": [
+      [
+        47273
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.3585,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000002",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the average monthly consumption of customers in SME for the year 2013?\n\nEvidence: Average Monthly consumption = AVG(Consumption) / 12; Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT AVG(T2.Consumption) / 12 FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME'",
+    "gold_answer": [
+      [
+        459.9562642870894
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.1316,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000003",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the difference in gas consumption between CZK-paying customers and EUR-paying customers in 2012?\n\nEvidence: Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year; Difference in Consumption = CZK customers consumption in 2012 - EUR customers consumption in 2012",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT SUM(IIF(T1.Currency = 'CZK', T2.Consumption, 0)) - SUM(IIF(T1.Currency = 'EUR', T2.Consumption, 0)) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2012'",
+    "gold_answer": [
+      [
+        402524570.17
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.1306,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000004",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Which year recorded the most consumption of gas paid in CZK?\n\nEvidence: The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT SUBSTR(T2.Date, 1, 4) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'CZK' GROUP BY SUBSTR(T2.Date, 1, 4) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "2013"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.3034,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000005",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the gas consumption peak month for SME customers in 2013?\n\nEvidence: Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT SUBSTR(T2.Date, 5, 2) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME' GROUP BY SUBSTR(T2.Date, 5, 2) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "04"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.2676,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000006",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the difference in the annual average consumption of the customers with the least amount of consumption paid in CZK for 2013 between SME and LAM, LAM and KAM, and KAM and SME?\n\nEvidence: annual average consumption of customer with the lowest consumption in each segment = total consumption per year / the number of customer with lowest consumption in each segment; Difference in annual average = SME's annual average - LAM's annual average; Difference in annual average = LAM's annual average - KAM's annual average; Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(T1.Segment = 'SME', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) - CAST(SUM(IIF(T1.Segment = 'LAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) , CAST(SUM(IIF(T1.Segment = 'LAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) - CAST(SUM(IIF(T1.Segment = 'KAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) , CAST(SUM(IIF(T1.Segment = 'KAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) - CAST(SUM(IIF(T1.Segment = 'SME', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'CZK' AND T2.Consumption = ( SELECT MIN(Consumption) FROM yearmonth ) AND T2.Date BETWEEN 201301 AND 201312",
+    "gold_answer": [
+      [
+        0.0,
+        582092.86,
+        -582092.86
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.4116,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000007",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Which of the three segments\u9225\u64f2ME, LAM and KAM\u9225\u6508as the biggest and lowest percentage increases in consumption paid in EUR between 2012 and 2013?\n\nEvidence: Increase or Decrease = consumption for 2013 - consumption for 2012; Percentage of Increase = (Increase or Decrease / consumption for 2013) * 100%; The first 4 strings of the Date values in the yearmonth table can represent year",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST((SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2012%', T2.Consumption, 0))) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2012%', T2.Consumption, 0)), CAST(SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) , CAST(SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID",
+    "gold_answer": [
+      [
+        545.4018999790969,
+        681.5824574939339,
+        708.1124062978664
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.3044,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000008",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "How much did customer 6 consume in total between August and November 2013?\n\nEvidence: Between August And November 2013 refers to Between 201308 And 201311; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT SUM(Consumption) FROM yearmonth WHERE CustomerID = 6 AND Date BETWEEN '201308' AND '201311'",
+    "gold_answer": [
+      [
+        1224.96
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.1212,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000009",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "How many more \"discount\" gas stations does the Czech Republic have compared to Slovakia?\n\nEvidence: Czech Republic can be represented as the Country value in gasstations table is 'CZE'; Slovakia can be represented as the Country value in the gasstations table is 'SVK';  Computation of more \"discount\" gas stations= Total no. of discount gas stations in Czech Republic - Total no. of discount gas stations in Slovakia",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT SUM(IIF(Country = 'CZE', 1, 0)) - SUM(IIF(Country = 'SVK', 1, 0)) FROM gasstations WHERE Segment = 'Discount'",
+    "gold_answer": [
+      [
+        176
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0991,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000010",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Is it true that more SMEs pay in Czech koruna than in euros? If so, how many more?\n\nEvidence: Amount of more SMEs = Total of SMEs pay using Currency CZK - Total of SMEs pay using Currency EUR",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT SUM(Currency = 'CZK') - SUM(Currency = 'EUR') FROM customers WHERE Segment = 'SME'",
+    "gold_answer": [
+      [
+        23505
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0824,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000011",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "How many percent of LAM customer consumed more than 46.73?\n\nEvidence: Percentage of LAM customer consumed more than 46.73 = (Total no. of LAM customers who consumed more than 46.73 / Total no. of LAM customers) * 100.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(T2.Consumption > 46.73, 1, 0)) AS FLOAT) * 100 / COUNT(T1.CustomerID) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM'",
+    "gold_answer": [
+      [
+        98.5267932135058
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.1125,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000012",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "In February 2012, what percentage of customers consumed more than 528.3?\n\nEvidence: February 2012 refers to '201202' in yearmonth.date; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(Consumption > 528.3, 1, 0)) AS FLOAT) * 100 / COUNT(CustomerID) FROM yearmonth WHERE Date = '201202'",
+    "gold_answer": [
+      [
+        66.62300807683911
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0816,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000013",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the highest monthly consumption in the year 2012?\n\nEvidence: The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT SUM(Consumption) FROM yearmonth WHERE SUBSTR(Date, 1, 4) = '2012' GROUP BY SUBSTR(Date, 5, 2) ORDER BY SUM(Consumption) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        51787161.74
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.1794,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000014",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Please list the product description of the products consumed in September, 2013.\n\nEvidence: September 2013 refers to 201309; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T3.Description FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Date = '201309'",
+    "gold_answer": [
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Prev.n\u00e1plne"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel aditiv"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Um\u00fdvanie voz"
+      ],
+      [
+        "Prev.n\u00e1plne"
+      ],
+      [
+        "Um\u00fdvanie voz"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel aditiv"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Um\u00fdvanie voz"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Autokozmetik"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Um\u00fdvanie voz"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Zpr.nakupu"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Autopr\u00edslu\u0161."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural +"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel aditiv"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Prev.n\u00e1plne"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Zpr.nakupu"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Autopr\u00edslu\u0161."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Autopr\u00edslu\u0161."
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Knihy,nov."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Zbo\u017e\u00ed nesp."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Autopr\u00edslu\u0161."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Obcerstven\u00ed"
+      ],
+      [
+        "Zbo\u017e\u00ed nesp."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Zpr.nakupu"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Additivum"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Autopr\u00edslu\u0161."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Autopr\u00edslu\u0161."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Obcerstven\u00ed"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Zpr.nakupu"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0658,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000015",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Please list the countries of the gas stations with transactions taken place in June, 2013.\n\nEvidence: June 2013 refers to '201306'; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month;",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT DISTINCT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN yearmonth AS T3 ON T1.CustomerID = T3.CustomerID WHERE T3.Date = '201306'",
+    "gold_answer": [
+      [
+        "CZE"
+      ],
+      [
+        "SVK"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0648,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000016",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Among the customers who paid in euro, how many of them have a monthly consumption of over 1000?\n\nEvidence: Pays in euro = Currency = 'EUR'.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT COUNT(*) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Currency = 'EUR' AND T1.Consumption > 1000.00",
+    "gold_answer": [
+      [
+        2730
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.1218,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000017",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Please list the product descriptions of the transactions taken place in the gas stations in the Czech Republic.\n\nEvidence: Czech Republic can be represented as the Country value in the gasstations table is 'CZE';",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT DISTINCT T3.Description FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Country = 'CZE'",
+    "gold_answer": [
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.n\u00e1pl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Myt\u00ed vozidel"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Zpr.nakupu"
+      ],
+      [
+        "Autopr\u00edslu\u0161."
+      ],
+      [
+        "Natural +"
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Knihy,nov."
+      ],
+      [
+        "Zbo\u017e\u00ed nesp."
+      ],
+      [
+        "Obcerstven\u00ed"
+      ],
+      [
+        "Additivum"
+      ],
+      [
+        "Natural Plus"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.054,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000018",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Please list the disparate time of the transactions taken place in the gas stations from chain no. 11.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT DISTINCT T1.Time FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T2.ChainID = 11",
+    "gold_answer": [
+      [
+        "14:29:00"
+      ],
+      [
+        "11:55:00"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0491,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000019",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Among the transactions made in the gas stations in the Czech Republic, how many of them are taken place after 2012/1/1?\n\nEvidence: Czech Republic can be represented as the Country value in the gasstations table is 'CZE'",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT COUNT(T1.TransactionID) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T2.Country = 'CZE' AND STRFTIME('%Y', T1.Date) >= '2012'",
+    "gold_answer": [
+      [
+        933
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0561,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000020",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What kind of currency did the customer paid at 16:25:00 in 2012/8/24?\n\nEvidence: '2012/8/24' can be represented by '2012-08-24';",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT DISTINCT T3.Currency FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN customers AS T3 ON T1.CustomerID = T3.CustomerID WHERE T1.Date = '2012-08-24' AND T1.Time = '16:25:00'",
+    "gold_answer": [
+      [
+        "CZK"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0867,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000021",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What segment did the customer have at 2012/8/23 21:20:00?\n\nEvidence: '2012/8/23' can be represented by '2012-08-23'",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T2.Segment FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.date = '2012-08-23' AND T1.time = '21:20:00'",
+    "gold_answer": [
+      [
+        "KAM"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0551,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000022",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "For all the transactions happened during 8:00-9:00 in 2012/8/26, how many happened in CZE?\n\nEvidence: Czech Republic can be represented as the Country value in the gasstations table is 'CZE'; '2012/8/26' can be represented by '2012-08-26'; during 8:00-9:00 can be represented as Time BETWEEN '08:00:00' AND '09:00:00'",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT COUNT(T1.TransactionID) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-26' AND T1.Time BETWEEN '08:00:00' AND '09:00:00' AND T2.Country = 'CZE'",
+    "gold_answer": [
+      [
+        14
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0482,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000023",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What's the nationality of the customer who spent 548.4 in 2012/8/24?\n\nEvidence: '2012/8/24' can be represented by '2012-08-24'",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-24' AND T1.Price  = 548.4",
+    "gold_answer": [
+      [
+        "CZE"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0533,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000024",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the percentage of the customers who used EUR in 2012/8/25?\n\nEvidence: '2012/8/25' can be represented by '2012-08-25'",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(T2.Currency = 'EUR', 1, 0)) AS FLOAT) * 100 / COUNT(T1.CustomerID) FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-25'",
+    "gold_answer": [
+      [
+        1.6470588235294117
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0468,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000025",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "For the customer who paid 634.8 in 2012/8/25, what was the consumption decrease rate from Year 2012 to 2013?\n\nEvidence: '2012/8/24' can be represented by '2012-08-24'; Consumption decrease rate = (consumption_2012 - consumption_2013) / consumption_2012",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) - SUM(IIF(SUBSTRING(Date, 1, 4) = '2013', Consumption, 0)) AS FLOAT) / SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) FROM yearmonth WHERE CustomerID = ( SELECT T1.CustomerID FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-25' AND T1.Price  = 1513.12 )",
+    "gold_answer": [
+      [
+        null
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0841,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000026",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the percentage of \"premium\" against the overall segment in Country = \"SVK\"?",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(Country = 'SVK' AND Segment = 'Premium', 1, 0)) AS FLOAT) * 100 / SUM(IIF(Country = 'SVK', 1, 0)) FROM gasstations",
+    "gold_answer": [
+      [
+        35.68181818181818
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.051,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000027",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the amount spent by customer \"38508\" at the gas stations? How much had the customer spent in January 2012?\n\nEvidence: January 2012 refers to the Date value = '201201'",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT SUM(T1.Price ) , SUM(IIF(T3.Date = '201201', T1.Price, 0)) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN yearmonth AS T3 ON T1.CustomerID = T3.CustomerID WHERE T1.CustomerID = '38508'",
+    "gold_answer": [
+      [
+        68740.2,
+        3437.01
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.1005,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000028",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Who is the top spending customer and how much is the average price per single item purchased by this customer? What currency was being used?\n\nEvidence: average price per single item = Total(price) / Total(amount)",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T2.CustomerID, SUM(T2.Price / T2.Amount), T1.Currency FROM customers AS T1 INNER JOIN transactions_1k AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.CustomerID = ( SELECT CustomerID FROM yearmonth ORDER BY Consumption DESC LIMIT 1 ) GROUP BY T2.CustomerID, T1.Currency",
+    "gold_answer": [
+      [
+        12459,
+        203.8560787354258,
+        "CZK"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0993,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000029",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "For all the people who paid more than 29.00 per unit of product id No.5. Give their consumption status in the August of 2012.\n\nEvidence: August of 2012 refers to the Date value = '201208' ; Price per unit of product = Price / Amount;",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T2.Consumption FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Price / T1.Amount > 29.00 AND T1.ProductID = 5 AND T2.Date = '201208'",
+    "gold_answer": [
+      [
+        1903.2
+      ],
+      [
+        88265.39
+      ],
+      [
+        1129.2
+      ],
+      [
+        126157.7
+      ],
+      [
+        126157.7
+      ],
+      [
+        58.19
+      ],
+      [
+        1142.95
+      ],
+      [
+        8878.07
+      ],
+      [
+        69331.72
+      ],
+      [
+        45937.22
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0498,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000030",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "student_club",
+    "question": "What's Angela Sanders's major?\n\nEvidence: Angela Sanders is the full name; full name refers to first_name, last_name; major refers to major_name.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T2.major_name FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.first_name = 'Angela' AND T1.last_name = 'Sanders'",
+    "gold_answer": [
+      [
+        "Business"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.05,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000031",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "student_club",
+    "question": "Among the students from the Student_Club who attended the event \"Women's Soccer\", how many of them want a T-shirt that's in medium size?\n\nEvidence: Women's Soccer is an event name; T-shirt that is in medium size refers to t_shirt_size = 'Medium'",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT COUNT(T1.event_id) FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event INNER JOIN member AS T3 ON T2.link_to_member = T3.member_id WHERE T1.event_name = 'Women''s Soccer' AND T3.t_shirt_size = 'Medium'",
+    "gold_answer": [
+      [
+        7
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0517,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000032",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "student_club",
+    "question": "Among the events attended by more than 10 members of the Student_Club, how many of them are meetings?\n\nEvidence: meetings events refers to type = 'Meeting'; attended by more than 10 members refers to COUNT(event_id) > 10",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT COUNT(DISTINCT T1.event_id) FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event WHERE T1.type = 'Meeting' GROUP BY T1.event_id HAVING COUNT(T2.link_to_event) > 10",
+    "gold_answer": [
+      [
+        1
+      ],
+      [
+        1
+      ],
+      [
+        1
+      ],
+      [
+        1
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0503,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000033",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "student_club",
+    "question": "List all the names of events that had an attendance of over 20 students but were not fundraisers.\n\nEvidence: name of events refers to event_name; attendance of over 20 students COUNT(event_id) > 20.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T1.event_name FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event GROUP BY T1.event_id HAVING COUNT(T2.link_to_event) > 20 EXCEPT SELECT T1.event_name FROM event AS T1  WHERE T1.type = 'Fundraiser'",
+    "gold_answer": [
+      [
+        "November Meeting"
+      ],
+      [
+        "November Speaker"
+      ],
+      [
+        "October Meeting"
+      ],
+      [
+        "October Speaker"
+      ],
+      [
+        "Registration"
+      ],
+      [
+        "September Meeting"
+      ],
+      [
+        "September Speaker"
+      ],
+      [
+        "Yearly Kickoff"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0526,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000034",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "student_club",
+    "question": "What is the amount of the funds that the Vice President received?\n\nEvidence: 'Vice President' is a position of Student Club; funds received refers to amount.",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T2.amount FROM member AS T1 INNER JOIN income AS T2 ON T1.member_id = T2.link_to_member WHERE T1.position = 'Vice President'",
+    "gold_answer": [
+      [
+        50
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.05,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000035",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "student_club",
+    "question": "List the full name of the Student_Club members that grew up in Illinois state.\n\nEvidence: full name of member refers to first_name, last_name",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN zip_code AS T2 ON T1.zip = T2.zip_code WHERE T2.state = 'Illinois'",
+    "gold_answer": [
+      [
+        "Trent",
+        "Smith"
+      ],
+      [
+        "Tyler",
+        "Hewitt"
+      ],
+      [
+        "Annabella",
+        "Warren"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.055,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000036",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "student_club",
+    "question": "Was each expense in October Meeting on October 8, 2019 approved?\n\nEvidence: event_name = 'October Meeting' where event_date = '2019-10-08'; approved = True means expenses was approved; approved = False means expenses was not approved",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T3.approved FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget WHERE T1.event_name = 'October Meeting' AND T1.event_date LIKE '2019-10-08%'",
+    "gold_answer": [
+      [
+        "true"
+      ],
+      [
+        "true"
+      ],
+      [
+        "true"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: GroqException - {\"error\":{\"message\":\"Invalid API Key\",\"type\":\"invalid_request_error\",\"code\":\"invalid_api_key\"}}\n",
+    "latency_seconds": 0.0549,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "BadRequestError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
   }
 ]

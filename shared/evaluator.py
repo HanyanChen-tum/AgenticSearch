@@ -5,12 +5,27 @@ from __future__ import annotations
 from typing import Any
 
 
+def canonical_sort_key(value: Any) -> Any:
+    """Return a deterministic key for values Python cannot directly compare."""
+    if value is None:
+        return (0, "")
+    if isinstance(value, bool):
+        return (1, int(value))
+    if isinstance(value, (int, float)):
+        return (2, value)
+    if isinstance(value, str):
+        return (3, value)
+    if isinstance(value, (list, tuple)):
+        return (4, tuple(canonical_sort_key(item) for item in value))
+    return (5, repr(value))
+
+
 def normalize_answer(answer: Any, *, preserve_order: bool = False) -> Any:
     if answer is None:
         return None
 
     rows = [tuple(row) for row in answer]
-    return rows if preserve_order else sorted(rows)
+    return rows if preserve_order else sorted(rows, key=canonical_sort_key)
 
 
 def sql_requires_order(sql: str | None) -> bool:

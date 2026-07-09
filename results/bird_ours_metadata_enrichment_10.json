@@ -1,0 +1,333 @@
+[
+  {
+    "id": "bird_mini_dev_000000",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?\n\nEvidence: ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+    "predicted_sql": "SELECT 1.0 * SUM(CASE WHEN Currency = 'EUR' THEN 1 ELSE 0 END) / SUM(CASE WHEN Currency = 'CZK' THEN 1 ELSE 0 END) AS ratio_of_eur_to_czk_customers FROM customers;",
+    "predicted_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 1.9084,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000001",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "In 2012, who had the least consumption in LAM?\n\nEvidence: Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "SELECT ym.CustomerID\nFROM yearmonth AS ym\nJOIN customers AS c\n  ON c.CustomerID = ym.CustomerID\nWHERE substr(ym.Date, 1, 4) = '2012'\n  AND c.Segment = 'LAM'\nORDER BY ym.Consumption ASC, ym.CustomerID ASC\nLIMIT 1",
+    "predicted_answer": [
+      [
+        7653
+      ]
+    ],
+    "gold_sql": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+    "gold_answer": [
+      [
+        47273
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 3.9714,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000002",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the average monthly consumption of customers in SME for the year 2013?\n\nEvidence: Average Monthly consumption = AVG(Consumption) / 12; Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "SELECT AVG(ym.Consumption) / 12.0 AS average_monthly_consumption FROM yearmonth ym JOIN customers c ON ym.CustomerID = c.CustomerID WHERE c.Segment = 'SME' AND substr(ym.Date, 1, 4) = '2013'",
+    "predicted_answer": [
+      [
+        459.9562642870894
+      ]
+    ],
+    "gold_sql": "SELECT AVG(T2.Consumption) / 12 FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME'",
+    "gold_answer": [
+      [
+        459.9562642870894
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 5.4397,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000003",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the difference in gas consumption between CZK-paying customers and EUR-paying customers in 2012?\n\nEvidence: Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year; Difference in Consumption = CZK customers consumption in 2012 - EUR customers consumption in 2012",
+    "predicted_sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN ym.Consumption ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN ym.Consumption ELSE 0 END) AS difference_in_gas_consumption FROM yearmonth ym JOIN customers c ON ym.CustomerID = c.CustomerID WHERE ym.Date BETWEEN '201201' AND '201212';",
+    "predicted_answer": [
+      [
+        402524570.17
+      ]
+    ],
+    "gold_sql": "SELECT SUM(IIF(T1.Currency = 'CZK', T2.Consumption, 0)) - SUM(IIF(T1.Currency = 'EUR', T2.Consumption, 0)) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2012'",
+    "gold_answer": [
+      [
+        402524570.17
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 4.9875,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000004",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Which year recorded the most consumption of gas paid in CZK?\n\nEvidence: The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "SELECT SUBSTR(Date, 1, 4) AS year FROM yearmonth JOIN customers USING (CustomerID) WHERE customers.Currency = 'CZK' GROUP BY SUBSTR(Date, 1, 4) ORDER BY SUM(Consumption) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "2013"
+      ]
+    ],
+    "gold_sql": "SELECT SUBSTR(T2.Date, 1, 4) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'CZK' GROUP BY SUBSTR(T2.Date, 1, 4) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "2013"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 4.3712,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000005",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the gas consumption peak month for SME customers in 2013?\n\nEvidence: Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.",
+    "predicted_sql": "SELECT SUBSTR(y.Date, 1, 6) AS month, SUM(y.Consumption) AS total_consumption FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE c.Segment = 'SME' AND y.Date BETWEEN '201301' AND '201312' GROUP BY SUBSTR(y.Date, 1, 6) ORDER BY total_consumption DESC, month ASC LIMIT 1;",
+    "predicted_answer": [
+      [
+        "201304",
+        126047776.92
+      ]
+    ],
+    "gold_sql": "SELECT SUBSTR(T2.Date, 5, 2) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME' GROUP BY SUBSTR(T2.Date, 5, 2) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "04"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 5.9735,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000006",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the difference in the annual average consumption of the customers with the least amount of consumption paid in CZK for 2013 between SME and LAM, LAM and KAM, and KAM and SME?\n\nEvidence: annual average consumption of customer with the lowest consumption in each segment = total consumption per year / the number of customer with lowest consumption in each segment; Difference in annual average = SME's annual average - LAM's annual average; Difference in annual average = LAM's annual average - KAM's annual average; Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "WITH per_customer_2013 AS (\n  SELECT\n    c.Segment,\n    y.CustomerID,\n    SUM(y.Consumption) AS total_consumption_2013\n  FROM yearmonth y\n  JOIN customers c\n    ON c.CustomerID = y.CustomerID\n  WHERE c.Currency = 'CZK'\n    AND c.Segment IN ('SME', 'LAM', 'KAM')\n    AND substr(y.Date, 1, 4) = '2013'\n  GROUP BY c.Segment, y.CustomerID\n),\nmin_consumption AS (\n  SELECT Segment, MIN(total_consumption_2013) AS min_total_consumption_2013\n  FROM per_customer_2013\n  GROUP BY Segment\n),\nlowest_customers AS (\n  SELECT p.Segment, COUNT(*) AS num_lowest_customers\n  FROM per_customer_2013 p\n  JOIN min_consumption m\n    ON p.Segment = m.Segment\n   AND p.total_consumption_2013 = m.min_total_consumption_2013\n  GROUP BY p.Segment\n),\nsegment_annual_avg AS (\n  SELECT\n    m.Segment,\n    m.min_total_consumption_2013 / lc.num_lowest_customers AS annual_average_consumption\n  FROM min_consumption m\n  JOIN lowest_customers lc\n    ON m.Segment = lc.Segment\n)\nSELECT\n  s1.annual_average_consumption - s2.annual_average_consumption AS difference\nFROM segment_annual_avg s1\nJOIN segment_annual_avg s2\n  ON s1.Segment = 'SME' AND s2.Segment = 'LAM'\nUNION ALL\nSELECT\n  s1.annual_average_consumption - s2.annual_average_consumption AS difference\nFROM segment_annual_avg s1\nJOIN segment_annual_avg s2\n  ON s1.Segment = 'LAM' AND s2.Segment = 'KAM'\nUNION ALL\nSELECT\n  s1.annual_average_consumption - s2.annual_average_consumption AS difference\nFROM segment_annual_avg s1\nJOIN segment_annual_avg s2\n  ON s1.Segment = 'KAM' AND s2.Segment = 'SME';",
+    "predicted_answer": [
+      [
+        -14009.339999999998
+      ],
+      [
+        6046.619999999999
+      ],
+      [
+        7962.719999999999
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(T1.Segment = 'SME', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) - CAST(SUM(IIF(T1.Segment = 'LAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) , CAST(SUM(IIF(T1.Segment = 'LAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) - CAST(SUM(IIF(T1.Segment = 'KAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) , CAST(SUM(IIF(T1.Segment = 'KAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) - CAST(SUM(IIF(T1.Segment = 'SME', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'CZK' AND T2.Consumption = ( SELECT MIN(Consumption) FROM yearmonth ) AND T2.Date BETWEEN 201301 AND 201312",
+    "gold_answer": [
+      [
+        0.0,
+        582092.86,
+        -582092.86
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 9.611,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000007",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Which of the three segments\u2014SME, LAM and KAM\u2014has the biggest and lowest percentage increases in consumption paid in EUR between 2012 and 2013?\n\nEvidence: Increase or Decrease = consumption for 2013 - consumption for 2012; Percentage of Increase = (Increase or Decrease / consumption for 2013) * 100%; The first 4 strings of the Date values in the yearmonth table can represent year",
+    "predicted_sql": "WITH yearly AS (\n  SELECT\n    c.Segment,\n    SUBSTR(y.Date, 1, 4) AS yr,\n    SUM(y.Consumption) AS consumption\n  FROM yearmonth y\n  JOIN customers c\n    ON y.CustomerID = c.CustomerID\n  WHERE c.Segment IN ('SME', 'LAM', 'KAM')\n    AND c.Currency = 'EUR'\n    AND SUBSTR(y.Date, 1, 4) IN ('2012', '2013')\n  GROUP BY c.Segment, SUBSTR(y.Date, 1, 4)\n),\npivoted AS (\n  SELECT\n    Segment,\n    MAX(CASE WHEN yr = '2012' THEN consumption END) AS consumption_2012,\n    MAX(CASE WHEN yr = '2013' THEN consumption END) AS consumption_2013\n  FROM yearly\n  GROUP BY Segment\n),\ncalc AS (\n  SELECT\n    Segment,\n    ((consumption_2013 - consumption_2012) / consumption_2013) * 100.0 AS pct_increase\n  FROM pivoted\n  WHERE consumption_2012 IS NOT NULL\n    AND consumption_2013 IS NOT NULL\n    AND consumption_2013 <> 0\n)\nSELECT Segment\nFROM calc\nORDER BY pct_increase DESC\nLIMIT 1;",
+    "predicted_answer": [
+      [
+        "SME"
+      ]
+    ],
+    "gold_sql": "SELECT CAST((SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2012%', T2.Consumption, 0))) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2012%', T2.Consumption, 0)), CAST(SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) , CAST(SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID",
+    "gold_answer": [
+      [
+        545.4018999790969,
+        681.5824574939339,
+        708.1124062978664
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 7.2522,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000008",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "How much did customer 6 consume in total between August and November 2013?\n\nEvidence: Between August And November 2013 refers to Between 201308 And 201311; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.",
+    "predicted_sql": "SELECT SUM(Consumption) AS total_consumption FROM yearmonth WHERE CustomerID = 6 AND Date BETWEEN '201308' AND '201311';",
+    "predicted_answer": [
+      [
+        1224.96
+      ]
+    ],
+    "gold_sql": "SELECT SUM(Consumption) FROM yearmonth WHERE CustomerID = 6 AND Date BETWEEN '201308' AND '201311'",
+    "gold_answer": [
+      [
+        1224.96
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 4.4903,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000009",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "How many more \"discount\" gas stations does the Czech Republic have compared to Slovakia?\n\nEvidence: Czech Republic can be represented as the Country value in gasstations table is 'CZE'; Slovakia can be represented as the Country value in the gasstations table is 'SVK';  Computation of more \"discount\" gas stations= Total no. of discount gas stations in Czech Republic - Total no. of discount gas stations in Slovakia",
+    "predicted_sql": "SELECT (SELECT COUNT(*) FROM gasstations WHERE Country = 'CZE' AND Segment = 'Discount') - (SELECT COUNT(*) FROM gasstations WHERE Country = 'SVK' AND Segment = 'Discount') AS difference;",
+    "predicted_answer": [
+      [
+        176
+      ]
+    ],
+    "gold_sql": "SELECT SUM(IIF(Country = 'CZE', 1, 0)) - SUM(IIF(Country = 'SVK', 1, 0)) FROM gasstations WHERE Segment = 'Discount'",
+    "gold_answer": [
+      [
+        176
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 2.3332,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": false,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  }
+]

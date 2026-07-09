@@ -1,7 +1,10 @@
 """Core RLM implementation."""
 
 import asyncio
+import json
 import re
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 from typing import Optional, Dict, Any, List
 
 import litellm
@@ -68,6 +71,8 @@ class RLM:
         # Stats
         self._llm_calls = 0
         self._iterations = 0
+        self._input_tokens = 0
+        self._output_tokens = 0
 
     def complete(
         self,
@@ -138,7 +143,7 @@ class RLM:
         if query and not context:
             context = query
             query = ""
-        if self._current_depth >= self.max_depth:
+        if self._current_depth > self.max_depth:
             raise MaxDepthError(f"Max recursion depth ({self.max_depth}) exceeded")
 
         # Initialize REPL environment
@@ -223,6 +228,9 @@ class RLM:
         if self.api_key:
             call_kwargs['api_key'] = self.api_key
 
+        if model.startswith("azure/"):
+            return await self._call_azure_chat(model, messages, call_kwargs)
+
         # Call LiteLLM
         response = await litellm.acompletion(
             model=model,
@@ -230,8 +238,76 @@ class RLM:
             **call_kwargs
         )
 
+        usage = getattr(response, "usage", None)
+        self._input_tokens += int(getattr(usage, "prompt_tokens", 0) or 0)
+        self._output_tokens += int(getattr(usage, "completion_tokens", 0) or 0)
         # Extract text
         return response.choices[0].message.content
+
+    async def _call_azure_chat(
+        self,
+        model: str,
+        messages: List[Message],
+        call_kwargs: Dict[str, Any],
+    ) -> str:
+        api_base = str(call_kwargs.get("api_base") or self.api_base or "").rstrip("/")
+        api_key = str(call_kwargs.get("api_key") or self.api_key or "")
+        api_version = str(call_kwargs.get("api_version") or "2024-12-01-preview")
+        deployment = str(
+            call_kwargs.get("azure_deployment")
+            or call_kwargs.get("deployment")
+            or model.removeprefix("azure/")
+        )
+        temperature = call_kwargs.get("temperature", 1)
+        max_tokens = call_kwargs.get("max_completion_tokens", call_kwargs.get("max_tokens"))
+
+        if not api_base or not api_key or not deployment:
+            raise RuntimeError(
+                "Azure RLM call requires api_base, api_key, and deployment."
+            )
+
+        url = (
+            f"{api_base}/openai/deployments/{deployment}/chat/completions"
+            f"?api-version={api_version}"
+        )
+        payload: Dict[str, Any] = {
+            "messages": messages,
+            "temperature": temperature,
+        }
+        if max_tokens is not None:
+            payload["max_completion_tokens"] = max_tokens
+
+        request = Request(
+            url,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Content-Type": "application/json", "api-key": api_key},
+            method="POST",
+        )
+
+        def do_request() -> str:
+            try:
+                with urlopen(request, timeout=300) as response:
+                    result = json.loads(response.read().decode("utf-8"))
+            except HTTPError as error:
+                details = error.read().decode("utf-8", errors="replace")
+                raise RuntimeError(
+                    f"Azure OpenAI request failed ({error.code}): {details}"
+                ) from error
+            except URLError as error:
+                raise RuntimeError(
+                    f"Cannot connect to Azure OpenAI at {api_base}. "
+                    "Check api_base and api_version."
+                ) from error
+
+            try:
+                usage = result.get("usage") or {}
+                self._input_tokens += int(usage.get("prompt_tokens") or 0)
+                self._output_tokens += int(usage.get("completion_tokens") or 0)
+                return result["choices"][0]["message"]["content"]
+            except (KeyError, IndexError, TypeError) as error:
+                raise RuntimeError(f"Unexpected Azure OpenAI response: {result}") from error
+
+        return await asyncio.to_thread(do_request)
 
     def _build_repl_env(self, query: str, context: str) -> Dict[str, Any]:
         """
@@ -270,7 +346,7 @@ class RLM:
             Returns:
                 Answer from recursive call
             """
-            if self._current_depth + 1 >= self.max_depth:
+            if self._current_depth + 1 > self.max_depth:
                 return f"Max recursion depth ({self.max_depth}) reached"
 
             # Create sub-RLM with increased depth
@@ -315,4 +391,6 @@ class RLM:
             'llm_calls': self._llm_calls,
             'iterations': self._iterations,
             'depth': self._current_depth,
+            'input_tokens': self._input_tokens,
+            'output_tokens': self._output_tokens,
         }

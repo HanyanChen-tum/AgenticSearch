@@ -1,0 +1,28 @@
+[
+  {
+    "id": "bird_mini_dev_000000",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?\n\nEvidence: ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.APIConnectionError: AzureException APIConnectionError - Connection error.",
+    "latency_seconds": 2.0343,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "APIConnectionError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": true,
+      "use_workspace": false,
+      "prompt_version": "recursive"
+    }
+  }
+]

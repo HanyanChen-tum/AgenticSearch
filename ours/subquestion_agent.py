@@ -23,6 +23,10 @@ class SubquestionAgent:
     max_iterations: int = 6
     current_depth: int = 0
     use_metadata: bool = False
+    use_enrichment: bool = False
+    use_probe_queries: bool = False
+    use_schema_memory: bool = False
+    initial_top_k: int = 10
     use_workspace: bool = False
     prompt_version: str = "recursive"
     llm_kwargs: dict[str, Any] | None = None
@@ -34,7 +38,7 @@ class SubquestionAgent:
         execute that SQL in read-only mode so the parent receives compact,
         structured evidence instead of another long conversation.
         """
-        if self.current_depth + 1 >= self.max_depth:
+        if self.current_depth + 1 > self.max_depth:
             return {
                 "subquestion": question,
                 "sql": "",
@@ -68,6 +72,10 @@ class SubquestionAgent:
             max_iterations=self.max_iterations,
             _current_depth=self.current_depth + 1,
             use_metadata=self.use_metadata,
+            use_enrichment=self.use_enrichment,
+            use_probe_queries=self.use_probe_queries,
+            use_schema_memory=self.use_schema_memory,
+            initial_top_k=self.initial_top_k,
             use_recursion=True,
             use_workspace=self.use_workspace,
             prompt_version=self.prompt_version,
@@ -84,6 +92,9 @@ class SubquestionAgent:
                 "error": execution.get("error"),
                 "llm_calls": agent.stats["llm_calls"],
                 "iterations": agent.stats["iterations"],
+                "input_tokens": agent.stats["input_tokens"],
+                "output_tokens": agent.stats["output_tokens"],
+                "db_stats": agent.experiment_stats,
             }
         except Exception as error:
             return {
@@ -93,4 +104,6 @@ class SubquestionAgent:
                 "error": str(error),
                 "llm_calls": agent.stats["llm_calls"],
                 "iterations": agent.stats["iterations"],
+                "input_tokens": agent.stats["input_tokens"],
+                "output_tokens": agent.stats["output_tokens"],
             }

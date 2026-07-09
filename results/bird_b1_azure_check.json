@@ -1,0 +1,21 @@
+[
+  {
+    "id": "bird_mini_dev_000000",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?\n\nEvidence: ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": false,
+    "error": "Cannot connect to Azure OpenAI at https://gpt5openai.openai.azure.com. Check that AZURE_API_BASE and AZURE_API_VERSION are correct.",
+    "latency_seconds": 0.0824,
+    "input_tokens": null,
+    "output_tokens": null
+  }
+]

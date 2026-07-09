@@ -1,0 +1,25 @@
+[
+  {
+    "id": "bird_mini_dev_000000",
+    "method": "baseline_1_direct_llm_schema",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?\n\nEvidence: ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+    "predicted_sql": "SELECT 1.0 * SUM(CASE WHEN Currency = 'EUR' THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN Currency = 'CZK' THEN 1 ELSE 0 END), 0) AS ratio\nFROM customers;",
+    "predicted_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 1.9325,
+    "input_tokens": 314,
+    "output_tokens": 58
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "id": "bird_mini_dev_000000",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?\n\nEvidence: ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.UnsupportedParamsError: gpt-5 models (including gpt-5-codex) don't support temperature=0. Only temperature=1 is supported. For gpt-5.1, temperature is supported when reasoning_effort='none' (or not specified, as it defaults to 'none'). To drop unsupported params set `litellm.drop_params = True`",
+    "latency_seconds": 0.0434,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "UnsupportedParamsError",
+    "ablation_config": {
+      "use_metadata": false,
+      "use_recursion": true,
+      "use_workspace": false,
+      "prompt_version": "recursive"
+    }
+  }
+]

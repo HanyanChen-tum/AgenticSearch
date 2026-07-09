@@ -3,15 +3,14 @@ __pycache__/
 .DS_Store
 .venv/
 venv/
+.tmp/
 .env
 .env.*
 !.env.example
 logs/*.log
 
-data/raw/spider/database/
 data/databases/
-data/spider_data/
-data/spider_data.zip
+data/raw/bird/
 *.sqlite
 *.db
 .ipynb_checkpoints/

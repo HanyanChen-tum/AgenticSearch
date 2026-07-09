@@ -25,6 +25,40 @@ class DBEnvironment:
         if not self.db_path.exists():
             raise FileNotFoundError(f"Database not found: {self.db_path}")
         self._uri = f"{self.db_path.as_uri()}?mode=ro"
+        self._trace: list[dict[str, Any]] = []
+
+    def _record(self, tool: str, **details: Any) -> None:
+        self._trace.append({"tool": tool, **details})
+
+    def trace(self) -> list[dict[str, Any]]:
+        """Return a copy of database tool calls made during this run."""
+        return [dict(item) for item in self._trace]
+
+    def stats(self) -> dict[str, Any]:
+        """Return compact schema-exploration and tool-use statistics."""
+        inspected_tables = sorted(
+            {
+                str(item["table"])
+                for item in self._trace
+                if item["tool"] in {"get_schema", "sample_rows"} and item.get("table")
+            }
+        )
+        inspected_columns: dict[str, list[str]] = {}
+        for item in self._trace:
+            if item["tool"] != "get_schema" or not item.get("table"):
+                continue
+            inspected_columns[str(item["table"])] = list(item.get("columns") or [])
+        return {
+            "tool_calls": len(self._trace),
+            "retrieval_calls": sum(
+                item["tool"] in {"get_tables", "get_schema"} for item in self._trace
+            ),
+            "sql_execution_calls": sum(
+                item["tool"] == "execute" for item in self._trace
+            ),
+            "inspected_tables": inspected_tables,
+            "inspected_columns": inspected_columns,
+        }
 
     def _connect(self) -> sqlite3.Connection:
         return sqlite3.connect(self._uri, uri=True)
@@ -37,9 +71,17 @@ class DBEnvironment:
         """Return all table names in the database, sorted alphabetically."""
         with self._connect() as conn:
             rows = conn.execute(
-                "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
+                """
+                SELECT name
+                FROM sqlite_master
+                WHERE type='table'
+                  AND name NOT LIKE 'sqlite_%'
+                ORDER BY name
+                """
             ).fetchall()
-        return [row[0] for row in rows]
+        tables = [row[0] for row in rows]
+        self._record("get_tables", tables=tables)
+        return tables
 
     def get_schema(self, table: str) -> dict[str, Any]:
         """Return column definitions and foreign keys for *table*."""
@@ -48,7 +90,9 @@ class DBEnvironment:
             cols = conn.execute(f"PRAGMA table_info({quoted})").fetchall()
             fks = conn.execute(f"PRAGMA foreign_key_list({quoted})").fetchall()
         if not cols:
+            self._record("get_schema", table=table, columns=[], error="not found")
             return {"error": f"Table '{table}' not found"}
+        self._record("get_schema", table=table, columns=[c[1] for c in cols])
         return {
             "table": table,
             "columns": [
@@ -83,8 +127,10 @@ class DBEnvironment:
                 cursor = conn.execute(f"SELECT * FROM {quoted} LIMIT ?", (limit,))
                 columns = [d[0] for d in cursor.description or []]
                 rows = [list(r) for r in cursor.fetchall()]
+            self._record("sample_rows", table=table, limit=limit, error=None)
             return {"table": table, "columns": columns, "rows": rows, "error": None}
         except sqlite3.Error as e:
+            self._record("sample_rows", table=table, limit=limit, error=str(e))
             return {"table": table, "columns": [], "rows": [], "error": str(e)}
 
     # ------------------------------------------------------------------
@@ -107,6 +153,7 @@ class DBEnvironment:
                 columns = [d[0] for d in cursor.description or []]
                 rows = cursor.fetchall()
             truncated = len(rows) > MAX_ROWS
+            self._record("execute", sql=sql, error=None)
             return {
                 "columns": columns,
                 "rows": [list(r) for r in rows[:MAX_ROWS]],
@@ -114,6 +161,7 @@ class DBEnvironment:
                 "error": None,
             }
         except sqlite3.Error as e:
+            self._record("execute", sql=sql, error=str(e))
             return {"columns": [], "rows": [], "truncated": False, "error": str(e)}
 
     # ------------------------------------------------------------------

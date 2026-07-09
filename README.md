@@ -277,7 +277,8 @@ Is recursive decomposition with independent sub-exploration stronger than a norm
 
 # Dataset
 
-We use the Spider Text-to-SQL benchmark.
+The current experiments use BIRD Mini-Dev. Spider 1.0 is no longer part of
+the project dataset or evaluation plan.
 
 It contains:
 
@@ -289,111 +290,27 @@ SQLite databases
 Ground-truth SQL queries
 ```
 
-Original structure:
-
-```text
-data/spider_data/
-
-├── train_spider.json
-├── dev.json
-├── tables.json
-
-└── database/
-    ├── concert_singer/
-    │   └── concert_singer.sqlite
-    └── other databases
-```
-
-The Spider download is not stored in Git because it is large and contains
-files above GitHub's 100 MB file-size limit. After cloning this repository,
-download **Spider 1.0** from the official Yale page:
-
-- Dataset page: https://yale-lily.github.io/spider
-- Official code and evaluation repository: https://github.com/taoyds/spider
-
-On the dataset page, use the **Spider Dataset** link in the **Getting Started**
-section. It opens the official Google Drive download. This project uses Spider
-1.0, not Spider 2.0.
-
-After downloading the archive, extract it and place the extracted dataset at
-`data/spider_data/`. The final layout must be:
-
-```text
-AgenticSearch/
-└── data/
-    └── spider_data/
-        ├── train_spider.json
-        ├── dev.json
-        ├── tables.json
-        └── database/
-            ├── concert_singer/
-            │   └── concert_singer.sqlite
-            └── ...
-```
-
-Prepare all project inputs with one command:
-
-```bash
-python scripts/prepare_spider.py
-```
-
-This command:
-
-1. Converts `train_spider.json` and `dev.json` to the unified project format.
-2. Writes them to `data/processed/train_questions.json` and
-   `data/processed/dev_questions.json`.
-3. Creates database links under
-   `data/databases/{db_id}/{db_id}.sqlite`.
-
-Symbolic links are used by default, so preparing the data does not duplicate
-the downloaded databases. To copy the databases instead, for example on a
-system where symbolic links are unavailable, run:
-
-```bash
-python scripts/prepare_spider.py --database-mode copy
-```
-
-If Spider was extracted somewhere else, provide its directory:
-
-```bash
-python scripts/prepare_spider.py --spider-dir /path/to/spider
-```
-
-The source directory must contain `train_spider.json`, `dev.json`, and
-`database/`. The command is safe to run again: existing prepared databases are
-reused.
-
 ---
 
 # Unified Data Format
 
-Spider examples are converted into:
+BIRD examples use the following unified format:
 
 ```json
 {
-    "id": "001",
+    "id": "bird_mini_dev_000000",
 
-    "db_id": "concert_singer",
+    "db_id": "debit_card_specializing",
 
     "question":
-    "How many singers do we have?",
+    "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
 
     "gold_sql":
-    "SELECT count(*) FROM singer"
+    "SELECT ..."
 }
 ```
 
-Mapping:
-
-```text
-Spider Field     Project Field
-
-db_id        ->  db_id
-
-question     ->  question
-
-query        ->  gold_sql
-```
+The prepared file is `data/processed/bird_mini_dev_questions.json`.
 
 ---
 
@@ -615,11 +532,39 @@ LM Studio: http://localhost:1234/v1
 
 # Running Experiments
 
-Prepare dataset:
+Prepare BIRD Mini-Dev:
 
 ```bash
-python scripts/prepare_spider.py
+python scripts/prepare_bird.py --database-mode copy
 ```
+
+Run the focused bounded-schema RLM pilot:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_rlm_schema_suite.py `
+  --limit 10 `
+  --top-k 5 10 20 `
+  --depths 0 1 2 `
+  --model "<fixed-model>" `
+  --temperature 0
+```
+
+The BIRD Mini-Dev helper expects the official complete package archive at:
+
+```text
+data/raw/bird/minidev_0703.zip
+```
+
+It writes:
+
+```text
+data/processed/bird_mini_dev_questions.json
+data/databases/{db_id}/{db_id}.sqlite
+```
+
+For compatibility with the current runners, the script appends BIRD `evidence`
+to the natural-language `question` by default. Use `--exclude-evidence` to keep
+the original question text unchanged.
 
 The command expects the downloaded Spider dataset in `data/spider_data/`.
 See the [Dataset](#dataset) section for the required layout and alternative
@@ -633,6 +578,14 @@ python scripts/run_baseline_1.py
 python scripts/run_baseline_2.py
 
 python scripts/run_baseline_3.py
+```
+
+Run baselines on BIRD Mini-Dev:
+
+```bash
+python scripts/run_baseline_1.py --dataset data/processed/bird_mini_dev_questions.json
+python scripts/run_baseline_2.py --dataset data/processed/bird_mini_dev_questions.json
+python scripts/run_baseline_3.py --dataset data/processed/bird_mini_dev_questions.json
 ```
 
 Run all three baselines sequentially over the complete development set:
@@ -677,6 +630,12 @@ python scripts/run_ours.py --limit 10 --no-recursion --prompt-version basic
 # Add metadata extraction
 python scripts/run_ours.py --limit 10 --no-recursion --prompt-version basic --use-metadata
 
+# Add query enrichment based on schema tokens and sampled values
+python scripts/run_ours.py --limit 10 --no-recursion --prompt-version basic --use-metadata --use-enrichment
+
+# Add automatic probe queries and store their results in the context/workspace
+python scripts/run_ours.py --limit 10 --no-recursion --prompt-version basic --use-metadata --use-enrichment --use-probe-queries
+
 # Add RLM-style recursive sub-questions
 python scripts/run_ours.py --limit 10 --use-metadata
 
@@ -692,8 +651,48 @@ answer_subquestion("focused database sub-question")
 ```
 
 When metadata is enabled, pre-extracted table, column, row-count, and foreign
-key metadata is included before online schema exploration. When workspace is
-enabled, the agent can store and review compact evidence during the run.
+key metadata is included before online schema exploration. When query
+enrichment is enabled, the runner adds a separate pre-reasoning stage that
+infers likely tables, likely columns, matched cell values, and numeric
+mentions from the question plus sampled rows. When probe queries are enabled,
+the runner executes a few exploratory read-only SQL queries up front and
+injects the results into the initial context. When workspace is enabled, the
+agent gets a restricted model workspace. It can store compact evidence, save
+named intermediate results, read a generated schema snapshot, read non-secret
+project text files, write note/script artifacts under `results/model_workspace`,
+run small restricted Python scripts, inspect execution results, and revise SQL
+after errors.
+
+Workspace mode exposes these tools:
+
+```python
+workspace.add(note, data)
+workspace.read()
+workspace.save_result(name, data)
+workspace.load_result(name)
+workspace.list_files(relative_dir="")
+workspace.read_file(relative_path, max_chars=4000)
+workspace.read_schema_file(max_chars=6000)
+workspace.write_note_file(name, content)
+workspace.write_python_script(name, code)
+workspace.run_python_script(name)
+workspace.run_python(code)
+```
+
+The workspace is intentionally restricted: SQL is read-only, repo file reads
+block secrets such as `.env`, and file writes are limited to
+`results/model_workspace`.
+
+Current `ours` ablation flags:
+
+```text
+--no-recursion
+--use-metadata
+--use-enrichment
+--use-probe-queries
+--use-workspace
+--prompt-version {basic,recursive,workspace}
+```
 
 Each result row records its `ablation_config`. If `--output` is omitted, the
 runner writes a variant-specific result file such as:

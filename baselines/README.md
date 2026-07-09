@@ -69,7 +69,7 @@ Research question:
 
 ## Benchmark
 
-Spider Benchmark.
+BIRD Mini-Dev benchmark.
 
 ---
 
@@ -494,10 +494,10 @@ SQL / Answer
 
 To make all baselines comparable, all methods should use the same benchmark dataset and database resources.
 
-Recommended benchmark:
+Benchmark:
 
 ```text
-Spider Text-to-SQL Dataset
+BIRD Mini-Dev
 ```
 
 The dataset provides:
@@ -509,70 +509,43 @@ The dataset provides:
 
 ### 11.1 Dataset Source
 
-We use the Spider dataset as the shared benchmark.
+We use BIRD Mini-Dev as the shared benchmark.
 
 Downloaded structure:
 
-```text
-spider/
-├── train_spider.json
-├── dev.json
-├── database/
-│   ├── concert_singer/
-│   │   └── concert_singer.sqlite
-│   └── other databases...
-└── tables.json
-```
+The prepared questions are stored in
+`data/processed/bird_mini_dev_questions.json`; SQLite databases are stored in
+`data/databases/{db_id}/{db_id}.sqlite`.
 
 ### 11.2 Question and Gold SQL
 
 Questions and gold SQL queries are obtained from:
 
 ```text
-train_spider.json
-or
-dev.json
+data/processed/bird_mini_dev_questions.json
 ```
 
-Original Spider format:
+Unified format:
 
 ```json
 {
-  "db_id": "concert_singer",
-  "question": "How many singers do we have?",
-  "query": "SELECT count(*) FROM singer"
+  "id": "bird_mini_dev_000000",
+  "db_id": "debit_card_specializing",
+  "question": "...",
+  "gold_sql": "SELECT ..."
 }
 ```
-
-Converted unified format:
-
-```json
-{
-  "id": "001",
-  "db_id": "concert_singer",
-  "question": "How many singers do we have?",
-  "gold_sql": "SELECT count(*) FROM singer"
-}
-```
-
-Mapping:
-
-| Spider field | Our field |
-| --- | --- |
-| `db_id` | `db_id` |
-| `question` | `question` |
-| `query` | `gold_sql` |
 
 ### 11.3 Database Source
 
-SQLite databases are directly provided by Spider.
+SQLite databases are prepared from the BIRD Mini-Dev package.
 
 Example:
 
 ```text
-database/
-└── concert_singer/
-    └── concert_singer.sqlite
+data/databases/
+└── debit_card_specializing/
+    └── debit_card_specializing.sqlite
 ```
 
 All methods access databases using:
@@ -584,7 +557,7 @@ data/databases/{db_id}/{db_id}.sqlite
 Example:
 
 ```text
-data/databases/concert_singer/concert_singer.sqlite
+data/databases/debit_card_specializing/debit_card_specializing.sqlite
 ```
 
 ### 11.4 Schema Source
@@ -596,7 +569,7 @@ All methods must use the same schema extraction function.
 Example input:
 
 ```text
-concert_singer.sqlite
+debit_card_specializing.sqlite
 ```
 
 Extractor:
@@ -608,19 +581,11 @@ PRAGMA table_info(table_name);
 Output:
 
 ```text
-Table: singer
+Table: customers
 
 Columns:
-- singer_id INTEGER
-- name TEXT
-- age INTEGER
-
-Table: concert
-
-Columns:
-- concert_id INTEGER
-- concert_name TEXT
-- singer_id INTEGER
+- CustomerID INTEGER
+- Currency TEXT
 ```
 
 This generated schema is used by:
@@ -656,7 +621,7 @@ Example gold SQL:
 
 ```sql
 SELECT count(*)
-FROM singer;
+FROM customers;
 ```
 
 Execution result:
@@ -679,7 +644,7 @@ The same SQL executor should be used for both:
 All methods follow the same pipeline:
 
 ```text
-Spider Dataset
+BIRD Mini-Dev
   |
   v
 question

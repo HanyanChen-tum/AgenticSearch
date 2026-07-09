@@ -11,12 +11,17 @@ from __future__ import annotations
 import argparse
 import re
 import sqlite3
+import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 from tqdm import tqdm
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from shared import config
 from shared.data_loader import load_questions
@@ -423,7 +428,7 @@ def run_baseline(
     done_ids: set[str] = set()
     if output_path.exists():
         import json
-        existing = json.loads(output_path.read_text())
+        existing = json.loads(output_path.read_text(encoding="utf-8"))
         results = existing
         done_ids = {r["id"] for r in results}
         logger.info("Resuming — %d already done", len(done_ids))

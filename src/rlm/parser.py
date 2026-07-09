@@ -1,5 +1,6 @@
 """Parse FINAL() and FINAL_VAR() statements from LLM responses."""
 
+import ast
 import re
 from typing import Optional, Dict, Any
 
@@ -14,18 +15,25 @@ def extract_final(response: str) -> Optional[str]:
     Returns:
         Extracted answer or None if not found
     """
-    # Look for FINAL("answer") or FINAL('answer')
+    # Parse FINAL("...") as a Python string literal so escaped quotes and
+    # escaped newlines in SQL are preserved instead of truncating at \".
     patterns = [
-        r'FINAL\s*\(\s*"""(.*)"""',  # FINAL("""answer""") - triple double quotes
-        r"FINAL\s*\(\s*'''(.*)'''",  # FINAL('''answer''') - triple single quotes
-        r'FINAL\s*\(\s*"([^"]*)"',  # FINAL("answer") - double quotes
-        r"FINAL\s*\(\s*'([^']*)'",  # FINAL('answer') - single quotes
+        r'FINAL\s*\(\s*("""(?:.|\n)*?""")\s*\)',
+        r"FINAL\s*\(\s*('''(?:.|\n)*?''')\s*\)",
+        r'FINAL\s*\(\s*("(?:\\.|[^"\\])*")\s*\)',
+        r"FINAL\s*\(\s*('(?:\\.|[^'\\])*')\s*\)",
     ]
 
     for pattern in patterns:
         match = re.search(pattern, response, re.DOTALL)
-        if match:
-            return match.group(1).strip()
+        if not match:
+            continue
+        literal = match.group(1)
+        try:
+            value = ast.literal_eval(literal)
+        except (SyntaxError, ValueError):
+            value = literal[1:-1]
+        return str(value).strip()
 
     return None
 

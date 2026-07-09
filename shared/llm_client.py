@@ -47,7 +47,7 @@ def _generate_with_gemini(
         contents=contents,
         config=types.GenerateContentConfig(
             system_instruction=system_instruction,
-            temperature=config.TEMPERATURE,
+            temperature=config.effective_temperature(),
             max_output_tokens=config.MAX_TOKENS,
         ),
     )
@@ -73,7 +73,7 @@ def _generate_with_openai_compatible(
         {
             "model": config.MODEL,
             "messages": request_messages,
-            "temperature": config.TEMPERATURE,
+            "temperature": config.effective_temperature(),
             "max_tokens": config.MAX_TOKENS,
         }
     ).encode("utf-8")
@@ -117,6 +117,61 @@ def _generate_with_openai_compatible(
     )
 
 
+def _generate_with_azure(
+    messages: list[dict[str, str]],
+    system_instruction: str,
+) -> LLMResponse:
+    if not config.AZURE_API_BASE or not config.AZURE_API_KEY or not config.AZURE_DEPLOYMENT:
+        raise ValueError(
+            "AZURE_API_BASE, AZURE_API_KEY, and AZURE_DEPLOYMENT must be set for Azure OpenAI."
+        )
+
+    url = (
+        f"{config.AZURE_API_BASE}/openai/deployments/{config.AZURE_DEPLOYMENT}/chat/completions"
+        f"?api-version={config.AZURE_API_VERSION}"
+    )
+    request_messages: list[dict[str, Any]] = [
+        {"role": "system", "content": system_instruction},
+        *messages,
+    ]
+    payload = json.dumps(
+        {
+            "messages": request_messages,
+            "temperature": config.effective_temperature(provider="azure"),
+            "max_completion_tokens": config.MAX_TOKENS,
+        }
+    ).encode("utf-8")
+    headers = {
+        "Content-Type": "application/json",
+        "api-key": config.AZURE_API_KEY,
+    }
+
+    request = Request(url, data=payload, headers=headers, method="POST")
+    try:
+        with urlopen(request, timeout=300) as response:
+            result = json.loads(response.read().decode("utf-8"))
+    except HTTPError as error:
+        details = error.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"Azure OpenAI request failed ({error.code}): {details}") from error
+    except URLError as error:
+        raise RuntimeError(
+            f"Cannot connect to Azure OpenAI at {config.AZURE_API_BASE}. "
+            "Check that AZURE_API_BASE and AZURE_API_VERSION are correct."
+        ) from error
+
+    try:
+        text = result["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError) as error:
+        raise RuntimeError(f"Unexpected Azure OpenAI response: {result}") from error
+
+    usage = result.get("usage", {})
+    return LLMResponse(
+        text=text or "",
+        input_tokens=usage.get("prompt_tokens"),
+        output_tokens=usage.get("completion_tokens"),
+    )
+
+
 def generate_chat(
     messages: list[dict[str, str]],
     system_instruction: str = SYSTEM_INSTRUCTION,
@@ -124,11 +179,13 @@ def generate_chat(
     provider = config.LLM_PROVIDER.lower()
     if provider == "gemini":
         return _generate_with_gemini(messages, system_instruction)
+    if provider == "azure":
+        return _generate_with_azure(messages, system_instruction)
     if provider in {"openai_compatible", "local", "qwen"}:
         return _generate_with_openai_compatible(messages, system_instruction)
     raise ValueError(
         f"Unsupported LLM_PROVIDER: {config.LLM_PROVIDER}. "
-        "Use 'gemini' or 'openai_compatible'."
+        "Use 'gemini', 'azure', or 'openai_compatible'."
     )
 
 

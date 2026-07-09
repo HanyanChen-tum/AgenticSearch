@@ -1,0 +1,103 @@
+[
+  {
+    "id": "bird_mini_dev_000000",
+    "method": "baseline_3_non_recursive_db_agent",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?\n\nEvidence: ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN Currency = 'EUR' THEN 1 ELSE 0 END) AS REAL) / NULLIF(SUM(CASE WHEN Currency = 'CZK' THEN 1 ELSE 0 END), 0) AS ratio FROM customers;",
+    "predicted_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 19.8875,
+    "input_tokens": 1633,
+    "output_tokens": 185,
+    "agent_steps": 4,
+    "tool_calls": 3,
+    "termination_reason": "final",
+    "tool_trace": [
+      {
+        "step": 1,
+        "action": {
+          "action": "SHOW_TABLES"
+        },
+        "observation": {
+          "tables": [
+            "customers",
+            "gasstations",
+            "products",
+            "transactions_1k",
+            "yearmonth"
+          ]
+        }
+      },
+      {
+        "step": 2,
+        "action": {
+          "action": "DESCRIBE_TABLE",
+          "table": "customers"
+        },
+        "observation": {
+          "table": "customers",
+          "columns": [
+            {
+              "name": "CustomerID",
+              "type": "INTEGER",
+              "not_null": true,
+              "default": null,
+              "primary_key": true
+            },
+            {
+              "name": "Segment",
+              "type": "TEXT",
+              "not_null": false,
+              "default": null,
+              "primary_key": false
+            },
+            {
+              "name": "Currency",
+              "type": "TEXT",
+              "not_null": false,
+              "default": null,
+              "primary_key": false
+            }
+          ],
+          "foreign_keys": []
+        }
+      },
+      {
+        "step": 3,
+        "action": {
+          "action": "EXECUTE_SQL",
+          "sql": "SELECT CAST(SUM(CASE WHEN Currency = 'EUR' THEN 1 ELSE 0 END) AS REAL) / NULLIF(SUM(CASE WHEN Currency = 'CZK' THEN 1 ELSE 0 END), 0) AS ratio FROM customers;"
+        },
+        "observation": {
+          "answer": [
+            [
+              0.06572769953051644
+            ]
+          ],
+          "error": null,
+          "truncated": false
+        }
+      },
+      {
+        "step": 4,
+        "action": {
+          "action": "FINAL",
+          "sql": "SELECT CAST(SUM(CASE WHEN Currency = 'EUR' THEN 1 ELSE 0 END) AS REAL) / NULLIF(SUM(CASE WHEN Currency = 'CZK' THEN 1 ELSE 0 END), 0) AS ratio FROM customers;"
+        },
+        "observation": null
+      }
+    ]
+  }
+]

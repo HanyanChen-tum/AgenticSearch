@@ -52,6 +52,12 @@ def summarize_results(method: str, rows: list[dict[str, Any]]) -> dict[str, Any]
         for row in rows
         if row.get("correct") is not True
     )
+    schema_rows = [
+        row["schema_metrics"]
+        for row in rows
+        if isinstance(row.get("schema_metrics"), dict)
+        and not row["schema_metrics"].get("error")
+    ]
 
     return {
         "method": method,
@@ -63,6 +69,44 @@ def summarize_results(method: str, rows: list[dict[str, Any]]) -> dict[str, Any]
         "total_output_tokens": safe_sum([row.get("output_tokens") for row in rows]),
         "total_tool_calls": safe_sum([row.get("tool_calls") for row in rows]),
         "avg_tool_calls": safe_average([row.get("tool_calls") for row in rows]),
+        "total_retrieval_calls": safe_sum(
+            [row.get("retrieval_calls") for row in rows]
+        ),
+        "avg_recursion_calls": safe_average(
+            [row.get("recursion_calls") for row in rows]
+        ),
+        "recursion_usage_rate": (
+            round(
+                sum(row.get("recursion_used") is True for row in rows) / total,
+                4,
+            )
+            if total
+            else None
+        ),
+        "avg_table_recall": safe_average(
+            [row.get("table_recall") for row in schema_rows]
+        ),
+        "avg_column_recall": safe_average(
+            [row.get("column_recall") for row in schema_rows]
+        ),
+        "strict_schema_recall_rate": (
+            round(
+                sum(row.get("strict_schema_recall") is True for row in schema_rows)
+                / len(schema_rows),
+                4,
+            )
+            if schema_rows
+            else None
+        ),
+        "avg_schema_precision": safe_average(
+            [row.get("schema_precision") for row in schema_rows]
+        ),
+        "avg_schema_f1": safe_average(
+            [row.get("schema_f1") for row in schema_rows]
+        ),
+        "avg_selected_columns": safe_average(
+            [row.get("selected_column_count") for row in schema_rows]
+        ),
         "error_counts": dict(errors),
     }
 
@@ -144,6 +188,15 @@ def print_summary(summary: list[dict[str, Any]]) -> None:
         "total_output_tokens",
         "total_tool_calls",
         "avg_tool_calls",
+        "total_retrieval_calls",
+        "avg_recursion_calls",
+        "recursion_usage_rate",
+        "avg_table_recall",
+        "avg_column_recall",
+        "strict_schema_recall_rate",
+        "avg_schema_precision",
+        "avg_schema_f1",
+        "avg_selected_columns",
     ]
     widths = {
         header: max(

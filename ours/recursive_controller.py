@@ -24,6 +24,10 @@ class RecursiveDBController:
     max_iterations: int = 10
     temperature: float = 0
     use_metadata: bool = False
+    use_enrichment: bool = False
+    use_probe_queries: bool = False
+    use_schema_memory: bool = False
+    initial_top_k: int = 10
     use_recursion: bool = True
     use_workspace: bool = False
     prompt_version: str = "recursive"
@@ -38,6 +42,10 @@ class RecursiveDBController:
             max_iterations=self.max_iterations,
             temperature=self.temperature,
             use_metadata=self.use_metadata,
+            use_enrichment=self.use_enrichment,
+            use_probe_queries=self.use_probe_queries,
+            use_schema_memory=self.use_schema_memory,
+            initial_top_k=self.initial_top_k,
             use_recursion=self.use_recursion,
             use_workspace=self.use_workspace,
             prompt_version=self.prompt_version,

@@ -6,3 +6,7 @@ ipykernel
 nbconvert
 litellm
 RestrictedPython
+datasets
+pyarrow
+gdown
+sqlglot
