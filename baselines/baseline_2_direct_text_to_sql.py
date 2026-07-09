@@ -11,12 +11,17 @@ from __future__ import annotations
 import argparse
 import re
 import sqlite3
+import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 from tqdm import tqdm
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from shared import config
 from shared.data_loader import load_questions
@@ -375,7 +380,11 @@ def run_one(
         "correct": (
             predicted_exec["error"] is None
             and gold_exec["error"] is None
-            and is_correct(predicted_exec["answer"], gold_exec["answer"])
+            and is_correct(
+                predicted_exec["answer"],
+                gold_exec["answer"],
+                gold_sql=example["gold_sql"],
+            )
         ),
         "error": error,
         "latency_seconds": round(latency_seconds, 4),
@@ -391,6 +400,7 @@ def run_baseline(
     limit: int | None = None,
     top_k_tables: int = DEFAULT_TOP_K_TABLES,
     top_k_columns: int = DEFAULT_TOP_K_COLUMNS,
+    sleep: float = 0,
 ) -> list[dict[str, Any]]:
     """批量运行 baseline 2 并保存结果。
 
@@ -412,20 +422,29 @@ def run_baseline(
     # 同一个 prompt 模板会被复用于所有样本。
     # The same prompt template is reused for all examples.
     prompt_template = read_text(PROMPT_PATH)
-    results = [
-        run_one(
+
+    output_path = Path(output_path)
+    results: list[dict[str, Any]] = []
+    done_ids: set[str] = set()
+    if output_path.exists():
+        import json
+        existing = json.loads(output_path.read_text(encoding="utf-8"))
+        results = existing
+        done_ids = {r["id"] for r in results}
+        logger.info("Resuming — %d already done", len(done_ids))
+    questions = [q for q in questions if q["id"] not in done_ids]
+
+    for example in tqdm(questions, desc=METHOD_NAME):
+        results.append(run_one(
             example,
             prompt_template,
             Path(database_dir),
             top_k_tables=top_k_tables,
             top_k_columns=top_k_columns,
-        )
-        for example in tqdm(questions, desc=METHOD_NAME)
-    ]
-
-    # 保存逐条结果，并在日志中记录整体执行准确率。
-    # Save per-example results and log aggregate execution accuracy.
-    write_json(output_path, results)
+        ))
+        write_json(output_path, results)
+        if sleep > 0:
+            time.sleep(sleep)
     total = len(results)
     correct = sum(1 for row in results if row["correct"])
     accuracy = correct / total if total else 0
@@ -453,6 +472,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--top-k-tables", type=int, default=DEFAULT_TOP_K_TABLES)
     parser.add_argument("--top-k-columns", type=int, default=DEFAULT_TOP_K_COLUMNS)
+    parser.add_argument("--sleep", type=float, default=0)
     return parser.parse_args()
 
 
@@ -469,6 +489,7 @@ def main() -> None:
         limit=args.limit,
         top_k_tables=args.top_k_tables,
         top_k_columns=args.top_k_columns,
+        sleep=args.sleep,
     )
 
 

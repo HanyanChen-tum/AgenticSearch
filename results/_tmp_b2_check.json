@@ -1,0 +1,24 @@
+[
+  {
+    "id": "bird_mini_dev_000000",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?\n\nEvidence: ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+    "retrieved_schema": "Table: customers\n\nColumns:\n- Currency TEXT\n- CustomerID INTEGER PRIMARY KEY NOT NULL\n- Segment TEXT\n\nTable: gasstations\n\nColumns:\n- Country TEXT\n- ChainID INTEGER\n- GasStationID INTEGER PRIMARY KEY NOT NULL\n- Segment TEXT\n\nTable: products\n\nColumns:\n- Description TEXT\n- ProductID INTEGER PRIMARY KEY NOT NULL\n\nTable: transactions_1k\n\nColumns:\n- Amount INTEGER\n- CardID INTEGER\n- CustomerID INTEGER\n- Date DATE\n- GasStationID INTEGER\n- Price REAL\n- ProductID INTEGER\n- Time TEXT\n- TransactionID INTEGER PRIMARY KEY\n\nTable: yearmonth\n\nColumns:\n- Consumption REAL\n- CustomerID INTEGER PRIMARY KEY NOT NULL\n- Date TEXT PRIMARY KEY NOT NULL\n\nForeign keys:\n- CustomerID -> customers.None\n- CustomerID -> customers.None",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": false,
+    "error": "Cannot connect to Azure OpenAI at https://gpt5openai.openai.azure.com. Check that AZURE_API_BASE and AZURE_API_VERSION are correct.",
+    "latency_seconds": 0.1481,
+    "input_tokens": null,
+    "output_tokens": null
+  }
+]

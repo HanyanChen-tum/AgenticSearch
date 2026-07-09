@@ -277,7 +277,8 @@ Is recursive decomposition with independent sub-exploration stronger than a norm
 
 # Dataset
 
-We use the Spider Text-to-SQL benchmark.
+The current experiments use BIRD Mini-Dev. Spider 1.0 is no longer part of
+the project dataset or evaluation plan.
 
 It contains:
 
@@ -289,53 +290,27 @@ SQLite databases
 Ground-truth SQL queries
 ```
 
-Original structure:
-
-```text
-spider/
-
-├── train_spider.json
-├── dev.json
-├── tables.json
-
-└── database/
-    |
-    ├── concert_singer/
-    │
-    └── other databases
-```
-
 ---
 
 # Unified Data Format
 
-Spider examples are converted into:
+BIRD examples use the following unified format:
 
 ```json
 {
-    "id": "001",
+    "id": "bird_mini_dev_000000",
 
-    "db_id": "concert_singer",
+    "db_id": "debit_card_specializing",
 
     "question":
-    "How many singers do we have?",
+    "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
 
     "gold_sql":
-    "SELECT count(*) FROM singer"
+    "SELECT ..."
 }
 ```
 
-Mapping:
-
-```text
-Spider Field     Project Field
-
-db_id        ->  db_id
-
-question     ->  question
-
-query        ->  gold_sql
-```
+The prepared file is `data/processed/bird_mini_dev_questions.json`.
 
 ---
 
@@ -557,11 +532,43 @@ LM Studio: http://localhost:1234/v1
 
 # Running Experiments
 
-Prepare dataset:
+Prepare BIRD Mini-Dev:
 
 ```bash
-python scripts/prepare_spider.py
+python scripts/prepare_bird.py --database-mode copy
 ```
+
+Run the focused bounded-schema RLM pilot:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_rlm_schema_suite.py `
+  --limit 10 `
+  --top-k 5 10 20 `
+  --depths 0 1 2 `
+  --model "<fixed-model>" `
+  --temperature 0
+```
+
+The BIRD Mini-Dev helper expects the official complete package archive at:
+
+```text
+data/raw/bird/minidev_0703.zip
+```
+
+It writes:
+
+```text
+data/processed/bird_mini_dev_questions.json
+data/databases/{db_id}/{db_id}.sqlite
+```
+
+For compatibility with the current runners, the script appends BIRD `evidence`
+to the natural-language `question` by default. Use `--exclude-evidence` to keep
+the original question text unchanged.
+
+The command expects the downloaded Spider dataset in `data/spider_data/`.
+See the [Dataset](#dataset) section for the required layout and alternative
+options.
 
 Run baselines:
 
@@ -573,10 +580,134 @@ python scripts/run_baseline_2.py
 python scripts/run_baseline_3.py
 ```
 
-Run Recursive DB-RLM:
+Run baselines on BIRD Mini-Dev:
+
+```bash
+python scripts/run_baseline_1.py --dataset data/processed/bird_mini_dev_questions.json
+python scripts/run_baseline_2.py --dataset data/processed/bird_mini_dev_questions.json
+python scripts/run_baseline_3.py --dataset data/processed/bird_mini_dev_questions.json
+```
+
+Run all three baselines sequentially over the complete development set:
+
+```bash
+python scripts/run_all_baselines.py
+```
+
+For a small smoke test before the full experiment:
+
+```bash
+python scripts/run_all_baselines.py --limit 10
+```
+
+The unified runner writes all three result files and
+`results/summary_metrics.json`. It also accepts `--top-k-tables`,
+`--top-k-columns`, `--max-steps`, and `--results-dir`.
+
+Baseline 3 runs a single non-recursive agent for multiple database-tool steps.
+Use `--max-steps` to control its exploration budget:
+
+```bash
+python scripts/run_baseline_3.py --limit 10 --max-steps 8
+```
+
+Its result rows include `agent_steps`, `tool_calls`, `termination_reason`, and
+`tool_trace` diagnostics in addition to the unified evaluation fields.
+
+Run DB-RLM ablations:
 
 ```bash
 python scripts/run_ours.py
+```
+
+The `ours` runner is designed for incremental ablations. It starts from a
+simple DB agent configuration and lets you enable one feature at a time:
+
+```bash
+# DB agent without recursive sub-questions
+python scripts/run_ours.py --limit 10 --no-recursion --prompt-version basic
+
+# Add metadata extraction
+python scripts/run_ours.py --limit 10 --no-recursion --prompt-version basic --use-metadata
+
+# Add query enrichment based on schema tokens and sampled values
+python scripts/run_ours.py --limit 10 --no-recursion --prompt-version basic --use-metadata --use-enrichment
+
+# Add automatic probe queries and store their results in the context/workspace
+python scripts/run_ours.py --limit 10 --no-recursion --prompt-version basic --use-metadata --use-enrichment --use-probe-queries
+
+# Add RLM-style recursive sub-questions
+python scripts/run_ours.py --limit 10 --use-metadata
+
+# Add an evidence workspace
+python scripts/run_ours.py --limit 10 --use-metadata --use-workspace --prompt-version workspace
+```
+
+Recursive DB-RLM uses the same database tools as the non-recursive DB agent.
+When recursion is enabled, it also exposes this helper to the root agent:
+
+```python
+answer_subquestion("focused database sub-question")
+```
+
+When metadata is enabled, pre-extracted table, column, row-count, and foreign
+key metadata is included before online schema exploration. When query
+enrichment is enabled, the runner adds a separate pre-reasoning stage that
+infers likely tables, likely columns, matched cell values, and numeric
+mentions from the question plus sampled rows. When probe queries are enabled,
+the runner executes a few exploratory read-only SQL queries up front and
+injects the results into the initial context. When workspace is enabled, the
+agent gets a restricted model workspace. It can store compact evidence, save
+named intermediate results, read a generated schema snapshot, read non-secret
+project text files, write note/script artifacts under `results/model_workspace`,
+run small restricted Python scripts, inspect execution results, and revise SQL
+after errors.
+
+Workspace mode exposes these tools:
+
+```python
+workspace.add(note, data)
+workspace.read()
+workspace.save_result(name, data)
+workspace.load_result(name)
+workspace.list_files(relative_dir="")
+workspace.read_file(relative_path, max_chars=4000)
+workspace.read_schema_file(max_chars=6000)
+workspace.write_note_file(name, content)
+workspace.write_python_script(name, code)
+workspace.run_python_script(name)
+workspace.run_python(code)
+```
+
+The workspace is intentionally restricted: SQL is read-only, repo file reads
+block secrets such as `.env`, and file writes are limited to
+`results/model_workspace`.
+
+Current `ours` ablation flags:
+
+```text
+--no-recursion
+--use-metadata
+--use-enrichment
+--use-probe-queries
+--use-workspace
+--prompt-version {basic,recursive,workspace}
+```
+
+Each result row records its `ablation_config`. If `--output` is omitted, the
+runner writes a variant-specific result file such as:
+
+```text
+results/ours_no_rlm_prompt_basic.json
+results/ours_metadata_no_rlm_prompt_basic.json
+results/ours_metadata_rlm.json
+results/ours_metadata_rlm_workspace_prompt_workspace.json
+```
+
+You can still provide an explicit output path:
+
+```bash
+python scripts/run_ours.py --use-metadata --output results/ours_metadata_rlm.json
 ```
 
 Evaluate:
@@ -584,6 +715,34 @@ Evaluate:
 ```bash
 python scripts/evaluate_results.py
 ```
+
+For ablation comparisons, pass the specific result files:
+
+```bash
+python scripts/evaluate_results.py \
+  --result-files \
+  results/baseline_3_non_recursive_db_agent.json \
+  results/ours_no_rlm_prompt_basic.json \
+  results/ours_metadata_no_rlm_prompt_basic.json \
+  results/ours_metadata_rlm.json
+```
+
+Analyze errors:
+
+```bash
+python scripts/analyze_errors.py
+```
+
+The error analysis script writes:
+
+```text
+results/error_analysis.json
+```
+
+For ablation runs, `scripts/run_ours.py` writes variant-specific files such as
+`ours_no_rlm_prompt_basic.json`, `ours_metadata_no_rlm_prompt_basic.json`,
+`ours_metadata_rlm.json`, and
+`ours_metadata_rlm_workspace_prompt_workspace.json`.
 
 ---
 
@@ -621,13 +780,18 @@ Specifically:
 
 # Status
 
-* [ ] Dataset preparation
+* [x] Dataset preparation script
+* [ ] Local Spider databases available in `data/databases/`
 * [x] Baseline 1 implementation
 * [x] Baseline 2 implementation
-* [ ] Baseline 3 implementation
-* [ ] Recursive DB-RLM implementation
-* [ ] Evaluation
-* [ ] Error analysis
+* [x] Baseline 3 implementation
+* [x] Recursive DB-RLM implementation
+* [x] DB-RLM ablation switches
+* [x] Metadata extraction module
+* [x] Evidence workspace module
+* [x] Evaluation script
+* [x] Error analysis script
+* [ ] Full Recursive DB-RLM experiment run
 
 ---
 

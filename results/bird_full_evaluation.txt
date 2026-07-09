@@ -1,0 +1,10 @@
+method                                  | total | correct | execution_accuracy | avg_latency_seconds | total_input_tokens | total_output_tokens | total_tool_calls | avg_tool_calls
+----------------------------------------+-------+---------+--------------------+---------------------+--------------------+---------------------+------------------+---------------
+baseline_1_direct_llm_schema            | 500   | 254     | 0.508              | 3.6097              | 389309             | 34741               | None             | None          
+baseline_2_direct_text_to_sql           | 500   | 255     | 0.51               | 3.6926              | 213378             | 33815               | None             | None          
+baseline_3_non_recursive_db_agent       | 500   | 246     | 0.492              | 28.1828             | 2330232            | 109152              | 1966             | 3.932         
+bird_ours_basic_500                     | 500   | 133     | 0.266              | 4.0151              | None               | None                | None             | None          
+bird_ours_metadata_500                  | 500   | 255     | 0.51               | 4.9427              | None               | None                | None             | None          
+bird_ours_metadata_enrichment_500       | 500   | 262     | 0.524              | 16.8055             | None               | None                | None             | None          
+bird_ours_metadata_enrichment_probe_500 | 500   | 268     | 0.536              | 16.9697             | None               | None                | None             | None          
+bird_ours_full_workspace_500            | 500   | 255     | 0.51               | 17.7574             | None               | None                | None             | None          

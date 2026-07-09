@@ -1,0 +1,195 @@
+[
+  {
+    "id": "bird_mini_dev_000000",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?\n\nEvidence: ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN Currency = 'EUR' THEN 1.0 ELSE 0 END) / SUM(CASE WHEN Currency = 'CZK' THEN 1.0 ELSE 0 END) AS REAL) AS ratio FROM customers",
+    "predicted_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 1.9598,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000001",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "In 2012, who had the least consumption in LAM?\n\nEvidence: Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "SELECT c.CustomerID\nFROM yearmonth ym\nJOIN customers c ON c.CustomerID = ym.CustomerID\nWHERE substr(ym.Date, 1, 4) = '2012'\n  AND c.Segment = 'LAM'\nGROUP BY c.CustomerID\nORDER BY SUM(ym.Consumption) ASC\nLIMIT 1",
+    "predicted_answer": [
+      [
+        47273
+      ]
+    ],
+    "gold_sql": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+    "gold_answer": [
+      [
+        47273
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 4.1515,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000002",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the average monthly consumption of customers in SME for the year 2013?\n\nEvidence: Average Monthly consumption = AVG(Consumption) / 12; Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "SELECT AVG(Consumption) / 12.0 AS average_monthly_consumption\nFROM yearmonth ym\nJOIN customers c ON ym.CustomerID = c.CustomerID\nWHERE c.Segment = 'SME'\n  AND substr(ym.Date, 1, 4) = '2013';",
+    "predicted_answer": [
+      [
+        459.9562642870894
+      ]
+    ],
+    "gold_sql": "SELECT AVG(T2.Consumption) / 12 FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME'",
+    "gold_answer": [
+      [
+        459.9562642870894
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 5.0635,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000003",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the difference in gas consumption between CZK-paying customers and EUR-paying customers in 2012?\n\nEvidence: Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year; Difference in Consumption = CZK customers consumption in 2012 - EUR customers consumption in 2012",
+    "predicted_sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN y.Consumption ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN y.Consumption ELSE 0 END) AS difference_in_gas_consumption FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE y.Date BETWEEN '201201' AND '201212';",
+    "predicted_answer": [
+      [
+        402524570.17
+      ]
+    ],
+    "gold_sql": "SELECT SUM(IIF(T1.Currency = 'CZK', T2.Consumption, 0)) - SUM(IIF(T1.Currency = 'EUR', T2.Consumption, 0)) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2012'",
+    "gold_answer": [
+      [
+        402524570.17
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 4.8459,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000004",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Which year recorded the most consumption of gas paid in CZK?\n\nEvidence: The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "predicted_sql": "SELECT SUBSTR(Date, 1, 4) AS year FROM yearmonth JOIN customers USING (CustomerID) WHERE customers.Currency = 'CZK' GROUP BY SUBSTR(Date, 1, 4) ORDER BY SUM(Consumption) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "2013"
+      ]
+    ],
+    "gold_sql": "SELECT SUBSTR(T2.Date, 1, 4) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'CZK' GROUP BY SUBSTR(T2.Date, 1, 4) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "2013"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 4.2799,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "id": "bird_mini_dev_000005",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the gas consumption peak month for SME customers in 2013?\n\nEvidence: Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.",
+    "predicted_sql": "SELECT ym.Date AS month, SUM(ym.Consumption) AS gas_consumption\nFROM yearmonth AS ym\nJOIN customers AS c\n  ON ym.CustomerID = c.CustomerID\nWHERE c.Segment = 'SME'\n  AND ym.Date BETWEEN '201301' AND '201312'\nGROUP BY ym.Date\nORDER BY gas_consumption DESC\nLIMIT 1;",
+    "predicted_answer": [
+      [
+        "201304",
+        126047776.92
+      ]
+    ],
+    "gold_sql": "SELECT SUBSTR(T2.Date, 5, 2) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME' GROUP BY SUBSTR(T2.Date, 5, 2) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "04"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 5.2345,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  }
+]

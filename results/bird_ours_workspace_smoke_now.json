@@ -1,0 +1,34 @@
+[
+  {
+    "id": "bird_mini_dev_000000",
+    "method": "ours_recursive_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?\n\nEvidence: ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK').",
+    "predicted_sql": "SELECT 1.0 * SUM(CASE WHEN Currency = 'EUR' THEN 1 ELSE 0 END) / SUM(CASE WHEN Currency = 'CZK' THEN 1 ELSE 0 END) AS ratio FROM customers;",
+    "predicted_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 1.9649,
+    "llm_calls": 1,
+    "iterations": 1,
+    "termination": "final",
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": true,
+      "use_recursion": true,
+      "use_workspace": true,
+      "prompt_version": "workspace"
+    }
+  }
+]

@@ -1,0 +1,7345 @@
+[
+  {
+    "id": "dev_000228",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "flight_2",
+    "question": "Give the code of the airport with the least flights.",
+    "retrieved_schema": "Table: flights\n\nColumns:\n- DestAirport TEXT\n- SourceAirport TEXT\n- Airline INTEGER PRIMARY KEY\n- FlightNo INTEGER PRIMARY KEY\n\nForeign keys:\n- DestAirport -> airports.AirportCode\n- SourceAirport -> airports.AirportCode\n\nTable: airports\n\nColumns:\n- AirportCode TEXT PRIMARY KEY\n- AirportName TEXT\n- City TEXT\n- Country TEXT\n- CountryAbbrev TEXT\n\nTable: airlines\n\nColumns:\n- Abbreviation TEXT\n- Airline TEXT\n- Country TEXT\n- uid INTEGER PRIMARY KEY",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT DestAirport\nFROM flights\nGROUP BY DestAirport\nORDER BY COUNT(*) ASC\nLIMIT 1",
+    "predicted_answer": [
+      [
+        " AID"
+      ]
+    ],
+    "gold_sql": "SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1",
+    "gold_answer": [],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.2508,
+    "input_tokens": 224,
+    "output_tokens": 27
+  },
+  {
+    "id": "dev_000051",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "pets_1",
+    "question": "Find number of pets owned by students who are older than 20.",
+    "retrieved_schema": "Table: Pets\n\nColumns:\n- pet_age INTEGER\n- PetID INTEGER PRIMARY KEY\n- PetType VARCHAR(20)\n- weight REAL\n\nTable: Student\n\nColumns:\n- Advisor INTEGER\n- Age INTEGER\n- Fname VARCHAR(12)\n- LName VARCHAR(12)\n- Major INTEGER\n- Sex VARCHAR(1)\n- StuID INTEGER PRIMARY KEY\n- city_code VARCHAR(3)\n\nTable: Has_Pet\n\nColumns:\n- PetID INTEGER\n- StuID INTEGER\n\nForeign keys:\n- StuID -> Student.StuID\n- PetID -> Pets.PetID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(DISTINCT T2.PetID) \nFROM Student AS T1 \nINNER JOIN Has_Pet AS T2 \nON T1.StuID = T2.StuID \nWHERE T1.Age > 20;",
+    "predicted_answer": [
+      [
+        0
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20",
+    "gold_answer": [
+      [
+        0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2407,
+    "input_tokens": 238,
+    "output_tokens": 53
+  },
+  {
+    "id": "dev_000563",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "student_transcripts_tracking",
+    "question": "On average, when were the transcripts printed?",
+    "retrieved_schema": "Table: Transcripts\n\nColumns:\n- transcript_date DATETIME\n- transcript_id INTEGER PRIMARY KEY\n- other_details VARCHAR(255)\n\nTable: Transcript_Contents\n\nColumns:\n- transcript_id INTEGER NOT NULL\n- student_course_id INTEGER NOT NULL\n\nForeign keys:\n- transcript_id -> Transcripts.transcript_id\n- student_course_id -> Student_Enrolment_Courses.student_course_id\n\nTable: Addresses\n\nColumns:\n- address_id INTEGER PRIMARY KEY\n- city VARCHAR(255)\n- country VARCHAR(255)\n- line_1 VARCHAR(255)\n- line_2 VARCHAR(255)\n- line_3 VARCHAR(255)\n- other_address_details VARCHAR(255)\n- state_province_county VARCHAR(255)\n\nTable: Courses\n\nColumns:\n- course_description VARCHAR(255)\n- course_id INTEGER PRIMARY KEY\n- course_name VARCHAR(255)\n- other_details VARCHAR(255)\n\nTable: Degree_Programs\n\nColumns:\n- degree_program_id INTEGER PRIMARY KEY\n- degree_summary_description VARCHAR(255)\n- degree_summary_name VARCHAR(255)\n- department_id INTEGER NOT NULL\n- other_details VARCHAR(255)\n\nForeign keys:\n- department_id -> Departments.department_id",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT AVG(strftime('%J', transcript_date)) FROM Transcripts",
+    "predicted_answer": [
+      [
+        2448053.8884891975
+      ]
+    ],
+    "gold_sql": "SELECT avg(transcript_date) FROM Transcripts",
+    "gold_answer": [
+      [
+        1989.9333333333334
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.2633,
+    "input_tokens": 346,
+    "output_tokens": 14
+  },
+  {
+    "id": "dev_000501",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "battle_death",
+    "question": "What are the distinct battle names which are between bulgarian commander 'Kaloyan' and latin commander 'Baldwin I'?",
+    "retrieved_schema": "Table: battle\n\nColumns:\n- bulgarian_commander TEXT\n- latin_commander TEXT\n- name TEXT\n- id INT PRIMARY KEY\n- date TEXT\n- result TEXT\n\nTable: ship\n\nColumns:\n- lost_in_battle INT\n- name TEXT\n- disposition_of_ship TEXT\n- id INT PRIMARY KEY\n- location TEXT\n- ship_type TEXT\n- tonnage TEXT\n\nForeign keys:\n- lost_in_battle -> battle.id\n\nTable: death\n\nColumns:\n- caused_by_ship_id INT\n- id INT PRIMARY KEY\n- injured INT\n- killed INT\n- note TEXT\n\nForeign keys:\n- caused_by_ship_id -> ship.id",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT DISTINCT name FROM battle WHERE bulgarian_commander = 'Kaloyan' AND latin_commander = 'Baldwin I'",
+    "predicted_answer": [
+      [
+        "Battle of Adrianople"
+      ]
+    ],
+    "gold_sql": "SELECT name FROM battle WHERE bulgarian_commander  =  'Kaloyan' AND latin_commander  =  'Baldwin I'",
+    "gold_answer": [
+      [
+        "Battle of Adrianople"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2561,
+    "input_tokens": 265,
+    "output_tokens": 29
+  },
+  {
+    "id": "dev_000457",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "wta_1",
+    "question": "List the first and last name of all players who are left / L hand in the order of birth date.",
+    "retrieved_schema": "Table: players\n\nColumns:\n- last_name TEXT\n- birth_date DATE\n- first_name TEXT\n- hand TEXT\n- player_id INT PRIMARY KEY\n- country_code TEXT\n\nTable: matches\n\nColumns:\n- loser_hand TEXT\n- loser_name TEXT\n- tourney_date DATE\n- tourney_name TEXT\n- winner_hand TEXT\n- winner_name TEXT\n- loser_age FLOAT\n- loser_entry TEXT\n- loser_id INT\n- winner_id INT\n\nForeign keys:\n- winner_id -> players.player_id\n- loser_id -> players.player_id\n\nTable: rankings\n\nColumns:\n- ranking_date DATE\n- player_id INT\n- ranking INT\n- ranking_points INT\n- tours INT\n\nForeign keys:\n- player_id -> players.player_id",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT first_name, last_name FROM players WHERE hand = 'L' ORDER BY birth_date",
+    "predicted_answer": [
+      [
+        "Ann",
+        "Jones"
+      ],
+      [
+        "Wendy",
+        "Gilchrist"
+      ],
+      [
+        "Martina",
+        "Navratilova"
+      ],
+      [
+        "Mary",
+        "Carillo"
+      ],
+      [
+        "Katerina",
+        "Bohmova"
+      ],
+      [
+        "Petra",
+        "Delhees Jauch"
+      ],
+      [
+        "Nancy",
+        "Loeffler Caro"
+      ],
+      [
+        "Lise",
+        "Gregory"
+      ],
+      [
+        "Rene",
+        "Collins"
+      ],
+      [
+        "Nicole",
+        "Arendt"
+      ],
+      [
+        "Florencia",
+        "Labat"
+      ],
+      [
+        "Sabine",
+        "Appelmans"
+      ],
+      [
+        "Andreea",
+        "Ehritt Vanc"
+      ],
+      [
+        "Monica",
+        "Seles"
+      ],
+      [
+        "Gala",
+        "Leon Garcia"
+      ],
+      [
+        "Karen",
+        "Cross"
+      ],
+      [
+        "Julie",
+        "Pullin"
+      ],
+      [
+        "Vanessa",
+        "Webb"
+      ],
+      [
+        "Elena",
+        "Tatarkova"
+      ],
+      [
+        "Anca",
+        "Barna"
+      ],
+      [
+        "Francesca",
+        "Lubiani"
+      ],
+      [
+        "Gaelle",
+        "Widmer"
+      ],
+      [
+        "Amanda",
+        "Keen"
+      ],
+      [
+        "Amanda",
+        "Augustus"
+      ],
+      [
+        "Rita",
+        "Kuti Kis"
+      ],
+      [
+        "Amelie",
+        "Cocheteux"
+      ],
+      [
+        "Amelie",
+        "Castera"
+      ],
+      [
+        "Saori",
+        "Obata"
+      ],
+      [
+        "Marine",
+        "Nizri Spiegel"
+      ],
+      [
+        "Patty",
+        "Schnyder"
+      ],
+      [
+        "Julie",
+        "Ditty"
+      ],
+      [
+        "Joana",
+        "Cortez"
+      ],
+      [
+        "Barbara",
+        "Schwartz"
+      ],
+      [
+        "Ludmilla",
+        "Varmuza"
+      ],
+      [
+        "Magui",
+        "Serna"
+      ],
+      [
+        "Amanda",
+        "Grahame"
+      ],
+      [
+        "Kim",
+        "Kilsdonk"
+      ],
+      [
+        "Emilie",
+        "Loit"
+      ],
+      [
+        "Erika",
+        "Pineider"
+      ],
+      [
+        "Anne Gaelle",
+        "Sidot"
+      ],
+      [
+        "Erica",
+        "Biro"
+      ],
+      [
+        "Stephanie",
+        "Kovacic"
+      ],
+      [
+        "Sybille",
+        "Bammer"
+      ],
+      [
+        "Lisa",
+        "Fritz"
+      ],
+      [
+        "Maja",
+        "Matevzic"
+      ],
+      [
+        "Leanne",
+        "Baker"
+      ],
+      [
+        "Aurelie",
+        "Vedy"
+      ],
+      [
+        "Carla",
+        "Tiene"
+      ],
+      [
+        "Erika",
+        "Venere"
+      ],
+      [
+        "Jelena",
+        "Kostanic Tosic"
+      ],
+      [
+        "Clarisa",
+        "Fernandez"
+      ],
+      [
+        "Ansley",
+        "Cargill"
+      ],
+      [
+        "Dimana",
+        "Krastevitch"
+      ],
+      [
+        "Maria Jose",
+        "Martinez Sanchez"
+      ],
+      [
+        "Zerene",
+        "Reyes"
+      ],
+      [
+        "Melinda",
+        "Czink"
+      ],
+      [
+        "Sandra",
+        "Klemenschits"
+      ],
+      [
+        "Maria Elizabeth",
+        "Lopez"
+      ],
+      [
+        "Salome",
+        "Llaguno"
+      ],
+      [
+        "Lindsay",
+        "Cox"
+      ],
+      [
+        "Iveta",
+        "Benesova"
+      ],
+      [
+        "Eugenia",
+        "Chialvo"
+      ],
+      [
+        "Chun Yan",
+        "He"
+      ],
+      [
+        "Maria Fernanda",
+        "Alves"
+      ],
+      [
+        "Emily",
+        "Quin"
+      ],
+      [
+        "Fernanda",
+        "Oliveira Da Silva"
+      ],
+      [
+        "Annabel",
+        "Blow"
+      ],
+      [
+        "Julia",
+        "Smith"
+      ],
+      [
+        "Ana Lucia",
+        "Migliarini De Leon"
+      ],
+      [
+        "Elizabeth",
+        "Bondi"
+      ],
+      [
+        "Galina",
+        "Fokina"
+      ],
+      [
+        "Elise",
+        "Tamaela"
+      ],
+      [
+        "Bit Na",
+        "Lee"
+      ],
+      [
+        "Sonia",
+        "Iacovacci"
+      ],
+      [
+        "Mariana Pires",
+        "Junqueira"
+      ],
+      [
+        "Natalia",
+        "Bogdanova"
+      ],
+      [
+        "Irina",
+        "Smirnova"
+      ],
+      [
+        "Meghha",
+        "Vakaria"
+      ],
+      [
+        "Angela",
+        "Haynes"
+      ],
+      [
+        "Karly",
+        "Olson"
+      ],
+      [
+        "Casey",
+        "Dellacqua"
+      ],
+      [
+        "Kathrin",
+        "Hegel"
+      ],
+      [
+        "Beatrix",
+        "Csordas"
+      ],
+      [
+        "Zsuzsanna",
+        "Babos"
+      ],
+      [
+        "Emily",
+        "Applegate"
+      ],
+      [
+        "Olga",
+        "Pasichnichenko"
+      ],
+      [
+        "Theresa",
+        "Logar"
+      ],
+      [
+        "Jin A",
+        "Lee"
+      ],
+      [
+        "Hannah",
+        "Kuervers"
+      ],
+      [
+        "Andreea",
+        "Novaceanu"
+      ],
+      [
+        "Valentina",
+        "Tizzano"
+      ],
+      [
+        "Helen",
+        "Fritche"
+      ],
+      [
+        "Sandra",
+        "Sasidharan"
+      ],
+      [
+        "Isha",
+        "Lakhani"
+      ],
+      [
+        "Krushmi",
+        "Chheda"
+      ],
+      [
+        "Ljubica",
+        "Avramovic"
+      ],
+      [
+        "Avel Romaly",
+        "Coronado"
+      ],
+      [
+        "Shadisha",
+        "Robinson"
+      ],
+      [
+        "Carla",
+        "Zabaleta"
+      ],
+      [
+        "Diana",
+        "Arutyunova"
+      ],
+      [
+        "Cecile",
+        "Baijot"
+      ],
+      [
+        "Laura",
+        "Rocchi"
+      ],
+      [
+        "Rie",
+        "Imai"
+      ],
+      [
+        "Danielle",
+        "Harmsen"
+      ],
+      [
+        "Alejandra",
+        "Obregon"
+      ],
+      [
+        "Ariela",
+        "Perez"
+      ],
+      [
+        "Vasilisa",
+        "Davydova"
+      ],
+      [
+        "Emilia",
+        "Yorio"
+      ],
+      [
+        "Lizaan",
+        "Du Plessis"
+      ],
+      [
+        "Claire",
+        "Feuerstein"
+      ],
+      [
+        "Alexandria",
+        "Liles"
+      ],
+      [
+        "Katharine",
+        "Baker"
+      ],
+      [
+        "Emma",
+        "Laine"
+      ],
+      [
+        "Geraldine",
+        "Roma"
+      ],
+      [
+        "Aya",
+        "El Akkad"
+      ],
+      [
+        "Alexandra",
+        "Kazanova"
+      ],
+      [
+        "Allison",
+        "Baker"
+      ],
+      [
+        "Lucy",
+        "Fletcher"
+      ],
+      [
+        "Monika",
+        "Musilova"
+      ],
+      [
+        "Jitka",
+        "Gavdunova"
+      ],
+      [
+        "Elena",
+        "Petrucciano"
+      ],
+      [
+        "Varvara",
+        "Lepchenko"
+      ],
+      [
+        "Claire",
+        "De Gubernatis"
+      ],
+      [
+        "Seheno",
+        "Razafindramaso"
+      ],
+      [
+        "Karolina",
+        "Soor"
+      ],
+      [
+        "Melisa",
+        "Cabrera Handt"
+      ],
+      [
+        "Shraddha",
+        "Lodha"
+      ],
+      [
+        "Sylvia",
+        "Krywacz"
+      ],
+      [
+        "Amina",
+        "El Sahn"
+      ],
+      [
+        "Hendrike Lea",
+        "Heitmann"
+      ],
+      [
+        "Dunja",
+        "Antunovic"
+      ],
+      [
+        "Micaela",
+        "Acosta"
+      ],
+      [
+        "Katerina",
+        "Bohmova"
+      ],
+      [
+        "Catherine",
+        "Grotz"
+      ],
+      [
+        "Yurika",
+        "Sema"
+      ],
+      [
+        "Sheng Nan",
+        "Sun"
+      ],
+      [
+        "Lucie",
+        "Safarova"
+      ],
+      [
+        "Jitka",
+        "Kleisnerova"
+      ],
+      [
+        "Carolina",
+        "Escamilla"
+      ],
+      [
+        "Tapiwa",
+        "Marobela"
+      ],
+      [
+        "Punam",
+        "Reddy"
+      ],
+      [
+        "Katia",
+        "Sabate Orera"
+      ],
+      [
+        "Shana",
+        "Claes"
+      ],
+      [
+        "Chrissie",
+        "Seredni"
+      ],
+      [
+        "Yui",
+        "Nagasawa"
+      ],
+      [
+        "Marcela",
+        "Vojtiskova"
+      ],
+      [
+        "Seul Ki",
+        "Chin"
+      ],
+      [
+        "Nina",
+        "Munch Soegaard"
+      ],
+      [
+        "Hannah",
+        "Grady"
+      ],
+      [
+        "Karen",
+        "Castiblanco"
+      ],
+      [
+        "Angelique",
+        "Kerber"
+      ],
+      [
+        "Lauren",
+        "Lui"
+      ],
+      [
+        "Rana",
+        "Tharwat Hafez"
+      ],
+      [
+        "Nicole",
+        "Grunwald"
+      ],
+      [
+        "Ana",
+        "Veselinovic"
+      ],
+      [
+        "Sanaa",
+        "Bhambri"
+      ],
+      [
+        "Diana Andreea",
+        "Gae"
+      ],
+      [
+        "Ana",
+        "Beltran Trigueros"
+      ],
+      [
+        "Barbora",
+        "Bozkova"
+      ],
+      [
+        "Camila",
+        "Belassi"
+      ],
+      [
+        "Violette",
+        "Huck"
+      ],
+      [
+        "Megumi",
+        "Fukui"
+      ],
+      [
+        "Rita",
+        "Gouveia"
+      ],
+      [
+        "Mihaela",
+        "Buzarnescu"
+      ],
+      [
+        "Liset",
+        "Brito Herrera"
+      ],
+      [
+        "Paulina",
+        "Jorquera"
+      ],
+      [
+        "Ekaterina",
+        "Makarova"
+      ],
+      [
+        "Dessislava",
+        "Mladenova"
+      ],
+      [
+        "Sanaz",
+        "Marand"
+      ],
+      [
+        "Cristina",
+        "Greco Naccarato"
+      ],
+      [
+        "Cagla",
+        "Urcu"
+      ],
+      [
+        "Liege",
+        "Vieira"
+      ],
+      [
+        "Chang",
+        "Xu"
+      ],
+      [
+        "Jessica",
+        "Sweeting"
+      ],
+      [
+        "Yi Fan",
+        "Xu"
+      ],
+      [
+        "Eloisa Maria",
+        "Compostizo De Andres"
+      ],
+      [
+        "Karina",
+        "Porushkevich"
+      ],
+      [
+        "Ornella",
+        "Gentile"
+      ],
+      [
+        "Valeria",
+        "Casillo"
+      ],
+      [
+        "Bianca Ioana",
+        "Bonifate"
+      ],
+      [
+        "Michelle",
+        "Russ"
+      ],
+      [
+        "Monika",
+        "Lalewicz"
+      ],
+      [
+        "Amandine",
+        "Cazeaux"
+      ],
+      [
+        "Fatima",
+        "El Allami"
+      ],
+      [
+        "Simonetta",
+        "Miori"
+      ],
+      [
+        "Gabriela",
+        "Roux"
+      ],
+      [
+        "Sherazad",
+        "Benamar"
+      ],
+      [
+        "Sherazad",
+        "Reix"
+      ],
+      [
+        "Zora",
+        "Vlckova"
+      ],
+      [
+        "Naomi",
+        "Cavaday"
+      ],
+      [
+        "Nathalia",
+        "Rossi"
+      ],
+      [
+        "Maria Eugenia",
+        "Roca Recarey"
+      ],
+      [
+        "Lauren",
+        "Jones"
+      ],
+      [
+        "Roxane",
+        "Vaisemberg"
+      ],
+      [
+        "Ivana",
+        "Belejova"
+      ],
+      [
+        "Petra",
+        "Vogel"
+      ],
+      [
+        "Majdouline",
+        "Akrate"
+      ],
+      [
+        "Laura",
+        "Sadria"
+      ],
+      [
+        "Ia",
+        "Jikia"
+      ],
+      [
+        "Alessandra",
+        "Caprara"
+      ],
+      [
+        "Guadalupe",
+        "Moreno"
+      ],
+      [
+        "Lucie",
+        "Sipkova"
+      ],
+      [
+        "Xenia",
+        "Samoilova"
+      ],
+      [
+        "Kotomi",
+        "Takahata"
+      ],
+      [
+        "Stephanie",
+        "Theiler"
+      ],
+      [
+        "Maria",
+        "Prishlyak"
+      ],
+      [
+        "Grace",
+        "Leake"
+      ],
+      [
+        "Ioana Alexandra",
+        "Oprea"
+      ],
+      [
+        "Sanne",
+        "Bakker"
+      ],
+      [
+        "Katerina",
+        "Vankova"
+      ],
+      [
+        "Kristy",
+        "Frilling"
+      ],
+      [
+        "Tatiana",
+        "Bua"
+      ],
+      [
+        "Anastasia",
+        "Kontratevidi"
+      ],
+      [
+        "Chane",
+        "Hines"
+      ],
+      [
+        "Julia",
+        "Gavenko"
+      ],
+      [
+        "Yuuki",
+        "Tanaka"
+      ],
+      [
+        "Petra",
+        "Kvitova"
+      ],
+      [
+        "Leticia",
+        "Costas"
+      ],
+      [
+        "Sandra",
+        "Roma"
+      ],
+      [
+        "Nina",
+        "Mujezinovic"
+      ],
+      [
+        "Stella",
+        "Papaspyrou"
+      ],
+      [
+        "Chinami",
+        "Ogi"
+      ],
+      [
+        "Martina",
+        "Balogova"
+      ],
+      [
+        "Xinyun",
+        "Han"
+      ],
+      [
+        "Nicole",
+        "Riner"
+      ],
+      [
+        "Lara",
+        "Meccico"
+      ],
+      [
+        "Mai",
+        "Iwasaki"
+      ],
+      [
+        "Oksana",
+        "Kalashnikova"
+      ],
+      [
+        "Dipti",
+        "Srivastava"
+      ],
+      [
+        "Claudia",
+        "Mercado"
+      ],
+      [
+        "Margarita",
+        "Lazareva"
+      ],
+      [
+        "Shaozhuo",
+        "Liu"
+      ],
+      [
+        "Ana Maria",
+        "Chavez Franco"
+      ],
+      [
+        "Arantxa",
+        "Rus"
+      ],
+      [
+        "Ekaterina",
+        "Kamendova"
+      ],
+      [
+        "Monika",
+        "Tumova"
+      ],
+      [
+        "Gabriella",
+        "Boboc"
+      ],
+      [
+        "Ganna",
+        "Lukianchykova"
+      ],
+      [
+        "Sofia",
+        "Medina"
+      ],
+      [
+        "Ekaterina",
+        "Abaeva"
+      ],
+      [
+        "Andressa",
+        "Garcia"
+      ],
+      [
+        "Giulia",
+        "Bruzzone"
+      ],
+      [
+        "Catia",
+        "Rodrigues"
+      ],
+      [
+        "Danielle",
+        "Mills"
+      ],
+      [
+        "Flavia",
+        "Borges"
+      ],
+      [
+        "Misaki",
+        "Doi"
+      ],
+      [
+        "Veronika",
+        "Domagala"
+      ],
+      [
+        "Cindy",
+        "Chala"
+      ],
+      [
+        "Ksenia",
+        "Pervak"
+      ],
+      [
+        "Bianca",
+        "Botto"
+      ],
+      [
+        "Marianna",
+        "Natali"
+      ],
+      [
+        "Carolina",
+        "Orsi"
+      ],
+      [
+        "Aleksandra",
+        "Vukadinovic"
+      ],
+      [
+        "Elixane",
+        "Lechemia"
+      ],
+      [
+        "Sonya",
+        "Dayal"
+      ],
+      [
+        "Francesca",
+        "Campigotto"
+      ],
+      [
+        "Cristina Bianca",
+        "Danaila"
+      ],
+      [
+        "Tereza",
+        "Budilova"
+      ],
+      [
+        "Gemma",
+        "Praditngam"
+      ],
+      [
+        "Ekaterine",
+        "Gorgodze"
+      ],
+      [
+        "Dejana",
+        "Raickovic"
+      ],
+      [
+        "Alena",
+        "Gerasimova"
+      ],
+      [
+        "Quirine",
+        "Lemoine"
+      ],
+      [
+        "Chieh Yu",
+        "Hsu"
+      ],
+      [
+        "Anastasiya",
+        "Vasylyeva"
+      ],
+      [
+        "Alexia",
+        "Quartetto"
+      ],
+      [
+        "Joanna",
+        "Bougon"
+      ],
+      [
+        "Kristyna",
+        "Pliskova"
+      ],
+      [
+        "Elena",
+        "Bogdan"
+      ],
+      [
+        "Fiorella",
+        "Jerardino"
+      ],
+      [
+        "Julie",
+        "Gonzalez Rodriguez"
+      ],
+      [
+        "Alejandra",
+        "Barragan"
+      ],
+      [
+        "Renata",
+        "Bakieva"
+      ],
+      [
+        "Ashley",
+        "Krysiak"
+      ],
+      [
+        "Sarah Rebecca",
+        "Sekulic"
+      ],
+      [
+        "Na Lae",
+        "Han"
+      ],
+      [
+        "Natali",
+        "Coronel"
+      ],
+      [
+        "Kristyna",
+        "Hancarova"
+      ],
+      [
+        "Doroteja",
+        "Eric"
+      ],
+      [
+        "Chanel",
+        "Simmonds"
+      ],
+      [
+        "Kobkanok",
+        "Upapong"
+      ],
+      [
+        "Annie",
+        "Sullivan"
+      ],
+      [
+        "Jenny Thuy",
+        "Le"
+      ],
+      [
+        "Xenia",
+        "Knoll"
+      ],
+      [
+        "Francisca",
+        "Matos"
+      ],
+      [
+        "Christina",
+        "Madenoglou"
+      ],
+      [
+        "Alexandra",
+        "Avirvarei"
+      ],
+      [
+        "Georgina",
+        "Fedosenkova"
+      ],
+      [
+        "Alicia",
+        "Doms Golobart"
+      ],
+      [
+        "Amy",
+        "Hoburn"
+      ],
+      [
+        "Monica",
+        "Turewicz"
+      ],
+      [
+        "Martina",
+        "Zerbola"
+      ],
+      [
+        "Mashaal",
+        "Hameed"
+      ],
+      [
+        "Sabrina",
+        "Dos Reis"
+      ],
+      [
+        "Maria Sol",
+        "Carrasco"
+      ],
+      [
+        "Ruxandra",
+        "Ababii"
+      ],
+      [
+        "Daniella",
+        "Patton"
+      ],
+      [
+        "Veronika",
+        "Zavodska"
+      ],
+      [
+        "Briar",
+        "Preston"
+      ],
+      [
+        "Gabriela",
+        "Ce"
+      ],
+      [
+        "Amanda",
+        "Rodgers"
+      ],
+      [
+        "Constanze",
+        "Lotz"
+      ],
+      [
+        "Paula",
+        "Mocete Talamantes"
+      ],
+      [
+        "Verena",
+        "Gantschnig"
+      ],
+      [
+        "Ainhoa",
+        "Atucha Gomez"
+      ],
+      [
+        "Katarzyna",
+        "Kossowska"
+      ],
+      [
+        "Julia",
+        "Stamatova"
+      ],
+      [
+        "Vorranavaporn",
+        "Vorrarattanamongkol"
+      ],
+      [
+        "Michaela",
+        "Jasenakova"
+      ],
+      [
+        "Agustina Sol",
+        "Eskenazi"
+      ],
+      [
+        "Maja",
+        "Mladenovic"
+      ],
+      [
+        "Sandra",
+        "Garriga Catala"
+      ],
+      [
+        "Rita",
+        "Vilaca"
+      ],
+      [
+        "Zanmarie",
+        "Pienaar"
+      ],
+      [
+        "Julia",
+        "Kimmelmann"
+      ],
+      [
+        "Martina",
+        "Trevisan"
+      ],
+      [
+        "Charitomeni",
+        "Matoula"
+      ],
+      [
+        "Andreea",
+        "Istrate"
+      ],
+      [
+        "Sowjanya",
+        "Bavisetti"
+      ],
+      [
+        "Gabrielle",
+        "Moxey"
+      ],
+      [
+        "Viktoryia",
+        "Kisialeva"
+      ],
+      [
+        "Sarahi",
+        "Garcia Carrera"
+      ],
+      [
+        "Rachel",
+        "Girard"
+      ],
+      [
+        "Laura",
+        "Robson"
+      ],
+      [
+        "Kate",
+        "Vialle"
+      ],
+      [
+        "Anna",
+        "Montserrat Sanchez"
+      ],
+      [
+        "Elena Teodora",
+        "Cadar"
+      ],
+      [
+        "Carol",
+        "Augustine Benito"
+      ],
+      [
+        "Kamila",
+        "Pavelkova"
+      ],
+      [
+        "Arantxa",
+        "Sanchez"
+      ],
+      [
+        "Ana Sofia",
+        "Sanchez"
+      ],
+      [
+        "Julia",
+        "Wachaczyk"
+      ],
+      [
+        "Ecaterina",
+        "Oproiu"
+      ],
+      [
+        "Snigdha",
+        "Padamata"
+      ],
+      [
+        "Rona",
+        "Berisha"
+      ],
+      [
+        "Olga",
+        "Doroshina"
+      ],
+      [
+        "So Ra",
+        "Lee"
+      ],
+      [
+        "Brandy",
+        "Mina"
+      ],
+      [
+        "Natalie",
+        "Novakova"
+      ],
+      [
+        "Storm",
+        "Sanders"
+      ],
+      [
+        "Alexandra",
+        "Martinez"
+      ],
+      [
+        "Ysaline",
+        "Bonaventure"
+      ],
+      [
+        "Barbora",
+        "Trestikova"
+      ],
+      [
+        "Stefania",
+        "Hristov"
+      ],
+      [
+        "Ana Maria",
+        "Crisan"
+      ],
+      [
+        "Elpida",
+        "Papanelopoulou"
+      ],
+      [
+        "Tereza",
+        "Jankovska"
+      ],
+      [
+        "Rebecca",
+        "Andrade"
+      ],
+      [
+        "Kelly",
+        "Williford"
+      ],
+      [
+        "Tina",
+        "Rupert"
+      ],
+      [
+        "Mia Nicole",
+        "Eklund"
+      ],
+      [
+        "Bernarda",
+        "Pera"
+      ],
+      [
+        "Montserrat",
+        "Alonso"
+      ],
+      [
+        "Rosalie",
+        "Van Der Hoek"
+      ],
+      [
+        "Hedda",
+        "Odegaard"
+      ],
+      [
+        "Samira",
+        "Radjaa"
+      ],
+      [
+        "Zuzanna",
+        "Maciejewska"
+      ],
+      [
+        "Saumya",
+        "Vig"
+      ],
+      [
+        "Marie",
+        "Benoit"
+      ],
+      [
+        "Iga",
+        "Odrzywolek"
+      ],
+      [
+        "Shakhlo",
+        "Saidova"
+      ],
+      [
+        "Irina",
+        "Khromacheva"
+      ],
+      [
+        "Yuliya",
+        "Lysa"
+      ],
+      [
+        "Sophie",
+        "Blom"
+      ],
+      [
+        "Jennifer",
+        "Zerbone"
+      ],
+      [
+        "Kristina",
+        "Chasovskikh"
+      ],
+      [
+        "Maria Camila",
+        "Trujillo Hoyos"
+      ],
+      [
+        "Karina",
+        "Rovira"
+      ],
+      [
+        "Teodora Adina",
+        "Ardeleanu"
+      ],
+      [
+        "Yasmine",
+        "Rashad"
+      ],
+      [
+        "Judit",
+        "Vives Joan"
+      ],
+      [
+        "Sarah Beth",
+        "Askew"
+      ],
+      [
+        "Yasmine",
+        "Xantos"
+      ],
+      [
+        "Lea",
+        "Tholey"
+      ],
+      [
+        "Hikari",
+        "Yamamoto"
+      ],
+      [
+        "Ines Miren",
+        "De Pablo"
+      ],
+      [
+        "Stuti",
+        "Singh Tomar"
+      ],
+      [
+        "Naomi",
+        "Totka"
+      ],
+      [
+        "Polina",
+        "Bezsmertnaya"
+      ],
+      [
+        "Hannah",
+        "King"
+      ],
+      [
+        "Gabriele",
+        "Bertasiute"
+      ],
+      [
+        "Rebecca",
+        "Smaller"
+      ],
+      [
+        "Busra",
+        "Kayrun"
+      ],
+      [
+        "Stephani",
+        "Rodriguez"
+      ],
+      [
+        "Raquel",
+        "Montalvo"
+      ],
+      [
+        "Oana",
+        "Irimescu"
+      ],
+      [
+        "Taylor",
+        "Townsend"
+      ],
+      [
+        "Carmen",
+        "Blasco Robaina"
+      ],
+      [
+        "Giulia",
+        "Della Cioppa"
+      ],
+      [
+        "Nadege",
+        "Jorda"
+      ],
+      [
+        "Beatriz",
+        "Haddad Maia"
+      ],
+      [
+        "Nelise",
+        "Verster"
+      ],
+      [
+        "Eleonore",
+        "Barrere"
+      ],
+      [
+        "Anastasia",
+        "Prokopenko"
+      ],
+      [
+        "Dzina",
+        "Milovanovic"
+      ],
+      [
+        "Isabelle",
+        "Wallace"
+      ],
+      [
+        "Katelyn",
+        "Jackson"
+      ],
+      [
+        "Polina",
+        "Novoselova"
+      ],
+      [
+        "Maite",
+        "Cano"
+      ],
+      [
+        "Ria",
+        "Vaidya"
+      ],
+      [
+        "Ana Lorena",
+        "Garcia Navas"
+      ],
+      [
+        "Aayushi",
+        "Chouhan"
+      ],
+      [
+        "Ivona",
+        "Cudina"
+      ],
+      [
+        "Karina",
+        "Gurgenyan"
+      ],
+      [
+        "Maria",
+        "Patrascu"
+      ],
+      [
+        "Denisa",
+        "Chereches"
+      ],
+      [
+        "Mirabelle",
+        "Njoze"
+      ],
+      [
+        "Vasanti",
+        "Shinde"
+      ],
+      [
+        "Amanda",
+        "Schneider"
+      ],
+      [
+        "Katharina",
+        "Herpertz"
+      ],
+      [
+        "Tayisiya",
+        "Morderger"
+      ],
+      [
+        "Tamara",
+        "Tomic"
+      ],
+      [
+        "Maria Fernanda",
+        "Herazo Gonzalez"
+      ],
+      [
+        "Andra Maria",
+        "Nitescu"
+      ],
+      [
+        "Micheline",
+        "Aubuchon"
+      ],
+      [
+        "Ilayda",
+        "Yondem"
+      ],
+      [
+        "Birgit",
+        "Burk"
+      ],
+      [
+        "Kanako",
+        "Osafune"
+      ],
+      [
+        "Anastasiya",
+        "Komardina"
+      ],
+      [
+        "Nina",
+        "Holanova"
+      ],
+      [
+        "Jil Belen",
+        "Teichmann"
+      ],
+      [
+        "Francesca",
+        "Di Lorenzo"
+      ],
+      [
+        "Natsuho",
+        "Arakawa"
+      ],
+      [
+        "Emerald",
+        "Able"
+      ],
+      [
+        "Manca",
+        "Pislak"
+      ],
+      [
+        "Irys",
+        "Ekani"
+      ],
+      [
+        "Veronica",
+        "Miroshnichenko"
+      ],
+      [
+        "Martina",
+        "Capurro Taborda"
+      ],
+      [
+        "Mariam",
+        "Bolkvadze"
+      ],
+      [
+        "Diana",
+        "Valverde"
+      ],
+      [
+        "Do Hee",
+        "Bae"
+      ],
+      [
+        "Daniela",
+        "Morales Beckmann"
+      ],
+      [
+        "Ioana Diana",
+        "Pietroiu"
+      ],
+      [
+        "Luisa Fernanda",
+        "Echeverry Rodriguez"
+      ],
+      [
+        "Mayuka",
+        "Aikawa"
+      ],
+      [
+        "Nicole",
+        "Frenkel"
+      ],
+      [
+        "Daria",
+        "Kruzhkova"
+      ],
+      [
+        "Alejandra",
+        "Tamayo Gomez"
+      ],
+      [
+        "Tereza",
+        "Koplova"
+      ],
+      [
+        "Chiara",
+        "Lommer"
+      ],
+      [
+        "Laura",
+        "Illanes"
+      ],
+      [
+        "Olga",
+        "Fridman"
+      ],
+      [
+        "Ana Paula",
+        "Leal"
+      ],
+      [
+        "Shiraz",
+        "Bronstein"
+      ],
+      [
+        "Nicole",
+        "Bunea"
+      ],
+      [
+        "Charlotte",
+        "Robillard Millette"
+      ],
+      [
+        "Ashley",
+        "Kratzer"
+      ],
+      [
+        "Momoka",
+        "Chimura"
+      ],
+      [
+        "Anna",
+        "Slovakova"
+      ],
+      [
+        "Ai Qi",
+        "Chen"
+      ],
+      [
+        "Jiaying",
+        "He"
+      ],
+      [
+        "Ysabel",
+        "Gonzalez Rico"
+      ],
+      [
+        "Andreea",
+        "Stanescu"
+      ],
+      [
+        "Marketa",
+        "Vondrousova"
+      ],
+      [
+        "Ecaterina",
+        "Ivasco"
+      ],
+      [
+        "Ivon",
+        "Mihaleva"
+      ],
+      [
+        "Jasmine",
+        "Boyd"
+      ],
+      [
+        "Andrea",
+        "Arratia Fernandez"
+      ],
+      [
+        "Kayla",
+        "Day"
+      ],
+      [
+        "Ekaterina",
+        "Davletova"
+      ],
+      [
+        "Irina",
+        "Cantos Siemers"
+      ],
+      [
+        "Oceane",
+        "Mialon"
+      ],
+      [
+        "Watsachol",
+        "Sawasdee"
+      ],
+      [
+        "Ellen",
+        "Ashley"
+      ],
+      [
+        "Mila",
+        "Mejic"
+      ],
+      [
+        "Natalia",
+        "Nikolopoulou"
+      ],
+      [
+        "Marta",
+        "Del Pino Maturano"
+      ],
+      [
+        "Jayci",
+        "Goldsmith"
+      ],
+      [
+        "Yang",
+        "Lee"
+      ],
+      [
+        "Isabella",
+        "Tcherkes Zade"
+      ],
+      [
+        "Mara",
+        "Vidal"
+      ],
+      [
+        "Taylor",
+        "Johnson"
+      ],
+      [
+        "Julia",
+        "Vulpio"
+      ],
+      [
+        "Dagmar",
+        "Zdrubecka"
+      ],
+      [
+        "Olga",
+        "Danilovic"
+      ],
+      [
+        "Xiyu",
+        "Wang"
+      ],
+      [
+        "Lina",
+        "Shokry"
+      ],
+      [
+        "Ya Hsin",
+        "Lee"
+      ],
+      [
+        "Ruxandra",
+        "Schech"
+      ],
+      [
+        "Yasmina",
+        "Karimjanova"
+      ],
+      [
+        "Lara",
+        "Biter"
+      ],
+      [
+        "Najah",
+        "Dawson"
+      ],
+      [
+        "Giulia",
+        "Morlet"
+      ],
+      [
+        "Matilde",
+        "Mariani"
+      ],
+      [
+        "Isabella",
+        "Nunez"
+      ],
+      [
+        "Betina",
+        "Tokac"
+      ],
+      [
+        "Noa",
+        "Krznaric"
+      ]
+    ],
+    "gold_sql": "SELECT first_name ,  last_name FROM players WHERE hand  =  'L' ORDER BY birth_date",
+    "gold_answer": [
+      [
+        "Ann",
+        "Jones"
+      ],
+      [
+        "Wendy",
+        "Gilchrist"
+      ],
+      [
+        "Martina",
+        "Navratilova"
+      ],
+      [
+        "Mary",
+        "Carillo"
+      ],
+      [
+        "Katerina",
+        "Bohmova"
+      ],
+      [
+        "Petra",
+        "Delhees Jauch"
+      ],
+      [
+        "Nancy",
+        "Loeffler Caro"
+      ],
+      [
+        "Lise",
+        "Gregory"
+      ],
+      [
+        "Rene",
+        "Collins"
+      ],
+      [
+        "Nicole",
+        "Arendt"
+      ],
+      [
+        "Florencia",
+        "Labat"
+      ],
+      [
+        "Sabine",
+        "Appelmans"
+      ],
+      [
+        "Andreea",
+        "Ehritt Vanc"
+      ],
+      [
+        "Monica",
+        "Seles"
+      ],
+      [
+        "Gala",
+        "Leon Garcia"
+      ],
+      [
+        "Karen",
+        "Cross"
+      ],
+      [
+        "Julie",
+        "Pullin"
+      ],
+      [
+        "Vanessa",
+        "Webb"
+      ],
+      [
+        "Elena",
+        "Tatarkova"
+      ],
+      [
+        "Anca",
+        "Barna"
+      ],
+      [
+        "Francesca",
+        "Lubiani"
+      ],
+      [
+        "Gaelle",
+        "Widmer"
+      ],
+      [
+        "Amanda",
+        "Keen"
+      ],
+      [
+        "Amanda",
+        "Augustus"
+      ],
+      [
+        "Rita",
+        "Kuti Kis"
+      ],
+      [
+        "Amelie",
+        "Cocheteux"
+      ],
+      [
+        "Amelie",
+        "Castera"
+      ],
+      [
+        "Saori",
+        "Obata"
+      ],
+      [
+        "Marine",
+        "Nizri Spiegel"
+      ],
+      [
+        "Patty",
+        "Schnyder"
+      ],
+      [
+        "Julie",
+        "Ditty"
+      ],
+      [
+        "Joana",
+        "Cortez"
+      ],
+      [
+        "Barbara",
+        "Schwartz"
+      ],
+      [
+        "Ludmilla",
+        "Varmuza"
+      ],
+      [
+        "Magui",
+        "Serna"
+      ],
+      [
+        "Amanda",
+        "Grahame"
+      ],
+      [
+        "Kim",
+        "Kilsdonk"
+      ],
+      [
+        "Emilie",
+        "Loit"
+      ],
+      [
+        "Erika",
+        "Pineider"
+      ],
+      [
+        "Anne Gaelle",
+        "Sidot"
+      ],
+      [
+        "Erica",
+        "Biro"
+      ],
+      [
+        "Stephanie",
+        "Kovacic"
+      ],
+      [
+        "Sybille",
+        "Bammer"
+      ],
+      [
+        "Lisa",
+        "Fritz"
+      ],
+      [
+        "Maja",
+        "Matevzic"
+      ],
+      [
+        "Leanne",
+        "Baker"
+      ],
+      [
+        "Aurelie",
+        "Vedy"
+      ],
+      [
+        "Carla",
+        "Tiene"
+      ],
+      [
+        "Erika",
+        "Venere"
+      ],
+      [
+        "Jelena",
+        "Kostanic Tosic"
+      ],
+      [
+        "Clarisa",
+        "Fernandez"
+      ],
+      [
+        "Ansley",
+        "Cargill"
+      ],
+      [
+        "Dimana",
+        "Krastevitch"
+      ],
+      [
+        "Maria Jose",
+        "Martinez Sanchez"
+      ],
+      [
+        "Zerene",
+        "Reyes"
+      ],
+      [
+        "Melinda",
+        "Czink"
+      ],
+      [
+        "Sandra",
+        "Klemenschits"
+      ],
+      [
+        "Maria Elizabeth",
+        "Lopez"
+      ],
+      [
+        "Salome",
+        "Llaguno"
+      ],
+      [
+        "Lindsay",
+        "Cox"
+      ],
+      [
+        "Iveta",
+        "Benesova"
+      ],
+      [
+        "Eugenia",
+        "Chialvo"
+      ],
+      [
+        "Chun Yan",
+        "He"
+      ],
+      [
+        "Maria Fernanda",
+        "Alves"
+      ],
+      [
+        "Emily",
+        "Quin"
+      ],
+      [
+        "Fernanda",
+        "Oliveira Da Silva"
+      ],
+      [
+        "Annabel",
+        "Blow"
+      ],
+      [
+        "Julia",
+        "Smith"
+      ],
+      [
+        "Ana Lucia",
+        "Migliarini De Leon"
+      ],
+      [
+        "Elizabeth",
+        "Bondi"
+      ],
+      [
+        "Galina",
+        "Fokina"
+      ],
+      [
+        "Elise",
+        "Tamaela"
+      ],
+      [
+        "Bit Na",
+        "Lee"
+      ],
+      [
+        "Sonia",
+        "Iacovacci"
+      ],
+      [
+        "Mariana Pires",
+        "Junqueira"
+      ],
+      [
+        "Natalia",
+        "Bogdanova"
+      ],
+      [
+        "Irina",
+        "Smirnova"
+      ],
+      [
+        "Meghha",
+        "Vakaria"
+      ],
+      [
+        "Angela",
+        "Haynes"
+      ],
+      [
+        "Karly",
+        "Olson"
+      ],
+      [
+        "Casey",
+        "Dellacqua"
+      ],
+      [
+        "Kathrin",
+        "Hegel"
+      ],
+      [
+        "Beatrix",
+        "Csordas"
+      ],
+      [
+        "Zsuzsanna",
+        "Babos"
+      ],
+      [
+        "Emily",
+        "Applegate"
+      ],
+      [
+        "Olga",
+        "Pasichnichenko"
+      ],
+      [
+        "Theresa",
+        "Logar"
+      ],
+      [
+        "Jin A",
+        "Lee"
+      ],
+      [
+        "Hannah",
+        "Kuervers"
+      ],
+      [
+        "Andreea",
+        "Novaceanu"
+      ],
+      [
+        "Valentina",
+        "Tizzano"
+      ],
+      [
+        "Helen",
+        "Fritche"
+      ],
+      [
+        "Sandra",
+        "Sasidharan"
+      ],
+      [
+        "Isha",
+        "Lakhani"
+      ],
+      [
+        "Krushmi",
+        "Chheda"
+      ],
+      [
+        "Ljubica",
+        "Avramovic"
+      ],
+      [
+        "Avel Romaly",
+        "Coronado"
+      ],
+      [
+        "Shadisha",
+        "Robinson"
+      ],
+      [
+        "Carla",
+        "Zabaleta"
+      ],
+      [
+        "Diana",
+        "Arutyunova"
+      ],
+      [
+        "Cecile",
+        "Baijot"
+      ],
+      [
+        "Laura",
+        "Rocchi"
+      ],
+      [
+        "Rie",
+        "Imai"
+      ],
+      [
+        "Danielle",
+        "Harmsen"
+      ],
+      [
+        "Alejandra",
+        "Obregon"
+      ],
+      [
+        "Ariela",
+        "Perez"
+      ],
+      [
+        "Vasilisa",
+        "Davydova"
+      ],
+      [
+        "Emilia",
+        "Yorio"
+      ],
+      [
+        "Lizaan",
+        "Du Plessis"
+      ],
+      [
+        "Claire",
+        "Feuerstein"
+      ],
+      [
+        "Alexandria",
+        "Liles"
+      ],
+      [
+        "Katharine",
+        "Baker"
+      ],
+      [
+        "Emma",
+        "Laine"
+      ],
+      [
+        "Geraldine",
+        "Roma"
+      ],
+      [
+        "Aya",
+        "El Akkad"
+      ],
+      [
+        "Alexandra",
+        "Kazanova"
+      ],
+      [
+        "Allison",
+        "Baker"
+      ],
+      [
+        "Lucy",
+        "Fletcher"
+      ],
+      [
+        "Monika",
+        "Musilova"
+      ],
+      [
+        "Jitka",
+        "Gavdunova"
+      ],
+      [
+        "Elena",
+        "Petrucciano"
+      ],
+      [
+        "Varvara",
+        "Lepchenko"
+      ],
+      [
+        "Claire",
+        "De Gubernatis"
+      ],
+      [
+        "Seheno",
+        "Razafindramaso"
+      ],
+      [
+        "Karolina",
+        "Soor"
+      ],
+      [
+        "Melisa",
+        "Cabrera Handt"
+      ],
+      [
+        "Shraddha",
+        "Lodha"
+      ],
+      [
+        "Sylvia",
+        "Krywacz"
+      ],
+      [
+        "Amina",
+        "El Sahn"
+      ],
+      [
+        "Hendrike Lea",
+        "Heitmann"
+      ],
+      [
+        "Dunja",
+        "Antunovic"
+      ],
+      [
+        "Micaela",
+        "Acosta"
+      ],
+      [
+        "Katerina",
+        "Bohmova"
+      ],
+      [
+        "Catherine",
+        "Grotz"
+      ],
+      [
+        "Yurika",
+        "Sema"
+      ],
+      [
+        "Sheng Nan",
+        "Sun"
+      ],
+      [
+        "Lucie",
+        "Safarova"
+      ],
+      [
+        "Jitka",
+        "Kleisnerova"
+      ],
+      [
+        "Carolina",
+        "Escamilla"
+      ],
+      [
+        "Tapiwa",
+        "Marobela"
+      ],
+      [
+        "Punam",
+        "Reddy"
+      ],
+      [
+        "Katia",
+        "Sabate Orera"
+      ],
+      [
+        "Shana",
+        "Claes"
+      ],
+      [
+        "Chrissie",
+        "Seredni"
+      ],
+      [
+        "Yui",
+        "Nagasawa"
+      ],
+      [
+        "Marcela",
+        "Vojtiskova"
+      ],
+      [
+        "Seul Ki",
+        "Chin"
+      ],
+      [
+        "Nina",
+        "Munch Soegaard"
+      ],
+      [
+        "Hannah",
+        "Grady"
+      ],
+      [
+        "Karen",
+        "Castiblanco"
+      ],
+      [
+        "Angelique",
+        "Kerber"
+      ],
+      [
+        "Lauren",
+        "Lui"
+      ],
+      [
+        "Rana",
+        "Tharwat Hafez"
+      ],
+      [
+        "Nicole",
+        "Grunwald"
+      ],
+      [
+        "Ana",
+        "Veselinovic"
+      ],
+      [
+        "Sanaa",
+        "Bhambri"
+      ],
+      [
+        "Diana Andreea",
+        "Gae"
+      ],
+      [
+        "Ana",
+        "Beltran Trigueros"
+      ],
+      [
+        "Barbora",
+        "Bozkova"
+      ],
+      [
+        "Camila",
+        "Belassi"
+      ],
+      [
+        "Violette",
+        "Huck"
+      ],
+      [
+        "Megumi",
+        "Fukui"
+      ],
+      [
+        "Rita",
+        "Gouveia"
+      ],
+      [
+        "Mihaela",
+        "Buzarnescu"
+      ],
+      [
+        "Liset",
+        "Brito Herrera"
+      ],
+      [
+        "Paulina",
+        "Jorquera"
+      ],
+      [
+        "Ekaterina",
+        "Makarova"
+      ],
+      [
+        "Dessislava",
+        "Mladenova"
+      ],
+      [
+        "Sanaz",
+        "Marand"
+      ],
+      [
+        "Cristina",
+        "Greco Naccarato"
+      ],
+      [
+        "Cagla",
+        "Urcu"
+      ],
+      [
+        "Liege",
+        "Vieira"
+      ],
+      [
+        "Chang",
+        "Xu"
+      ],
+      [
+        "Jessica",
+        "Sweeting"
+      ],
+      [
+        "Yi Fan",
+        "Xu"
+      ],
+      [
+        "Eloisa Maria",
+        "Compostizo De Andres"
+      ],
+      [
+        "Karina",
+        "Porushkevich"
+      ],
+      [
+        "Ornella",
+        "Gentile"
+      ],
+      [
+        "Valeria",
+        "Casillo"
+      ],
+      [
+        "Bianca Ioana",
+        "Bonifate"
+      ],
+      [
+        "Michelle",
+        "Russ"
+      ],
+      [
+        "Monika",
+        "Lalewicz"
+      ],
+      [
+        "Amandine",
+        "Cazeaux"
+      ],
+      [
+        "Fatima",
+        "El Allami"
+      ],
+      [
+        "Simonetta",
+        "Miori"
+      ],
+      [
+        "Gabriela",
+        "Roux"
+      ],
+      [
+        "Sherazad",
+        "Benamar"
+      ],
+      [
+        "Sherazad",
+        "Reix"
+      ],
+      [
+        "Zora",
+        "Vlckova"
+      ],
+      [
+        "Naomi",
+        "Cavaday"
+      ],
+      [
+        "Nathalia",
+        "Rossi"
+      ],
+      [
+        "Maria Eugenia",
+        "Roca Recarey"
+      ],
+      [
+        "Lauren",
+        "Jones"
+      ],
+      [
+        "Roxane",
+        "Vaisemberg"
+      ],
+      [
+        "Ivana",
+        "Belejova"
+      ],
+      [
+        "Petra",
+        "Vogel"
+      ],
+      [
+        "Majdouline",
+        "Akrate"
+      ],
+      [
+        "Laura",
+        "Sadria"
+      ],
+      [
+        "Ia",
+        "Jikia"
+      ],
+      [
+        "Alessandra",
+        "Caprara"
+      ],
+      [
+        "Guadalupe",
+        "Moreno"
+      ],
+      [
+        "Lucie",
+        "Sipkova"
+      ],
+      [
+        "Xenia",
+        "Samoilova"
+      ],
+      [
+        "Kotomi",
+        "Takahata"
+      ],
+      [
+        "Stephanie",
+        "Theiler"
+      ],
+      [
+        "Maria",
+        "Prishlyak"
+      ],
+      [
+        "Grace",
+        "Leake"
+      ],
+      [
+        "Ioana Alexandra",
+        "Oprea"
+      ],
+      [
+        "Sanne",
+        "Bakker"
+      ],
+      [
+        "Katerina",
+        "Vankova"
+      ],
+      [
+        "Kristy",
+        "Frilling"
+      ],
+      [
+        "Tatiana",
+        "Bua"
+      ],
+      [
+        "Anastasia",
+        "Kontratevidi"
+      ],
+      [
+        "Chane",
+        "Hines"
+      ],
+      [
+        "Julia",
+        "Gavenko"
+      ],
+      [
+        "Yuuki",
+        "Tanaka"
+      ],
+      [
+        "Petra",
+        "Kvitova"
+      ],
+      [
+        "Leticia",
+        "Costas"
+      ],
+      [
+        "Sandra",
+        "Roma"
+      ],
+      [
+        "Nina",
+        "Mujezinovic"
+      ],
+      [
+        "Stella",
+        "Papaspyrou"
+      ],
+      [
+        "Chinami",
+        "Ogi"
+      ],
+      [
+        "Martina",
+        "Balogova"
+      ],
+      [
+        "Xinyun",
+        "Han"
+      ],
+      [
+        "Nicole",
+        "Riner"
+      ],
+      [
+        "Lara",
+        "Meccico"
+      ],
+      [
+        "Mai",
+        "Iwasaki"
+      ],
+      [
+        "Oksana",
+        "Kalashnikova"
+      ],
+      [
+        "Dipti",
+        "Srivastava"
+      ],
+      [
+        "Claudia",
+        "Mercado"
+      ],
+      [
+        "Margarita",
+        "Lazareva"
+      ],
+      [
+        "Shaozhuo",
+        "Liu"
+      ],
+      [
+        "Ana Maria",
+        "Chavez Franco"
+      ],
+      [
+        "Arantxa",
+        "Rus"
+      ],
+      [
+        "Ekaterina",
+        "Kamendova"
+      ],
+      [
+        "Monika",
+        "Tumova"
+      ],
+      [
+        "Gabriella",
+        "Boboc"
+      ],
+      [
+        "Ganna",
+        "Lukianchykova"
+      ],
+      [
+        "Sofia",
+        "Medina"
+      ],
+      [
+        "Ekaterina",
+        "Abaeva"
+      ],
+      [
+        "Andressa",
+        "Garcia"
+      ],
+      [
+        "Giulia",
+        "Bruzzone"
+      ],
+      [
+        "Catia",
+        "Rodrigues"
+      ],
+      [
+        "Danielle",
+        "Mills"
+      ],
+      [
+        "Flavia",
+        "Borges"
+      ],
+      [
+        "Misaki",
+        "Doi"
+      ],
+      [
+        "Veronika",
+        "Domagala"
+      ],
+      [
+        "Cindy",
+        "Chala"
+      ],
+      [
+        "Ksenia",
+        "Pervak"
+      ],
+      [
+        "Bianca",
+        "Botto"
+      ],
+      [
+        "Marianna",
+        "Natali"
+      ],
+      [
+        "Carolina",
+        "Orsi"
+      ],
+      [
+        "Aleksandra",
+        "Vukadinovic"
+      ],
+      [
+        "Elixane",
+        "Lechemia"
+      ],
+      [
+        "Sonya",
+        "Dayal"
+      ],
+      [
+        "Francesca",
+        "Campigotto"
+      ],
+      [
+        "Cristina Bianca",
+        "Danaila"
+      ],
+      [
+        "Tereza",
+        "Budilova"
+      ],
+      [
+        "Gemma",
+        "Praditngam"
+      ],
+      [
+        "Ekaterine",
+        "Gorgodze"
+      ],
+      [
+        "Dejana",
+        "Raickovic"
+      ],
+      [
+        "Alena",
+        "Gerasimova"
+      ],
+      [
+        "Quirine",
+        "Lemoine"
+      ],
+      [
+        "Chieh Yu",
+        "Hsu"
+      ],
+      [
+        "Anastasiya",
+        "Vasylyeva"
+      ],
+      [
+        "Alexia",
+        "Quartetto"
+      ],
+      [
+        "Joanna",
+        "Bougon"
+      ],
+      [
+        "Kristyna",
+        "Pliskova"
+      ],
+      [
+        "Elena",
+        "Bogdan"
+      ],
+      [
+        "Fiorella",
+        "Jerardino"
+      ],
+      [
+        "Julie",
+        "Gonzalez Rodriguez"
+      ],
+      [
+        "Alejandra",
+        "Barragan"
+      ],
+      [
+        "Renata",
+        "Bakieva"
+      ],
+      [
+        "Ashley",
+        "Krysiak"
+      ],
+      [
+        "Sarah Rebecca",
+        "Sekulic"
+      ],
+      [
+        "Na Lae",
+        "Han"
+      ],
+      [
+        "Natali",
+        "Coronel"
+      ],
+      [
+        "Kristyna",
+        "Hancarova"
+      ],
+      [
+        "Doroteja",
+        "Eric"
+      ],
+      [
+        "Chanel",
+        "Simmonds"
+      ],
+      [
+        "Kobkanok",
+        "Upapong"
+      ],
+      [
+        "Annie",
+        "Sullivan"
+      ],
+      [
+        "Jenny Thuy",
+        "Le"
+      ],
+      [
+        "Xenia",
+        "Knoll"
+      ],
+      [
+        "Francisca",
+        "Matos"
+      ],
+      [
+        "Christina",
+        "Madenoglou"
+      ],
+      [
+        "Alexandra",
+        "Avirvarei"
+      ],
+      [
+        "Georgina",
+        "Fedosenkova"
+      ],
+      [
+        "Alicia",
+        "Doms Golobart"
+      ],
+      [
+        "Amy",
+        "Hoburn"
+      ],
+      [
+        "Monica",
+        "Turewicz"
+      ],
+      [
+        "Martina",
+        "Zerbola"
+      ],
+      [
+        "Mashaal",
+        "Hameed"
+      ],
+      [
+        "Sabrina",
+        "Dos Reis"
+      ],
+      [
+        "Maria Sol",
+        "Carrasco"
+      ],
+      [
+        "Ruxandra",
+        "Ababii"
+      ],
+      [
+        "Daniella",
+        "Patton"
+      ],
+      [
+        "Veronika",
+        "Zavodska"
+      ],
+      [
+        "Briar",
+        "Preston"
+      ],
+      [
+        "Gabriela",
+        "Ce"
+      ],
+      [
+        "Amanda",
+        "Rodgers"
+      ],
+      [
+        "Constanze",
+        "Lotz"
+      ],
+      [
+        "Paula",
+        "Mocete Talamantes"
+      ],
+      [
+        "Verena",
+        "Gantschnig"
+      ],
+      [
+        "Ainhoa",
+        "Atucha Gomez"
+      ],
+      [
+        "Katarzyna",
+        "Kossowska"
+      ],
+      [
+        "Julia",
+        "Stamatova"
+      ],
+      [
+        "Vorranavaporn",
+        "Vorrarattanamongkol"
+      ],
+      [
+        "Michaela",
+        "Jasenakova"
+      ],
+      [
+        "Agustina Sol",
+        "Eskenazi"
+      ],
+      [
+        "Maja",
+        "Mladenovic"
+      ],
+      [
+        "Sandra",
+        "Garriga Catala"
+      ],
+      [
+        "Rita",
+        "Vilaca"
+      ],
+      [
+        "Zanmarie",
+        "Pienaar"
+      ],
+      [
+        "Julia",
+        "Kimmelmann"
+      ],
+      [
+        "Martina",
+        "Trevisan"
+      ],
+      [
+        "Charitomeni",
+        "Matoula"
+      ],
+      [
+        "Andreea",
+        "Istrate"
+      ],
+      [
+        "Sowjanya",
+        "Bavisetti"
+      ],
+      [
+        "Gabrielle",
+        "Moxey"
+      ],
+      [
+        "Viktoryia",
+        "Kisialeva"
+      ],
+      [
+        "Sarahi",
+        "Garcia Carrera"
+      ],
+      [
+        "Rachel",
+        "Girard"
+      ],
+      [
+        "Laura",
+        "Robson"
+      ],
+      [
+        "Kate",
+        "Vialle"
+      ],
+      [
+        "Anna",
+        "Montserrat Sanchez"
+      ],
+      [
+        "Elena Teodora",
+        "Cadar"
+      ],
+      [
+        "Carol",
+        "Augustine Benito"
+      ],
+      [
+        "Kamila",
+        "Pavelkova"
+      ],
+      [
+        "Arantxa",
+        "Sanchez"
+      ],
+      [
+        "Ana Sofia",
+        "Sanchez"
+      ],
+      [
+        "Julia",
+        "Wachaczyk"
+      ],
+      [
+        "Ecaterina",
+        "Oproiu"
+      ],
+      [
+        "Snigdha",
+        "Padamata"
+      ],
+      [
+        "Rona",
+        "Berisha"
+      ],
+      [
+        "Olga",
+        "Doroshina"
+      ],
+      [
+        "So Ra",
+        "Lee"
+      ],
+      [
+        "Brandy",
+        "Mina"
+      ],
+      [
+        "Natalie",
+        "Novakova"
+      ],
+      [
+        "Storm",
+        "Sanders"
+      ],
+      [
+        "Alexandra",
+        "Martinez"
+      ],
+      [
+        "Ysaline",
+        "Bonaventure"
+      ],
+      [
+        "Barbora",
+        "Trestikova"
+      ],
+      [
+        "Stefania",
+        "Hristov"
+      ],
+      [
+        "Ana Maria",
+        "Crisan"
+      ],
+      [
+        "Elpida",
+        "Papanelopoulou"
+      ],
+      [
+        "Tereza",
+        "Jankovska"
+      ],
+      [
+        "Rebecca",
+        "Andrade"
+      ],
+      [
+        "Kelly",
+        "Williford"
+      ],
+      [
+        "Tina",
+        "Rupert"
+      ],
+      [
+        "Mia Nicole",
+        "Eklund"
+      ],
+      [
+        "Bernarda",
+        "Pera"
+      ],
+      [
+        "Montserrat",
+        "Alonso"
+      ],
+      [
+        "Rosalie",
+        "Van Der Hoek"
+      ],
+      [
+        "Hedda",
+        "Odegaard"
+      ],
+      [
+        "Samira",
+        "Radjaa"
+      ],
+      [
+        "Zuzanna",
+        "Maciejewska"
+      ],
+      [
+        "Saumya",
+        "Vig"
+      ],
+      [
+        "Marie",
+        "Benoit"
+      ],
+      [
+        "Iga",
+        "Odrzywolek"
+      ],
+      [
+        "Shakhlo",
+        "Saidova"
+      ],
+      [
+        "Irina",
+        "Khromacheva"
+      ],
+      [
+        "Yuliya",
+        "Lysa"
+      ],
+      [
+        "Sophie",
+        "Blom"
+      ],
+      [
+        "Jennifer",
+        "Zerbone"
+      ],
+      [
+        "Kristina",
+        "Chasovskikh"
+      ],
+      [
+        "Maria Camila",
+        "Trujillo Hoyos"
+      ],
+      [
+        "Karina",
+        "Rovira"
+      ],
+      [
+        "Teodora Adina",
+        "Ardeleanu"
+      ],
+      [
+        "Yasmine",
+        "Rashad"
+      ],
+      [
+        "Judit",
+        "Vives Joan"
+      ],
+      [
+        "Sarah Beth",
+        "Askew"
+      ],
+      [
+        "Yasmine",
+        "Xantos"
+      ],
+      [
+        "Lea",
+        "Tholey"
+      ],
+      [
+        "Hikari",
+        "Yamamoto"
+      ],
+      [
+        "Ines Miren",
+        "De Pablo"
+      ],
+      [
+        "Stuti",
+        "Singh Tomar"
+      ],
+      [
+        "Naomi",
+        "Totka"
+      ],
+      [
+        "Polina",
+        "Bezsmertnaya"
+      ],
+      [
+        "Hannah",
+        "King"
+      ],
+      [
+        "Gabriele",
+        "Bertasiute"
+      ],
+      [
+        "Rebecca",
+        "Smaller"
+      ],
+      [
+        "Busra",
+        "Kayrun"
+      ],
+      [
+        "Stephani",
+        "Rodriguez"
+      ],
+      [
+        "Raquel",
+        "Montalvo"
+      ],
+      [
+        "Oana",
+        "Irimescu"
+      ],
+      [
+        "Taylor",
+        "Townsend"
+      ],
+      [
+        "Carmen",
+        "Blasco Robaina"
+      ],
+      [
+        "Giulia",
+        "Della Cioppa"
+      ],
+      [
+        "Nadege",
+        "Jorda"
+      ],
+      [
+        "Beatriz",
+        "Haddad Maia"
+      ],
+      [
+        "Nelise",
+        "Verster"
+      ],
+      [
+        "Eleonore",
+        "Barrere"
+      ],
+      [
+        "Anastasia",
+        "Prokopenko"
+      ],
+      [
+        "Dzina",
+        "Milovanovic"
+      ],
+      [
+        "Isabelle",
+        "Wallace"
+      ],
+      [
+        "Katelyn",
+        "Jackson"
+      ],
+      [
+        "Polina",
+        "Novoselova"
+      ],
+      [
+        "Maite",
+        "Cano"
+      ],
+      [
+        "Ria",
+        "Vaidya"
+      ],
+      [
+        "Ana Lorena",
+        "Garcia Navas"
+      ],
+      [
+        "Aayushi",
+        "Chouhan"
+      ],
+      [
+        "Ivona",
+        "Cudina"
+      ],
+      [
+        "Karina",
+        "Gurgenyan"
+      ],
+      [
+        "Maria",
+        "Patrascu"
+      ],
+      [
+        "Denisa",
+        "Chereches"
+      ],
+      [
+        "Mirabelle",
+        "Njoze"
+      ],
+      [
+        "Vasanti",
+        "Shinde"
+      ],
+      [
+        "Amanda",
+        "Schneider"
+      ],
+      [
+        "Katharina",
+        "Herpertz"
+      ],
+      [
+        "Tayisiya",
+        "Morderger"
+      ],
+      [
+        "Tamara",
+        "Tomic"
+      ],
+      [
+        "Maria Fernanda",
+        "Herazo Gonzalez"
+      ],
+      [
+        "Andra Maria",
+        "Nitescu"
+      ],
+      [
+        "Micheline",
+        "Aubuchon"
+      ],
+      [
+        "Ilayda",
+        "Yondem"
+      ],
+      [
+        "Birgit",
+        "Burk"
+      ],
+      [
+        "Kanako",
+        "Osafune"
+      ],
+      [
+        "Anastasiya",
+        "Komardina"
+      ],
+      [
+        "Nina",
+        "Holanova"
+      ],
+      [
+        "Jil Belen",
+        "Teichmann"
+      ],
+      [
+        "Francesca",
+        "Di Lorenzo"
+      ],
+      [
+        "Natsuho",
+        "Arakawa"
+      ],
+      [
+        "Emerald",
+        "Able"
+      ],
+      [
+        "Manca",
+        "Pislak"
+      ],
+      [
+        "Irys",
+        "Ekani"
+      ],
+      [
+        "Veronica",
+        "Miroshnichenko"
+      ],
+      [
+        "Martina",
+        "Capurro Taborda"
+      ],
+      [
+        "Mariam",
+        "Bolkvadze"
+      ],
+      [
+        "Diana",
+        "Valverde"
+      ],
+      [
+        "Do Hee",
+        "Bae"
+      ],
+      [
+        "Daniela",
+        "Morales Beckmann"
+      ],
+      [
+        "Ioana Diana",
+        "Pietroiu"
+      ],
+      [
+        "Luisa Fernanda",
+        "Echeverry Rodriguez"
+      ],
+      [
+        "Mayuka",
+        "Aikawa"
+      ],
+      [
+        "Nicole",
+        "Frenkel"
+      ],
+      [
+        "Daria",
+        "Kruzhkova"
+      ],
+      [
+        "Alejandra",
+        "Tamayo Gomez"
+      ],
+      [
+        "Tereza",
+        "Koplova"
+      ],
+      [
+        "Chiara",
+        "Lommer"
+      ],
+      [
+        "Laura",
+        "Illanes"
+      ],
+      [
+        "Olga",
+        "Fridman"
+      ],
+      [
+        "Ana Paula",
+        "Leal"
+      ],
+      [
+        "Shiraz",
+        "Bronstein"
+      ],
+      [
+        "Nicole",
+        "Bunea"
+      ],
+      [
+        "Charlotte",
+        "Robillard Millette"
+      ],
+      [
+        "Ashley",
+        "Kratzer"
+      ],
+      [
+        "Momoka",
+        "Chimura"
+      ],
+      [
+        "Anna",
+        "Slovakova"
+      ],
+      [
+        "Ai Qi",
+        "Chen"
+      ],
+      [
+        "Jiaying",
+        "He"
+      ],
+      [
+        "Ysabel",
+        "Gonzalez Rico"
+      ],
+      [
+        "Andreea",
+        "Stanescu"
+      ],
+      [
+        "Marketa",
+        "Vondrousova"
+      ],
+      [
+        "Ecaterina",
+        "Ivasco"
+      ],
+      [
+        "Ivon",
+        "Mihaleva"
+      ],
+      [
+        "Jasmine",
+        "Boyd"
+      ],
+      [
+        "Andrea",
+        "Arratia Fernandez"
+      ],
+      [
+        "Kayla",
+        "Day"
+      ],
+      [
+        "Ekaterina",
+        "Davletova"
+      ],
+      [
+        "Irina",
+        "Cantos Siemers"
+      ],
+      [
+        "Oceane",
+        "Mialon"
+      ],
+      [
+        "Watsachol",
+        "Sawasdee"
+      ],
+      [
+        "Ellen",
+        "Ashley"
+      ],
+      [
+        "Mila",
+        "Mejic"
+      ],
+      [
+        "Natalia",
+        "Nikolopoulou"
+      ],
+      [
+        "Marta",
+        "Del Pino Maturano"
+      ],
+      [
+        "Jayci",
+        "Goldsmith"
+      ],
+      [
+        "Yang",
+        "Lee"
+      ],
+      [
+        "Isabella",
+        "Tcherkes Zade"
+      ],
+      [
+        "Mara",
+        "Vidal"
+      ],
+      [
+        "Taylor",
+        "Johnson"
+      ],
+      [
+        "Julia",
+        "Vulpio"
+      ],
+      [
+        "Dagmar",
+        "Zdrubecka"
+      ],
+      [
+        "Olga",
+        "Danilovic"
+      ],
+      [
+        "Xiyu",
+        "Wang"
+      ],
+      [
+        "Lina",
+        "Shokry"
+      ],
+      [
+        "Ya Hsin",
+        "Lee"
+      ],
+      [
+        "Ruxandra",
+        "Schech"
+      ],
+      [
+        "Yasmina",
+        "Karimjanova"
+      ],
+      [
+        "Lara",
+        "Biter"
+      ],
+      [
+        "Najah",
+        "Dawson"
+      ],
+      [
+        "Giulia",
+        "Morlet"
+      ],
+      [
+        "Matilde",
+        "Mariani"
+      ],
+      [
+        "Isabella",
+        "Nunez"
+      ],
+      [
+        "Betina",
+        "Tokac"
+      ],
+      [
+        "Noa",
+        "Krznaric"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2146,
+    "input_tokens": 277,
+    "output_tokens": 19
+  },
+  {
+    "id": "dev_000285",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "employee_hire_evaluation",
+    "question": "Find the name of the shops that do not hire any employee.",
+    "retrieved_schema": "Table: employee\n\nColumns:\n- Name TEXT\n- Employee_ID INT PRIMARY KEY\n- Age INT\n- City TEXT\n\nTable: shop\n\nColumns:\n- Name TEXT\n- Manager_name TEXT\n- Shop_ID INT PRIMARY KEY\n- District TEXT\n- Location TEXT\n- Number_products INT\n\nTable: hiring\n\nColumns:\n- Employee_ID INT PRIMARY KEY\n- Shop_ID INT\n- Is_full_time bool\n- Start_from TEXT\n\nForeign keys:\n- Employee_ID -> employee.Employee_ID\n- Shop_ID -> shop.Shop_ID\n\nTable: evaluation\n\nColumns:\n- Employee_ID TEXT PRIMARY KEY\n- Bonus REAL\n- Year_awarded TEXT PRIMARY KEY\n\nForeign keys:\n- Employee_ID -> employee.Employee_ID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT Name \nFROM shop \nWHERE Shop_ID NOT IN (SELECT Shop_ID FROM hiring);",
+    "predicted_answer": [
+      [
+        "FC Honka"
+      ],
+      [
+        "KuPS"
+      ],
+      [
+        "IFK Mariehamn"
+      ]
+    ],
+    "gold_sql": "SELECT name FROM shop WHERE shop_id NOT IN (SELECT shop_id FROM hiring)",
+    "gold_answer": [
+      [
+        "FC Honka"
+      ],
+      [
+        "KuPS"
+      ],
+      [
+        "IFK Mariehamn"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2166,
+    "input_tokens": 259,
+    "output_tokens": 23
+  },
+  {
+    "id": "dev_000209",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "flight_2",
+    "question": "How many flights arriving in Aberdeen city?",
+    "retrieved_schema": "Table: airports\n\nColumns:\n- City TEXT\n- AirportCode TEXT PRIMARY KEY\n- AirportName TEXT\n- Country TEXT\n- CountryAbbrev TEXT\n\nTable: flights\n\nColumns:\n- Airline INTEGER PRIMARY KEY\n- DestAirport TEXT\n- FlightNo INTEGER PRIMARY KEY\n- SourceAirport TEXT\n\nForeign keys:\n- DestAirport -> airports.AirportCode\n- SourceAirport -> airports.AirportCode\n\nTable: airlines\n\nColumns:\n- Abbreviation TEXT\n- Airline TEXT\n- Country TEXT\n- uid INTEGER PRIMARY KEY",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(f.FlightNo) \nFROM flights f \nJOIN airports a ON f.DestAirport = a.AirportCode \nWHERE a.City = 'Aberdeen'",
+    "predicted_answer": [
+      [
+        0
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.City  =  \"Aberdeen\"",
+    "gold_answer": [
+      [
+        0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3232,
+    "input_tokens": 221,
+    "output_tokens": 41
+  },
+  {
+    "id": "dev_000178",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "car_1",
+    "question": "What are the ids and names of all countries that either have more than 3 car makers or produce fiat model ?",
+    "retrieved_schema": "Table: car_makers\n\nColumns:\n- Id INTEGER PRIMARY KEY\n- Maker TEXT\n- Country TEXT\n- FullName TEXT\n\nForeign keys:\n- Country -> countries.CountryId\n\nTable: car_names\n\nColumns:\n- Model TEXT\n- Make TEXT\n- MakeId INTEGER PRIMARY KEY\n\nForeign keys:\n- Model -> model_list.Model\n\nTable: model_list\n\nColumns:\n- Model TEXT\n- Maker INTEGER\n- ModelId INTEGER PRIMARY KEY\n\nForeign keys:\n- Maker -> car_makers.Id\n\nTable: countries\n\nColumns:\n- Continent INTEGER\n- CountryId INTEGER PRIMARY KEY\n- CountryName TEXT\n\nForeign keys:\n- Continent -> continents.ContId\n\nTable: cars_data\n\nColumns:\n- Id INTEGER PRIMARY KEY\n- Accelerate REAL\n- Cylinders INTEGER\n- Edispl REAL\n- Horsepower TEXT\n- MPG TEXT\n- Weight INTEGER\n- Year INTEGER\n\nForeign keys:\n- Id -> car_names.MakeId",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT T1.CountryId, T1.CountryName \nFROM countries AS T1 \nWHERE T1.CountryId IN (\n    SELECT T2.Country \n    FROM car_makers AS T2 \n    GROUP BY T2.Country \n    HAVING COUNT(T2.Id) > 3\n)\nOR T1.CountryId IN (\n    SELECT T3.Country \n    FROM car_makers AS T3 \n    JOIN model_list AS T4 ON T3.Id = T4.Maker \n    WHERE T4.Model = 'fiat'\n)",
+    "predicted_answer": [
+      [
+        1,
+        "usa"
+      ],
+      [
+        2,
+        "germany"
+      ],
+      [
+        4,
+        "japan"
+      ],
+      [
+        5,
+        "italy"
+      ]
+    ],
+    "gold_sql": "select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  3 union select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country join model_list as t3 on t2.id  =  t3.maker where t3.model  =  'fiat';",
+    "gold_answer": [
+      [
+        1,
+        "usa"
+      ],
+      [
+        2,
+        "germany"
+      ],
+      [
+        4,
+        "japan"
+      ],
+      [
+        5,
+        "italy"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4212,
+    "input_tokens": 315,
+    "output_tokens": 114
+  },
+  {
+    "id": "dev_000864",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "network_1",
+    "question": "Show the names and grades of each high schooler.",
+    "retrieved_schema": "Table: Highschooler\n\nColumns:\n- grade INT\n- name TEXT\n- ID INT PRIMARY KEY\n\nTable: Friend\n\nColumns:\n- friend_id INT PRIMARY KEY\n- student_id INT PRIMARY KEY\n\nForeign keys:\n- friend_id -> Highschooler.ID\n- student_id -> Highschooler.ID\n\nTable: Likes\n\nColumns:\n- liked_id INT PRIMARY KEY\n- student_id INT PRIMARY KEY\n\nForeign keys:\n- student_id -> Highschooler.ID\n- liked_id -> Highschooler.ID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT name, grade FROM Highschooler",
+    "predicted_answer": [
+      [
+        "Jordan",
+        9
+      ],
+      [
+        "Gabriel",
+        9
+      ],
+      [
+        "Tiffany",
+        9
+      ],
+      [
+        "Cassandra",
+        9
+      ],
+      [
+        "Haley",
+        10
+      ],
+      [
+        "Andrew",
+        10
+      ],
+      [
+        "Kris",
+        10
+      ],
+      [
+        "Brittany",
+        10
+      ],
+      [
+        "Alexis",
+        11
+      ],
+      [
+        "Austin",
+        11
+      ],
+      [
+        "Gabriel",
+        11
+      ],
+      [
+        "Jessica",
+        11
+      ],
+      [
+        "Jordan",
+        12
+      ],
+      [
+        "John",
+        12
+      ],
+      [
+        "Kyle",
+        12
+      ],
+      [
+        "Logan",
+        12
+      ]
+    ],
+    "gold_sql": "SELECT name ,  grade FROM Highschooler",
+    "gold_answer": [
+      [
+        "Jordan",
+        9
+      ],
+      [
+        "Gabriel",
+        9
+      ],
+      [
+        "Tiffany",
+        9
+      ],
+      [
+        "Cassandra",
+        9
+      ],
+      [
+        "Haley",
+        10
+      ],
+      [
+        "Andrew",
+        10
+      ],
+      [
+        "Kris",
+        10
+      ],
+      [
+        "Brittany",
+        10
+      ],
+      [
+        "Alexis",
+        11
+      ],
+      [
+        "Austin",
+        11
+      ],
+      [
+        "Gabriel",
+        11
+      ],
+      [
+        "Jessica",
+        11
+      ],
+      [
+        "Jordan",
+        12
+      ],
+      [
+        "John",
+        12
+      ],
+      [
+        "Kyle",
+        12
+      ],
+      [
+        "Logan",
+        12
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2052,
+    "input_tokens": 216,
+    "output_tokens": 9
+  },
+  {
+    "id": "dev_000065",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "pets_1",
+    "question": "Find the first name and age of students who have a dog but do not have a cat as a pet.",
+    "retrieved_schema": "Table: Student\n\nColumns:\n- Age INTEGER\n- Fname VARCHAR(12)\n- LName VARCHAR(12)\n- Advisor INTEGER\n- Major INTEGER\n- Sex VARCHAR(1)\n- StuID INTEGER PRIMARY KEY\n- city_code VARCHAR(3)\n\nTable: Pets\n\nColumns:\n- pet_age INTEGER\n- PetID INTEGER PRIMARY KEY\n- PetType VARCHAR(20)\n- weight REAL\n\nTable: Has_Pet\n\nColumns:\n- PetID INTEGER\n- StuID INTEGER\n\nForeign keys:\n- StuID -> Student.StuID\n- PetID -> Pets.PetID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT S.Fname, S.Age\nFROM Student S\nWHERE S.StuID IN (\n  SELECT H.StuID\n  FROM Has_Pet H\n  JOIN Pets P ON H.PetID = P.PetID\n  WHERE P.PetType = 'dog'\n)\nAND S.StuID NOT IN (\n  SELECT H.StuID\n  FROM Has_Pet H\n  JOIN Pets P ON H.PetID = P.PetID\n  WHERE P.PetType = 'cat'\n)",
+    "predicted_answer": [
+      [
+        "Tracy",
+        19
+      ]
+    ],
+    "gold_sql": "SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+    "gold_answer": [
+      [
+        "Tracy",
+        19
+      ],
+      [
+        "Tracy",
+        19
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.4274,
+    "input_tokens": 246,
+    "output_tokens": 112
+  },
+  {
+    "id": "dev_000061",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "pets_1",
+    "question": "Find the major and age of students who do not have a cat pet.",
+    "retrieved_schema": "Table: Student\n\nColumns:\n- Age INTEGER\n- Major INTEGER\n- Advisor INTEGER\n- Fname VARCHAR(12)\n- LName VARCHAR(12)\n- Sex VARCHAR(1)\n- StuID INTEGER PRIMARY KEY\n- city_code VARCHAR(3)\n\nTable: Pets\n\nColumns:\n- pet_age INTEGER\n- PetID INTEGER PRIMARY KEY\n- PetType VARCHAR(20)\n- weight REAL\n\nTable: Has_Pet\n\nColumns:\n- PetID INTEGER\n- StuID INTEGER\n\nForeign keys:\n- StuID -> Student.StuID\n- PetID -> Pets.PetID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT S.Major, S.Age \nFROM Student S \nWHERE S.StuID NOT IN (\n    SELECT H.StuID \n    FROM Has_Pet H \n    JOIN Pets P ON H.PetID = P.PetID \n    WHERE P.PetType = 'cat'\n)",
+    "predicted_answer": [
+      [
+        600,
+        19
+      ],
+      [
+        600,
+        21
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        26
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        19
+      ],
+      [
+        600,
+        17
+      ],
+      [
+        600,
+        22
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        16
+      ],
+      [
+        600,
+        17
+      ],
+      [
+        600,
+        27
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        520,
+        22
+      ],
+      [
+        520,
+        19
+      ],
+      [
+        540,
+        17
+      ],
+      [
+        520,
+        20
+      ],
+      [
+        540,
+        18
+      ],
+      [
+        520,
+        18
+      ],
+      [
+        520,
+        19
+      ],
+      [
+        520,
+        18
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        100,
+        17
+      ],
+      [
+        550,
+        21
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        550,
+        18
+      ],
+      [
+        50,
+        18
+      ],
+      [
+        50,
+        26
+      ]
+    ],
+    "gold_sql": "SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+    "gold_answer": [
+      [
+        600,
+        19
+      ],
+      [
+        600,
+        21
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        26
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        19
+      ],
+      [
+        600,
+        17
+      ],
+      [
+        600,
+        22
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        600,
+        16
+      ],
+      [
+        600,
+        17
+      ],
+      [
+        600,
+        27
+      ],
+      [
+        600,
+        20
+      ],
+      [
+        600,
+        18
+      ],
+      [
+        520,
+        22
+      ],
+      [
+        520,
+        19
+      ],
+      [
+        540,
+        17
+      ],
+      [
+        520,
+        20
+      ],
+      [
+        540,
+        18
+      ],
+      [
+        520,
+        18
+      ],
+      [
+        520,
+        19
+      ],
+      [
+        520,
+        18
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        100,
+        17
+      ],
+      [
+        550,
+        21
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        550,
+        20
+      ],
+      [
+        550,
+        18
+      ],
+      [
+        50,
+        18
+      ],
+      [
+        50,
+        26
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3081,
+    "input_tokens": 239,
+    "output_tokens": 65
+  },
+  {
+    "id": "dev_000191",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "flight_2",
+    "question": "How many flights do we have?",
+    "retrieved_schema": "Table: flights\n\nColumns:\n- Airline INTEGER PRIMARY KEY\n- DestAirport TEXT\n- FlightNo INTEGER PRIMARY KEY\n- SourceAirport TEXT\n\nForeign keys:\n- DestAirport -> airports.AirportCode\n- SourceAirport -> airports.AirportCode\n\nTable: airlines\n\nColumns:\n- Abbreviation TEXT\n- Airline TEXT\n- Country TEXT\n- uid INTEGER PRIMARY KEY\n\nTable: airports\n\nColumns:\n- AirportCode TEXT PRIMARY KEY\n- AirportName TEXT\n- City TEXT\n- Country TEXT\n- CountryAbbrev TEXT",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(*) FROM flights",
+    "predicted_answer": [
+      [
+        1200
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM FLIGHTS",
+    "gold_answer": [
+      [
+        1200
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1688,
+    "input_tokens": 220,
+    "output_tokens": 6
+  },
+  {
+    "id": "dev_000447",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "wta_1",
+    "question": "List the names of all winners who played in both 2013 and 2016.",
+    "retrieved_schema": "Table: matches\n\nColumns:\n- winner_name TEXT\n- loser_name TEXT\n- tourney_name TEXT\n- winner_age FLOAT\n- winner_entry TEXT\n- winner_hand TEXT\n- winner_ht INT\n- winner_id INT\n- loser_id INT\n\nForeign keys:\n- winner_id -> players.player_id\n- loser_id -> players.player_id\n\nTable: players\n\nColumns:\n- first_name TEXT\n- last_name TEXT\n- birth_date DATE\n- country_code TEXT\n- hand TEXT\n- player_id INT PRIMARY KEY\n\nTable: rankings\n\nColumns:\n- player_id INT\n- ranking INT\n- ranking_date DATE\n- ranking_points INT\n- tours INT\n\nForeign keys:\n- player_id -> players.player_id",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT DISTINCT T1.first_name, T1.last_name \nFROM players AS T1 \nJOIN matches AS T2 \nON T1.player_id = T2.winner_id \nWHERE T2.tourney_name LIKE '%2013%' \nAND T1.player_id IN (\n    SELECT T2.winner_id \n    FROM matches AS T2 \n    WHERE T2.tourney_name LIKE '%2016%'\n)",
+    "predicted_answer": [],
+    "gold_sql": "SELECT winner_name FROM matches WHERE YEAR  =  2013 INTERSECT SELECT winner_name FROM matches WHERE YEAR  =  2016",
+    "gold_answer": [
+      [
+        "Angelique Kerber"
+      ],
+      [
+        "Petra Kvitova"
+      ],
+      [
+        "Sara Errani"
+      ],
+      [
+        "Serena Williams"
+      ],
+      [
+        "Victoria Azarenka"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.541,
+    "input_tokens": 267,
+    "output_tokens": 88
+  },
+  {
+    "id": "dev_000476",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "wta_1",
+    "question": "What is the code of the country with the most players?",
+    "retrieved_schema": "Table: players\n\nColumns:\n- country_code TEXT\n- player_id INT PRIMARY KEY\n- birth_date DATE\n- first_name TEXT\n- hand TEXT\n- last_name TEXT\n\nTable: rankings\n\nColumns:\n- player_id INT\n- ranking INT\n- ranking_date DATE\n- ranking_points INT\n- tours INT\n\nForeign keys:\n- player_id -> players.player_id\n\nTable: matches\n\nColumns:\n- best_of INT\n- draw_size INT\n- loser_age FLOAT\n- loser_entry TEXT\n- loser_hand TEXT\n- loser_ht INT\n- loser_id INT\n- loser_ioc TEXT\n- winner_id INT\n\nForeign keys:\n- winner_id -> players.player_id\n- loser_id -> players.player_id",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT country_code \nFROM players \nGROUP BY country_code \nORDER BY COUNT(player_id) DESC \nLIMIT 1;",
+    "predicted_answer": [
+      [
+        "USA"
+      ]
+    ],
+    "gold_sql": "SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "USA"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2662,
+    "input_tokens": 261,
+    "output_tokens": 29
+  },
+  {
+    "id": "dev_000054",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "pets_1",
+    "question": "How many dog pets are raised by female students?",
+    "retrieved_schema": "Table: Pets\n\nColumns:\n- pet_age INTEGER\n- PetID INTEGER PRIMARY KEY\n- PetType VARCHAR(20)\n- weight REAL\n\nTable: Student\n\nColumns:\n- Advisor INTEGER\n- Age INTEGER\n- Fname VARCHAR(12)\n- LName VARCHAR(12)\n- Major INTEGER\n- Sex VARCHAR(1)\n- StuID INTEGER PRIMARY KEY\n- city_code VARCHAR(3)\n\nTable: Has_Pet\n\nColumns:\n- PetID INTEGER\n- StuID INTEGER\n\nForeign keys:\n- StuID -> Student.StuID\n- PetID -> Pets.PetID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(T1.PetID) FROM Has_Pet AS T1 INNER JOIN Student AS T2 ON T1.StuID = T2.StuID INNER JOIN Pets AS T3 ON T1.PetID = T3.PetID WHERE T3.PetType = 'dog' AND T2.Sex = 'F'",
+    "predicted_answer": [
+      [
+        2
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'",
+    "gold_answer": [
+      [
+        2
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3964,
+    "input_tokens": 234,
+    "output_tokens": 71
+  },
+  {
+    "id": "dev_000407",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "course_teach",
+    "question": "Show names of teachers that teach at least two courses.",
+    "retrieved_schema": "Table: teacher\n\nColumns:\n- Name TEXT\n- Teacher_ID INT PRIMARY KEY\n- Age TEXT\n- Hometown TEXT\n\nTable: course\n\nColumns:\n- Course TEXT\n- Course_ID INT PRIMARY KEY\n- Staring_Date TEXT\n\nTable: course_arrange\n\nColumns:\n- Teacher_ID INT PRIMARY KEY\n- Course_ID INT PRIMARY KEY\n- Grade INT PRIMARY KEY\n\nForeign keys:\n- Teacher_ID -> teacher.Teacher_ID\n- Course_ID -> course.Course_ID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT T.Name \nFROM teacher T \nJOIN course_arrange CA ON T.Teacher_ID = CA.Teacher_ID \nGROUP BY T.Name \nHAVING COUNT(DISTINCT CA.Course_ID) >= 2",
+    "predicted_answer": [
+      [
+        "Anne Walker"
+      ]
+    ],
+    "gold_sql": "SELECT T2.Name FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name HAVING COUNT(*)  >=  2",
+    "gold_answer": [
+      [
+        "Anne Walker"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3102,
+    "input_tokens": 209,
+    "output_tokens": 48
+  },
+  {
+    "id": "dev_000859",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "orchestra",
+    "question": "Count the number of orchestras that have CD or DVD as their record format.",
+    "retrieved_schema": "Table: orchestra\n\nColumns:\n- Major_Record_Format TEXT\n- Orchestra TEXT\n- Record_Company TEXT\n- Orchestra_ID INT PRIMARY KEY\n- Conductor_ID INT\n- Year_of_Founded REAL\n\nForeign keys:\n- Conductor_ID -> conductor.Conductor_ID\n\nTable: performance\n\nColumns:\n- Orchestra_ID INT\n- Date TEXT\n- Official_ratings_(millions) REAL\n- Performance_ID INT PRIMARY KEY\n- Share TEXT\n- Type TEXT\n- Weekly_rank TEXT\n\nForeign keys:\n- Orchestra_ID -> orchestra.Orchestra_ID\n\nTable: conductor\n\nColumns:\n- Age INT\n- Conductor_ID INT PRIMARY KEY\n- Name TEXT\n- Nationality TEXT\n- Year_of_Work INT\n\nTable: show\n\nColumns:\n- Attendance REAL\n- If_first_show bool\n- Performance_ID INT\n- Result TEXT\n- Show_ID INT\n\nForeign keys:\n- Performance_ID -> performance.Performance_ID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(Orchestra_ID) FROM orchestra WHERE Major_Record_Format = 'CD' OR Major_Record_Format = 'DVD'",
+    "predicted_answer": [
+      [
+        11
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format  =  \"CD\" OR Major_Record_Format  =  \"DVD\"",
+    "gold_answer": [
+      [
+        11
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3231,
+    "input_tokens": 303,
+    "output_tokens": 26
+  },
+  {
+    "id": "dev_000451",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "wta_1",
+    "question": "What are the country code and first name of the players who won in both tourney WTA Championships and Australian Open?",
+    "retrieved_schema": "Table: players\n\nColumns:\n- country_code TEXT\n- first_name TEXT\n- last_name TEXT\n- player_id INT PRIMARY KEY\n- birth_date DATE\n- hand TEXT\n\nTable: matches\n\nColumns:\n- tourney_name TEXT\n- loser_name TEXT\n- tourney_date DATE\n- tourney_id TEXT\n- tourney_level TEXT\n- winner_name TEXT\n- best_of INT\n- draw_size INT\n- loser_id INT\n- winner_id INT\n\nForeign keys:\n- winner_id -> players.player_id\n- loser_id -> players.player_id\n\nTable: rankings\n\nColumns:\n- player_id INT\n- ranking INT\n- ranking_date DATE\n- ranking_points INT\n- tours INT\n\nForeign keys:\n- player_id -> players.player_id",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT DISTINCT T1.country_code, T1.first_name \nFROM players AS T1 \nINNER JOIN matches AS T2 \nON T1.player_id = T2.winner_id \nWHERE T2.tourney_name = 'WTA Championships' \nAND T1.player_id IN (\n    SELECT T3.winner_id \n    FROM matches AS T3 \n    WHERE T3.tourney_name = 'Australian Open'\n)",
+    "predicted_answer": [
+      [
+        "USA",
+        "Serena"
+      ],
+      [
+        "GER",
+        "Angelique"
+      ]
+    ],
+    "gold_sql": "SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'WTA Championships' INTERSECT SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'Australian Open'",
+    "gold_answer": [
+      [
+        "GER",
+        "Angelique"
+      ],
+      [
+        "USA",
+        "Serena"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.5138,
+    "input_tokens": 281,
+    "output_tokens": 90
+  },
+  {
+    "id": "dev_000919",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "dog_kennels",
+    "question": "Find the states where both owners and professionals live.",
+    "retrieved_schema": "Table: Owners\n\nColumns:\n- state VARCHAR(20)\n- owner_id INTEGER PRIMARY KEY\n- cell_number VARCHAR(20)\n- city VARCHAR(50)\n- email_address VARCHAR(50)\n- first_name VARCHAR(50)\n- home_phone VARCHAR(20)\n- last_name VARCHAR(50)\n\nTable: Professionals\n\nColumns:\n- state VARCHAR(20)\n- professional_id INTEGER PRIMARY KEY\n- cell_number VARCHAR(20)\n- city VARCHAR(50)\n- email_address VARCHAR(50)\n- first_name VARCHAR(50)\n- home_phone VARCHAR(20)\n- last_name VARCHAR(50)\n\nTable: Dogs\n\nColumns:\n- owner_id INTEGER NOT NULL\n- abandoned_yn VARCHAR(1)\n- age VARCHAR(20)\n- breed_code VARCHAR(10) NOT NULL\n- date_adopted DATETIME\n- date_arrived DATETIME\n- date_departed DATETIME\n- date_of_birth DATETIME\n- dog_id INTEGER PRIMARY KEY\n- size_code VARCHAR(10) NOT NULL\n\nForeign keys:\n- owner_id -> Owners.owner_id\n- owner_id -> Owners.owner_id\n- size_code -> Sizes.size_code\n- breed_code -> Breeds.breed_code\n\nTable: Treatments\n\nColumns:\n- professional_id INTEGER NOT NULL\n- cost_of_treatment DECIMAL(19,4)\n- date_of_treatment DATETIME\n- dog_id INTEGER NOT NULL\n- treatment_id INTEGER PRIMARY KEY\n- treatment_type_code VARCHAR(10) NOT NULL\n\nForeign keys:\n- dog_id -> Dogs.dog_id\n- professional_id -> Professionals.professional_id\n- treatment_type_code -> Treatment_Types.treatment_type_code\n\nTable: Breeds\n\nColumns:\n- breed_code VARCHAR(10) PRIMARY KEY\n- breed_name VARCHAR(80)",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT state FROM Owners\nINTERSECT\nSELECT state FROM Professionals",
+    "predicted_answer": [
+      [
+        "Indiana"
+      ],
+      [
+        "Mississippi"
+      ],
+      [
+        "Wisconsin"
+      ]
+    ],
+    "gold_sql": "SELECT state FROM Owners INTERSECT SELECT state FROM Professionals",
+    "gold_answer": [
+      [
+        "Indiana"
+      ],
+      [
+        "Mississippi"
+      ],
+      [
+        "Wisconsin"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2141,
+    "input_tokens": 468,
+    "output_tokens": 19
+  },
+  {
+    "id": "dev_000569",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "student_transcripts_tracking",
+    "question": "What is the last transcript release date?",
+    "retrieved_schema": "Table: Transcripts\n\nColumns:\n- transcript_date DATETIME\n- transcript_id INTEGER PRIMARY KEY\n- other_details VARCHAR(255)\n\nTable: Students\n\nColumns:\n- date_first_registered DATETIME\n- date_left DATETIME\n- last_name VARCHAR(40)\n- cell_mobile_number VARCHAR(40)\n- current_address_id INTEGER NOT NULL\n- email_address VARCHAR(40)\n- first_name VARCHAR(80)\n- middle_name VARCHAR(40)\n- permanent_address_id INTEGER NOT NULL\n- student_id INTEGER PRIMARY KEY\n\nForeign keys:\n- permanent_address_id -> Addresses.address_id\n- current_address_id -> Addresses.address_id\n\nTable: Transcript_Contents\n\nColumns:\n- transcript_id INTEGER NOT NULL\n- student_course_id INTEGER NOT NULL\n\nForeign keys:\n- transcript_id -> Transcripts.transcript_id\n- student_course_id -> Student_Enrolment_Courses.student_course_id\n\nTable: Addresses\n\nColumns:\n- address_id INTEGER PRIMARY KEY\n- city VARCHAR(255)\n- country VARCHAR(255)\n- line_1 VARCHAR(255)\n- line_2 VARCHAR(255)\n- line_3 VARCHAR(255)\n- other_address_details VARCHAR(255)\n- state_province_county VARCHAR(255)\n\nTable: Courses\n\nColumns:\n- course_description VARCHAR(255)\n- course_id INTEGER PRIMARY KEY\n- course_name VARCHAR(255)\n- other_details VARCHAR(255)",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT MAX(transcript_date) FROM Transcripts",
+    "predicted_answer": [
+      [
+        "2013-06-30 13:01:40"
+      ]
+    ],
+    "gold_sql": "SELECT transcript_date FROM Transcripts ORDER BY transcript_date DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "2013-06-30 13:01:40"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1978,
+    "input_tokens": 387,
+    "output_tokens": 10
+  },
+  {
+    "id": "dev_000013",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "concert_singer",
+    "question": "What are all the song names by singers who are older than average?",
+    "retrieved_schema": "Table: singer\n\nColumns:\n- Song_Name TEXT\n- Age INT\n- Name TEXT\n- Song_release_year TEXT\n- Singer_ID INT PRIMARY KEY\n- Country TEXT\n- Is_male bool\n\nTable: stadium\n\nColumns:\n- Average INT\n- Name TEXT\n- Capacity INT\n- Highest INT\n- Location TEXT\n- Lowest INT\n- Stadium_ID INT PRIMARY KEY\n\nTable: singer_in_concert\n\nColumns:\n- Singer_ID TEXT PRIMARY KEY\n- concert_ID INT PRIMARY KEY\n\nForeign keys:\n- Singer_ID -> singer.Singer_ID\n- concert_ID -> concert.concert_ID\n\nTable: concert\n\nColumns:\n- concert_Name TEXT\n- Stadium_ID TEXT\n- Theme TEXT\n- Year TEXT\n- concert_ID INT PRIMARY KEY\n\nForeign keys:\n- Stadium_ID -> stadium.Stadium_ID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT Song_Name \nFROM singer \nWHERE Age > (SELECT AVG(Age) FROM singer)",
+    "predicted_answer": [
+      [
+        "You"
+      ],
+      [
+        "Sun"
+      ],
+      [
+        "Gentleman"
+      ]
+    ],
+    "gold_sql": "SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)",
+    "gold_answer": [
+      [
+        "You"
+      ],
+      [
+        "Sun"
+      ],
+      [
+        "Gentleman"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2428,
+    "input_tokens": 280,
+    "output_tokens": 24
+  },
+  {
+    "id": "dev_000326",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "cre_Doc_Template_Mgt",
+    "question": "Count the number of templates of the type CV.",
+    "retrieved_schema": "Table: Templates\n\nColumns:\n- Template_Type_Code CHAR(15) NOT NULL\n- Version_Number INTEGER NOT NULL\n- Template_Details VARCHAR(255) NOT NULL\n- Template_ID INTEGER PRIMARY KEY NOT NULL\n- Date_Effective_From DATETIME\n- Date_Effective_To DATETIME\n\nForeign keys:\n- Template_Type_Code -> Ref_Template_Types.Template_Type_Code\n\nTable: Ref_Template_Types\n\nColumns:\n- Template_Type_Code CHAR(15) PRIMARY KEY NOT NULL\n- Template_Type_Description VARCHAR(255) NOT NULL\n\nTable: Documents\n\nColumns:\n- Template_ID INTEGER\n- Document_Description VARCHAR(255)\n- Document_ID INTEGER PRIMARY KEY NOT NULL\n- Document_Name VARCHAR(255)\n- Other_Details VARCHAR(255)\n\nForeign keys:\n- Template_ID -> Templates.Template_ID\n\nTable: Paragraphs\n\nColumns:\n- Document_ID INTEGER NOT NULL\n- Other_Details VARCHAR(255)\n- Paragraph_ID INTEGER PRIMARY KEY NOT NULL\n- Paragraph_Text VARCHAR(255)\n\nForeign keys:\n- Document_ID -> Documents.Document_ID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(T.Template_ID) \nFROM Templates T \nJOIN Ref_Template_Types RTT ON T.Template_Type_Code = RTT.Template_Type_Code \nWHERE RTT.Template_Type_Description = 'CV';",
+    "predicted_answer": [
+      [
+        2
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM Templates WHERE template_type_code  =  \"CV\"",
+    "gold_answer": [
+      [
+        2
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3112,
+    "input_tokens": 319,
+    "output_tokens": 45
+  },
+  {
+    "id": "dev_000865",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "network_1",
+    "question": "What are the names and grades for each high schooler?",
+    "retrieved_schema": "Table: Highschooler\n\nColumns:\n- grade INT\n- name TEXT\n- ID INT PRIMARY KEY\n\nTable: Friend\n\nColumns:\n- friend_id INT PRIMARY KEY\n- student_id INT PRIMARY KEY\n\nForeign keys:\n- friend_id -> Highschooler.ID\n- student_id -> Highschooler.ID\n\nTable: Likes\n\nColumns:\n- liked_id INT PRIMARY KEY\n- student_id INT PRIMARY KEY\n\nForeign keys:\n- student_id -> Highschooler.ID\n- liked_id -> Highschooler.ID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT name, grade FROM Highschooler",
+    "predicted_answer": [
+      [
+        "Jordan",
+        9
+      ],
+      [
+        "Gabriel",
+        9
+      ],
+      [
+        "Tiffany",
+        9
+      ],
+      [
+        "Cassandra",
+        9
+      ],
+      [
+        "Haley",
+        10
+      ],
+      [
+        "Andrew",
+        10
+      ],
+      [
+        "Kris",
+        10
+      ],
+      [
+        "Brittany",
+        10
+      ],
+      [
+        "Alexis",
+        11
+      ],
+      [
+        "Austin",
+        11
+      ],
+      [
+        "Gabriel",
+        11
+      ],
+      [
+        "Jessica",
+        11
+      ],
+      [
+        "Jordan",
+        12
+      ],
+      [
+        "John",
+        12
+      ],
+      [
+        "Kyle",
+        12
+      ],
+      [
+        "Logan",
+        12
+      ]
+    ],
+    "gold_sql": "SELECT name ,  grade FROM Highschooler",
+    "gold_answer": [
+      [
+        "Jordan",
+        9
+      ],
+      [
+        "Gabriel",
+        9
+      ],
+      [
+        "Tiffany",
+        9
+      ],
+      [
+        "Cassandra",
+        9
+      ],
+      [
+        "Haley",
+        10
+      ],
+      [
+        "Andrew",
+        10
+      ],
+      [
+        "Kris",
+        10
+      ],
+      [
+        "Brittany",
+        10
+      ],
+      [
+        "Alexis",
+        11
+      ],
+      [
+        "Austin",
+        11
+      ],
+      [
+        "Gabriel",
+        11
+      ],
+      [
+        "Jessica",
+        11
+      ],
+      [
+        "Jordan",
+        12
+      ],
+      [
+        "John",
+        12
+      ],
+      [
+        "Kyle",
+        12
+      ],
+      [
+        "Logan",
+        12
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2142,
+    "input_tokens": 217,
+    "output_tokens": 9
+  },
+  {
+    "id": "dev_000696",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "voter_1",
+    "question": "What are the number of votes from state 'NY' or 'CA'?",
+    "retrieved_schema": "Table: VOTES\n\nColumns:\n- state varchar(2) NOT NULL\n- contestant_number INTEGER NOT NULL\n- phone_number INTEGER NOT NULL\n- vote_id INTEGER PRIMARY KEY NOT NULL\n- created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP\n\nForeign keys:\n- contestant_number -> CONTESTANTS.contestant_number\n- state -> AREA_CODE_STATE.state\n\nTable: AREA_CODE_STATE\n\nColumns:\n- state varchar(2) NOT NULL\n- area_code INTEGER PRIMARY KEY NOT NULL\n\nTable: CONTESTANTS\n\nColumns:\n- contestant_number INTEGER PRIMARY KEY\n- contestant_name varchar(50) NOT NULL",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(vote_id) \nFROM VOTES \nWHERE state IN ('NY', 'CA');",
+    "predicted_answer": [
+      [
+        3
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM votes WHERE state  =  'NY' OR state  =  'CA'",
+    "gold_answer": [
+      [
+        3
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1741,
+    "input_tokens": 239,
+    "output_tokens": 25
+  },
+  {
+    "id": "dev_000318",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "cre_Doc_Template_Mgt",
+    "question": "Count the number of templates.",
+    "retrieved_schema": "Table: Templates\n\nColumns:\n- Version_Number INTEGER NOT NULL\n- Template_Details VARCHAR(255) NOT NULL\n- Template_ID INTEGER PRIMARY KEY NOT NULL\n- Template_Type_Code CHAR(15) NOT NULL\n- Date_Effective_From DATETIME\n- Date_Effective_To DATETIME\n\nForeign keys:\n- Template_Type_Code -> Ref_Template_Types.Template_Type_Code\n\nTable: Ref_Template_Types\n\nColumns:\n- Template_Type_Code CHAR(15) PRIMARY KEY NOT NULL\n- Template_Type_Description VARCHAR(255) NOT NULL\n\nTable: Documents\n\nColumns:\n- Template_ID INTEGER\n- Document_Description VARCHAR(255)\n- Document_ID INTEGER PRIMARY KEY NOT NULL\n- Document_Name VARCHAR(255)\n- Other_Details VARCHAR(255)\n\nForeign keys:\n- Template_ID -> Templates.Template_ID\n\nTable: Paragraphs\n\nColumns:\n- Document_ID INTEGER NOT NULL\n- Other_Details VARCHAR(255)\n- Paragraph_ID INTEGER PRIMARY KEY NOT NULL\n- Paragraph_Text VARCHAR(255)\n\nForeign keys:\n- Document_ID -> Documents.Document_ID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(Template_ID) FROM Templates",
+    "predicted_answer": [
+      [
+        20
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM Templates",
+    "gold_answer": [
+      [
+        20
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2447,
+    "input_tokens": 315,
+    "output_tokens": 9
+  },
+  {
+    "id": "dev_000440",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "wta_1",
+    "question": "What is the best rank of losers across all matches?",
+    "retrieved_schema": "Table: matches\n\nColumns:\n- loser_rank INT\n- loser_rank_points INT\n- best_of INT\n- winner_rank INT\n- winner_rank_points INT\n- loser_age FLOAT\n- loser_entry TEXT\n- loser_hand TEXT\n- loser_id INT\n- winner_id INT\n\nForeign keys:\n- winner_id -> players.player_id\n- loser_id -> players.player_id\n\nTable: rankings\n\nColumns:\n- ranking INT\n- ranking_date DATE\n- ranking_points INT\n- player_id INT\n- tours INT\n\nForeign keys:\n- player_id -> players.player_id\n\nTable: players\n\nColumns:\n- birth_date DATE\n- country_code TEXT\n- first_name TEXT\n- hand TEXT\n- last_name TEXT\n- player_id INT PRIMARY KEY",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT MIN(loser_rank) FROM matches",
+    "predicted_answer": [
+      [
+        1
+      ]
+    ],
+    "gold_sql": "SELECT min(loser_rank) FROM matches",
+    "gold_answer": [
+      [
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1955,
+    "input_tokens": 266,
+    "output_tokens": 9
+  },
+  {
+    "id": "dev_000689",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "voter_1",
+    "question": "List the vote ids, phone numbers and states of all votes.",
+    "retrieved_schema": "Table: VOTES\n\nColumns:\n- phone_number INTEGER NOT NULL\n- vote_id INTEGER PRIMARY KEY NOT NULL\n- state varchar(2) NOT NULL\n- contestant_number INTEGER NOT NULL\n- created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP\n\nForeign keys:\n- contestant_number -> CONTESTANTS.contestant_number\n- state -> AREA_CODE_STATE.state\n\nTable: AREA_CODE_STATE\n\nColumns:\n- state varchar(2) NOT NULL\n- area_code INTEGER PRIMARY KEY NOT NULL\n\nTable: CONTESTANTS\n\nColumns:\n- contestant_number INTEGER PRIMARY KEY\n- contestant_name varchar(50) NOT NULL",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT vote_id, phone_number, state FROM VOTES",
+    "predicted_answer": [
+      [
+        1,
+        7182887233,
+        "NY"
+      ],
+      [
+        2,
+        7148407040,
+        "NY"
+      ],
+      [
+        3,
+        6209222712,
+        "CA"
+      ],
+      [
+        5,
+        5112677315,
+        "NJ\n"
+      ]
+    ],
+    "gold_sql": "SELECT vote_id ,  phone_number ,  state FROM votes",
+    "gold_answer": [
+      [
+        1,
+        7182887233,
+        "NY"
+      ],
+      [
+        2,
+        7148407040,
+        "NY"
+      ],
+      [
+        3,
+        6209222712,
+        "CA"
+      ],
+      [
+        5,
+        5112677315,
+        "NJ\n"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1777,
+    "input_tokens": 236,
+    "output_tokens": 12
+  },
+  {
+    "id": "dev_000189",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "flight_2",
+    "question": "How many airports do we have?",
+    "retrieved_schema": "Table: airports\n\nColumns:\n- AirportCode TEXT PRIMARY KEY\n- AirportName TEXT\n- City TEXT\n- Country TEXT\n- CountryAbbrev TEXT\n\nTable: airlines\n\nColumns:\n- Abbreviation TEXT\n- Airline TEXT\n- Country TEXT\n- uid INTEGER PRIMARY KEY\n\nTable: flights\n\nColumns:\n- Airline INTEGER PRIMARY KEY\n- DestAirport TEXT\n- FlightNo INTEGER PRIMARY KEY\n- SourceAirport TEXT\n\nForeign keys:\n- DestAirport -> airports.AirportCode\n- SourceAirport -> airports.AirportCode",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(AirportCode) FROM airports",
+    "predicted_answer": [
+      [
+        100
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM AIRPORTS",
+    "gold_answer": [
+      [
+        100
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1662,
+    "input_tokens": 220,
+    "output_tokens": 10
+  },
+  {
+    "id": "dev_000778",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "world_1",
+    "question": "What are the country codes for countries that do not speak English?",
+    "retrieved_schema": "Table: country\n\nColumns:\n- Code char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- HeadOfState char(60) DEFAULT NULL\n- Capital INTEGER DEFAULT NULL\n- Code2 char(2) NOT NULL DEFAULT ''\n- Continent TEXT NOT NULL DEFAULT 'Asia'\n- GNP float(10,2) DEFAULT NULL\n- GNPOld float(10,2) DEFAULT NULL\n- GovernmentForm char(45) NOT NULL DEFAULT ''\n\nTable: countrylanguage\n\nColumns:\n- CountryCode char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- IsOfficial TEXT NOT NULL DEFAULT 'F'\n- Language char(30) PRIMARY KEY NOT NULL DEFAULT ''\n- Percentage float(4,1) NOT NULL DEFAULT '0.0'\n\nForeign keys:\n- CountryCode -> country.Code\n\nTable: city\n\nColumns:\n- CountryCode char(3) NOT NULL DEFAULT ''\n- District char(20) NOT NULL DEFAULT ''\n- ID INTEGER PRIMARY KEY NOT NULL\n- Name char(35) NOT NULL DEFAULT ''\n- Population INTEGER NOT NULL DEFAULT '0'\n\nForeign keys:\n- CountryCode -> country.Code",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT T1.Code \nFROM country AS T1 \nWHERE T1.Code NOT IN (\n  SELECT T2.CountryCode \n  FROM countrylanguage AS T2 \n  WHERE T2.Language = 'English'\n)",
+    "predicted_answer": [
+      [
+        "AFG"
+      ],
+      [
+        "AGO"
+      ],
+      [
+        "ALB"
+      ],
+      [
+        "AND"
+      ],
+      [
+        "ARE"
+      ],
+      [
+        "ARG"
+      ],
+      [
+        "ARM"
+      ],
+      [
+        "ATA"
+      ],
+      [
+        "ATF"
+      ],
+      [
+        "AUT"
+      ],
+      [
+        "AZE"
+      ],
+      [
+        "BDI"
+      ],
+      [
+        "BEL"
+      ],
+      [
+        "BEN"
+      ],
+      [
+        "BFA"
+      ],
+      [
+        "BGD"
+      ],
+      [
+        "BGR"
+      ],
+      [
+        "BHS"
+      ],
+      [
+        "BIH"
+      ],
+      [
+        "BLR"
+      ],
+      [
+        "BOL"
+      ],
+      [
+        "BRA"
+      ],
+      [
+        "BTN"
+      ],
+      [
+        "BVT"
+      ],
+      [
+        "BWA"
+      ],
+      [
+        "CAF"
+      ],
+      [
+        "CHE"
+      ],
+      [
+        "CHL"
+      ],
+      [
+        "CHN"
+      ],
+      [
+        "CIV"
+      ],
+      [
+        "CMR"
+      ],
+      [
+        "COD"
+      ],
+      [
+        "COG"
+      ],
+      [
+        "COL"
+      ],
+      [
+        "COM"
+      ],
+      [
+        "CPV"
+      ],
+      [
+        "CRI"
+      ],
+      [
+        "CUB"
+      ],
+      [
+        "CYP"
+      ],
+      [
+        "CZE"
+      ],
+      [
+        "DEU"
+      ],
+      [
+        "DJI"
+      ],
+      [
+        "DMA"
+      ],
+      [
+        "DOM"
+      ],
+      [
+        "DZA"
+      ],
+      [
+        "ECU"
+      ],
+      [
+        "EGY"
+      ],
+      [
+        "ERI"
+      ],
+      [
+        "ESH"
+      ],
+      [
+        "ESP"
+      ],
+      [
+        "EST"
+      ],
+      [
+        "ETH"
+      ],
+      [
+        "FIN"
+      ],
+      [
+        "FJI"
+      ],
+      [
+        "FRA"
+      ],
+      [
+        "FRO"
+      ],
+      [
+        "FSM"
+      ],
+      [
+        "GAB"
+      ],
+      [
+        "GEO"
+      ],
+      [
+        "GHA"
+      ],
+      [
+        "GIN"
+      ],
+      [
+        "GLP"
+      ],
+      [
+        "GMB"
+      ],
+      [
+        "GNB"
+      ],
+      [
+        "GNQ"
+      ],
+      [
+        "GRC"
+      ],
+      [
+        "GRD"
+      ],
+      [
+        "GRL"
+      ],
+      [
+        "GTM"
+      ],
+      [
+        "GUF"
+      ],
+      [
+        "GUY"
+      ],
+      [
+        "HMD"
+      ],
+      [
+        "HND"
+      ],
+      [
+        "HRV"
+      ],
+      [
+        "HTI"
+      ],
+      [
+        "HUN"
+      ],
+      [
+        "IDN"
+      ],
+      [
+        "IND"
+      ],
+      [
+        "IOT"
+      ],
+      [
+        "IRN"
+      ],
+      [
+        "IRQ"
+      ],
+      [
+        "ISR"
+      ],
+      [
+        "ITA"
+      ],
+      [
+        "JAM"
+      ],
+      [
+        "JOR"
+      ],
+      [
+        "KAZ"
+      ],
+      [
+        "KEN"
+      ],
+      [
+        "KGZ"
+      ],
+      [
+        "KHM"
+      ],
+      [
+        "KIR"
+      ],
+      [
+        "KOR"
+      ],
+      [
+        "LAO"
+      ],
+      [
+        "LBN"
+      ],
+      [
+        "LBR"
+      ],
+      [
+        "LBY"
+      ],
+      [
+        "LIE"
+      ],
+      [
+        "LKA"
+      ],
+      [
+        "LTU"
+      ],
+      [
+        "LUX"
+      ],
+      [
+        "LVA"
+      ],
+      [
+        "MAR"
+      ],
+      [
+        "MDA"
+      ],
+      [
+        "MDG"
+      ],
+      [
+        "MEX"
+      ],
+      [
+        "MKD"
+      ],
+      [
+        "MLI"
+      ],
+      [
+        "MMR"
+      ],
+      [
+        "MNG"
+      ],
+      [
+        "MOZ"
+      ],
+      [
+        "MRT"
+      ],
+      [
+        "MTQ"
+      ],
+      [
+        "MUS"
+      ],
+      [
+        "MWI"
+      ],
+      [
+        "MYT"
+      ],
+      [
+        "NAM"
+      ],
+      [
+        "NCL"
+      ],
+      [
+        "NER"
+      ],
+      [
+        "NGA"
+      ],
+      [
+        "NIC"
+      ],
+      [
+        "NLD"
+      ],
+      [
+        "NPL"
+      ],
+      [
+        "OMN"
+      ],
+      [
+        "PAK"
+      ],
+      [
+        "PAN"
+      ],
+      [
+        "PCN"
+      ],
+      [
+        "PER"
+      ],
+      [
+        "PHL"
+      ],
+      [
+        "PNG"
+      ],
+      [
+        "POL"
+      ],
+      [
+        "PRK"
+      ],
+      [
+        "PRT"
+      ],
+      [
+        "PRY"
+      ],
+      [
+        "PSE"
+      ],
+      [
+        "PYF"
+      ],
+      [
+        "QAT"
+      ],
+      [
+        "REU"
+      ],
+      [
+        "ROM"
+      ],
+      [
+        "RUS"
+      ],
+      [
+        "RWA"
+      ],
+      [
+        "SAU"
+      ],
+      [
+        "SDN"
+      ],
+      [
+        "SEN"
+      ],
+      [
+        "SGP"
+      ],
+      [
+        "SGS"
+      ],
+      [
+        "SJM"
+      ],
+      [
+        "SLB"
+      ],
+      [
+        "SLE"
+      ],
+      [
+        "SLV"
+      ],
+      [
+        "SMR"
+      ],
+      [
+        "SOM"
+      ],
+      [
+        "SPM"
+      ],
+      [
+        "STP"
+      ],
+      [
+        "SUR"
+      ],
+      [
+        "SVK"
+      ],
+      [
+        "SVN"
+      ],
+      [
+        "SWE"
+      ],
+      [
+        "SWZ"
+      ],
+      [
+        "SYR"
+      ],
+      [
+        "TCD"
+      ],
+      [
+        "TGO"
+      ],
+      [
+        "THA"
+      ],
+      [
+        "TJK"
+      ],
+      [
+        "TKM"
+      ],
+      [
+        "TMP"
+      ],
+      [
+        "TUN"
+      ],
+      [
+        "TUR"
+      ],
+      [
+        "TWN"
+      ],
+      [
+        "TZA"
+      ],
+      [
+        "UGA"
+      ],
+      [
+        "UKR"
+      ],
+      [
+        "URY"
+      ],
+      [
+        "UZB"
+      ],
+      [
+        "VAT"
+      ],
+      [
+        "VEN"
+      ],
+      [
+        "VNM"
+      ],
+      [
+        "WLF"
+      ],
+      [
+        "YEM"
+      ],
+      [
+        "YUG"
+      ],
+      [
+        "ZMB"
+      ]
+    ],
+    "gold_sql": "SELECT CountryCode FROM countrylanguage EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  \"English\"",
+    "gold_answer": [
+      [
+        "AFG"
+      ],
+      [
+        "AGO"
+      ],
+      [
+        "ALB"
+      ],
+      [
+        "AND"
+      ],
+      [
+        "ARE"
+      ],
+      [
+        "ARG"
+      ],
+      [
+        "ARM"
+      ],
+      [
+        "AUT"
+      ],
+      [
+        "AZE"
+      ],
+      [
+        "BDI"
+      ],
+      [
+        "BEL"
+      ],
+      [
+        "BEN"
+      ],
+      [
+        "BFA"
+      ],
+      [
+        "BGD"
+      ],
+      [
+        "BGR"
+      ],
+      [
+        "BHS"
+      ],
+      [
+        "BIH"
+      ],
+      [
+        "BLR"
+      ],
+      [
+        "BOL"
+      ],
+      [
+        "BRA"
+      ],
+      [
+        "BTN"
+      ],
+      [
+        "BWA"
+      ],
+      [
+        "CAF"
+      ],
+      [
+        "CHE"
+      ],
+      [
+        "CHL"
+      ],
+      [
+        "CHN"
+      ],
+      [
+        "CIV"
+      ],
+      [
+        "CMR"
+      ],
+      [
+        "COD"
+      ],
+      [
+        "COG"
+      ],
+      [
+        "COL"
+      ],
+      [
+        "COM"
+      ],
+      [
+        "CPV"
+      ],
+      [
+        "CRI"
+      ],
+      [
+        "CUB"
+      ],
+      [
+        "CYP"
+      ],
+      [
+        "CZE"
+      ],
+      [
+        "DEU"
+      ],
+      [
+        "DJI"
+      ],
+      [
+        "DMA"
+      ],
+      [
+        "DOM"
+      ],
+      [
+        "DZA"
+      ],
+      [
+        "ECU"
+      ],
+      [
+        "EGY"
+      ],
+      [
+        "ERI"
+      ],
+      [
+        "ESH"
+      ],
+      [
+        "ESP"
+      ],
+      [
+        "EST"
+      ],
+      [
+        "ETH"
+      ],
+      [
+        "FIN"
+      ],
+      [
+        "FJI"
+      ],
+      [
+        "FRA"
+      ],
+      [
+        "FRO"
+      ],
+      [
+        "FSM"
+      ],
+      [
+        "GAB"
+      ],
+      [
+        "GEO"
+      ],
+      [
+        "GHA"
+      ],
+      [
+        "GIN"
+      ],
+      [
+        "GLP"
+      ],
+      [
+        "GMB"
+      ],
+      [
+        "GNB"
+      ],
+      [
+        "GNQ"
+      ],
+      [
+        "GRC"
+      ],
+      [
+        "GRD"
+      ],
+      [
+        "GRL"
+      ],
+      [
+        "GTM"
+      ],
+      [
+        "GUF"
+      ],
+      [
+        "GUY"
+      ],
+      [
+        "HND"
+      ],
+      [
+        "HRV"
+      ],
+      [
+        "HTI"
+      ],
+      [
+        "HUN"
+      ],
+      [
+        "IDN"
+      ],
+      [
+        "IND"
+      ],
+      [
+        "IRN"
+      ],
+      [
+        "IRQ"
+      ],
+      [
+        "ISR"
+      ],
+      [
+        "ITA"
+      ],
+      [
+        "JAM"
+      ],
+      [
+        "JOR"
+      ],
+      [
+        "KAZ"
+      ],
+      [
+        "KEN"
+      ],
+      [
+        "KGZ"
+      ],
+      [
+        "KHM"
+      ],
+      [
+        "KIR"
+      ],
+      [
+        "KOR"
+      ],
+      [
+        "LAO"
+      ],
+      [
+        "LBN"
+      ],
+      [
+        "LBR"
+      ],
+      [
+        "LBY"
+      ],
+      [
+        "LIE"
+      ],
+      [
+        "LKA"
+      ],
+      [
+        "LTU"
+      ],
+      [
+        "LUX"
+      ],
+      [
+        "LVA"
+      ],
+      [
+        "MAR"
+      ],
+      [
+        "MDA"
+      ],
+      [
+        "MDG"
+      ],
+      [
+        "MEX"
+      ],
+      [
+        "MKD"
+      ],
+      [
+        "MLI"
+      ],
+      [
+        "MMR"
+      ],
+      [
+        "MNG"
+      ],
+      [
+        "MOZ"
+      ],
+      [
+        "MRT"
+      ],
+      [
+        "MTQ"
+      ],
+      [
+        "MUS"
+      ],
+      [
+        "MWI"
+      ],
+      [
+        "MYT"
+      ],
+      [
+        "NAM"
+      ],
+      [
+        "NCL"
+      ],
+      [
+        "NER"
+      ],
+      [
+        "NGA"
+      ],
+      [
+        "NIC"
+      ],
+      [
+        "NLD"
+      ],
+      [
+        "NPL"
+      ],
+      [
+        "OMN"
+      ],
+      [
+        "PAK"
+      ],
+      [
+        "PAN"
+      ],
+      [
+        "PCN"
+      ],
+      [
+        "PER"
+      ],
+      [
+        "PHL"
+      ],
+      [
+        "PNG"
+      ],
+      [
+        "POL"
+      ],
+      [
+        "PRK"
+      ],
+      [
+        "PRT"
+      ],
+      [
+        "PRY"
+      ],
+      [
+        "PSE"
+      ],
+      [
+        "PYF"
+      ],
+      [
+        "QAT"
+      ],
+      [
+        "REU"
+      ],
+      [
+        "ROM"
+      ],
+      [
+        "RUS"
+      ],
+      [
+        "RWA"
+      ],
+      [
+        "SAU"
+      ],
+      [
+        "SDN"
+      ],
+      [
+        "SEN"
+      ],
+      [
+        "SGP"
+      ],
+      [
+        "SJM"
+      ],
+      [
+        "SLB"
+      ],
+      [
+        "SLE"
+      ],
+      [
+        "SLV"
+      ],
+      [
+        "SMR"
+      ],
+      [
+        "SOM"
+      ],
+      [
+        "SPM"
+      ],
+      [
+        "STP"
+      ],
+      [
+        "SUR"
+      ],
+      [
+        "SVK"
+      ],
+      [
+        "SVN"
+      ],
+      [
+        "SWE"
+      ],
+      [
+        "SWZ"
+      ],
+      [
+        "SYR"
+      ],
+      [
+        "TCD"
+      ],
+      [
+        "TGO"
+      ],
+      [
+        "THA"
+      ],
+      [
+        "TJK"
+      ],
+      [
+        "TKM"
+      ],
+      [
+        "TMP"
+      ],
+      [
+        "TUN"
+      ],
+      [
+        "TUR"
+      ],
+      [
+        "TWN"
+      ],
+      [
+        "TZA"
+      ],
+      [
+        "UGA"
+      ],
+      [
+        "UKR"
+      ],
+      [
+        "URY"
+      ],
+      [
+        "UZB"
+      ],
+      [
+        "VAT"
+      ],
+      [
+        "VEN"
+      ],
+      [
+        "VNM"
+      ],
+      [
+        "WLF"
+      ],
+      [
+        "YEM"
+      ],
+      [
+        "YUG"
+      ],
+      [
+        "ZMB"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.3055,
+    "input_tokens": 337,
+    "output_tokens": 48
+  },
+  {
+    "id": "dev_000198",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "flight_2",
+    "question": "Give the city and country for the Alton airport.",
+    "retrieved_schema": "Table: airports\n\nColumns:\n- City TEXT\n- Country TEXT\n- AirportCode TEXT PRIMARY KEY\n- AirportName TEXT\n- CountryAbbrev TEXT\n\nTable: airlines\n\nColumns:\n- Country TEXT\n- Abbreviation TEXT\n- Airline TEXT\n- uid INTEGER PRIMARY KEY\n\nTable: flights\n\nColumns:\n- DestAirport TEXT\n- SourceAirport TEXT\n- Airline INTEGER PRIMARY KEY\n- FlightNo INTEGER PRIMARY KEY\n\nForeign keys:\n- DestAirport -> airports.AirportCode\n- SourceAirport -> airports.AirportCode",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT City, Country FROM airports WHERE AirportName = \"Alton\"",
+    "predicted_answer": [],
+    "gold_sql": "SELECT City ,  Country FROM AIRPORTS WHERE AirportName  =  \"Alton\"",
+    "gold_answer": [],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.219,
+    "input_tokens": 224,
+    "output_tokens": 15
+  },
+  {
+    "id": "dev_000735",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "world_1",
+    "question": "How many different forms of governments are there in Africa?",
+    "retrieved_schema": "Table: city\n\nColumns:\n- CountryCode char(3) NOT NULL DEFAULT ''\n- District char(20) NOT NULL DEFAULT ''\n- ID INTEGER PRIMARY KEY NOT NULL\n- Name char(35) NOT NULL DEFAULT ''\n- Population INTEGER NOT NULL DEFAULT '0'\n\nForeign keys:\n- CountryCode -> country.Code\n\nTable: country\n\nColumns:\n- Capital INTEGER DEFAULT NULL\n- Code char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- Code2 char(2) NOT NULL DEFAULT ''\n- Continent TEXT NOT NULL DEFAULT 'Asia'\n- GNP float(10,2) DEFAULT NULL\n- GNPOld float(10,2) DEFAULT NULL\n- GovernmentForm char(45) NOT NULL DEFAULT ''\n- HeadOfState char(60) DEFAULT NULL\n\nTable: countrylanguage\n\nColumns:\n- CountryCode char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- IsOfficial TEXT NOT NULL DEFAULT 'F'\n- Language char(30) PRIMARY KEY NOT NULL DEFAULT ''\n- Percentage float(4,1) NOT NULL DEFAULT '0.0'\n\nForeign keys:\n- CountryCode -> country.Code",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(DISTINCT GovernmentForm) FROM country WHERE Continent = 'Africa'",
+    "predicted_answer": [
+      [
+        10
+      ]
+    ],
+    "gold_sql": "SELECT count(DISTINCT GovernmentForm) FROM country WHERE Continent  =  \"Africa\"",
+    "gold_answer": [
+      [
+        10
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1948,
+    "input_tokens": 335,
+    "output_tokens": 17
+  },
+  {
+    "id": "dev_000704",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "world_1",
+    "question": "How many countries have a republic as their form of government?",
+    "retrieved_schema": "Table: country\n\nColumns:\n- GovernmentForm char(45) NOT NULL DEFAULT ''\n- Capital INTEGER DEFAULT NULL\n- Code char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- Code2 char(2) NOT NULL DEFAULT ''\n- Continent TEXT NOT NULL DEFAULT 'Asia'\n- GNP float(10,2) DEFAULT NULL\n- GNPOld float(10,2) DEFAULT NULL\n- HeadOfState char(60) DEFAULT NULL\n\nTable: city\n\nColumns:\n- CountryCode char(3) NOT NULL DEFAULT ''\n- District char(20) NOT NULL DEFAULT ''\n- ID INTEGER PRIMARY KEY NOT NULL\n- Name char(35) NOT NULL DEFAULT ''\n- Population INTEGER NOT NULL DEFAULT '0'\n\nForeign keys:\n- CountryCode -> country.Code\n\nTable: countrylanguage\n\nColumns:\n- CountryCode char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- IsOfficial TEXT NOT NULL DEFAULT 'F'\n- Language char(30) PRIMARY KEY NOT NULL DEFAULT ''\n- Percentage float(4,1) NOT NULL DEFAULT '0.0'\n\nForeign keys:\n- CountryCode -> country.Code",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(Code) FROM country WHERE GovernmentForm = 'Republic'",
+    "predicted_answer": [
+      [
+        122
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM country WHERE GovernmentForm  =  \"Republic\"",
+    "gold_answer": [
+      [
+        122
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2269,
+    "input_tokens": 336,
+    "output_tokens": 14
+  },
+  {
+    "id": "dev_000541",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "student_transcripts_tracking",
+    "question": "Which student has enrolled for the most times in any program? List the id, first name, middle name, last name, the number of enrollments and student id.",
+    "retrieved_schema": "Table: Students\n\nColumns:\n- middle_name VARCHAR(40)\n- first_name VARCHAR(80)\n- last_name VARCHAR(40)\n- student_id INTEGER PRIMARY KEY\n- cell_mobile_number VARCHAR(40)\n- current_address_id INTEGER NOT NULL\n- date_first_registered DATETIME\n- other_student_details VARCHAR(255)\n- permanent_address_id INTEGER NOT NULL\n\nForeign keys:\n- permanent_address_id -> Addresses.address_id\n- current_address_id -> Addresses.address_id\n\nTable: Student_Enrolment\n\nColumns:\n- student_id INTEGER NOT NULL\n- degree_program_id INTEGER NOT NULL\n- student_enrolment_id INTEGER PRIMARY KEY\n- semester_id INTEGER NOT NULL\n- other_details VARCHAR(255)\n\nForeign keys:\n- student_id -> Students.student_id\n- semester_id -> Semesters.semester_id\n- degree_program_id -> Degree_Programs.degree_program_id\n\nTable: Student_Enrolment_Courses\n\nColumns:\n- student_course_id INTEGER PRIMARY KEY\n- student_enrolment_id INTEGER NOT NULL\n- course_id INTEGER NOT NULL\n\nForeign keys:\n- student_enrolment_id -> Student_Enrolment.student_enrolment_id\n- course_id -> Courses.course_id\n\nTable: Degree_Programs\n\nColumns:\n- degree_program_id INTEGER PRIMARY KEY\n- degree_summary_name VARCHAR(255)\n- department_id INTEGER NOT NULL\n- degree_summary_description VARCHAR(255)\n- other_details VARCHAR(255)\n\nForeign keys:\n- department_id -> Departments.department_id\n\nTable: Sections\n\nColumns:\n- course_id INTEGER NOT NULL\n- section_id INTEGER PRIMARY KEY\n- section_name VARCHAR(255)\n- other_details VARCHAR(255)\n- section_description VARCHAR(255)\n\nForeign keys:\n- course_id -> Courses.course_id",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT S.student_id, S.first_name, S.middle_name, S.last_name, COUNT(SE.student_enrolment_id) AS num_enrollments\nFROM Students S\nJOIN Student_Enrolment SE ON S.student_id = SE.student_id\nGROUP BY S.student_id, S.first_name, S.middle_name, S.last_name\nORDER BY num_enrollments DESC\nLIMIT 1",
+    "predicted_answer": [
+      [
+        6,
+        "Stanford",
+        "Mona",
+        "Rogahn",
+        3
+      ]
+    ],
+    "gold_sql": "SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(*) ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        7,
+        "Frida",
+        "Aisha",
+        "Huel",
+        3,
+        7
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.4106,
+    "input_tokens": 486,
+    "output_tokens": 86
+  },
+  {
+    "id": "dev_000088",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "car_1",
+    "question": "What is the number of continents?",
+    "retrieved_schema": "Table: continents\n\nColumns:\n- Continent TEXT\n- ContId INTEGER PRIMARY KEY\n\nTable: countries\n\nColumns:\n- Continent INTEGER\n- CountryId INTEGER PRIMARY KEY\n- CountryName TEXT\n\nForeign keys:\n- Continent -> continents.ContId\n\nTable: car_makers\n\nColumns:\n- Country TEXT\n- FullName TEXT\n- Id INTEGER PRIMARY KEY\n- Maker TEXT\n\nForeign keys:\n- Country -> countries.CountryId\n\nTable: car_names\n\nColumns:\n- Make TEXT\n- MakeId INTEGER PRIMARY KEY\n- Model TEXT\n\nForeign keys:\n- Model -> model_list.Model\n\nTable: cars_data\n\nColumns:\n- Accelerate REAL\n- Cylinders INTEGER\n- Edispl REAL\n- Horsepower TEXT\n- Id INTEGER PRIMARY KEY\n- MPG TEXT\n- Weight INTEGER\n- Year INTEGER\n\nForeign keys:\n- Id -> car_names.MakeId",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(ContId) FROM continents",
+    "predicted_answer": [
+      [
+        5
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM CONTINENTS;",
+    "gold_answer": [
+      [
+        5
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2153,
+    "input_tokens": 283,
+    "output_tokens": 9
+  },
+  {
+    "id": "dev_000940",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "dog_kennels",
+    "question": "Which owner has paid the largest amount of money in total for their dogs? Show the owner id and zip code.",
+    "retrieved_schema": "Table: Dogs\n\nColumns:\n- owner_id INTEGER NOT NULL\n- dog_id INTEGER PRIMARY KEY\n- breed_code VARCHAR(10) NOT NULL\n- size_code VARCHAR(10) NOT NULL\n- abandoned_yn VARCHAR(1)\n- age VARCHAR(20)\n- date_adopted DATETIME\n- date_arrived DATETIME\n\nForeign keys:\n- owner_id -> Owners.owner_id\n- owner_id -> Owners.owner_id\n- size_code -> Sizes.size_code\n- breed_code -> Breeds.breed_code\n\nTable: Owners\n\nColumns:\n- owner_id INTEGER PRIMARY KEY\n- zip_code VARCHAR(20)\n- cell_number VARCHAR(20)\n- city VARCHAR(50)\n- email_address VARCHAR(50)\n- first_name VARCHAR(50)\n- home_phone VARCHAR(20)\n- last_name VARCHAR(50)\n\nTable: Professionals\n\nColumns:\n- zip_code VARCHAR(20)\n- professional_id INTEGER PRIMARY KEY\n- role_code VARCHAR(10) NOT NULL\n- cell_number VARCHAR(20)\n- city VARCHAR(50)\n- email_address VARCHAR(50)\n- first_name VARCHAR(50)\n- home_phone VARCHAR(20)\n\nTable: Treatments\n\nColumns:\n- dog_id INTEGER NOT NULL\n- professional_id INTEGER NOT NULL\n- treatment_id INTEGER PRIMARY KEY\n- treatment_type_code VARCHAR(10) NOT NULL\n- cost_of_treatment DECIMAL(19,4)\n- date_of_treatment DATETIME\n\nForeign keys:\n- dog_id -> Dogs.dog_id\n- professional_id -> Professionals.professional_id\n- treatment_type_code -> Treatment_Types.treatment_type_code\n\nTable: Charges\n\nColumns:\n- charge_amount DECIMAL(19,4)\n- charge_id INTEGER PRIMARY KEY\n- charge_type VARCHAR(10)",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT o.owner_id, o.zip_code\nFROM Owners o\nJOIN Dogs d ON o.owner_id = d.owner_id\nJOIN Treatments t ON d.dog_id = t.dog_id\nJOIN Charges c ON t.treatment_id = c.charge_id\nGROUP BY o.owner_id, o.zip_code\nORDER BY SUM(c.charge_amount) DESC\nLIMIT 1",
+    "predicted_answer": [
+      [
+        14,
+        "22731"
+      ]
+    ],
+    "gold_sql": "SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        3,
+        "02647"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.4111,
+    "input_tokens": 478,
+    "output_tokens": 83
+  },
+  {
+    "id": "dev_000255",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "flight_2",
+    "question": "Find the number of flights landing in the city of Aberdeen or Abilene.",
+    "retrieved_schema": "Table: airports\n\nColumns:\n- City TEXT\n- AirportCode TEXT PRIMARY KEY\n- AirportName TEXT\n- Country TEXT\n- CountryAbbrev TEXT\n\nTable: flights\n\nColumns:\n- Airline INTEGER PRIMARY KEY\n- DestAirport TEXT\n- FlightNo INTEGER PRIMARY KEY\n- SourceAirport TEXT\n\nForeign keys:\n- DestAirport -> airports.AirportCode\n- SourceAirport -> airports.AirportCode\n\nTable: airlines\n\nColumns:\n- Abbreviation TEXT\n- Airline TEXT\n- Country TEXT\n- uid INTEGER PRIMARY KEY",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(f.FlightNo) \nFROM flights f \nJOIN airports a ON f.DestAirport = a.AirportCode \nWHERE a.City = 'Aberdeen' OR a.City = 'Abilene'",
+    "predicted_answer": [
+      [
+        0
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM Flights AS T1 JOIN Airports AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.city  =  \"Aberdeen\" OR T2.city  =  \"Abilene\"",
+    "gold_answer": [
+      [
+        0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3203,
+    "input_tokens": 229,
+    "output_tokens": 50
+  },
+  {
+    "id": "dev_000775",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "world_1",
+    "question": "Which African countries have a smaller population than that of any country in Asia?",
+    "retrieved_schema": "Table: country\n\nColumns:\n- Population INTEGER NOT NULL DEFAULT '0'\n- Capital INTEGER DEFAULT NULL\n- Code char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- Code2 char(2) NOT NULL DEFAULT ''\n- Continent TEXT NOT NULL DEFAULT 'Asia'\n- GNP float(10,2) DEFAULT NULL\n- GNPOld float(10,2) DEFAULT NULL\n- GovernmentForm char(45) NOT NULL DEFAULT ''\n\nTable: city\n\nColumns:\n- Population INTEGER NOT NULL DEFAULT '0'\n- CountryCode char(3) NOT NULL DEFAULT ''\n- District char(20) NOT NULL DEFAULT ''\n- ID INTEGER PRIMARY KEY NOT NULL\n- Name char(35) NOT NULL DEFAULT ''\n\nForeign keys:\n- CountryCode -> country.Code\n\nTable: countrylanguage\n\nColumns:\n- CountryCode char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- IsOfficial TEXT NOT NULL DEFAULT 'F'\n- Language char(30) PRIMARY KEY NOT NULL DEFAULT ''\n- Percentage float(4,1) NOT NULL DEFAULT '0.0'\n\nForeign keys:\n- CountryCode -> country.Code",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT c1.Code \nFROM country c1 \nWHERE c1.Continent = 'Africa' \nAND c1.Population < (SELECT MIN(Population) \n                      FROM country \n                      WHERE Continent = 'Asia');",
+    "predicted_answer": [
+      [
+        "IOT"
+      ],
+      [
+        "MYT"
+      ],
+      [
+        "SHN"
+      ],
+      [
+        "STP"
+      ],
+      [
+        "SYC"
+      ]
+    ],
+    "gold_sql": "SELECT Name FROM country WHERE Continent  =  \"Africa\"  AND population  <  (SELECT min(population) FROM country WHERE Continent  =  \"Asia\")",
+    "gold_answer": [
+      [
+        "British Indian Ocean Territory"
+      ],
+      [
+        "Mayotte"
+      ],
+      [
+        "Saint Helena"
+      ],
+      [
+        "Sao Tome and Principe"
+      ],
+      [
+        "Seychelles"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 1.1246,
+    "input_tokens": 337,
+    "output_tokens": 50
+  },
+  {
+    "id": "dev_000161",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "car_1",
+    "question": "How many countries has more than 2 car makers ?",
+    "retrieved_schema": "Table: car_makers\n\nColumns:\n- Maker TEXT\n- Country TEXT\n- FullName TEXT\n- Id INTEGER PRIMARY KEY\n\nForeign keys:\n- Country -> countries.CountryId\n\nTable: car_names\n\nColumns:\n- Make TEXT\n- MakeId INTEGER PRIMARY KEY\n- Model TEXT\n\nForeign keys:\n- Model -> model_list.Model\n\nTable: countries\n\nColumns:\n- Continent INTEGER\n- CountryId INTEGER PRIMARY KEY\n- CountryName TEXT\n\nForeign keys:\n- Continent -> continents.ContId\n\nTable: model_list\n\nColumns:\n- Maker INTEGER\n- Model TEXT\n- ModelId INTEGER PRIMARY KEY\n\nForeign keys:\n- Maker -> car_makers.Id\n\nTable: cars_data\n\nColumns:\n- Accelerate REAL\n- Cylinders INTEGER\n- Edispl REAL\n- Horsepower TEXT\n- Id INTEGER PRIMARY KEY\n- MPG TEXT\n- Weight INTEGER\n- Year INTEGER\n\nForeign keys:\n- Id -> car_names.MakeId",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(*) \nFROM (\n    SELECT Country \n    FROM car_makers \n    GROUP BY Country \n    HAVING COUNT(Maker) > 2\n)",
+    "predicted_answer": [
+      [
+        4
+      ]
+    ],
+    "gold_sql": "select count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2",
+    "gold_answer": [
+      [
+        4
+      ],
+      [
+        4
+      ],
+      [
+        3
+      ],
+      [
+        5
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.3205,
+    "input_tokens": 303,
+    "output_tokens": 38
+  },
+  {
+    "id": "dev_000600",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "tvshow",
+    "question": "What is the content of the series Sky Radio?",
+    "retrieved_schema": "Table: TV_Channel\n\nColumns:\n- Content TEXT\n- series_name TEXT\n- Country TEXT\n- Hight_definition_TV TEXT\n- Language TEXT\n- Package_Option TEXT\n- Pay_per_view_PPV TEXT\n- Pixel_aspect_ratio_PAR TEXT\n- id TEXT PRIMARY KEY\n\nTable: TV_series\n\nColumns:\n- 18_49_Rating_Share TEXT\n- Air_Date TEXT\n- Channel TEXT\n- Episode TEXT\n- Rating TEXT\n- Share REAL\n- Viewers_m TEXT\n- Weekly_Rank REAL\n- id REAL PRIMARY KEY\n\nForeign keys:\n- Channel -> TV_Channel.id\n\nTable: Cartoon\n\nColumns:\n- Channel TEXT\n- Directed_by TEXT\n- Original_air_date TEXT\n- Production_code REAL\n- Title TEXT\n- Written_by TEXT\n- id REAL PRIMARY KEY\n\nForeign keys:\n- Channel -> TV_Channel.id",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT Content FROM TV_Channel WHERE series_name = 'Sky Radio'",
+    "predicted_answer": [
+      [
+        "music"
+      ]
+    ],
+    "gold_sql": "SELECT Content FROM TV_Channel WHERE series_name = \"Sky Radio\";",
+    "gold_answer": [
+      [
+        "music"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4192,
+    "input_tokens": 287,
+    "output_tokens": 14
+  },
+  {
+    "id": "dev_000740",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "world_1",
+    "question": "What is name of the country that speaks the largest number of languages?",
+    "retrieved_schema": "Table: country\n\nColumns:\n- Name char(52) NOT NULL DEFAULT ''\n- LocalName char(45) NOT NULL DEFAULT ''\n- Capital INTEGER DEFAULT NULL\n- Code char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- Code2 char(2) NOT NULL DEFAULT ''\n- Continent TEXT NOT NULL DEFAULT 'Asia'\n- GNP float(10,2) DEFAULT NULL\n- GNPOld float(10,2) DEFAULT NULL\n\nTable: city\n\nColumns:\n- Name char(35) NOT NULL DEFAULT ''\n- CountryCode char(3) NOT NULL DEFAULT ''\n- District char(20) NOT NULL DEFAULT ''\n- ID INTEGER PRIMARY KEY NOT NULL\n- Population INTEGER NOT NULL DEFAULT '0'\n\nForeign keys:\n- CountryCode -> country.Code\n\nTable: countrylanguage\n\nColumns:\n- Language char(30) PRIMARY KEY NOT NULL DEFAULT ''\n- CountryCode char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- IsOfficial TEXT NOT NULL DEFAULT 'F'\n- Percentage float(4,1) NOT NULL DEFAULT '0.0'\n\nForeign keys:\n- CountryCode -> country.Code",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT T1.Name \nFROM country AS T1 \nJOIN (\n    SELECT CountryCode, COUNT(Language) as num_languages\n    FROM countrylanguage\n    GROUP BY CountryCode\n) AS T2 \nON T1.Code = T2.CountryCode\nORDER BY T2.num_languages DESC\nLIMIT 1",
+    "predicted_answer": [
+      [
+        "Canada"
+      ]
+    ],
+    "gold_sql": "SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "United States"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.4187,
+    "input_tokens": 337,
+    "output_tokens": 68
+  },
+  {
+    "id": "dev_000393",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "course_teach",
+    "question": "Show different hometown of teachers and the number of teachers from each hometown.",
+    "retrieved_schema": "Table: teacher\n\nColumns:\n- Hometown TEXT\n- Teacher_ID INT PRIMARY KEY\n- Age TEXT\n- Name TEXT\n\nTable: course_arrange\n\nColumns:\n- Teacher_ID INT PRIMARY KEY\n- Course_ID INT PRIMARY KEY\n- Grade INT PRIMARY KEY\n\nForeign keys:\n- Teacher_ID -> teacher.Teacher_ID\n- Course_ID -> course.Course_ID\n\nTable: course\n\nColumns:\n- Course TEXT\n- Course_ID INT PRIMARY KEY\n- Staring_Date TEXT",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT Hometown, COUNT(Teacher_ID) \nFROM teacher \nGROUP BY Hometown;",
+    "predicted_answer": [
+      [
+        "Blackrod Urban District",
+        1
+      ],
+      [
+        "Bolton County Borough",
+        1
+      ],
+      [
+        "Farnworth Municipal Borough",
+        1
+      ],
+      [
+        "Horwich Urban District",
+        1
+      ],
+      [
+        "Kearsley Urban District",
+        1
+      ],
+      [
+        "Little Lever Urban District",
+        1
+      ],
+      [
+        "Turton Urban District",
+        1
+      ]
+    ],
+    "gold_sql": "SELECT Hometown ,  COUNT(*) FROM teacher GROUP BY Hometown",
+    "gold_answer": [
+      [
+        "Blackrod Urban District",
+        1
+      ],
+      [
+        "Bolton County Borough",
+        1
+      ],
+      [
+        "Farnworth Municipal Borough",
+        1
+      ],
+      [
+        "Horwich Urban District",
+        1
+      ],
+      [
+        "Kearsley Urban District",
+        1
+      ],
+      [
+        "Little Lever Urban District",
+        1
+      ],
+      [
+        "Turton Urban District",
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1849,
+    "input_tokens": 212,
+    "output_tokens": 23
+  },
+  {
+    "id": "dev_000142",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "car_1",
+    "question": "What model has the most different versions?",
+    "retrieved_schema": "Table: model_list\n\nColumns:\n- Model TEXT\n- ModelId INTEGER PRIMARY KEY\n- Maker INTEGER\n\nForeign keys:\n- Maker -> car_makers.Id\n\nTable: car_names\n\nColumns:\n- Model TEXT\n- Make TEXT\n- MakeId INTEGER PRIMARY KEY\n\nForeign keys:\n- Model -> model_list.Model\n\nTable: car_makers\n\nColumns:\n- Country TEXT\n- FullName TEXT\n- Id INTEGER PRIMARY KEY\n- Maker TEXT\n\nForeign keys:\n- Country -> countries.CountryId\n\nTable: cars_data\n\nColumns:\n- Accelerate REAL\n- Cylinders INTEGER\n- Edispl REAL\n- Horsepower TEXT\n- Id INTEGER PRIMARY KEY\n- MPG TEXT\n- Weight INTEGER\n- Year INTEGER\n\nForeign keys:\n- Id -> car_names.MakeId\n\nTable: continents\n\nColumns:\n- ContId INTEGER PRIMARY KEY\n- Continent TEXT",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT Model, COUNT(DISTINCT Make) as num_versions\nFROM car_names\nGROUP BY Model\nORDER BY num_versions DESC\nLIMIT 1",
+    "predicted_answer": [
+      [
+        "ford",
+        37
+      ]
+    ],
+    "gold_sql": "SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) DESC LIMIT 1;",
+    "gold_answer": [
+      [
+        "ford"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 0.3124,
+    "input_tokens": 285,
+    "output_tokens": 36
+  },
+  {
+    "id": "dev_000093",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "car_1",
+    "question": "How many models does each car maker produce? List maker full name, id and the number.",
+    "retrieved_schema": "Table: car_makers\n\nColumns:\n- Id INTEGER PRIMARY KEY\n- Maker TEXT\n- FullName TEXT\n- Country TEXT\n\nForeign keys:\n- Country -> countries.CountryId\n\nTable: model_list\n\nColumns:\n- Maker INTEGER\n- Model TEXT\n- ModelId INTEGER PRIMARY KEY\n\nForeign keys:\n- Maker -> car_makers.Id\n\nTable: car_names\n\nColumns:\n- Make TEXT\n- Model TEXT\n- MakeId INTEGER PRIMARY KEY\n\nForeign keys:\n- Model -> model_list.Model\n\nTable: cars_data\n\nColumns:\n- Id INTEGER PRIMARY KEY\n- Accelerate REAL\n- Cylinders INTEGER\n- Edispl REAL\n- Horsepower TEXT\n- MPG TEXT\n- Weight INTEGER\n- Year INTEGER\n\nForeign keys:\n- Id -> car_names.MakeId\n\nTable: countries\n\nColumns:\n- CountryId INTEGER PRIMARY KEY\n- CountryName TEXT\n- Continent INTEGER\n\nForeign keys:\n- Continent -> continents.ContId",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT T1.FullName, T1.Id, COUNT(T2.ModelId) \nFROM car_makers T1 \nLEFT JOIN model_list T2 \nON T1.Id = T2.Maker \nGROUP BY T1.FullName, T1.Id",
+    "predicted_answer": [
+      [
+        "American Motor Company",
+        1,
+        1
+      ],
+      [
+        "Volkswagen",
+        2,
+        2
+      ],
+      [
+        "BMW",
+        3,
+        1
+      ],
+      [
+        "General Motors",
+        4,
+        5
+      ],
+      [
+        "Ford Motor Company",
+        5,
+        3
+      ],
+      [
+        "Chrysler",
+        6,
+        4
+      ],
+      [
+        "Citroen",
+        7,
+        1
+      ],
+      [
+        "Nissan Motors",
+        8,
+        2
+      ],
+      [
+        "Fiat",
+        9,
+        1
+      ],
+      [
+        "Honda",
+        11,
+        1
+      ],
+      [
+        "Mazda",
+        12,
+        1
+      ],
+      [
+        "Daimler Benz",
+        13,
+        2
+      ],
+      [
+        "Opel",
+        14,
+        1
+      ],
+      [
+        "Peugeaut",
+        15,
+        1
+      ],
+      [
+        "Renault",
+        16,
+        1
+      ],
+      [
+        "Saab",
+        17,
+        1
+      ],
+      [
+        "Subaru",
+        18,
+        1
+      ],
+      [
+        "Toyota",
+        19,
+        2
+      ],
+      [
+        "Triumph",
+        20,
+        1
+      ],
+      [
+        "Volvo",
+        21,
+        1
+      ],
+      [
+        "Kia Motors",
+        22,
+        1
+      ],
+      [
+        "Hyundai",
+        23,
+        1
+      ]
+    ],
+    "gold_sql": "SELECT T1.FullName ,  T1.Id ,  count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id;",
+    "gold_answer": [
+      [
+        "American Motor Company",
+        1,
+        1
+      ],
+      [
+        "Volkswagen",
+        2,
+        2
+      ],
+      [
+        "BMW",
+        3,
+        1
+      ],
+      [
+        "General Motors",
+        4,
+        5
+      ],
+      [
+        "Ford Motor Company",
+        5,
+        3
+      ],
+      [
+        "Chrysler",
+        6,
+        4
+      ],
+      [
+        "Citroen",
+        7,
+        1
+      ],
+      [
+        "Nissan Motors",
+        8,
+        2
+      ],
+      [
+        "Fiat",
+        9,
+        1
+      ],
+      [
+        "Honda",
+        11,
+        1
+      ],
+      [
+        "Mazda",
+        12,
+        1
+      ],
+      [
+        "Daimler Benz",
+        13,
+        2
+      ],
+      [
+        "Opel",
+        14,
+        1
+      ],
+      [
+        "Peugeaut",
+        15,
+        1
+      ],
+      [
+        "Renault",
+        16,
+        1
+      ],
+      [
+        "Saab",
+        17,
+        1
+      ],
+      [
+        "Subaru",
+        18,
+        1
+      ],
+      [
+        "Toyota",
+        19,
+        2
+      ],
+      [
+        "Triumph",
+        20,
+        1
+      ],
+      [
+        "Volvo",
+        21,
+        1
+      ],
+      [
+        "Kia Motors",
+        22,
+        1
+      ],
+      [
+        "Hyundai",
+        23,
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4218,
+    "input_tokens": 311,
+    "output_tokens": 55
+  },
+  {
+    "id": "dev_000466",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "wta_1",
+    "question": "What is the name of the winner with the most rank points who participated in the Australian Open tournament?",
+    "retrieved_schema": "Table: matches\n\nColumns:\n- winner_rank_points INT\n- loser_rank_points INT\n- winner_name TEXT\n- winner_rank INT\n- loser_name TEXT\n- loser_rank INT\n- tourney_name TEXT\n- winner_age FLOAT\n- winner_id INT\n- loser_id INT\n\nForeign keys:\n- winner_id -> players.player_id\n- loser_id -> players.player_id\n\nTable: players\n\nColumns:\n- first_name TEXT\n- last_name TEXT\n- birth_date DATE\n- country_code TEXT\n- hand TEXT\n- player_id INT PRIMARY KEY\n\nTable: rankings\n\nColumns:\n- ranking_points INT\n- ranking INT\n- ranking_date DATE\n- player_id INT\n- tours INT\n\nForeign keys:\n- player_id -> players.player_id",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT winner_name FROM matches WHERE tourney_name = 'Australian Open' ORDER BY winner_rank_points DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "Serena Williams"
+      ]
+    ],
+    "gold_sql": "SELECT winner_name FROM matches WHERE tourney_name  =  'Australian Open' ORDER BY winner_rank_points DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "Serena Williams"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.2181,
+    "input_tokens": 276,
+    "output_tokens": 24
+  },
+  {
+    "id": "dev_000592",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "tvshow",
+    "question": "What is the name and directors of all the cartoons that are ordered by air date?",
+    "retrieved_schema": "Table: Cartoon\n\nColumns:\n- Original_air_date TEXT\n- Channel TEXT\n- Directed_by TEXT\n- Production_code REAL\n- Title TEXT\n- Written_by TEXT\n- id REAL PRIMARY KEY\n\nForeign keys:\n- Channel -> TV_Channel.id\n\nTable: TV_series\n\nColumns:\n- Air_Date TEXT\n- Viewers_m TEXT\n- 18_49_Rating_Share TEXT\n- Channel TEXT\n- Episode TEXT\n- Rating TEXT\n- Share REAL\n- Weekly_Rank REAL\n- id REAL PRIMARY KEY\n\nForeign keys:\n- Channel -> TV_Channel.id\n\nTable: TV_Channel\n\nColumns:\n- series_name TEXT\n- Content TEXT\n- Country TEXT\n- Hight_definition_TV TEXT\n- Language TEXT\n- Package_Option TEXT\n- Pay_per_view_PPV TEXT\n- Pixel_aspect_ratio_PAR TEXT\n- id TEXT PRIMARY KEY",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT Title, Directed_by FROM Cartoon ORDER BY Original_air_date",
+    "predicted_answer": [
+      [
+        "Invasion of the Secret Santas!",
+        "Brandon Vietti"
+      ],
+      [
+        "Evil Under the Sea!",
+        "Michael Chang"
+      ],
+      [
+        "Return of the Fearsome Fangs!",
+        "Brandon Vietti"
+      ],
+      [
+        "Deep Cover for Batman!",
+        "Michael Chang"
+      ],
+      [
+        "The Eyes of Despero!",
+        "Ben Jones"
+      ],
+      [
+        "Dawn of the Dead Man!",
+        "Ben Jones"
+      ],
+      [
+        "Day of the Dark Knight!",
+        "Ben Jones"
+      ],
+      [
+        "Fall of the Blue Beetle!",
+        "Brandon Vietti"
+      ],
+      [
+        "Journey to the Center of the Bat!",
+        "Michael Chang"
+      ],
+      [
+        "Enter the Outsiders!",
+        "Michael Chang"
+      ],
+      [
+        "The Rise of the Blue Beetle!",
+        "Ben Jones"
+      ],
+      [
+        "Terror on Dinosaur Island!",
+        "Brandon Vietti"
+      ]
+    ],
+    "gold_sql": "SELECT title ,  Directed_by FROM Cartoon ORDER BY Original_air_date",
+    "gold_answer": [
+      [
+        "Invasion of the Secret Santas!",
+        "Brandon Vietti"
+      ],
+      [
+        "Evil Under the Sea!",
+        "Michael Chang"
+      ],
+      [
+        "Return of the Fearsome Fangs!",
+        "Brandon Vietti"
+      ],
+      [
+        "Deep Cover for Batman!",
+        "Michael Chang"
+      ],
+      [
+        "The Eyes of Despero!",
+        "Ben Jones"
+      ],
+      [
+        "Dawn of the Dead Man!",
+        "Ben Jones"
+      ],
+      [
+        "Day of the Dark Knight!",
+        "Ben Jones"
+      ],
+      [
+        "Fall of the Blue Beetle!",
+        "Brandon Vietti"
+      ],
+      [
+        "Journey to the Center of the Bat!",
+        "Michael Chang"
+      ],
+      [
+        "Enter the Outsiders!",
+        "Michael Chang"
+      ],
+      [
+        "The Rise of the Blue Beetle!",
+        "Ben Jones"
+      ],
+      [
+        "Terror on Dinosaur Island!",
+        "Brandon Vietti"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.1934,
+    "input_tokens": 294,
+    "output_tokens": 13
+  },
+  {
+    "id": "dev_000163",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "car_1",
+    "question": "How many cars has over 6 cylinders?",
+    "retrieved_schema": "Table: cars_data\n\nColumns:\n- Cylinders INTEGER\n- Accelerate REAL\n- Edispl REAL\n- Horsepower TEXT\n- Id INTEGER PRIMARY KEY\n- MPG TEXT\n- Weight INTEGER\n- Year INTEGER\n\nForeign keys:\n- Id -> car_names.MakeId\n\nTable: car_makers\n\nColumns:\n- Country TEXT\n- FullName TEXT\n- Id INTEGER PRIMARY KEY\n- Maker TEXT\n\nForeign keys:\n- Country -> countries.CountryId\n\nTable: car_names\n\nColumns:\n- Make TEXT\n- MakeId INTEGER PRIMARY KEY\n- Model TEXT\n\nForeign keys:\n- Model -> model_list.Model\n\nTable: continents\n\nColumns:\n- ContId INTEGER PRIMARY KEY\n- Continent TEXT\n\nTable: countries\n\nColumns:\n- Continent INTEGER\n- CountryId INTEGER PRIMARY KEY\n- CountryName TEXT\n\nForeign keys:\n- Continent -> continents.ContId",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(Id) FROM cars_data WHERE Cylinders > 6",
+    "predicted_answer": [
+      [
+        108
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(*) FROM CARS_DATA WHERE Cylinders  >  6;",
+    "gold_answer": [
+      [
+        108
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3209,
+    "input_tokens": 285,
+    "output_tokens": 15
+  },
+  {
+    "id": "dev_000206",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "flight_2",
+    "question": "Count the number of flights into ATO.",
+    "retrieved_schema": "Table: flights\n\nColumns:\n- Airline INTEGER PRIMARY KEY\n- DestAirport TEXT\n- FlightNo INTEGER PRIMARY KEY\n- SourceAirport TEXT\n\nForeign keys:\n- DestAirport -> airports.AirportCode\n- SourceAirport -> airports.AirportCode\n\nTable: airports\n\nColumns:\n- Country TEXT\n- CountryAbbrev TEXT\n- AirportCode TEXT PRIMARY KEY\n- AirportName TEXT\n- City TEXT\n\nTable: airlines\n\nColumns:\n- Country TEXT\n- Abbreviation TEXT\n- Airline TEXT\n- uid INTEGER PRIMARY KEY",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT COUNT(*) FROM flights WHERE DestAirport = 'ATO'",
+    "predicted_answer": [
+      [
+        0
+      ]
+    ],
+    "gold_sql": "SELECT count(*) FROM FLIGHTS WHERE DestAirport  =  \"ATO\"",
+    "gold_answer": [
+      [
+        0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4007,
+    "input_tokens": 222,
+    "output_tokens": 13
+  },
+  {
+    "id": "dev_000928",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "dog_kennels",
+    "question": "Which professional did not operate any treatment on dogs? List the professional's id, role and email.",
+    "retrieved_schema": "Table: Treatments\n\nColumns:\n- professional_id INTEGER NOT NULL\n- treatment_id INTEGER PRIMARY KEY\n- cost_of_treatment DECIMAL(19,4)\n- dog_id INTEGER NOT NULL\n- date_of_treatment DATETIME\n- treatment_type_code VARCHAR(10) NOT NULL\n\nForeign keys:\n- dog_id -> Dogs.dog_id\n- professional_id -> Professionals.professional_id\n- treatment_type_code -> Treatment_Types.treatment_type_code\n\nTable: Professionals\n\nColumns:\n- professional_id INTEGER PRIMARY KEY\n- email_address VARCHAR(50)\n- role_code VARCHAR(10) NOT NULL\n- first_name VARCHAR(50)\n- last_name VARCHAR(50)\n- state VARCHAR(20)\n- street VARCHAR(50)\n- cell_number VARCHAR(20)\n\nTable: Dogs\n\nColumns:\n- dog_id INTEGER PRIMARY KEY\n- owner_id INTEGER NOT NULL\n- size_code VARCHAR(10) NOT NULL\n- abandoned_yn VARCHAR(1)\n- age VARCHAR(20)\n- breed_code VARCHAR(10) NOT NULL\n- date_adopted DATETIME\n- date_arrived DATETIME\n\nForeign keys:\n- owner_id -> Owners.owner_id\n- owner_id -> Owners.owner_id\n- size_code -> Sizes.size_code\n- breed_code -> Breeds.breed_code\n\nTable: Treatment_Types\n\nColumns:\n- treatment_type_description VARCHAR(80)\n- treatment_type_code VARCHAR(10) PRIMARY KEY\n\nTable: Owners\n\nColumns:\n- email_address VARCHAR(50)\n- owner_id INTEGER PRIMARY KEY\n- first_name VARCHAR(50)\n- last_name VARCHAR(50)\n- state VARCHAR(20)\n- street VARCHAR(50)\n- cell_number VARCHAR(20)\n- city VARCHAR(50)",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT professional_id, role_code, email_address \nFROM Professionals \nWHERE professional_id NOT IN (SELECT professional_id FROM Treatments);",
+    "predicted_answer": [
+      [
+        1,
+        "Employee",
+        "deanna.schuster@example.com"
+      ],
+      [
+        2,
+        "Employee",
+        "lucile.shanahan@example.org"
+      ],
+      [
+        3,
+        "Employee",
+        "uboehm@example.org"
+      ],
+      [
+        11,
+        "Employee",
+        "west.eula@example.net"
+      ],
+      [
+        12,
+        "Veterenarian",
+        "marquardt.furman@example.org"
+      ],
+      [
+        13,
+        "Veterenarian",
+        "delphine29@example.com"
+      ],
+      [
+        15,
+        "Employee",
+        "jeichmann@example.com"
+      ]
+    ],
+    "gold_sql": "SELECT professional_id ,  role_code ,  email_address FROM Professionals EXCEPT SELECT T1.professional_id ,  T1.role_code ,  T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id",
+    "gold_answer": [
+      [
+        1,
+        "Employee",
+        "deanna.schuster@example.com"
+      ],
+      [
+        2,
+        "Employee",
+        "lucile.shanahan@example.org"
+      ],
+      [
+        3,
+        "Employee",
+        "uboehm@example.org"
+      ],
+      [
+        11,
+        "Employee",
+        "west.eula@example.net"
+      ],
+      [
+        12,
+        "Veterenarian",
+        "marquardt.furman@example.org"
+      ],
+      [
+        13,
+        "Veterenarian",
+        "delphine29@example.com"
+      ],
+      [
+        15,
+        "Employee",
+        "jeichmann@example.com"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4253,
+    "input_tokens": 469,
+    "output_tokens": 31
+  },
+  {
+    "id": "dev_000747",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "world_1",
+    "question": "Give the names of nations that speak both English and French.",
+    "retrieved_schema": "Table: city\n\nColumns:\n- Name char(35) NOT NULL DEFAULT ''\n- CountryCode char(3) NOT NULL DEFAULT ''\n- District char(20) NOT NULL DEFAULT ''\n- ID INTEGER PRIMARY KEY NOT NULL\n- Population INTEGER NOT NULL DEFAULT '0'\n\nForeign keys:\n- CountryCode -> country.Code\n\nTable: country\n\nColumns:\n- Name char(52) NOT NULL DEFAULT ''\n- Capital INTEGER DEFAULT NULL\n- Code char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- Code2 char(2) NOT NULL DEFAULT ''\n- Continent TEXT NOT NULL DEFAULT 'Asia'\n- GNP float(10,2) DEFAULT NULL\n- GNPOld float(10,2) DEFAULT NULL\n- GovernmentForm char(45) NOT NULL DEFAULT ''\n\nTable: countrylanguage\n\nColumns:\n- CountryCode char(3) PRIMARY KEY NOT NULL DEFAULT ''\n- IsOfficial TEXT NOT NULL DEFAULT 'F'\n- Language char(30) PRIMARY KEY NOT NULL DEFAULT ''\n- Percentage float(4,1) NOT NULL DEFAULT '0.0'\n\nForeign keys:\n- CountryCode -> country.Code",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT T1.Name \nFROM country AS T1 \nWHERE T1.Code IN (\n    SELECT T2.CountryCode \n    FROM countrylanguage AS T2 \n    WHERE T2.Language = 'English'\n) \nAND T1.Code IN (\n    SELECT T3.CountryCode \n    FROM countrylanguage AS T3 \n    WHERE T3.Language = 'French'\n)",
+    "predicted_answer": [
+      [
+        "Canada"
+      ],
+      [
+        "Monaco"
+      ],
+      [
+        "Seychelles"
+      ],
+      [
+        "United States"
+      ],
+      [
+        "Virgin Islands, U.S."
+      ],
+      [
+        "Vanuatu"
+      ]
+    ],
+    "gold_sql": "SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"French\"",
+    "gold_answer": [
+      [
+        "Canada"
+      ],
+      [
+        "Monaco"
+      ],
+      [
+        "Seychelles"
+      ],
+      [
+        "United States"
+      ],
+      [
+        "Vanuatu"
+      ],
+      [
+        "Virgin Islands, U.S."
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.4118,
+    "input_tokens": 335,
+    "output_tokens": 79
+  },
+  {
+    "id": "dev_000333",
+    "method": "baseline_2_direct_text_to_sql",
+    "db_id": "cre_Doc_Template_Mgt",
+    "question": "Show all template type codes with less than three templates.",
+    "retrieved_schema": "Table: Templates\n\nColumns:\n- Template_Type_Code CHAR(15) NOT NULL\n- Template_Details VARCHAR(255) NOT NULL\n- Template_ID INTEGER PRIMARY KEY NOT NULL\n- Date_Effective_From DATETIME\n- Date_Effective_To DATETIME\n- Version_Number INTEGER NOT NULL\n\nForeign keys:\n- Template_Type_Code -> Ref_Template_Types.Template_Type_Code\n\nTable: Ref_Template_Types\n\nColumns:\n- Template_Type_Code CHAR(15) PRIMARY KEY NOT NULL\n- Template_Type_Description VARCHAR(255) NOT NULL\n\nTable: Documents\n\nColumns:\n- Template_ID INTEGER\n- Document_Description VARCHAR(255)\n- Document_ID INTEGER PRIMARY KEY NOT NULL\n- Document_Name VARCHAR(255)\n- Other_Details VARCHAR(255)\n\nForeign keys:\n- Template_ID -> Templates.Template_ID\n\nTable: Paragraphs\n\nColumns:\n- Document_ID INTEGER NOT NULL\n- Other_Details VARCHAR(255)\n- Paragraph_ID INTEGER PRIMARY KEY NOT NULL\n- Paragraph_Text VARCHAR(255)\n\nForeign keys:\n- Document_ID -> Documents.Document_ID",
+    "top_k_tables": 5,
+    "top_k_columns": 8,
+    "predicted_sql": "SELECT Template_Type_Code \nFROM Templates \nGROUP BY Template_Type_Code \nHAVING COUNT(Template_ID) < 3;",
+    "predicted_answer": [
+      [
+        "CV"
+      ]
+    ],
+    "gold_sql": "SELECT template_type_code FROM Templates GROUP BY template_type_code HAVING count(*)  <  3",
+    "gold_answer": [
+      [
+        "CV"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 0.3044,
+    "input_tokens": 320,
+    "output_tokens": 30
+  }
+]

@@ -32,6 +32,13 @@ def safe_sum(values: list[Any]) -> int | None:
     return int(sum(numeric_values))
 
 
+def safe_average(values: list[Any]) -> float | None:
+    numeric_values = [value for value in values if isinstance(value, (int, float))]
+    if not numeric_values:
+        return None
+    return round(sum(numeric_values) / len(numeric_values), 4)
+
+
 def summarize_results(method: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
     total = len(rows)
     correct = sum(1 for row in rows if row.get("correct") is True)
@@ -45,6 +52,12 @@ def summarize_results(method: str, rows: list[dict[str, Any]]) -> dict[str, Any]
         for row in rows
         if row.get("correct") is not True
     )
+    schema_rows = [
+        row["schema_metrics"]
+        for row in rows
+        if isinstance(row.get("schema_metrics"), dict)
+        and not row["schema_metrics"].get("error")
+    ]
 
     return {
         "method": method,
@@ -54,6 +67,46 @@ def summarize_results(method: str, rows: list[dict[str, Any]]) -> dict[str, Any]
         "avg_latency_seconds": round(sum(latencies) / len(latencies), 4) if latencies else None,
         "total_input_tokens": safe_sum([row.get("input_tokens") for row in rows]),
         "total_output_tokens": safe_sum([row.get("output_tokens") for row in rows]),
+        "total_tool_calls": safe_sum([row.get("tool_calls") for row in rows]),
+        "avg_tool_calls": safe_average([row.get("tool_calls") for row in rows]),
+        "total_retrieval_calls": safe_sum(
+            [row.get("retrieval_calls") for row in rows]
+        ),
+        "avg_recursion_calls": safe_average(
+            [row.get("recursion_calls") for row in rows]
+        ),
+        "recursion_usage_rate": (
+            round(
+                sum(row.get("recursion_used") is True for row in rows) / total,
+                4,
+            )
+            if total
+            else None
+        ),
+        "avg_table_recall": safe_average(
+            [row.get("table_recall") for row in schema_rows]
+        ),
+        "avg_column_recall": safe_average(
+            [row.get("column_recall") for row in schema_rows]
+        ),
+        "strict_schema_recall_rate": (
+            round(
+                sum(row.get("strict_schema_recall") is True for row in schema_rows)
+                / len(schema_rows),
+                4,
+            )
+            if schema_rows
+            else None
+        ),
+        "avg_schema_precision": safe_average(
+            [row.get("schema_precision") for row in schema_rows]
+        ),
+        "avg_schema_f1": safe_average(
+            [row.get("schema_f1") for row in schema_rows]
+        ),
+        "avg_selected_columns": safe_average(
+            [row.get("selected_column_count") for row in schema_rows]
+        ),
         "error_counts": dict(errors),
     }
 
@@ -74,6 +127,8 @@ def compare_results(results_dir: str | Path = config.RESULTS_DIR) -> list[dict[s
                     "avg_latency_seconds": None,
                     "total_input_tokens": None,
                     "total_output_tokens": None,
+                    "total_tool_calls": None,
+                    "avg_tool_calls": None,
                     "error_counts": {"missing_result_file": 1},
                 }
             )
@@ -88,6 +143,40 @@ def compare_results(results_dir: str | Path = config.RESULTS_DIR) -> list[dict[s
     return summary
 
 
+def compare_result_files(paths: list[str | Path]) -> list[dict[str, Any]]:
+    summary = []
+    for raw_path in paths:
+        path = Path(raw_path)
+        if not path.exists():
+            summary.append(
+                {
+                    "method": path.stem,
+                    "total": 0,
+                    "correct": 0,
+                    "execution_accuracy": None,
+                    "avg_latency_seconds": None,
+                    "total_input_tokens": None,
+                    "total_output_tokens": None,
+                    "total_tool_calls": None,
+                    "avg_tool_calls": None,
+                    "error_counts": {"missing_result_file": 1},
+                }
+            )
+            continue
+
+        rows = read_json(path)
+        if not isinstance(rows, list):
+            raise ValueError(f"Expected result list in {path}")
+        method = rows[0].get("method") if rows else path.stem
+        ablation = rows[0].get("ablation_config") if rows else None
+        method_name = path.stem if ablation else str(method)
+        row = summarize_results(method_name, rows)
+        if ablation:
+            row["ablation_config"] = ablation
+        summary.append(row)
+    return summary
+
+
 def print_summary(summary: list[dict[str, Any]]) -> None:
     headers = [
         "method",
@@ -97,6 +186,17 @@ def print_summary(summary: list[dict[str, Any]]) -> None:
         "avg_latency_seconds",
         "total_input_tokens",
         "total_output_tokens",
+        "total_tool_calls",
+        "avg_tool_calls",
+        "total_retrieval_calls",
+        "avg_recursion_calls",
+        "recursion_usage_rate",
+        "avg_table_recall",
+        "avg_column_recall",
+        "strict_schema_recall_rate",
+        "avg_schema_precision",
+        "avg_schema_f1",
+        "avg_selected_columns",
     ]
     widths = {
         header: max(
@@ -120,12 +220,22 @@ def parse_args() -> argparse.Namespace:
         default=str(config.RESULTS_DIR / "summary_metrics.json"),
         help="Path for summary metrics JSON.",
     )
+    parser.add_argument(
+        "--result-files",
+        nargs="+",
+        default=None,
+        help="Specific result JSON files to compare. Overrides the default method list.",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    summary = compare_results(args.results_dir)
+    summary = (
+        compare_result_files(args.result_files)
+        if args.result_files
+        else compare_results(args.results_dir)
+    )
     write_json(args.output, summary)
     print_summary(summary)
 

@@ -1,0 +1,47 @@
+[
+  {
+    "method": "bird_ours_metadata_enrichment_probe_no_rlm_50",
+    "total": 50,
+    "correct": 31,
+    "execution_accuracy": 0.62,
+    "avg_latency_seconds": 2.4938,
+    "total_input_tokens": null,
+    "total_output_tokens": null,
+    "total_tool_calls": null,
+    "avg_tool_calls": null,
+    "error_counts": {
+      "none": 19
+    },
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": true,
+      "use_recursion": false,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  },
+  {
+    "method": "bird_ours_metadata_enrichment_probe_rlm_50",
+    "total": 50,
+    "correct": 29,
+    "execution_accuracy": 0.58,
+    "avg_latency_seconds": 3.2419,
+    "total_input_tokens": null,
+    "total_output_tokens": null,
+    "total_tool_calls": null,
+    "avg_tool_calls": null,
+    "error_counts": {
+      "none": 20,
+      "Max iterations (8) exceeded without FINAL()": 1
+    },
+    "ablation_config": {
+      "use_metadata": true,
+      "use_enrichment": true,
+      "use_probe_queries": true,
+      "use_recursion": true,
+      "use_workspace": false,
+      "prompt_version": "basic"
+    }
+  }
+]

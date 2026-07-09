@@ -1,0 +1,5 @@
+method                            | total | correct | execution_accuracy | avg_latency_seconds | total_input_tokens | total_output_tokens | total_tool_calls | avg_tool_calls
+----------------------------------+-------+---------+--------------------+---------------------+--------------------+---------------------+------------------+---------------
+baseline_1_direct_llm_schema      | 1     | 1       | 1.0                | 1.8182              | 314                | 64                  | None             | None          
+baseline_2_direct_text_to_sql     | 1     | 1       | 1.0                | 1.1978              | 297                | 58                  | None             | None          
+baseline_3_non_recursive_db_agent | 1     | 1       | 1.0                | 19.8875             | 1633               | 185                 | 3                | 3.0           

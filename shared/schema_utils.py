@@ -7,7 +7,12 @@ from pathlib import Path
 
 
 def get_database_path(database_dir: str | Path, db_id: str) -> Path:
-    return Path(database_dir) / db_id / f"{db_id}.sqlite"
+    base = Path(database_dir) / db_id / db_id
+    for suffix in (".sqlite", ".db"):
+        candidate = base.with_suffix(suffix)
+        if candidate.exists():
+            return candidate
+    return base.with_suffix(".sqlite")
 
 
 def list_tables(db_path: str | Path) -> list[str]:

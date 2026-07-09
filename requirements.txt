@@ -2,3 +2,11 @@ google-genai
 tqdm
 numpy
 pandas
+ipykernel
+nbconvert
+litellm
+RestrictedPython
+datasets
+pyarrow
+gdown
+sqlglot

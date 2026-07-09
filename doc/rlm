@@ -1,0 +1,1079 @@
+## 实验计划：面向大规模数据库和受限上下文的 Recursive Language Model Text-to-SQL 评估
+
+### 1. 研究动机
+
+现有 Text-to-SQL agent 在小型或中等规模数据库上通常表现不错，但当数据库 schema 很大、包含大量无关表和列，或者 schema 无法完整放入模型上下文时，性能会明显变得不稳定。
+
+在这种情况下，直接把完整 schema 塞进 prompt 并不现实；但如果只做简单 schema pruning，又可能把真正需要的表或列删掉。
+
+AutoLink 的实验设计给我们的启发是：评价一个大规模 Text-to-SQL 系统时，不能只看最终 SQL 的 Execution Accuracy，还应该看：
+
+* 是否找全了需要的表和列；
+* 召回的 schema 是否过多；
+* token 消耗是否可控；
+* 数据库规模变大时性能是否下降；
+* 上下文预算变小时系统是否仍然稳定。
+
+因此，我们的 RLM 不应该只被包装成“提高 Text-to-SQL 准确率”的方法，而应该被定义为：
+
+> **RLM 是一种面向大规模数据库和受限上下文场景的递归式上下文管理框架。**
+
+也就是说，我们的核心目标是证明：
+**当数据库 schema 变大、上下文预算变小、无关 schema 噪声变多时，RLM 是否比普通 agent 更稳定、更省 token、更不容易丢失关键信息。**
+
+---
+
+### 2. 核心研究问题
+
+#### RQ1：在上下文受限时，RLM 是否能提升 Text-to-SQL 的稳定性？
+
+我们测试在不同 context budget 下，RLM 是否比非递归方法保持更高的 Execution Accuracy 和 Schema Recall。
+
+#### RQ2：当数据库 schema 规模变大时，RLM 是否具有更好的可扩展性？
+
+我们测试随着表和列数量增加，RLM 的性能下降是否比 baseline 更慢。
+
+#### RQ3：RLM 是否能够用更少 token 保留更完整的 schema 信息？
+
+我们测试 RLM 在 schema recall、schema noise 和 token cost 之间是否有更好的 trade-off。
+
+#### RQ4：RLM 的哪些组件真正有用？
+
+我们通过消融实验测试 recursion depth、schema memory、retrieval、verification 和 reflection 等模块的作用。
+
+---
+
+### 3. 实验假设
+
+#### H1
+
+在小数据库或 full-context 设置下，RLM 不一定显著优于强 baseline。
+
+#### H2
+
+在上下文预算受限时，RLM 能保留更多相关 schema 信息，因此性能下降更慢。
+
+#### H3
+
+在大规模 schema 数据库中，RLM 的 schema strict recall rate 会高于 direct prompting 或 non-recursive retrieval agent。
+
+#### H4
+
+RLM 的主要贡献不是提升模型本身的 SQL 推理能力，而是递归式上下文控制能力，包括 schema 选择、压缩、更新和复用。
+
+#### H5
+
+如果递归没有补充到新的有效 schema 或证据，它可能只会增加 token、延迟和噪声。因此，后续实验必须区分“递归工具已启用”和“递归被实际调用且产生有效增量”。
+
+---
+
+### 3.1 前期实验结果
+
+本节记录新实验计划形成前已经完成的 BIRD Mini-Dev 实验。这些结果用于确定后续研究重点，不作为大 schema 或受限 context claim 的最终证据。
+
+#### 3.1.1 已完成的 500 条描述性实验
+
+共同设置：
+
+```text
+dataset = data/processed/bird_mini_dev_questions.json
+database_dir = data/databases
+limit = 500
+database = SQLite
+metric = execution accuracy
+```
+
+| 方法 | 正确数 | EX | 平均延迟 | 输入 tokens | 输出 tokens |
+|---|---:|---:|---:|---:|---:|
+| Direct Full-Schema Prompting | 254 / 500 | 0.508 | 3.6097s | 389309 | 34741 |
+| Schema Retrieval + SQL Generation | 255 / 500 | 0.510 | 3.6926s | 213378 | 33815 |
+| Non-recursive DB Agent | 246 / 500 | 0.492 | 28.1828s | 2330232 | 109152 |
+| Ours Basic No-RLM | 133 / 500 | 0.266 | 4.0151s | 未记录 | 未记录 |
+| Ours Metadata No-RLM | 255 / 500 | 0.510 | 4.9427s | 未记录 | 未记录 |
+| Ours Metadata + Enrichment No-RLM | 262 / 500 | 0.524 | 16.8055s | 未记录 | 未记录 |
+| Ours Metadata + Enrichment + Probe No-RLM | 268 / 500 | 0.536 | 16.9697s | 未记录 | 未记录 |
+| Ours Full Workspace | 255 / 500 | 0.510 | 17.7574s | 未记录 | 未记录 |
+
+这些结果支持以下观察：
+
+1. retrieval baseline 与 full-schema baseline 的 EX 基本相同，但输入 token 从 `389309` 降到 `213378`，减少约 `45.2%`；
+2. 普通 non-recursive agent 没有带来准确率收益，且延迟和 token 成本显著增加；
+3. 在当前 ours 流程中，metadata 是主要增益来源：Basic No-RLM 从 `0.266` 提升到 `0.510`；
+4. enrichment 和 probe 继续把 EX 提升到 `0.524` 和 `0.536`，但平均延迟约为 retrieval baseline 的 4.6 倍；
+5. full workspace 没有超过 retrieval baseline，说明增加工作区和上下文不等于提高准确率；
+6. 当前最佳单一 ours 变体是 Metadata + Enrichment + Probe No-RLM，EX 为 `0.536`。
+
+这里的 `bird_ours_basic_500` 实际使用 `--no-recursion --prompt-version basic`，不能作为 RLM 结果。
+
+#### 3.1.2 50 条严格 RLM/no-RLM 配对 pilot
+
+该实验固定相同数据前 50 条、模型、prompt family、metadata、enrichment 和 probe 设置，唯一设计变量是是否开放递归子问题工具。
+
+| 方法 | 正确数 | EX | 平均延迟 |
+|---|---:|---:|---:|
+| Metadata + Enrichment + Probe No-RLM | 31 / 50 | 0.620 | 2.4938s |
+| Metadata + Enrichment + Probe RLM | 29 / 50 | 0.580 | 3.2419s |
+
+逐题配对结果：
+
+| 配对类别 | 样本数 |
+|---|---:|
+| 两种方法都正确 | 29 |
+| 仅 no-RLM 正确 | 2 |
+| 仅 RLM 正确 | 0 |
+| 两种方法都错误 | 19 |
+
+在该 pilot 中，RLM 净减少 2 道正确题，EX 变化为 `-4.00` 个百分点，平均延迟增加约 `30.0%`。因此，当前结果不支持“RLM 在普通 BIRD 配置下直接提高准确率”的假设。
+
+这个结果仍不能否定 RLM 在受限 context、大 schema、高 schema noise 或低 initial top-k 场景中的作用，原因包括：
+
+* 样本量只有 50；
+* 旧结果没有完整记录模型、temperature、代码和数据指纹；
+* 当时只记录了 recursion 开关，没有记录递归是否实际调用；
+* 当时没有记录 token、schema recall 和递归补充了哪些表或列；
+* 普通 BIRD schema 不足以代表计划中的大规模上下文压力。
+
+#### 3.1.3 候选互补性
+
+在 Retrieval Baseline、Metadata + Enrichment、Metadata + Enrichment + Probe 三个 500 条候选之间：
+
+| 指标 | 结果 |
+|---|---:|
+| Retrieval Baseline correct | 255 / 500 |
+| Metadata + Enrichment correct | 262 / 500 |
+| Metadata + Enrichment + Probe correct | 268 / 500 |
+| 三种方法 oracle union upper bound | 318 / 500 = 0.636 |
+| 三种方法全部正确 | 203 / 500 = 0.406 |
+| Baseline 正确但 Probe 错误 | 40 |
+| Probe 正确但 Baseline 错误 | 53 |
+
+`0.636` 的 oracle union 上限说明候选 SQL 之间存在互补性，candidate verifier 或 ensemble 有工程提升空间。但它不能证明 RLM 有效，因此只作为附加实验，不作为 RLM 主 claim。
+
+#### 3.1.4 前期结果对后续计划的影响
+
+根据上述结果，后续实验作如下调整：
+
+1. 主问题从“RLM 是否提高普通 BIRD EX”调整为“RLM 是否在上下文压力下改善 EX、SRR 和 token trade-off”；
+2. 优先运行 Context Budget、Controlled Schema Expansion、Initial Retrieval Size 和 Recursive Depth 实验；
+3. 所有 RLM 实验同时报告 `recursion_enabled`、`recursion_used`、递归调用次数和增量 schema；
+4. 暂停继续扩展 non-recursive DB agent、metadata-only 和 full workspace；
+5. 先在 50 条 pilot 上确认机制和追踪指标，再决定是否运行昂贵的 500 条 RLM；
+6. 新结果必须带 manifest；没有 manifest 的历史结果只作为描述性先导实验，不能与新结果续跑混合。
+
+---
+
+### 4. 数据集设计
+
+实验数据集中不再使用 Spider 1.0。普通场景使用 BIRD Dev，大规模
+schema 场景使用 Spider 2.0-Lite 或自建 Large-Schema Benchmark。
+
+---
+
+#### 4.1 BIRD Dev
+
+BIRD 更接近真实数据库场景，数据库内容和 SQL 难度都更复杂，适合测试 scalable Text-to-SQL。
+
+推荐设置：
+
+* 使用 BIRD Dev；
+* 如果 budget 有限，可以抽样 300–500 个 examples；
+* 按 schema size 和 difficulty 分层抽样；
+* 指标包括 Execution Accuracy、Valid SQL Rate、Schema Recall、token cost。
+
+---
+
+#### 4.2 Spider 2.0-Lite 或自建 Large-Schema Benchmark
+
+Spider 2.0-Lite 更适合测试真实企业级数据库，因为它包含更大的 schema、更长的 metadata 和更复杂的数据库操作。
+
+如果 Spider 2.0-Lite 实现成本太高，可以先做一个可控的 large-schema benchmark：
+
+* 基于 Spider 或 BIRD 原始数据库；
+* 人工加入 distractor tables 和 distractor columns；
+* 控制 schema size 从 original 扩展到 2×、5×、10×。
+
+这个数据集对证明 RLM 的贡献最重要。
+
+---
+
+### 5. 对比方法
+
+实验中应该同时比较简单 baseline、agent baseline 和我们的 RLM 变体。
+
+---
+
+#### 5.1 基础 Baseline
+
+##### B1：Direct Full-Schema Prompting
+
+把完整数据库 schema 直接放进 prompt。
+
+作用：
+测试当 schema 能完全放入上下文时，直接 prompting 的表现。
+
+---
+
+##### B2：Direct Truncated-Schema Prompting
+
+只把 schema 的前一部分放入 prompt，直到达到 context budget。
+
+作用：
+测试最简单的上下文截断策略会造成什么问题。
+
+---
+
+##### B3：Embedding Retrieval + SQL Generation
+
+使用 embedding retrieval 选出 top-k 相关表和列，然后生成 SQL。
+
+作用：
+测试简单语义检索是否足够。
+
+---
+
+##### B4：BM25 / Keyword Retrieval + SQL Generation
+
+使用关键词匹配方式检索相关 schema。
+
+作用：
+提供一个便宜且非 LLM 的 retrieval baseline。
+
+---
+
+#### 5.2 Agent Baseline
+
+##### B5：Non-recursive Schema Agent
+
+agent 可以检查 schema、选择相关表和列，然后生成 SQL，但不能递归地更新 schema context。
+
+作用：
+隔离 recursion 本身是否有贡献。
+
+---
+
+##### B6：Reflection-only Agent
+
+agent 先生成 SQL，然后根据错误信息进行 reflection 和 correction，但它不递归管理 schema memory。
+
+作用：
+测试 RLM 是否不仅仅是普通 reflection。
+
+---
+
+##### B7：Existing Text-to-SQL Agent
+
+如果时间允许，可以选择一到两个开源 agent 作为对比，例如：
+
+* CHESS
+* RSL-SQL
+* MAC-SQL
+* Spider-Agent
+
+作用：
+把 RLM 放到已有 Text-to-SQL agent 系统中比较。
+
+---
+
+#### 5.3 我们的方法
+
+##### Ours-1：RLM-Schema
+
+RLM 只用于 schema exploration 阶段。
+
+流程：
+
+1. 理解用户问题；
+2. 初始检索相关 schema；
+3. 递归探索可能缺失的表和列；
+4. 压缩并维护 schema memory；
+5. 将最终 schema context 交给 SQL generator。
+
+这个版本最适合证明 RLM 的 schema/context management 贡献。
+
+---
+
+##### Ours-2：RLM-Loop
+
+RLM 作为完整递归 agent loop 使用。
+
+流程：
+
+1. 理解问题；
+2. 初始 schema retrieval；
+3. 生成 tentative schema plan；
+4. 探索缺失 schema；
+5. 压缩 schema memory；
+6. 生成 SQL；
+7. 执行并验证；
+8. 如果失败，递归回到 schema exploration 或 SQL correction。
+
+这个版本更接近完整 agent 系统。
+
+---
+
+##### Ours-3：RLM-Loop + SQL Correction
+
+在 RLM-Loop 基础上加入 execution-based SQL correction。
+
+这个版本可能最终 EX 最高，但要单独报告，因为它混合了 schema management 和 SQL correction 两个贡献。
+
+---
+
+### 6. 主要实验变量
+
+---
+
+#### 6.1 Context Budget
+
+测试不同上下文预算：
+
+* 4k tokens
+* 8k tokens
+* 16k tokens
+* 32k tokens
+* full available context
+
+核心问题是：
+**当上下文变小时，RLM 是否比 baseline 掉得更慢？**
+
+预期结果：
+
+* Direct full-schema prompting 在小 context 下会失败或严重下降；
+* retrieval-only 方法可能漏掉必要 schema；
+* RLM 应该能通过递归探索和 schema memory 保持更高的 schema recall 和 EX。
+
+---
+
+#### 6.2 Schema Size
+
+测试不同数据库规模：
+
+* small：少于 100 columns；
+* medium：100–500 columns；
+* large：500–1000 columns；
+* very large：1000 columns 以上；
+* extreme：3000 columns 以上，如果数据集支持。
+
+如果原始 benchmark 中大数据库不够，可以构造 schema expansion：
+
+* original schema；
+* 2× schema size；
+* 5× schema size；
+* 10× schema size。
+
+注意：
+distractor schema 不应该完全随机，而应该和问题语义有一定相似性。否则任务太简单，不能真正测试 schema noise。
+
+---
+
+#### 6.3 Initial Retrieval Size
+
+参考 AutoLink 的 initial top-n 实验，我们测试一开始给 RLM 多少 schema 信息。
+
+设置：
+
+* top-5 columns
+* top-10 columns
+* top-20 columns
+* top-50 columns
+* top-100 columns
+
+核心问题是：
+**当初始 retrieval 很少时，RLM 是否能通过后续递归探索补全缺失 schema？**
+
+预期结果：
+
+RLM 应该比 non-recursive retrieval 更稳，尤其是在 initial top-k 很小的时候。
+
+---
+
+#### 6.4 Recursive Depth
+
+测试递归深度的影响。
+
+设置：
+
+* depth 0：无递归；
+* depth 1：一次递归扩展；
+* depth 2：两次递归扩展；
+* depth 3：三次递归扩展。
+
+预期结果：
+
+depth 1 或 depth 2 可能已经足够。
+过深的 recursion 可能增加 token cost，并引入更多无关 schema。
+
+---
+
+#### 6.5 Max Agent Turns
+
+测试 agent 最大交互轮数。
+
+设置：
+
+* max turns = 2
+* max turns = 4
+* max turns = 6
+* max turns = 8
+* max turns = 10
+
+核心问题是：
+
+> 更多轮数是真的提升了效果，还是只是消耗了更多 token？
+
+预期结果：
+
+前几轮带来主要收益，后续轮数收益变小。
+
+---
+
+### 7. 评估指标
+
+---
+
+#### 7.1 SQL Generation 指标
+
+##### Execution Accuracy, EX
+
+生成 SQL 的执行结果是否和 gold SQL 一致。
+
+这是最终 SQL 质量的主要指标。
+
+---
+
+##### Valid SQL Rate
+
+生成的 SQL 是否可以成功执行，没有语法错误或 runtime error。
+
+---
+
+##### Exact Match
+
+生成 SQL 是否和 gold SQL 在结构上完全匹配。
+
+这个指标可以报告，但不是最核心，因为不同 SQL 可能有相同执行结果。
+
+---
+
+#### 7.2 Schema Linking 指标
+
+这些是 RLM 实验最重要的指标。
+
+---
+
+##### Table Recall
+
+gold SQL 中需要的所有表是否都被选入最终 schema context。
+
+---
+
+##### Column Recall
+
+gold SQL 中需要的所有列是否都被选入最终 schema context。
+
+---
+
+##### Strict Schema Recall Rate, SRR
+
+只有当一个 example 所有需要的 schema 元素都被召回时，才算成功。
+
+这个指标非常关键，因为 Text-to-SQL 中只要漏掉一个关键列，最终 SQL 就很可能失败。
+
+---
+
+##### Average Recalled Columns
+
+最终 schema context 中平均包含多少列。
+
+这个指标可以衡量方法是否过度召回。
+
+---
+
+##### Schema Precision
+
+被选中的 schema 中，有多少是真正需要的。
+
+---
+
+##### Schema F1
+
+综合考虑 schema recall 和 schema precision。
+
+---
+
+#### 7.3 上下文和效率指标
+
+##### Average Input Tokens
+
+每个 example 平均输入 token 数。
+
+---
+
+##### Average Output Tokens
+
+每个 example 平均输出 token 数。
+
+---
+
+##### Total Tokens
+
+输入和输出 token 总和。
+
+---
+
+##### Latency
+
+每个 query 的平均运行时间。
+
+---
+
+##### Number of Tool Calls / Retrieval Calls
+
+每个 example 需要多少次 schema exploration 或 retrieval。
+
+---
+
+##### Performance per Token
+
+例如：
+
+[
+\text{EX per 10K tokens} = \frac{\text{Execution Accuracy}}{\text{Average Tokens}/10000}
+]
+
+这个指标很重要，因为 RLM 的贡献可能不是单纯更高准确率，而是更高 token efficiency。
+
+---
+
+#### 7.4 Robustness 指标
+
+##### Accuracy Drop under Context Limit
+
+[
+\Delta EX = EX_{\text{full context}} - EX_{\text{limited context}}
+]
+
+如果 RLM 的下降更小，说明它对上下文限制更鲁棒。
+
+---
+
+##### Schema Recall Drop under Schema Expansion
+
+[
+\Delta SRR = SRR_{\text{original schema}} - SRR_{\text{10x schema}}
+]
+
+如果 RLM 的 SRR 下降更小，说明它对大 schema 更鲁棒。
+
+---
+
+### 8. 实验一：主对比实验
+
+#### 目的
+
+比较 RLM 和 baseline 在相同模型、相同 SQL generator 下的表现。
+
+#### 设置
+
+* 数据集：BIRD subset、Spider 2.0-Lite 或自建 Large-Schema Benchmark；
+* 所有方法使用相同 LLM；
+* SQL generation prompt 固定；
+* 只改变 schema selection / context management 方法。
+
+#### 对比方法
+
+* Direct full schema；
+* Direct truncated schema；
+* Embedding retrieval；
+* BM25 retrieval；
+* Non-recursive schema agent；
+* Reflection-only agent；
+* RLM-Schema；
+* RLM-Loop；
+* RLM-Loop + SQL Correction。
+
+#### 报告指标
+
+* EX；
+* Valid SQL Rate；
+* SRR；
+* Average selected columns；
+* Average tokens；
+* Latency。
+
+#### 预期结论
+
+在小 schema 上，RLM 可能和 baseline 差距不大；
+但在大 schema 或受限 context 下，RLM 应该表现出更好的稳定性。
+
+---
+
+### 9. 实验二：Context Budget Study
+
+#### 目的
+
+测试 RLM 是否真的适合上下文受限场景。
+
+#### 设置
+
+固定数据集和模型，改变 context budget：
+
+* 4k；
+* 8k；
+* 16k；
+* 32k；
+* full context。
+
+#### 需要画的图
+
+* EX vs context budget；
+* SRR vs context budget；
+* token cost vs context budget。
+
+#### 预期结果
+
+Direct full-schema prompting 在小 context 下会失败或严重下降；
+retrieval-only 方法可能因为 initial retrieval 不完整而漏掉必要 schema；
+RLM 应该通过递归更新 schema memory，保持更高 SRR 和 EX。
+
+这个实验应该是你们新方向中最重要的实验之一。
+
+---
+
+### 10. 实验三：Schema Scale Study
+
+#### 目的
+
+测试随着数据库 schema 变大，RLM 是否比 baseline 更稳定。
+
+---
+
+#### 设计 A：自然 schema size 分组
+
+按数据库列数分组：
+
+* fewer than 100 columns；
+* 100–500 columns；
+* 500–1000 columns；
+* 1000–3000 columns；
+* more than 3000 columns。
+
+---
+
+#### 设计 B：Controlled Schema Expansion
+
+从同一个原始数据库开始，逐步加入 distractor schema：
+
+* original；
+* 2×；
+* 5×；
+* 10×。
+
+这个设计更干净，因为 question difficulty 不变，只改变 schema noise 和 schema size。
+
+#### 报告指标
+
+* EX；
+* SRR；
+* Average tokens；
+* Schema precision；
+* Selected columns。
+
+#### 预期结果
+
+随着 schema size 增加，所有方法都会下降；
+但 RLM 的下降应该更慢。
+
+---
+
+### 11. 实验四：Schema Recall vs Token Trade-off
+
+#### 目的
+
+证明 RLM 是否在“找全 schema”和“控制 token”之间有更好的平衡。
+
+#### 设置
+
+比较不同方法在不同 token 或 selected columns 下的 SRR。
+
+方法包括：
+
+* embedding retrieval with different top-k；
+* BM25 retrieval with different top-k；
+* non-recursive agent；
+* RLM with different recursion depth；
+* RLM with different initial top-n。
+
+#### 需要画的图
+
+* x-axis：average selected columns 或 average tokens；
+* y-axis：SRR 或 EX。
+
+#### 预期结果
+
+RLM 应该能在相同 token budget 下达到更高 SRR，或者用更少 token 达到相近 SRR。
+
+这个实验非常重要。
+即使最终 EX 提升不明显，只要 RLM 有更好的 schema recall/token trade-off，也能形成明确贡献。
+
+---
+
+### 12. 实验五：消融实验
+
+#### 目的
+
+分析 RLM 中哪些模块真正有用。
+
+#### 消融版本
+
+##### Full RLM
+
+完整递归 schema exploration + schema memory update。
+
+---
+
+##### w/o Recursion
+
+只做一次 schema selection，不进行递归扩展。
+
+---
+
+##### w/o Schema Memory
+
+可以 retrieve schema，但不维护压缩后的 schema memory。
+
+---
+
+##### w/o Verification
+
+移除检查当前 schema 是否足够的步骤。
+
+---
+
+##### w/o Reflection
+
+移除根据失败结果反思缺失 schema 的步骤。
+
+---
+
+##### w/o Retrieval
+
+只能使用初始提供的 schema，不能后续 retrieval。
+
+---
+
+##### w/o Compression
+
+保留原始 retrieved schema，不进行压缩或结构化整理。
+
+#### 报告指标
+
+* EX；
+* SRR；
+* Average tokens；
+* Selected columns；
+* Main failure type。
+
+#### 预期结果
+
+如果 RLM 真正有效，那么移除 recursion、schema memory 或 verification 后，在大 schema 和受限 context 下应该下降明显。
+
+---
+
+### 13. 实验六：Recursive Depth 和 Max-Turn 分析
+
+#### 目的
+
+分析递归深度和交互轮数对性能的影响。
+
+#### 设置
+
+递归深度：
+
+* depth 0；
+* depth 1；
+* depth 2；
+* depth 3。
+
+最大轮数：
+
+* 2；
+* 4；
+* 6；
+* 8；
+* 10。
+
+#### 报告指标
+
+* EX；
+* SRR；
+* token cost；
+* latency。
+
+#### 预期结果
+
+depth 1 或 2 可能已经提供主要收益。
+更多递归可能只增加 token cost，不一定继续提升性能。
+
+这个实验可以避免别人质疑：
+
+> RLM 只是因为用了更多 token，所以结果更好。
+
+---
+
+### 14. 实验七：错误分析
+
+#### 目的
+
+分析 RLM 具体解决了哪些错误，以及哪些错误仍然无法解决。
+
+#### 设置
+
+手动分析 50–100 个失败案例。
+
+错误类型可以分为：
+
+1. Missing table；
+2. Missing column；
+3. Wrong join path；
+4. Wrong aggregation；
+5. Wrong filter condition；
+6. Wrong value grounding；
+7. SQL syntax error；
+8. Execution error；
+9. Over-retrieval of irrelevant schema；
+10. Context overflow or truncation；
+11. Schema 正确但 SQL reasoning 错误。
+
+#### 对比方法
+
+* direct prompting；
+* retrieval-only；
+* non-recursive agent；
+* RLM。
+
+#### 预期结果
+
+RLM 应该主要减少：
+
+* missing table；
+* missing column；
+* context overflow；
+* schema truncation。
+
+但它不一定能明显减少纯 SQL reasoning 错误。
+
+这个结果反而有价值，因为它能清楚说明：
+
+> RLM 的贡献是 context management，而不是通用 SQL reasoning。
+
+---
+
+### 15. 实验八：案例分析
+
+选择 3–5 个典型案例。
+
+---
+
+#### Case 1：RLM 通过递归找到了缺失表
+
+展示 initial retrieval 没有找到某个关键表，但 RLM 在后续递归探索中发现了它。
+
+---
+
+#### Case 2：RLM 在受限 context 下成功
+
+展示 direct full-schema prompting 因 schema 太长无法放入上下文，而 RLM 通过 schema memory 保留了关键 schema。
+
+---
+
+#### Case 3：RLM 失败，因为 schema 正确但 SQL reasoning 错误
+
+这个案例用来说明 RLM 的边界。
+
+---
+
+#### Case 4：RLM 过度探索，引入了无关 schema
+
+这个案例用来展示方法限制，并引出 future work。
+
+---
+
+### 16. 推荐结果表格
+
+---
+
+#### Table 1：Main Results
+
+| Method | Dataset | EX | Valid SQL Rate | SRR | Avg. Selected Columns | Avg. Tokens | Latency |
+| ------ | ------- | -- | -------------- | --- | --------------------- | ----------- | ------- |
+
+---
+
+#### Table 2：Context Budget Results
+
+| Method | 4k EX/SRR | 8k EX/SRR | 16k EX/SRR | 32k EX/SRR | Full EX/SRR |
+| ------ | --------- | --------- | ---------- | ---------- | ----------- |
+
+---
+
+#### Table 3：Schema Size Results
+
+| Method | Small EX/SRR | Medium EX/SRR | Large EX/SRR | Very Large EX/SRR | Extreme EX/SRR |
+| ------ | ------------ | ------------- | ------------ | ----------------- | -------------- |
+
+---
+
+#### Table 4：Ablation Results
+
+| Variant | EX | SRR | Avg. Tokens | Avg. Selected Columns | Main Failure Type |
+| ------- | -- | --- | ----------- | --------------------- | ----------------- |
+
+---
+
+### 17. 推荐图表
+
+#### Figure 1：EX vs Context Budget
+
+展示 RLM 是否在上下文减少时下降更慢。
+
+#### Figure 2：SRR vs Schema Size
+
+展示 RLM 是否在 schema 变大时更稳定。
+
+#### Figure 3：SRR vs Token Cost
+
+展示 RLM 是否有更好的 recall-cost trade-off。
+
+#### Figure 4：Error Type Distribution
+
+展示 RLM 实际减少了哪些错误。
+
+---
+
+### 18. 最终论文 claim
+
+不建议写：
+
+> RLM significantly improves Text-to-SQL accuracy in all settings.
+
+这个说法风险太高，因为你们目前实验已经发现准确率提升不明显。
+
+更建议写：
+
+> RLM improves scalable context management for Text-to-SQL. Although it may not significantly improve accuracy on small databases or full-context settings, it maintains higher schema recall, lower accuracy degradation, and better token efficiency under large-schema and limited-context conditions.
+
+中文可以写成：
+
+> RLM 提升的是 Text-to-SQL 在大规模 schema 和受限上下文条件下的上下文管理能力。虽然它在小数据库或完整上下文设置下不一定显著提高准确率，但在大 schema、低 context budget 和高 schema noise 场景中，RLM 能够保持更高的 schema recall、更低的准确率下降幅度，以及更好的 token efficiency。
+
+---
+
+### 19. 如果时间有限，最小实验版本
+
+如果时间不够，建议优先做下面 5 个实验：
+
+1. **主对比实验**
+   在 BIRD subset 和大规模 schema benchmark 上比较 RLM 与 baseline。
+
+2. **Context Budget 实验**
+   设置 4k、8k、16k、full context，观察性能下降。
+
+3. **Schema Expansion 实验**
+   设置 original、2×、5×、10× schema size。
+
+4. **消融实验**
+   至少比较 full RLM、w/o recursion、w/o memory、w/o verification。
+
+5. **错误分析**
+   手动分析 50 个失败案例，说明 RLM 主要解决 schema 丢失和上下文溢出问题。
+
+这 5 个实验已经足够支撑新的研究方向。
+
+---
+
+### 20. 实验可复现性与结果兼容规则
+
+从后续实验开始，每个 ours 结果文件必须同时生成同名
+`*.manifest.json`。manifest 至少记录模型、递归模型、temperature、递归深度、
+最大轮数、全部消融开关、dataset SHA-256、关键代码和 prompt SHA-256、git
+revision 以及运行时间。API key 不得写入 manifest。
+
+结果文件只允许在 manifest fingerprint 完全一致时续跑。如果模型、数据、
+prompt、关键代码或实验参数发生变化，必须使用新的结果文件，不能把新旧样本
+合并到同一个 JSON 中。
+
+每条 ours 结果除 EX 所需字段外，还必须记录：
+
+* input/output tokens；
+* database tool calls 和 retrieval calls；
+* inspected tables/columns；
+* recursion 是否实际发生以及 recursion call 数；
+* 子问题、子 SQL、子查询结果和错误；
+* termination reason 和完整 ablation config。
+
+`use_recursion=true` 只表示递归工具可用；只有 `recursion_used=true` 才表示
+该样本实际执行过递归。报告 RLM 结果时必须同时报告 recursion usage rate。
+
+递归深度统一定义为：
+
+* depth 0：不允许子调用；
+* depth 1：最多一层子调用；
+* depth 2：最多两层子调用；
+* depth 3：最多三层子调用。
+
+#### 历史结果使用规则
+
+1. 已完成的 500 条 baseline、metadata、enrichment、probe 和 workspace
+   结果可以作为描述性先导实验；
+2. 50 条严格 no-RLM/RLM 配对结果只作为 pilot；
+3. 没有 manifest 的结果不能与新结果续跑合并；
+4. 不同批次的 50 条和 500 条结果不能仅根据文件名前缀视为相同配置；
+5. 正式表格应使用固定 evaluator 重新执行保存的 predicted SQL 后生成；
+6. 当前 recursive subquestion agent 的结果不能直接支持 schema memory、
+   compression 或 context-budget claim，这些模块实现后必须作为新的方法版本
+   单独运行。
+
+#### 正式实验启动条件
+
+在运行新的 500 条实验前，先确认：
+
+* 50 条 pilot 的 manifest 完整；
+* no-RLM/RLM 只相差 recursion 开关；
+* recursion trace 能区分 enabled 和 used；
+* token、tool、schema exploration 指标不为空；
+* 同一配置重复运行的方差已经报告；
+* context budget 和 schema expansion 是真实受控变量，而不是仅修改 prompt。
+
+#### 当前实现状态：Bounded Schema Pilot
+
+当前代码已经实现第一版可运行的 RLM-Schema 基础：
+
+* `--use-schema-memory`：启用与完整 catalog 分离的有界 schema memory；
+* `--initial-top-k N`：按问题词面相关性初始化最多 N 个 columns；
+* `schema_memory.search(query, top_k)`：在推理过程中增量检索 columns；
+* `schema_memory.add_table/add_column`：显式扩展 memory；
+* 子问题返回后，将子 agent 检查到的 schema 合并回父 memory；
+* 结果记录 initial/recursive/root inspection 来源、memory events 和最终
+  selected tables/columns；
+* 使用 SQL AST 从 gold SQL 提取 gold tables/columns，并计算 Table Recall、
+  Column Recall、SRR、Schema Precision、Schema F1。
+
+该版本可以用于 Initial Retrieval Size 和 Recursive Depth 的 10/50 条 pilot。
+它还没有实现严格的全对话 context budget 和 controlled schema expansion，
+因此暂时不能运行对应的正式实验。
+
+推荐先运行不产生大规模成本的 10 条机制测试：
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_rlm_schema_suite.py `
+  --limit 10 `
+  --top-k 5 10 20 `
+  --depths 0 1 2 `
+  --model "<固定模型>" `
+  --temperature 0
+```
+
+确认 manifest、recursion usage、SRR 和 selected columns 正常后，再将
+`--limit` 提高到 50。旧结果不会被该脚本自动覆盖；续跑必须显式使用
+`--keep-existing`，且 manifest fingerprint 必须一致。

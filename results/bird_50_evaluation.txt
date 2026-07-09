@@ -1,0 +1,18 @@
+method                                        | total | correct | execution_accuracy | avg_latency_seconds | total_input_tokens | total_output_tokens | total_tool_calls | avg_tool_calls
+----------------------------------------------+-------+---------+--------------------+---------------------+--------------------+---------------------+------------------+---------------
+bird_ours_basic_50                            | 50    | 7       | 0.14               | 3.4222              | None               | None                | None             | None
+bird_ours_metadata_50                         | 50    | 28      | 0.56               | 2.5371              | None               | None                | None             | None
+bird_ours_metadata_enrichment_50              | 50    | 28      | 0.56               | 3.3892              | None               | None                | None             | None
+bird_ours_metadata_enrichment_probe_50        | 50    | 28      | 0.56               | 3.2011              | None               | None                | None             | None
+bird_ours_full_workspace_50                   | 50    | 28      | 0.56               | 3.1898              | None               | None                | None             | None
+bird_ours_metadata_enrichment_probe_no_rlm_50 | 50    | 31      | 0.62               | 2.4938              | None               | None                | None             | None
+bird_ours_metadata_enrichment_probe_rlm_50    | 50    | 29      | 0.58               | 3.2419              | None               | None                | None             | None
+
+Strict paired RLM ablation
+--------------------------
+paired examples : 50
+both correct    : 29
+no-RLM only     : 2
+RLM only        : 0
+both wrong      : 19
+RLM net gain    : -2 examples (-4.00%)
