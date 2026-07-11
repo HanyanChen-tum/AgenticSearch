@@ -1,0 +1,7 @@
+litellm>=1.40
+python-dotenv
+tqdm
+numpy
+pandas
+sentence-transformers
+RestrictedPython
