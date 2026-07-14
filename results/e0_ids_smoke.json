@@ -1,0 +1,89 @@
+[
+  {
+    "id": "bird_1471",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
+    "difficulty": "simple",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.NotFoundError: AzureException NotFoundError - The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.",
+    "latency_seconds": 1.1371,
+    "llm_calls": 1,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "reasoning_tokens": 0,
+    "total_tokens": 0,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 1,
+    "reasoning_usage_missing_calls": 1,
+    "termination": "NotFoundError",
+    "run_id": "20260713T050650Z-2a1fef61",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1472",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "In 2012, who had the least consumption in LAM?",
+    "difficulty": "moderate",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+    "gold_answer": [
+      [
+        47273
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.NotFoundError: AzureException NotFoundError - The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.",
+    "latency_seconds": 0.6717,
+    "llm_calls": 1,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "reasoning_tokens": 0,
+    "total_tokens": 0,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 1,
+    "reasoning_usage_missing_calls": 1,
+    "termination": "NotFoundError",
+    "run_id": "20260713T050650Z-2a1fef61",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1480",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the gas consumption peak month for SME customers in 2013?",
+    "difficulty": "moderate",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT SUBSTR(T2.Date, 5, 2) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME' GROUP BY SUBSTR(T2.Date, 5, 2) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "04"
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.NotFoundError: AzureException NotFoundError - The API deployment for this resource does not exist. If you created the deployment within the last 5 minutes, please wait a moment and try again.",
+    "latency_seconds": 0.7574,
+    "llm_calls": 1,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "reasoning_tokens": 0,
+    "total_tokens": 0,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 1,
+    "reasoning_usage_missing_calls": 1,
+    "termination": "NotFoundError",
+    "run_id": "20260713T050650Z-2a1fef61",
+    "trace_schema_version": 3
+  }
+]

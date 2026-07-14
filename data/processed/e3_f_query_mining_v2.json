@@ -1,0 +1,1741 @@
+{
+  "version": "train-mined-v2",
+  "source": {
+    "split": "bird-train",
+    "pool_path": "train_pool.json",
+    "pool_sha256": "80c0326216d775eff04ae46d5656a452d741d09993d93d527b02848451ee443f",
+    "builder_path": "scripts/build_e3_f_query_mining.py",
+    "builder_sha256": "16ea05c046c15c80c9b2ba83495dc3d31e8f80cc3b0861ffe9f105a5c81615b5",
+    "contains_eval_questions": false,
+    "contains_eval_sql": false
+  },
+  "build_config": {
+    "parser": "sqlglot-30.12.0",
+    "dialect": "sqlite",
+    "method": "independent-high-precision-plan-slot-rules",
+    "validation_split": "5-fold database-level sha256 cross-validation",
+    "min_rule_support": 8,
+    "min_rule_precision": 0.92,
+    "min_rule_lift": 1.1,
+    "min_rule_database_support": 3,
+    "min_validation_precision": 0.95,
+    "min_validation_predictions": 50,
+    "min_fold_precision": 0.9,
+    "min_fold_predictions": 5,
+    "max_rules_per_slot": 400,
+    "stores_raw_sql": false,
+    "stores_train_examples": false,
+    "runtime_abstention": true
+  },
+  "train_example_count": 9428,
+  "parsed_sql_count": 9428,
+  "parse_failure_count": 0,
+  "build_example_count": 9428,
+  "validation_example_count": 9428,
+  "enabled_slot_count": 0,
+  "rule_count": 0,
+  "slots": {
+    "aggregate_AVG": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 35,
+        "coverage": 0.003712,
+        "correct": 31,
+        "precision": 0.885714,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 2,
+            "coverage": 0.001462,
+            "correct": 2,
+            "precision": 1.0,
+            "enabled": true
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 8,
+            "coverage": 0.004522,
+            "correct": 7,
+            "precision": 0.875,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 9,
+            "coverage": 0.003888,
+            "correct": 8,
+            "precision": 0.888889,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 8,
+            "coverage": 0.004022,
+            "correct": 7,
+            "precision": 0.875,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 8,
+            "coverage": 0.004026,
+            "correct": 7,
+            "precision": 0.875,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9120,
+        "present": 308
+      },
+      "rules": []
+    },
+    "aggregate_COUNT": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 699,
+        "coverage": 0.074141,
+        "correct": 599,
+        "precision": 0.856938,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 96,
+            "coverage": 0.070175,
+            "correct": 84,
+            "precision": 0.875,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 142,
+            "coverage": 0.080271,
+            "correct": 127,
+            "precision": 0.894366,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 149,
+            "coverage": 0.064363,
+            "correct": 135,
+            "precision": 0.90604,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 173,
+            "coverage": 0.086978,
+            "correct": 139,
+            "precision": 0.803468,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 139,
+            "coverage": 0.069955,
+            "correct": 114,
+            "precision": 0.820144,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 6196,
+        "present": 3232
+      },
+      "rules": []
+    },
+    "aggregate_MAX": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9195,
+        "present": 233
+      },
+      "rules": []
+    },
+    "aggregate_MIN": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9342,
+        "present": 86
+      },
+      "rules": []
+    },
+    "aggregate_SUM": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 59,
+        "coverage": 0.006258,
+        "correct": 43,
+        "precision": 0.728814,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 7,
+            "coverage": 0.005117,
+            "correct": 4,
+            "precision": 0.571429,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 4,
+            "coverage": 0.002261,
+            "correct": 4,
+            "precision": 1.0,
+            "enabled": true
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 25,
+            "coverage": 0.010799,
+            "correct": 17,
+            "precision": 0.68,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 15,
+            "coverage": 0.007541,
+            "correct": 10,
+            "precision": 0.666667,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 8,
+            "coverage": 0.004026,
+            "correct": 8,
+            "precision": 1.0,
+            "enabled": true
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 8225,
+        "present": 1203
+      },
+      "rules": []
+    },
+    "conditional": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 1,
+        "coverage": 0.000106,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 1,
+            "coverage": 0.000565,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 8652,
+        "present": 776
+      },
+      "rules": []
+    },
+    "cte": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9428
+      },
+      "rules": []
+    },
+    "distinct": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 8653,
+        "present": 775
+      },
+      "rules": []
+    },
+    "group_by": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 22,
+        "coverage": 0.002333,
+        "correct": 15,
+        "precision": 0.681818,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 2,
+            "coverage": 0.001462,
+            "correct": 1,
+            "precision": 0.5,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 5,
+            "coverage": 0.002514,
+            "correct": 2,
+            "precision": 0.4,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 15,
+            "coverage": 0.007549,
+            "correct": 12,
+            "precision": 0.8,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 8419,
+        "present": 1009
+      },
+      "rules": []
+    },
+    "having": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9289,
+        "present": 139
+      },
+      "rules": []
+    },
+    "join_count": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 313,
+        "coverage": 0.033199,
+        "correct": 191,
+        "precision": 0.610224,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 15,
+            "coverage": 0.010965,
+            "correct": 9,
+            "precision": 0.6,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 76,
+            "coverage": 0.042962,
+            "correct": 35,
+            "precision": 0.460526,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 87,
+            "coverage": 0.037581,
+            "correct": 55,
+            "precision": 0.632184,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 30,
+            "coverage": 0.015083,
+            "correct": 20,
+            "precision": 0.666667,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 105,
+            "coverage": 0.052843,
+            "correct": 72,
+            "precision": 0.685714,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "0": 2216,
+        "1": 5300,
+        "2+": 1912
+      },
+      "rules": []
+    },
+    "limit": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 621,
+        "coverage": 0.065868,
+        "correct": 552,
+        "precision": 0.888889,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 100,
+            "coverage": 0.073099,
+            "correct": 91,
+            "precision": 0.91,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 107,
+            "coverage": 0.060486,
+            "correct": 93,
+            "precision": 0.869159,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 162,
+            "coverage": 0.069978,
+            "correct": 147,
+            "precision": 0.907407,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 123,
+            "coverage": 0.06184,
+            "correct": 111,
+            "precision": 0.902439,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 129,
+            "coverage": 0.064922,
+            "correct": 110,
+            "precision": 0.852713,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 7626,
+        "present": 1802
+      },
+      "rules": []
+    },
+    "order_by": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 576,
+        "coverage": 0.061095,
+        "correct": 503,
+        "precision": 0.873264,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 92,
+            "coverage": 0.067251,
+            "correct": 83,
+            "precision": 0.902174,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 97,
+            "coverage": 0.054833,
+            "correct": 82,
+            "precision": 0.845361,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 150,
+            "coverage": 0.064795,
+            "correct": 135,
+            "precision": 0.9,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 119,
+            "coverage": 0.059829,
+            "correct": 104,
+            "precision": 0.87395,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 118,
+            "coverage": 0.059386,
+            "correct": 99,
+            "precision": 0.838983,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 7711,
+        "present": 1717
+      },
+      "rules": []
+    },
+    "order_direction": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 384,
+        "coverage": 0.04073,
+        "correct": 336,
+        "precision": 0.875,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 54,
+            "coverage": 0.039474,
+            "correct": 50,
+            "precision": 0.925926,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 60,
+            "coverage": 0.033917,
+            "correct": 51,
+            "precision": 0.85,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 135,
+            "coverage": 0.058315,
+            "correct": 117,
+            "precision": 0.866667,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 95,
+            "coverage": 0.047763,
+            "correct": 82,
+            "precision": 0.863158,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 40,
+            "coverage": 0.020131,
+            "correct": 36,
+            "precision": 0.9,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "ASC": 289,
+        "DESC": 1413,
+        "abstain": 7726
+      },
+      "rules": []
+    },
+    "output_count": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 3853,
+        "coverage": 0.408676,
+        "correct": 3491,
+        "precision": 0.906047,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 516,
+            "coverage": 0.377193,
+            "correct": 481,
+            "precision": 0.932171,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 746,
+            "coverage": 0.421707,
+            "correct": 664,
+            "precision": 0.89008,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 1002,
+            "coverage": 0.432829,
+            "correct": 899,
+            "precision": 0.897206,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 791,
+            "coverage": 0.397687,
+            "correct": 733,
+            "precision": 0.926675,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 798,
+            "coverage": 0.40161,
+            "correct": 714,
+            "precision": 0.894737,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "1": 7825,
+        "2+": 1603
+      },
+      "rules": []
+    },
+    "predicate_BETWEEN": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 25,
+        "coverage": 0.002652,
+        "correct": 18,
+        "precision": 0.72,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 3,
+            "coverage": 0.002193,
+            "correct": 3,
+            "precision": 1.0,
+            "enabled": true
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 8,
+            "coverage": 0.004522,
+            "correct": 7,
+            "precision": 0.875,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 7,
+            "coverage": 0.003024,
+            "correct": 2,
+            "precision": 0.285714,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 4,
+            "coverage": 0.002011,
+            "correct": 3,
+            "precision": 0.75,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 3,
+            "coverage": 0.00151,
+            "correct": 3,
+            "precision": 1.0,
+            "enabled": true
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9132,
+        "present": 296
+      },
+      "rules": []
+    },
+    "predicate_EQ": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 627,
+        "present": 8801
+      },
+      "rules": []
+    },
+    "predicate_GT": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 249,
+        "coverage": 0.026411,
+        "correct": 231,
+        "precision": 0.927711,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 24,
+            "coverage": 0.017544,
+            "correct": 23,
+            "precision": 0.958333,
+            "enabled": true
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 52,
+            "coverage": 0.029395,
+            "correct": 48,
+            "precision": 0.923077,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 70,
+            "coverage": 0.030238,
+            "correct": 64,
+            "precision": 0.914286,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 60,
+            "coverage": 0.030166,
+            "correct": 55,
+            "precision": 0.916667,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 43,
+            "coverage": 0.021641,
+            "correct": 41,
+            "precision": 0.953488,
+            "enabled": true
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 8749,
+        "present": 679
+      },
+      "rules": []
+    },
+    "predicate_GTE": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9315,
+        "present": 113
+      },
+      "rules": []
+    },
+    "predicate_IN": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9277,
+        "present": 151
+      },
+      "rules": []
+    },
+    "predicate_IS": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9182,
+        "present": 246
+      },
+      "rules": []
+    },
+    "predicate_LIKE": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 83,
+        "coverage": 0.008804,
+        "correct": 7,
+        "precision": 0.084337,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 1,
+            "coverage": 0.000731,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 81,
+            "coverage": 0.040724,
+            "correct": 6,
+            "precision": 0.074074,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 1,
+            "coverage": 0.000503,
+            "correct": 1,
+            "precision": 1.0,
+            "enabled": true
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 8814,
+        "present": 614
+      },
+      "rules": []
+    },
+    "predicate_LT": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 17,
+        "coverage": 0.001803,
+        "correct": 12,
+        "precision": 0.705882,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 2,
+            "coverage": 0.001462,
+            "correct": 2,
+            "precision": 1.0,
+            "enabled": true
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 1,
+            "coverage": 0.000565,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 7,
+            "coverage": 0.003024,
+            "correct": 5,
+            "precision": 0.714286,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 7,
+            "coverage": 0.003519,
+            "correct": 5,
+            "precision": 0.714286,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9099,
+        "present": 329
+      },
+      "rules": []
+    },
+    "predicate_LTE": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9357,
+        "present": 71
+      },
+      "rules": []
+    },
+    "predicate_NEQ": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9336,
+        "present": 92
+      },
+      "rules": []
+    },
+    "subquery": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 26,
+        "coverage": 0.002758,
+        "correct": 23,
+        "precision": 0.884615,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 2,
+            "coverage": 0.001462,
+            "correct": 2,
+            "precision": 1.0,
+            "enabled": true
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 4,
+            "coverage": 0.002261,
+            "correct": 4,
+            "precision": 1.0,
+            "enabled": true
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 7,
+            "coverage": 0.003024,
+            "correct": 5,
+            "precision": 0.714286,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 8,
+            "coverage": 0.004022,
+            "correct": 7,
+            "precision": 0.875,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 5,
+            "coverage": 0.002516,
+            "correct": 5,
+            "precision": 1.0,
+            "enabled": true
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 8705,
+        "present": 723
+      },
+      "rules": []
+    },
+    "window": {
+      "enabled": false,
+      "validation": {
+        "validation_examples": 9428,
+        "prediction_count": 0,
+        "coverage": 0.0,
+        "correct": 0,
+        "precision": 0.0,
+        "folds": [
+          {
+            "bucket": 0,
+            "validation_examples": 1368,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 1,
+            "validation_examples": 1769,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 2,
+            "validation_examples": 2315,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 3,
+            "validation_examples": 1989,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          },
+          {
+            "bucket": 4,
+            "validation_examples": 1987,
+            "prediction_count": 0,
+            "coverage": 0.0,
+            "correct": 0,
+            "precision": 0.0,
+            "enabled": false
+          }
+        ],
+        "enabled": false
+      },
+      "label_counts": {
+        "absent": 9423,
+        "present": 5
+      },
+      "rules": []
+    }
+  }
+}

@@ -1,7 +1,8 @@
-litellm>=1.40
+litellm==1.91.1
 python-dotenv
 tqdm
 numpy
 pandas
 sentence-transformers
 RestrictedPython
+sqlglot==30.12.0

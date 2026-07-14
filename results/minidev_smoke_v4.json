@@ -1,0 +1,101 @@
+[
+  {
+    "id": "bird_1471",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN Currency = 'EUR' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN Currency = 'CZK' THEN 1 ELSE 0 END) FROM customers",
+    "predicted_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 15.3083,
+    "llm_calls": 1,
+    "prompt_tokens": 2032,
+    "completion_tokens": 2252,
+    "reasoning_tokens": 2171,
+    "total_tokens": 4284,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "termination": "final",
+    "run_id": "20260713T045344Z-648b1e23",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1472",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "In 2012, who had the least consumption in LAM?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT y.CustomerID FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE c.Segment = 'LAM' AND y.Date BETWEEN '201201' AND '201212' ORDER BY y.Consumption ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        7653
+      ]
+    ],
+    "gold_sql": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+    "gold_answer": [
+      [
+        47273
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 23.9862,
+    "llm_calls": 3,
+    "prompt_tokens": 6487,
+    "completion_tokens": 3478,
+    "reasoning_tokens": 3147,
+    "total_tokens": 9965,
+    "cached_prompt_tokens": 3584,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "termination": "final",
+    "run_id": "20260713T045344Z-648b1e23",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1473",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the average monthly consumption of customers in SME for the year 2013?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(T1.Consumption) / 12 FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND T1.Date BETWEEN '201301' AND '201312'",
+    "predicted_answer": [
+      [
+        459.9562642870894
+      ]
+    ],
+    "gold_sql": "SELECT AVG(T2.Consumption) / 12 FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME'",
+    "gold_answer": [
+      [
+        459.9562642870894
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 30.3206,
+    "llm_calls": 3,
+    "prompt_tokens": 6578,
+    "completion_tokens": 4289,
+    "reasoning_tokens": 3924,
+    "total_tokens": 10867,
+    "cached_prompt_tokens": 3584,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "termination": "final",
+    "run_id": "20260713T045344Z-648b1e23",
+    "trace_schema_version": 3
+  }
+]

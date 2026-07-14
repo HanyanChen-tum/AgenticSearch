@@ -2,6 +2,8 @@
 
 import sqlite3
 import time
+from collections.abc import Callable
+from contextlib import closing
 from pathlib import Path
 from typing import Any
 
@@ -22,11 +24,20 @@ class DBEnvironment:
         result = db.execute("SELECT count(*) FROM singer")
     """
 
-    def __init__(self, db_path: str | Path):
+    def __init__(
+        self,
+        db_path: str | Path,
+        event_sink: Callable[[str, dict[str, Any], dict[str, Any]], None] | None = None,
+    ):
         self.db_path = Path(db_path).resolve()
         if not self.db_path.exists():
             raise FileNotFoundError(f"Database not found: {self.db_path}")
         self._uri = f"{self.db_path.as_uri()}?mode=ro"
+        self._event_sink = event_sink
+
+    def _emit(self, tool: str, arguments: dict[str, Any], result: dict[str, Any]) -> None:
+        if self._event_sink is not None:
+            self._event_sink(tool, arguments, result)
 
     def _connect(self) -> sqlite3.Connection:
         conn = sqlite3.connect(self._uri, uri=True)
@@ -44,7 +55,7 @@ class DBEnvironment:
 
     def get_tables(self) -> list[str]:
         """Return all table names in the database, sorted alphabetically."""
-        with self._connect() as conn:
+        with closing(self._connect()) as conn:
             rows = conn.execute(
                 "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
             ).fetchall()
@@ -53,7 +64,7 @@ class DBEnvironment:
     def get_schema(self, table: str) -> dict[str, Any]:
         """Return column definitions and foreign keys for *table*."""
         quoted = _quote(table)
-        with self._connect() as conn:
+        with closing(self._connect()) as conn:
             cols = conn.execute(f"PRAGMA table_info({quoted})").fetchall()
             fks = conn.execute(f"PRAGMA foreign_key_list({quoted})").fetchall()
         if not cols:
@@ -88,29 +99,51 @@ class DBEnvironment:
         limit = max(1, min(limit, MAX_ROWS))
         quoted = _quote(table)
         try:
-            with self._connect() as conn:
+            with closing(self._connect()) as conn:
                 cursor = conn.execute(f"SELECT * FROM {quoted} LIMIT ?", (limit,))
                 columns = [d[0] for d in cursor.description or []]
                 rows = [list(r) for r in cursor.fetchall()]
-            return {"table": table, "columns": columns, "rows": rows, "error": None}
+            result = {"table": table, "columns": columns, "rows": rows, "error": None}
         except sqlite3.Error as e:
-            return {"table": table, "columns": [], "rows": [], "error": str(e)}
+            result = {"table": table, "columns": [], "rows": [], "error": str(e)}
+        self._emit("db.sample_rows", {"table": table, "limit": limit}, result)
+        return result
 
     def sample_values(self, table: str, column: str, limit: int = 10) -> dict[str, Any]:
         """Return distinct sample values for a column — use this to discover actual string values."""
         limit = max(1, min(limit, MAX_ROWS))
+        schema = self.get_schema(table)
+        if "error" in schema:
+            result = {"table": table, "column": column, "values": [], "error": schema["error"]}
+            self._emit("db.sample_values", {"table": table, "column": column, "limit": limit}, result)
+            return result
+        column_names = {
+            item["name"].casefold(): item["name"] for item in schema["columns"]
+        }
+        actual_column = column_names.get(column.casefold())
+        if actual_column is None:
+            result = {
+                "table": table,
+                "column": column,
+                "values": [],
+                "error": f"Column '{column}' not found in table '{table}'",
+            }
+            self._emit("db.sample_values", {"table": table, "column": column, "limit": limit}, result)
+            return result
         quoted_t = _quote(table)
-        quoted_c = _quote(column)
+        quoted_c = _quote(actual_column)
         try:
-            with self._connect() as conn:
+            with closing(self._connect()) as conn:
                 cursor = conn.execute(
                     f"SELECT DISTINCT {quoted_c} FROM {quoted_t} WHERE {quoted_c} IS NOT NULL LIMIT ?",
                     (limit,)
                 )
                 rows = [r[0] for r in cursor.fetchall()]
-            return {"table": table, "column": column, "values": rows, "error": None}
+            result = {"table": table, "column": column, "values": rows, "error": None}
         except sqlite3.Error as e:
-            return {"table": table, "column": column, "values": [], "error": str(e)}
+            result = {"table": table, "column": column, "values": [], "error": str(e)}
+        self._emit("db.sample_values", {"table": table, "column": column, "limit": limit}, result)
+        return result
 
     # ------------------------------------------------------------------
     # SQL execution
@@ -127,19 +160,21 @@ class DBEnvironment:
         """
         sql = sql.strip()
         try:
-            with self._connect() as conn:
+            with closing(self._connect()) as conn:
                 cursor = conn.execute(sql)
                 columns = [d[0] for d in cursor.description or []]
                 rows = cursor.fetchall()
             truncated = len(rows) > MAX_ROWS
-            return {
+            result = {
                 "columns": columns,
                 "rows": [list(r) for r in rows[:MAX_ROWS]],
                 "truncated": truncated,
                 "error": None,
             }
         except sqlite3.Error as e:
-            return {"columns": [], "rows": [], "truncated": False, "error": str(e)}
+            result = {"columns": [], "rows": [], "truncated": False, "error": str(e)}
+        self._emit("db.execute", {"sql": sql}, result)
+        return result
 
     # ------------------------------------------------------------------
     # Helpers

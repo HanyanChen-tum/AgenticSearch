@@ -1,11 +1,18 @@
 """Core RLM implementation."""
 
 import asyncio
+import copy
 import re
+import time
 from typing import Optional, Dict, Any, List
 
 import litellm
 
+from shared.token_usage import (
+    TOKEN_FIELDS,
+    empty_token_usage,
+    extract_response_usage,
+)
 from .types import Message
 from .repl import REPLExecutor, REPLError
 from .prompts import build_system_prompt
@@ -65,9 +72,63 @@ class RLM:
 
         self.repl = REPLExecutor()
 
-        # Stats
+        self.reset_stats()
+
+    def reset_stats(self) -> None:
+        """Reset per-question counters before reusing an agent."""
         self._llm_calls = 0
         self._iterations = 0
+        self._token_usage = empty_token_usage()
+        self._usage_missing_calls = 0
+        self._reasoning_usage_missing_calls = 0
+        self._llm_call_usage: list[dict[str, Any]] = []
+
+    def llm_call_usage_snapshot(self) -> list[dict[str, Any]]:
+        return copy.deepcopy(self._llm_call_usage)
+
+    def _record_llm_call(
+        self,
+        *,
+        model: str,
+        latency_seconds: float,
+        usage: dict[str, int | bool] | None = None,
+        error: str | None = None,
+    ) -> None:
+        normalized = usage or {
+            "usage_available": False,
+            "reasoning_tokens_available": False,
+            **empty_token_usage(),
+        }
+        record = {
+            "sequence": len(self._llm_call_usage) + 1,
+            "depth": self._current_depth,
+            "model": model,
+            "latency_seconds": round(latency_seconds, 4),
+            **normalized,
+        }
+        if error:
+            record["error"] = error
+        self._llm_call_usage.append(record)
+        if not normalized["usage_available"]:
+            self._usage_missing_calls += 1
+        if not normalized["reasoning_tokens_available"]:
+            self._reasoning_usage_missing_calls += 1
+        for field in TOKEN_FIELDS:
+            self._token_usage[field] += int(normalized[field])
+
+    def _absorb_child_usage(self, child: "RLM") -> None:
+        """Merge recursive calls so parent totals cover the whole agent tree."""
+        self._llm_calls += child._llm_calls
+        self._usage_missing_calls += child._usage_missing_calls
+        self._reasoning_usage_missing_calls += (
+            child._reasoning_usage_missing_calls
+        )
+        for field in TOKEN_FIELDS:
+            self._token_usage[field] += child._token_usage[field]
+        for child_call in child._llm_call_usage:
+            call = copy.deepcopy(child_call)
+            call["sequence"] = len(self._llm_call_usage) + 1
+            self._llm_call_usage.append(call)
 
     def complete(
         self,
@@ -226,9 +287,24 @@ class RLM:
         # Call LiteLLM (60s hard timeout at both litellm and asyncio level)
         call_kwargs.setdefault("timeout", 60)
         import asyncio as _asyncio
-        response = await _asyncio.wait_for(
-            litellm.acompletion(model=model, messages=messages, **call_kwargs),
-            timeout=60,
+        started_at = time.perf_counter()
+        try:
+            response = await _asyncio.wait_for(
+                litellm.acompletion(model=model, messages=messages, **call_kwargs),
+                timeout=60,
+            )
+        except Exception as exc:
+            self._record_llm_call(
+                model=model,
+                latency_seconds=time.perf_counter() - started_at,
+                error=type(exc).__name__,
+            )
+            raise
+
+        self._record_llm_call(
+            model=model,
+            latency_seconds=time.perf_counter() - started_at,
+            usage=extract_response_usage(response),
         )
 
         # Extract text
@@ -286,7 +362,10 @@ class RLM:
                 **self.llm_kwargs
             )
 
-            return await sub_rlm.acomplete(sub_query, sub_context)
+            try:
+                return await sub_rlm.acomplete(sub_query, sub_context)
+            finally:
+                self._absorb_child_usage(sub_rlm)
 
         # Wrap in sync function for REPL compatibility
         def sync_recursive_llm(sub_query: str, sub_context: str) -> str:
@@ -316,4 +395,7 @@ class RLM:
             'llm_calls': self._llm_calls,
             'iterations': self._iterations,
             'depth': self._current_depth,
+            **self._token_usage,
+            'usage_missing_calls': self._usage_missing_calls,
+            'reasoning_usage_missing_calls': self._reasoning_usage_missing_calls,
         }

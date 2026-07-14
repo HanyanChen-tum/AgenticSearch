@@ -1,0 +1,59 @@
+{
+  "experiment": "E4-R0",
+  "profile": "e4-r0",
+  "run_id": "20260713T213358Z-8603f18a",
+  "result_path": "results/e4_r0_run1.json",
+  "trace_dir": "trace/e4_r0_run1",
+  "question_count": 50,
+  "correct": 19,
+  "accuracy": 0.38,
+  "termination": {
+    "final": 50,
+    "MaxIterationsError": 0
+  },
+  "cost": {
+    "llm_calls": 136,
+    "llm_calls_per_question": 2.72,
+    "prompt_tokens": 201308,
+    "completion_tokens": 309056,
+    "reasoning_tokens": 282493,
+    "total_tokens": 510364,
+    "total_tokens_per_question": 10207.28,
+    "usage_missing_calls": 3,
+    "latency_seconds": 1834.474,
+    "latency_seconds_per_question": 36.68948,
+    "db_tool_calls": 110,
+    "db_tool_calls_per_question": 2.2,
+    "db_execute_calls": 60,
+    "db_execute_calls_per_question": 1.2,
+    "db_sample_values_calls": 50,
+    "db_sample_values_calls_per_question": 1.0
+  },
+  "capability_audit": {
+    "allowed_db_methods": [
+      "execute",
+      "sample_values"
+    ],
+    "generic_recursive_llm": false,
+    "observed_db_tool_events": 110,
+    "observed_disallowed_tool_events": 0,
+    "observed_recursive_calls": 0
+  },
+  "error_classes": {
+    "AGGREGATION_REASONING": 1,
+    "OUTPUT_CONTRACT": 1,
+    "SEMANTIC_REVIEW_REQUIRED": 1,
+    "TOOL_ERROR": 1,
+    "UNVERIFIED_FINAL": 27
+  },
+  "subcategories": {
+    "aggregation_or_grouping_mismatch": 1,
+    "filter_scope_or_expression_mismatch": 1,
+    "final_sql_changed_after_test": 25,
+    "final_without_db_execution": 2,
+    "output_column_count_mismatch": 1,
+    "unparseable_execution_observation": 1
+  },
+  "decision": "accept_as_capability_gated_parent_control",
+  "next": "E4-R1E"
+}

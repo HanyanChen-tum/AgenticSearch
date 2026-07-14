@@ -1,0 +1,41 @@
+{
+  "trace_schema_version": 3,
+  "run_id": "20260713T045344Z-648b1e23",
+  "created_at": "2026-07-13T04:53:44.031083+00:00",
+  "status": "complete",
+  "completed_questions": 3,
+  "config": {
+    "dataset": "C:\\Users\\Irene\\AgenticSearch\\data\\processed\\bird_dev_500.json",
+    "dataset_sha256": "397d227d4c9f5f28590dc76e0a01dc8e2c9cd0bf4da2a2bc078c7b9c1017f5eb",
+    "database_dir": "C:\\Users\\Irene\\AgenticSearch\\data\\raw\\bird\\minidev\\MINIDEV\\dev_databases",
+    "output": "C:\\Users\\Irene\\AgenticSearch\\results\\minidev_smoke_v4.json",
+    "model": "azure/seminar-gpt-5.4-mini",
+    "api_base": "https://gpt5openai.openai.azure.com/",
+    "api_version": "2024-12-01-preview",
+    "limit": 3,
+    "max_iterations": 8,
+    "k": 1,
+    "temperature": 0,
+    "reasoning_effort": "high"
+  },
+  "token_usage": {
+    "prompt_tokens": 15097,
+    "completion_tokens": 10019,
+    "reasoning_tokens": 9242,
+    "total_tokens": 25116,
+    "cached_prompt_tokens": 7168,
+    "llm_calls": 7,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "questions": 3,
+    "questions_with_complete_usage": 3,
+    "average_per_question": {
+      "prompt_tokens": 5032.33,
+      "completion_tokens": 3339.67,
+      "reasoning_tokens": 3080.67,
+      "total_tokens": 8372.0,
+      "cached_prompt_tokens": 2389.33
+    }
+  },
+  "finished_at": "2026-07-13T04:55:49.420947+00:00"
+}

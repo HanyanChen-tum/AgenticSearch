@@ -1,0 +1,64 @@
+{
+  "summary_schema_version": 1,
+  "report_type": "partial_single_run",
+  "run_id": "20260713T200839Z-23a93559",
+  "agent_profile": "clean-e1",
+  "source_result": "results/e1_verified_run1.json",
+  "source_trace": "trace/e1_verified_run1/transcripts.jsonl",
+  "source_classification": "trace/e1_verified_run1/classification_sheet.csv",
+  "selection": {
+    "saved_records": 71,
+    "mode": "first_n",
+    "question_count": 70,
+    "ignored_saved_records": 1
+  },
+  "result": {
+    "correct": 28,
+    "total": 70,
+    "accuracy": 0.4,
+    "terminations": {
+      "final": 65,
+      "MaxIterationsError": 5
+    }
+  },
+  "usage": {
+    "llm_calls": 386,
+    "llm_calls_per_question": 5.514286,
+    "prompt_tokens": 1064668,
+    "completion_tokens": 819791,
+    "reasoning_tokens": 737521,
+    "total_tokens": 1884459,
+    "total_tokens_per_question": 26920.842857,
+    "usage_missing_calls": 1,
+    "reasoning_usage_missing_calls": 1,
+    "latency_seconds": 4426.2863,
+    "latency_seconds_per_question": 63.232661
+  },
+  "database": {
+    "db_tool_calls": 251,
+    "db_tool_calls_per_question": 3.585714,
+    "db_execute_calls": 207,
+    "db_execute_calls_per_question": 2.957143
+  },
+  "verified_final": {
+    "blocked_events": 103,
+    "questions_with_blocked_final": 63
+  },
+  "error_classes": {
+    "AGGREGATION_REASONING": 13,
+    "OUTPUT_CONTRACT": 10,
+    "RUNNER_OR_API": 5,
+    "SCHEMA_LINKING": 5,
+    "SEMANTIC_REVIEW_REQUIRED": 9
+  },
+  "subcategories": {
+    "aggregation_or_grouping_mismatch": 12,
+    "filter_scope_or_expression_mismatch": 9,
+    "missing_final_sql": 5,
+    "output_column_count_mismatch": 9,
+    "sort_direction_or_order_scope_mismatch": 1,
+    "table_or_join_path_mismatch": 5,
+    "yes_no_vs_row_output_mismatch": 1
+  },
+  "decision": "reject_strict_verified_final"
+}

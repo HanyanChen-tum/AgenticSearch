@@ -1,0 +1,2 @@
+run_id,id,db_id,difficulty,wrong_turn,error_class,subcategory,fix_idea,notes
+20260713T072616Z-d1322fa4,bird_1472,debit_card_specializing,moderate,3,AGGREGATION_REASONING,aggregation_or_grouping_mismatch,生成 SQL 前明确统计对象、分组键、聚合函数和聚合后的排序字段。,"[AUTO confidence=medium] 预测与 gold 的聚合结构不同：group by, sum(。"

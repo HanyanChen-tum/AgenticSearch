@@ -1,0 +1,7249 @@
+[
+  {
+    "id": "bird_1471",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT CAST(COUNT(CASE WHEN Currency = 'EUR' THEN 1 END) AS REAL) / NULLIF(COUNT(CASE WHEN Currency = 'CZK' THEN 1 END), 0) AS ratio FROM customers;",
+    "predicted_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 10.4731,
+    "llm_calls": 2,
+    "prompt_tokens": 1911,
+    "completion_tokens": 1625,
+    "reasoning_tokens": 1246,
+    "total_tokens": 3536,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1472",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "In 2012, who had the least consumption in LAM?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT y.CustomerID FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Segment = 'LAM' AND y.Date BETWEEN '201201' AND '201212' GROUP BY y.CustomerID ORDER BY SUM(y.Consumption) ASC, y.CustomerID ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        47273
+      ]
+    ],
+    "gold_sql": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+    "gold_answer": [
+      [
+        47273
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 35.9883,
+    "llm_calls": 4,
+    "prompt_tokens": 4383,
+    "completion_tokens": 6377,
+    "reasoning_tokens": 5693,
+    "total_tokens": 10760,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1480",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the gas consumption peak month for SME customers in 2013?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT SUBSTR(T2.Date, 5, 2) AS Month FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'SME' AND T2.Date BETWEEN '201301' AND '201312' GROUP BY SUBSTR(T2.Date, 5, 2) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "04"
+      ]
+    ],
+    "gold_sql": "SELECT SUBSTR(T2.Date, 5, 2) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME' GROUP BY SUBSTR(T2.Date, 5, 2) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "04"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 39.0029,
+    "llm_calls": 3,
+    "prompt_tokens": 2988,
+    "completion_tokens": 7719,
+    "reasoning_tokens": 7208,
+    "total_tokens": 10707,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1481",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the difference in the annual average consumption of the customers with the least amount of consumption paid in CZK for 2013 between SME and LAM, LAM and KAM, and KAM and SME?",
+    "difficulty": "challenging",
+    "predicted_sql": "WITH customer_totals AS ( SELECT c.Segment, ym.CustomerID, SUM(ym.Consumption) AS total_consumption FROM yearmonth AS ym JOIN customers AS c ON ym.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' AND substr(ym.Date, 1, 4) = '2013' AND c.Segment IN ('SME', 'LAM', 'KAM') GROUP BY c.Segment, ym.CustomerID ), segment_mins AS ( SELECT Segment, MIN(total_consumption) AS min_total FROM customer_totals GROUP BY Segment ), segment_avgs AS ( SELECT ct.Segment, AVG(ct.total_consumption) AS annual_avg FROM customer_totals AS ct JOIN segment_mins AS sm ON ct.Segment = sm.Segment AND ct.total_consumption = sm.min_total GROUP BY ct.Segment ) SELECT (SELECT annual_avg FROM segment_avgs WHERE Segment = 'SME') - (SELECT annual_avg FROM segment_avgs WHERE Segment = 'LAM') AS SME_LAM, (SELECT annual_avg FROM segment_avgs WHERE Segment = 'LAM') - (SELECT annual_avg FROM segment_avgs WHERE Segment = 'KAM') AS LAM_KAM, (SELECT annual_avg FROM segment_avgs WHERE Segment = 'KAM') - (SELECT annual_avg FROM segment_avgs WHERE Segment = 'SME') AS KAM_SME;",
+    "predicted_answer": [
+      [
+        -14009.339999999998,
+        6046.619999999999,
+        7962.719999999999
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(T1.Segment = 'SME', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) - CAST(SUM(IIF(T1.Segment = 'LAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) , CAST(SUM(IIF(T1.Segment = 'LAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) - CAST(SUM(IIF(T1.Segment = 'KAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) , CAST(SUM(IIF(T1.Segment = 'KAM', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) - CAST(SUM(IIF(T1.Segment = 'SME', T2.Consumption, 0)) AS REAL) / COUNT(T1.CustomerID) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'CZK' AND T2.Consumption = ( SELECT MIN(Consumption) FROM yearmonth ) AND T2.Date BETWEEN 201301 AND 201312",
+    "gold_answer": [
+      [
+        0.0,
+        582092.86,
+        -582092.86
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 69.0337,
+    "llm_calls": 3,
+    "prompt_tokens": 3768,
+    "completion_tokens": 14733,
+    "reasoning_tokens": 13548,
+    "total_tokens": 18501,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1482",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Which of the three segments—SME, LAM and KAM—has the biggest and lowest percentage increases in consumption paid in EUR between 2012 and 2013?",
+    "difficulty": "challenging",
+    "predicted_sql": "WITH segment_totals AS (SELECT c.Segment, SUM(CASE WHEN substr(y.Date,1,4)='2012' THEN y.Consumption ELSE 0 END) AS consumption_2012, SUM(CASE WHEN substr(y.Date,1,4)='2013' THEN y.Consumption ELSE 0 END) AS consumption_2013 FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME','LAM','KAM') AND substr(y.Date,1,4) IN ('2012','2013') GROUP BY c.Segment), pct AS (SELECT Segment, (consumption_2013 - consumption_2012) * 100.0 / NULLIF(consumption_2013, 0) AS percentage_increase FROM segment_totals) SELECT 'biggest' AS which, Segment, percentage_increase FROM pct WHERE percentage_increase = (SELECT MAX(percentage_increase) FROM pct) UNION ALL SELECT 'lowest' AS which, Segment, percentage_increase FROM pct WHERE percentage_increase = (SELECT MIN(percentage_increase) FROM pct) ORDER BY CASE which WHEN 'biggest' THEN 1 ELSE 2 END;",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST((SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2012%', T2.Consumption, 0))) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2012%', T2.Consumption, 0)), CAST(SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) , CAST(SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID",
+    "gold_answer": [
+      [
+        545.4018999790969,
+        681.5824574939339,
+        708.1124062978664
+      ]
+    ],
+    "correct": false,
+    "error": "1st ORDER BY term does not match any column in the result set",
+    "latency_seconds": 91.9704,
+    "llm_calls": 4,
+    "prompt_tokens": 6451,
+    "completion_tokens": 19837,
+    "reasoning_tokens": 17641,
+    "total_tokens": 26288,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1483",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "How much did customer 6 consume in total between August and November 2013?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT SUM(Consumption) AS total_consumption FROM yearmonth WHERE CustomerID = 6 AND SUBSTR(Date, 1, 6) BETWEEN '201308' AND '201311'",
+    "predicted_answer": [
+      [
+        1224.96
+      ]
+    ],
+    "gold_sql": "SELECT SUM(Consumption) FROM yearmonth WHERE CustomerID = 6 AND Date BETWEEN '201308' AND '201311'",
+    "gold_answer": [
+      [
+        1224.96
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 12.1895,
+    "llm_calls": 2,
+    "prompt_tokens": 1824,
+    "completion_tokens": 2251,
+    "reasoning_tokens": 1952,
+    "total_tokens": 4075,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1498",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the highest monthly consumption in the year 2012?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT MAX(Consumption) FROM yearmonth WHERE substr(Date, 1, 4) = '2012';",
+    "predicted_answer": [
+      [
+        445279.69
+      ]
+    ],
+    "gold_sql": "SELECT SUM(Consumption) FROM yearmonth WHERE SUBSTR(Date, 1, 4) = '2012' GROUP BY SUBSTR(Date, 5, 2) ORDER BY SUM(Consumption) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        51787161.74
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 14.7239,
+    "llm_calls": 2,
+    "prompt_tokens": 1665,
+    "completion_tokens": 2542,
+    "reasoning_tokens": 2365,
+    "total_tokens": 4207,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1500",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Please list the product description of the products consumed in September, 2013.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT DISTINCT P.Description FROM transactions_1k AS T INNER JOIN products AS P ON T.ProductID = P.ProductID WHERE strftime('%Y%m', T.Date) = '201309' ORDER BY P.Description",
+    "predicted_answer": [],
+    "gold_sql": "SELECT T3.Description FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Date = '201309'",
+    "gold_answer": [
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Prev.náplne"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel aditiv"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Umývanie voz"
+      ],
+      [
+        "Prev.náplne"
+      ],
+      [
+        "Umývanie voz"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel aditiv"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Umývanie voz"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Autokozmetik"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Umývanie voz"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Zpr.nakupu"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Autoprísluš."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural +"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel aditiv"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Prev.náplne"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Zpr.nakupu"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Autoprísluš."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Autoprísluš."
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Knihy,nov."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Zboží nesp."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Autoprísluš."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Obcerstvení"
+      ],
+      [
+        "Zboží nesp."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Zpr.nakupu"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Additivum"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Autoprísluš."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Autoprísluš."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Obcerstvení"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Zpr.nakupu"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Nat.Super"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Diesel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ],
+      [
+        "Nafta"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 176.6001,
+    "llm_calls": 6,
+    "prompt_tokens": 4902,
+    "completion_tokens": 21885,
+    "reasoning_tokens": 21031,
+    "total_tokens": 26787,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 1,
+    "reasoning_usage_missing_calls": 1,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1505",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Among the customers who paid in euro, how many of them have a monthly consumption of over 1000?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT COUNT(DISTINCT T1.CustomerID) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'EUR' AND T2.Consumption > 1000",
+    "predicted_answer": [
+      [
+        391
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(*) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Currency = 'EUR' AND T1.Consumption > 1000.00",
+    "gold_answer": [
+      [
+        2730
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 19.7632,
+    "llm_calls": 3,
+    "prompt_tokens": 2828,
+    "completion_tokens": 3609,
+    "reasoning_tokens": 3312,
+    "total_tokens": 6437,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1506",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Please list the product descriptions of the transactions taken place in the gas stations in the Czech Republic.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT Description FROM products WHERE ProductID IN ( SELECT ProductID FROM transactions_1k JOIN gasstations ON transactions_1k.GasStationID = gasstations.GasStationID WHERE gasstations.Country = 'CZE' )",
+    "predicted_answer": [
+      [
+        "Nafta"
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Natural +"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Obcerstvení"
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Natural Plus"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Autoprísluš."
+      ],
+      [
+        "Knihy,nov."
+      ],
+      [
+        "Zboží nesp."
+      ],
+      [
+        "Additivum"
+      ],
+      [
+        "Zpr.nakupu"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T3.Description FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Country = 'CZE'",
+    "gold_answer": [
+      [
+        "Nafta"
+      ],
+      [
+        "Provoz.nápl."
+      ],
+      [
+        "Natural"
+      ],
+      [
+        "Nemrz.kapal."
+      ],
+      [
+        "Oleje,tuky"
+      ],
+      [
+        "Diesel +"
+      ],
+      [
+        "LPG"
+      ],
+      [
+        "Mytí vozidel"
+      ],
+      [
+        "Autokosmet."
+      ],
+      [
+        "Potraviny"
+      ],
+      [
+        "Nafta Plus"
+      ],
+      [
+        "Natural Spec"
+      ],
+      [
+        "Zpr.nakupu"
+      ],
+      [
+        "Autoprísluš."
+      ],
+      [
+        "Natural +"
+      ],
+      [
+        "Dalnic.popl."
+      ],
+      [
+        "Knihy,nov."
+      ],
+      [
+        "Zboží nesp."
+      ],
+      [
+        "Obcerstvení"
+      ],
+      [
+        "Additivum"
+      ],
+      [
+        "Natural Plus"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 12.8798,
+    "llm_calls": 3,
+    "prompt_tokens": 2588,
+    "completion_tokens": 2078,
+    "reasoning_tokens": 1811,
+    "total_tokens": 4666,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1524",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What's the nationality of the customer who spent 548.4 in 2012/8/24?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT DISTINCT T2.Currency FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-24' AND ROUND(T1.Price, 1) = 548.4",
+    "predicted_answer": [
+      [
+        "CZK"
+      ]
+    ],
+    "gold_sql": "SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-24' AND T1.Price  = 548.4",
+    "gold_answer": [
+      [
+        "CZE"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 80.8432,
+    "llm_calls": 4,
+    "prompt_tokens": 4672,
+    "completion_tokens": 15375,
+    "reasoning_tokens": 14277,
+    "total_tokens": 20047,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1526",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "For the customer who paid 634.8 in 2012/8/25, what was the consumption decrease rate from Year 2012 to 2013?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT (y2012.c - y2013.c) / y2012.c AS consumption_decrease_rate FROM (SELECT SUM(Consumption) AS c FROM yearmonth WHERE CustomerID = (SELECT CustomerID FROM transactions_1k WHERE Date = '2012-08-25' AND Price = 634.8 LIMIT 1) AND substr(Date, 1, 4) = '2012') AS y2012 CROSS JOIN (SELECT SUM(Consumption) AS c FROM yearmonth WHERE CustomerID = (SELECT CustomerID FROM transactions_1k WHERE Date = '2012-08-25' AND Price = 634.8 LIMIT 1) AND substr(Date, 1, 4) = '2013') AS y2013",
+    "predicted_answer": [
+      [
+        -5.815242674672346
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) - SUM(IIF(SUBSTRING(Date, 1, 4) = '2013', Consumption, 0)) AS FLOAT) / SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) FROM yearmonth WHERE CustomerID = ( SELECT T1.CustomerID FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-25' AND T1.Price  = 1513.12 )",
+    "gold_answer": [
+      [
+        null
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 37.9995,
+    "llm_calls": 3,
+    "prompt_tokens": 3466,
+    "completion_tokens": 7695,
+    "reasoning_tokens": 6934,
+    "total_tokens": 11161,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1529",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the amount spent by customer \"38508\" at the gas stations? How much had the customer spent in January 2012?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT (SELECT SUM(t.Price) FROM transactions_1k t WHERE t.CustomerID = 38508) AS spent_at_gas_stations, (SELECT SUM(y.Consumption) FROM yearmonth y WHERE y.CustomerID = 38508 AND y.Date = '201201') AS spent_in_january_2012;",
+    "predicted_answer": [
+      [
+        3437.01,
+        67156.94
+      ]
+    ],
+    "gold_sql": "SELECT SUM(T1.Price ) , SUM(IIF(T3.Date = '201201', T1.Price, 0)) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN yearmonth AS T3 ON T1.CustomerID = T3.CustomerID WHERE T1.CustomerID = '38508'",
+    "gold_answer": [
+      [
+        68740.2,
+        3437.01
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 38.3181,
+    "llm_calls": 2,
+    "prompt_tokens": 1664,
+    "completion_tokens": 7457,
+    "reasoning_tokens": 7092,
+    "total_tokens": 9121,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1531",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "Who is the top spending customer and how much is the average price per single item purchased by this customer? What currency was being used?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT t.CustomerID, SUM(t.Price) * 1.0 / SUM(t.Amount) AS average_price_per_single_item, c.Currency FROM transactions_1k AS t INNER JOIN customers AS c ON t.CustomerID = c.CustomerID GROUP BY t.CustomerID, c.Currency ORDER BY SUM(t.Price) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        19182,
+        24.277577464788735,
+        "CZK"
+      ]
+    ],
+    "gold_sql": "SELECT T2.CustomerID, SUM(T2.Price / T2.Amount), T1.Currency FROM customers AS T1 INNER JOIN transactions_1k AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.CustomerID = ( SELECT CustomerID FROM yearmonth ORDER BY Consumption DESC LIMIT 1 ) GROUP BY T2.CustomerID, T1.Currency",
+    "gold_answer": [
+      [
+        12459,
+        203.8560787354258,
+        "CZK"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 8.6432,
+    "llm_calls": 2,
+    "prompt_tokens": 1917,
+    "completion_tokens": 1438,
+    "reasoning_tokens": 1110,
+    "total_tokens": 3355,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1312",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "What's Angela Sanders's major?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT T2.major_name FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.first_name = 'Angela' AND T1.last_name = 'Sanders'",
+    "predicted_answer": [
+      [
+        "Business"
+      ]
+    ],
+    "gold_sql": "SELECT T2.major_name FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.first_name = 'Angela' AND T1.last_name = 'Sanders'",
+    "gold_answer": [
+      [
+        "Business"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 48.8361,
+    "llm_calls": 4,
+    "prompt_tokens": 6800,
+    "completion_tokens": 9040,
+    "reasoning_tokens": 8273,
+    "total_tokens": 15840,
+    "cached_prompt_tokens": 3840,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1322",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "Among the events attended by more than 10 members of the Student_Club, how many of them are meetings?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(*) FROM (SELECT e.event_id FROM event e JOIN attendance a ON e.event_id = a.link_to_event WHERE e.type = 'Meeting' GROUP BY e.event_id HAVING COUNT(e.event_id) > 10)",
+    "predicted_answer": [
+      [
+        4
+      ]
+    ],
+    "gold_sql": "SELECT T1.event_name FROM event AS T1  INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event GROUP BY T1.event_id  HAVING COUNT(T2.link_to_event) > 10 EXCEPT SELECT T1.event_name  FROM event AS T1  WHERE T1.type = 'Meeting'",
+    "gold_answer": [
+      [
+        "Community Theater"
+      ],
+      [
+        "Food Bank"
+      ],
+      [
+        "Football game"
+      ],
+      [
+        "Laugh Out Loud"
+      ],
+      [
+        "November Speaker"
+      ],
+      [
+        "October Speaker"
+      ],
+      [
+        "Registration"
+      ],
+      [
+        "September Speaker"
+      ],
+      [
+        "Women's Soccer"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 11.5669,
+    "llm_calls": 2,
+    "prompt_tokens": 2944,
+    "completion_tokens": 2044,
+    "reasoning_tokens": 1766,
+    "total_tokens": 4988,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1334",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "List the full name of the Student_Club members that grew up in Illinois state.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT m.first_name, m.last_name FROM member AS m JOIN zip_code AS z ON m.zip = z.zip_code WHERE z.state = 'Illinois'",
+    "predicted_answer": [
+      [
+        "Trent",
+        "Smith"
+      ],
+      [
+        "Tyler",
+        "Hewitt"
+      ],
+      [
+        "Annabella",
+        "Warren"
+      ]
+    ],
+    "gold_sql": "SELECT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN zip_code AS T2 ON T1.zip = T2.zip_code WHERE T2.state = 'Illinois'",
+    "gold_answer": [
+      [
+        "Trent",
+        "Smith"
+      ],
+      [
+        "Tyler",
+        "Hewitt"
+      ],
+      [
+        "Annabella",
+        "Warren"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 8.715,
+    "llm_calls": 2,
+    "prompt_tokens": 2901,
+    "completion_tokens": 1428,
+    "reasoning_tokens": 1254,
+    "total_tokens": 4329,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1338",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "Was each expense in October Meeting on October 8, 2019 approved?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT expense.expense_description, CASE WHEN lower(expense.approved) = 'true' THEN 'True' ELSE 'False' END AS approved FROM expense JOIN budget ON expense.link_to_budget = budget.budget_id JOIN event ON budget.link_to_event = event.event_id WHERE event.event_name = 'October Meeting' AND event.event_date LIKE '2019-10-08%' ORDER BY expense.expense_description;",
+    "predicted_answer": [
+      [
+        "Pizza",
+        "True"
+      ],
+      [
+        "Posters",
+        "True"
+      ],
+      [
+        "Water, chips, cookies",
+        "True"
+      ]
+    ],
+    "gold_sql": "SELECT T3.approved FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget WHERE T1.event_name = 'October Meeting' AND T1.event_date LIKE '2019-10-08%'",
+    "gold_answer": [
+      [
+        "true"
+      ],
+      [
+        "true"
+      ],
+      [
+        "true"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 40.2705,
+    "llm_calls": 3,
+    "prompt_tokens": 4806,
+    "completion_tokens": 7963,
+    "reasoning_tokens": 7403,
+    "total_tokens": 12769,
+    "cached_prompt_tokens": 2560,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1340",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "Calculate the difference of the total amount spent in all events by the Student_Club in year 2019 and 2020.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COALESCE(SUM(CASE WHEN substr(E.event_date, 1, 4) = '2019' THEN B.spent ELSE 0 END), 0) - COALESCE(SUM(CASE WHEN substr(E.event_date, 1, 4) = '2020' THEN B.spent ELSE 0 END), 0) FROM budget AS B INNER JOIN event AS E ON B.link_to_event = E.event_id WHERE substr(E.event_date, 1, 4) IN ('2019', '2020') AND (INSTR(LOWER(COALESCE(E.event_name, '')), 'student_club') > 0 OR INSTR(LOWER(COALESCE(E.notes, '')), 'student_club') > 0);",
+    "predicted_answer": [
+      [
+        0
+      ]
+    ],
+    "gold_sql": "SELECT SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2019' THEN T2.spent ELSE 0 END) - SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2020' THEN T2.spent ELSE 0 END) AS num FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event",
+    "gold_answer": [
+      [
+        2086.05
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 38.6831,
+    "llm_calls": 2,
+    "prompt_tokens": 3536,
+    "completion_tokens": 7955,
+    "reasoning_tokens": 7270,
+    "total_tokens": 11491,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1344",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "What was the notes of the fundraising on 2019/9/14?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT notes FROM income WHERE source = 'Fundraising' AND date_received = '2019-09-14'",
+    "predicted_answer": [
+      [
+        "Secured donations to help pay for speaker gifts."
+      ]
+    ],
+    "gold_sql": "SELECT notes FROM income WHERE source = 'Fundraising' AND date_received = '2019-09-14'",
+    "gold_answer": [
+      [
+        "Secured donations to help pay for speaker gifts."
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 54.0445,
+    "llm_calls": 6,
+    "prompt_tokens": 11368,
+    "completion_tokens": 10156,
+    "reasoning_tokens": 9237,
+    "total_tokens": 21524,
+    "cached_prompt_tokens": 6144,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1350",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "What is the status of the event which bought \"Post Cards, Posters\" on 2019/8/20?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT T1.event_status FROM budget AS T1 INNER JOIN expense AS T2 ON T1.budget_id = T2.link_to_budget WHERE T2.expense_description = 'Post Cards, Posters' AND T2.expense_date = '2019-08-20'",
+    "predicted_answer": [
+      [
+        "Closed"
+      ]
+    ],
+    "gold_sql": "SELECT T1.event_status FROM budget AS T1 INNER JOIN expense AS T2 ON T1.budget_id = T2.link_to_budget WHERE T2.expense_description = 'Post Cards, Posters' AND T2.expense_date = '2019-08-20'",
+    "gold_answer": [
+      [
+        "Closed"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 52.3947,
+    "llm_calls": 5,
+    "prompt_tokens": 9943,
+    "completion_tokens": 9916,
+    "reasoning_tokens": 8923,
+    "total_tokens": 19859,
+    "cached_prompt_tokens": 4864,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1371",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "How many members attended the \"Women's Soccer\" event?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT COUNT(*) AS member_count FROM attendance AS a INNER JOIN event AS e ON a.link_to_event = e.event_id WHERE e.event_name = 'Women''s Soccer';",
+    "predicted_answer": [
+      [
+        17
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(T2.link_to_member) FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event WHERE T1.event_name = 'Women''s Soccer'",
+    "gold_answer": [
+      [
+        17
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 10.9837,
+    "llm_calls": 2,
+    "prompt_tokens": 3133,
+    "completion_tokens": 1787,
+    "reasoning_tokens": 1407,
+    "total_tokens": 4920,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1380",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "What is the total amount of money spent for food?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT SUM(spent) FROM budget WHERE category = 'Food';",
+    "predicted_answer": [
+      [
+        1234.73
+      ]
+    ],
+    "gold_sql": "SELECT SUM(spent) FROM budget WHERE category = 'Food'",
+    "gold_answer": [
+      [
+        1234.73
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 5.6206,
+    "llm_calls": 2,
+    "prompt_tokens": 2873,
+    "completion_tokens": 754,
+    "reasoning_tokens": 632,
+    "total_tokens": 3627,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1387",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "Which student has been entrusted to manage the budget for the Yearly Kickoff?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN expense AS T2 ON T1.member_id = T2.link_to_member INNER JOIN budget AS T3 ON T2.link_to_budget = T3.budget_id INNER JOIN event AS T4 ON T3.link_to_event = T4.event_id WHERE LOWER(TRIM(T4.event_name)) = 'yearly kickoff'",
+    "predicted_answer": [
+      [
+        "Sacha",
+        "Harrison"
+      ],
+      [
+        "Elijah",
+        "Allen"
+      ]
+    ],
+    "gold_sql": "SELECT T4.first_name, T4.last_name FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget INNER JOIN member AS T4 ON T3.link_to_member = T4.member_id WHERE T1.event_name = 'Yearly Kickoff'",
+    "gold_answer": [
+      [
+        "Sacha",
+        "Harrison"
+      ],
+      [
+        "Elijah",
+        "Allen"
+      ],
+      [
+        "Elijah",
+        "Allen"
+      ],
+      [
+        "Sacha",
+        "Harrison"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 64.2145,
+    "llm_calls": 3,
+    "prompt_tokens": 5360,
+    "completion_tokens": 11666,
+    "reasoning_tokens": 10625,
+    "total_tokens": 17026,
+    "cached_prompt_tokens": 2560,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1399",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "Did Maya Mclean attend the 'Women's Soccer' event?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(*) FROM attendance AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN event AS T3 ON T1.link_to_event = T3.event_id WHERE T2.first_name = 'Maya' AND T2.last_name = 'Mclean' AND T3.event_name = 'Women''s Soccer'",
+    "predicted_answer": [
+      [
+        1
+      ]
+    ],
+    "gold_sql": "SELECT CASE WHEN T3.event_name = 'Women''s Soccer' THEN 'YES' END AS result FROM member AS T1 INNER JOIN attendance AS T2 ON T1.member_id = T2.link_to_member INNER JOIN event AS T3 ON T2.link_to_event = T3.event_id WHERE T1.first_name = 'Maya' AND T1.last_name = 'Mclean'",
+    "gold_answer": [
+      [
+        "YES"
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 41.8672,
+    "llm_calls": 3,
+    "prompt_tokens": 5301,
+    "completion_tokens": 7646,
+    "reasoning_tokens": 6742,
+    "total_tokens": 12947,
+    "cached_prompt_tokens": 2560,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1427",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "What are the budget category of the events located at MU 215 and a guest speaker type with a 0 budget spent?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT b.category FROM budget AS b INNER JOIN event AS e ON b.link_to_event = e.event_id WHERE e.location = 'MU 215' AND e.type = 'Guest Speaker' AND b.spent = 0;",
+    "predicted_answer": [
+      [
+        "Speaker Gifts"
+      ],
+      [
+        "Food"
+      ],
+      [
+        "Parking"
+      ],
+      [
+        "Advertisement"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T2.category, T1.type FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event WHERE T1.location = 'MU 215' AND T2.spent = 0 AND T1.type = 'Guest Speaker'",
+    "gold_answer": [
+      [
+        "Speaker Gifts",
+        "Guest Speaker"
+      ],
+      [
+        "Food",
+        "Guest Speaker"
+      ],
+      [
+        "Parking",
+        "Guest Speaker"
+      ],
+      [
+        "Advertisement",
+        "Guest Speaker"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 10.0963,
+    "llm_calls": 2,
+    "prompt_tokens": 3246,
+    "completion_tokens": 1765,
+    "reasoning_tokens": 1385,
+    "total_tokens": 5011,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1460",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "Write the full name of the member who spent money for water, veggie tray and supplies and include the cost of it.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT m.first_name || ' ' || m.last_name AS full_name, e.cost FROM expense AS e INNER JOIN member AS m ON e.link_to_member = m.member_id WHERE e.expense_description = 'Water, Veggie tray, supplies'",
+    "predicted_answer": [
+      [
+        "Elijah Allen",
+        28.15
+      ]
+    ],
+    "gold_sql": "SELECT T2.first_name, T2.last_name, T1.cost FROM expense AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id WHERE T1.expense_description = 'Water, Veggie tray, supplies'",
+    "gold_answer": [
+      [
+        "Elijah",
+        "Allen",
+        28.15
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 4.1372,
+    "llm_calls": 2,
+    "prompt_tokens": 3132,
+    "completion_tokens": 530,
+    "reasoning_tokens": 301,
+    "total_tokens": 3662,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1464",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "Write the full names of students who received funds on the date of 9/9/2019 and include the amount received.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT member.first_name, member.last_name, income.amount FROM income JOIN member ON income.link_to_member = member.member_id WHERE income.date_received = '2019-09-09'",
+    "predicted_answer": [
+      [
+        "Sacha",
+        "Harrison",
+        50
+      ],
+      [
+        "Carlo",
+        "Jacobs",
+        50
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T3.first_name, T3.last_name, T4.amount FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event INNER JOIN member AS T3 ON T3.member_id = T2.link_to_member INNER JOIN income AS T4 ON T4.link_to_member = T3.member_id WHERE T4.date_received = '2019-09-09'",
+    "gold_answer": [
+      [
+        "Sacha",
+        "Harrison",
+        50
+      ],
+      [
+        "Carlo",
+        "Jacobs",
+        50
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 16.4438,
+    "llm_calls": 3,
+    "prompt_tokens": 4956,
+    "completion_tokens": 2784,
+    "reasoning_tokens": 2490,
+    "total_tokens": 7740,
+    "cached_prompt_tokens": 2560,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1155",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "List the patient ID, sex and birthday of patient with LDH beyond normal range.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT DISTINCT T1.ID, T1.SEX, T1.Birthday FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.LDH > 500 ORDER BY T1.ID",
+    "predicted_answer": [
+      [
+        27654,
+        "F",
+        "1936-03-25"
+      ],
+      [
+        57266,
+        "M",
+        "1923-07-25"
+      ],
+      [
+        81043,
+        "M",
+        "1967-03-25"
+      ],
+      [
+        540520,
+        "F",
+        "1941-11-21"
+      ],
+      [
+        912147,
+        "F",
+        "1975-02-17"
+      ],
+      [
+        944797,
+        "F",
+        "1975-01-31"
+      ],
+      [
+        1078741,
+        "F",
+        "1937-12-18"
+      ],
+      [
+        1110526,
+        "F",
+        "1966-01-01"
+      ],
+      [
+        1124385,
+        "F",
+        "1944-04-20"
+      ],
+      [
+        1137040,
+        "M",
+        "1966-12-01"
+      ],
+      [
+        1138737,
+        "F",
+        "1965-11-18"
+      ],
+      [
+        1650222,
+        "F",
+        "1947-03-17"
+      ],
+      [
+        1673252,
+        "F",
+        "1989-08-28"
+      ],
+      [
+        1944990,
+        "F",
+        "1950-08-03"
+      ],
+      [
+        2265184,
+        "F",
+        "1926-01-02"
+      ],
+      [
+        2276582,
+        "F",
+        "1941-07-10"
+      ],
+      [
+        2307640,
+        "M",
+        "1953-04-06"
+      ],
+      [
+        2308236,
+        "F",
+        "1951-01-20"
+      ],
+      [
+        2343945,
+        "F",
+        "1952-09-10"
+      ],
+      [
+        2371753,
+        "F",
+        "1932-12-05"
+      ],
+      [
+        2395148,
+        "F",
+        "1971-04-03"
+      ],
+      [
+        2931207,
+        "F",
+        "1959-01-05"
+      ],
+      [
+        2933261,
+        "F",
+        "1967-08-26"
+      ],
+      [
+        3150681,
+        "F",
+        "1974-09-30"
+      ],
+      [
+        3173679,
+        "F",
+        "1980-09-04"
+      ],
+      [
+        3178036,
+        "F",
+        "1929-03-22"
+      ],
+      [
+        3182521,
+        "M",
+        "1952-10-16"
+      ],
+      [
+        3310582,
+        "F",
+        "1965-11-10"
+      ],
+      [
+        3362815,
+        "M",
+        "1969-02-06"
+      ],
+      [
+        3418071,
+        "F",
+        "1957-11-12"
+      ],
+      [
+        3545964,
+        "F",
+        "1926-08-01"
+      ],
+      [
+        3552067,
+        "F",
+        "1938-04-05"
+      ],
+      [
+        4007151,
+        "M",
+        "1968-06-11"
+      ],
+      [
+        4021070,
+        "F",
+        "1928-07-10"
+      ],
+      [
+        4415406,
+        "F",
+        "1935-06-03"
+      ],
+      [
+        4416959,
+        "F",
+        "1949-07-16"
+      ],
+      [
+        4417978,
+        "F",
+        "1941-10-06"
+      ],
+      [
+        4424808,
+        "F",
+        "1936-05-22"
+      ],
+      [
+        4425292,
+        "F",
+        "1954-12-23"
+      ],
+      [
+        4466420,
+        "F",
+        "1930-02-15"
+      ],
+      [
+        4466840,
+        "F",
+        "1953-07-12"
+      ],
+      [
+        4472142,
+        "F",
+        "1973-03-27"
+      ],
+      [
+        4483771,
+        "M",
+        "1967-03-15"
+      ],
+      [
+        4618443,
+        "M",
+        "1922-12-01"
+      ],
+      [
+        4621629,
+        "F",
+        "1962-07-19"
+      ],
+      [
+        4630092,
+        "F",
+        "1949-04-21"
+      ],
+      [
+        4632421,
+        "F",
+        "1941-07-29"
+      ],
+      [
+        4632519,
+        "F",
+        "1925-03-25"
+      ],
+      [
+        4632548,
+        "F",
+        "1927-01-25"
+      ],
+      [
+        4634342,
+        "F",
+        "1967-11-11"
+      ],
+      [
+        4643816,
+        "F",
+        "1949-05-13"
+      ],
+      [
+        4648912,
+        "F",
+        "1974-11-25"
+      ],
+      [
+        4649885,
+        "F",
+        "1952-03-03"
+      ],
+      [
+        4652830,
+        "F",
+        "1946-05-12"
+      ],
+      [
+        4790235,
+        "F",
+        "1943-11-28"
+      ],
+      [
+        4791049,
+        "F",
+        "1939-01-07"
+      ],
+      [
+        4792459,
+        "M",
+        "1931-02-11"
+      ],
+      [
+        4823634,
+        "F",
+        "1938-04-08"
+      ],
+      [
+        4840422,
+        "F",
+        "1962-01-18"
+      ],
+      [
+        4843434,
+        "F",
+        "1971-09-20"
+      ],
+      [
+        4861720,
+        "F",
+        "1973-04-13"
+      ],
+      [
+        4862013,
+        "F",
+        "1964-01-29"
+      ],
+      [
+        4865142,
+        "M",
+        "1961-12-12"
+      ],
+      [
+        4869782,
+        "M",
+        "1961-03-18"
+      ],
+      [
+        4878272,
+        "F",
+        "1945-12-04"
+      ],
+      [
+        4879930,
+        "F",
+        "1958-11-24"
+      ],
+      [
+        4894243,
+        "F",
+        "1956-12-07"
+      ],
+      [
+        4915498,
+        "F",
+        "1959-01-22"
+      ],
+      [
+        4916710,
+        "F",
+        "1939-09-19"
+      ],
+      [
+        4921572,
+        "F",
+        "1950-09-04"
+      ],
+      [
+        4927381,
+        "F",
+        "1977-02-26"
+      ],
+      [
+        5064814,
+        "F",
+        "1965-03-19"
+      ],
+      [
+        5065022,
+        "F",
+        "1971-11-16"
+      ],
+      [
+        5093188,
+        "M",
+        "1944-04-25"
+      ],
+      [
+        5093771,
+        "F",
+        "1964-10-17"
+      ],
+      [
+        5094107,
+        "F",
+        "1969-04-05"
+      ],
+      [
+        5096552,
+        "F",
+        "1938-01-01"
+      ],
+      [
+        5098691,
+        "F",
+        "1950-10-19"
+      ],
+      [
+        5105683,
+        "F",
+        "1976-04-03"
+      ],
+      [
+        5115307,
+        "F",
+        "1976-12-15"
+      ],
+      [
+        5115815,
+        "M",
+        "1950-04-04"
+      ],
+      [
+        5119703,
+        "M",
+        "1968-05-21"
+      ],
+      [
+        5122312,
+        "F",
+        "1969-11-30"
+      ],
+      [
+        5123360,
+        "F",
+        "1960-08-24"
+      ],
+      [
+        5126587,
+        "F",
+        "1964-01-01"
+      ],
+      [
+        5164396,
+        "F",
+        "1938-03-23"
+      ],
+      [
+        5174645,
+        "M",
+        "1938-11-07"
+      ],
+      [
+        5176234,
+        "F",
+        "1957-01-19"
+      ],
+      [
+        5176755,
+        "F",
+        "1931-05-27"
+      ],
+      [
+        5179581,
+        "F",
+        "1955-01-07"
+      ],
+      [
+        5181621,
+        "M",
+        "1942-03-04"
+      ],
+      [
+        5184284,
+        "F",
+        "1963-12-13"
+      ],
+      [
+        5186147,
+        "F",
+        "1949-05-11"
+      ],
+      [
+        5296268,
+        "F",
+        "1969-02-15"
+      ],
+      [
+        5300381,
+        "F",
+        "1953-12-26"
+      ],
+      [
+        5302954,
+        "F",
+        "1978-02-10"
+      ],
+      [
+        5397059,
+        "F",
+        "1976-01-14"
+      ],
+      [
+        5404650,
+        "F",
+        "1963-04-07"
+      ],
+      [
+        5405581,
+        "F",
+        "1956-06-25"
+      ],
+      [
+        5408290,
+        "M",
+        "1957-11-06"
+      ],
+      [
+        5441886,
+        "F",
+        "1968-02-16"
+      ],
+      [
+        5446559,
+        "F",
+        "1931-03-19"
+      ],
+      [
+        5452747,
+        "F",
+        "1972-03-22"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T1.ID, T1.SEX, T1.Birthday FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.LDH > 500",
+    "gold_answer": [
+      [
+        27654,
+        "F",
+        "1936-03-25"
+      ],
+      [
+        57266,
+        "M",
+        "1923-07-25"
+      ],
+      [
+        81043,
+        "M",
+        "1967-03-25"
+      ],
+      [
+        540520,
+        "F",
+        "1941-11-21"
+      ],
+      [
+        912147,
+        "F",
+        "1975-02-17"
+      ],
+      [
+        944797,
+        "F",
+        "1975-01-31"
+      ],
+      [
+        1078741,
+        "F",
+        "1937-12-18"
+      ],
+      [
+        1110526,
+        "F",
+        "1966-01-01"
+      ],
+      [
+        1124385,
+        "F",
+        "1944-04-20"
+      ],
+      [
+        1137040,
+        "M",
+        "1966-12-01"
+      ],
+      [
+        1138737,
+        "F",
+        "1965-11-18"
+      ],
+      [
+        1650222,
+        "F",
+        "1947-03-17"
+      ],
+      [
+        1673252,
+        "F",
+        "1989-08-28"
+      ],
+      [
+        1944990,
+        "F",
+        "1950-08-03"
+      ],
+      [
+        2265184,
+        "F",
+        "1926-01-02"
+      ],
+      [
+        2276582,
+        "F",
+        "1941-07-10"
+      ],
+      [
+        2307640,
+        "M",
+        "1953-04-06"
+      ],
+      [
+        2308236,
+        "F",
+        "1951-01-20"
+      ],
+      [
+        2343945,
+        "F",
+        "1952-09-10"
+      ],
+      [
+        2371753,
+        "F",
+        "1932-12-05"
+      ],
+      [
+        2395148,
+        "F",
+        "1971-04-03"
+      ],
+      [
+        2931207,
+        "F",
+        "1959-01-05"
+      ],
+      [
+        2933261,
+        "F",
+        "1967-08-26"
+      ],
+      [
+        3150681,
+        "F",
+        "1974-09-30"
+      ],
+      [
+        3173679,
+        "F",
+        "1980-09-04"
+      ],
+      [
+        3178036,
+        "F",
+        "1929-03-22"
+      ],
+      [
+        3182521,
+        "M",
+        "1952-10-16"
+      ],
+      [
+        3310582,
+        "F",
+        "1965-11-10"
+      ],
+      [
+        3362815,
+        "M",
+        "1969-02-06"
+      ],
+      [
+        3418071,
+        "F",
+        "1957-11-12"
+      ],
+      [
+        3545964,
+        "F",
+        "1926-08-01"
+      ],
+      [
+        3552067,
+        "F",
+        "1938-04-05"
+      ],
+      [
+        4007151,
+        "M",
+        "1968-06-11"
+      ],
+      [
+        4021070,
+        "F",
+        "1928-07-10"
+      ],
+      [
+        4415406,
+        "F",
+        "1935-06-03"
+      ],
+      [
+        4416959,
+        "F",
+        "1949-07-16"
+      ],
+      [
+        4417978,
+        "F",
+        "1941-10-06"
+      ],
+      [
+        4424808,
+        "F",
+        "1936-05-22"
+      ],
+      [
+        4425292,
+        "F",
+        "1954-12-23"
+      ],
+      [
+        4466420,
+        "F",
+        "1930-02-15"
+      ],
+      [
+        4466840,
+        "F",
+        "1953-07-12"
+      ],
+      [
+        4472142,
+        "F",
+        "1973-03-27"
+      ],
+      [
+        4483771,
+        "M",
+        "1967-03-15"
+      ],
+      [
+        4618443,
+        "M",
+        "1922-12-01"
+      ],
+      [
+        4621629,
+        "F",
+        "1962-07-19"
+      ],
+      [
+        4630092,
+        "F",
+        "1949-04-21"
+      ],
+      [
+        4632421,
+        "F",
+        "1941-07-29"
+      ],
+      [
+        4632519,
+        "F",
+        "1925-03-25"
+      ],
+      [
+        4632548,
+        "F",
+        "1927-01-25"
+      ],
+      [
+        4634342,
+        "F",
+        "1967-11-11"
+      ],
+      [
+        4643816,
+        "F",
+        "1949-05-13"
+      ],
+      [
+        4648912,
+        "F",
+        "1974-11-25"
+      ],
+      [
+        4649885,
+        "F",
+        "1952-03-03"
+      ],
+      [
+        4652830,
+        "F",
+        "1946-05-12"
+      ],
+      [
+        4790235,
+        "F",
+        "1943-11-28"
+      ],
+      [
+        4791049,
+        "F",
+        "1939-01-07"
+      ],
+      [
+        4792459,
+        "M",
+        "1931-02-11"
+      ],
+      [
+        4823634,
+        "F",
+        "1938-04-08"
+      ],
+      [
+        4840422,
+        "F",
+        "1962-01-18"
+      ],
+      [
+        4843434,
+        "F",
+        "1971-09-20"
+      ],
+      [
+        4861720,
+        "F",
+        "1973-04-13"
+      ],
+      [
+        4862013,
+        "F",
+        "1964-01-29"
+      ],
+      [
+        4865142,
+        "M",
+        "1961-12-12"
+      ],
+      [
+        4869782,
+        "M",
+        "1961-03-18"
+      ],
+      [
+        4878272,
+        "F",
+        "1945-12-04"
+      ],
+      [
+        4879930,
+        "F",
+        "1958-11-24"
+      ],
+      [
+        4894243,
+        "F",
+        "1956-12-07"
+      ],
+      [
+        4915498,
+        "F",
+        "1959-01-22"
+      ],
+      [
+        4916710,
+        "F",
+        "1939-09-19"
+      ],
+      [
+        4921572,
+        "F",
+        "1950-09-04"
+      ],
+      [
+        4927381,
+        "F",
+        "1977-02-26"
+      ],
+      [
+        5064814,
+        "F",
+        "1965-03-19"
+      ],
+      [
+        5065022,
+        "F",
+        "1971-11-16"
+      ],
+      [
+        5093188,
+        "M",
+        "1944-04-25"
+      ],
+      [
+        5093771,
+        "F",
+        "1964-10-17"
+      ],
+      [
+        5094107,
+        "F",
+        "1969-04-05"
+      ],
+      [
+        5096552,
+        "F",
+        "1938-01-01"
+      ],
+      [
+        5098691,
+        "F",
+        "1950-10-19"
+      ],
+      [
+        5105683,
+        "F",
+        "1976-04-03"
+      ],
+      [
+        5115307,
+        "F",
+        "1976-12-15"
+      ],
+      [
+        5115815,
+        "M",
+        "1950-04-04"
+      ],
+      [
+        5119703,
+        "M",
+        "1968-05-21"
+      ],
+      [
+        5122312,
+        "F",
+        "1969-11-30"
+      ],
+      [
+        5123360,
+        "F",
+        "1960-08-24"
+      ],
+      [
+        5126587,
+        "F",
+        "1964-01-01"
+      ],
+      [
+        5164396,
+        "F",
+        "1938-03-23"
+      ],
+      [
+        5174645,
+        "M",
+        "1938-11-07"
+      ],
+      [
+        5176234,
+        "F",
+        "1957-01-19"
+      ],
+      [
+        5176755,
+        "F",
+        "1931-05-27"
+      ],
+      [
+        5179581,
+        "F",
+        "1955-01-07"
+      ],
+      [
+        5181621,
+        "M",
+        "1942-03-04"
+      ],
+      [
+        5184284,
+        "F",
+        "1963-12-13"
+      ],
+      [
+        5186147,
+        "F",
+        "1949-05-11"
+      ],
+      [
+        5296268,
+        "F",
+        "1969-02-15"
+      ],
+      [
+        5300381,
+        "F",
+        "1953-12-26"
+      ],
+      [
+        5302954,
+        "F",
+        "1978-02-10"
+      ],
+      [
+        5397059,
+        "F",
+        "1976-01-14"
+      ],
+      [
+        5404650,
+        "F",
+        "1963-04-07"
+      ],
+      [
+        5405581,
+        "F",
+        "1956-06-25"
+      ],
+      [
+        5408290,
+        "M",
+        "1957-11-06"
+      ],
+      [
+        5441886,
+        "F",
+        "1968-02-16"
+      ],
+      [
+        5446559,
+        "F",
+        "1931-03-19"
+      ],
+      [
+        5452747,
+        "F",
+        "1972-03-22"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 7.5983,
+    "llm_calls": 2,
+    "prompt_tokens": 3105,
+    "completion_tokens": 1184,
+    "reasoning_tokens": 955,
+    "total_tokens": 4289,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1156",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "State the ID and age of patient with positive degree of coagulation.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT P.ID, CAST(strftime('%Y', CURRENT_TIMESTAMP) AS INTEGER) - CAST(strftime('%Y', P.Birthday) AS INTEGER) AS age FROM Patient AS P INNER JOIN Examination AS E ON P.ID = E.ID WHERE E.RVVT = '+'",
+    "predicted_answer": [
+      [
+        163109,
+        76
+      ],
+      [
+        174116,
+        53
+      ],
+      [
+        355009,
+        42
+      ],
+      [
+        1567380,
+        67
+      ],
+      [
+        2803470,
+        41
+      ],
+      [
+        3192610,
+        88
+      ],
+      [
+        4130000,
+        63
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T1.ID, STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Examination AS T2 ON T1.ID = T2.ID WHERE T2.RVVT = '+'",
+    "gold_answer": [
+      [
+        163109,
+        76
+      ],
+      [
+        174116,
+        53
+      ],
+      [
+        355009,
+        42
+      ],
+      [
+        1567380,
+        67
+      ],
+      [
+        2803470,
+        41
+      ],
+      [
+        3192610,
+        88
+      ],
+      [
+        4130000,
+        63
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 12.2842,
+    "llm_calls": 2,
+    "prompt_tokens": 3171,
+    "completion_tokens": 2066,
+    "reasoning_tokens": 1822,
+    "total_tokens": 5237,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1166",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What are the symptoms observed by the youngest patient to ever did a medical examination? Identify their diagnosis.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT E.Symptoms, E.Diagnosis FROM Examination AS E INNER JOIN Patient AS P ON E.ID = P.ID WHERE E.Symptoms IS NOT NULL AND P.Birthday = (SELECT MAX(P2.Birthday) FROM Patient AS P2 INNER JOIN Examination AS E2 ON E2.ID = P2.ID WHERE E2.Symptoms IS NOT NULL) ORDER BY E.`Examination Date` DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "CNS susp",
+        "SLE+Psy"
+      ]
+    ],
+    "gold_sql": "SELECT T2.Symptoms, T1.Diagnosis FROM Patient AS T1 INNER JOIN Examination AS T2 ON T1.ID = T2.ID WHERE T2.Symptoms IS NOT NULL ORDER BY T1.Birthday DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "CNS susp",
+        "SLE"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 24.9953,
+    "llm_calls": 2,
+    "prompt_tokens": 3383,
+    "completion_tokens": 4703,
+    "reasoning_tokens": 4186,
+    "total_tokens": 8086,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1168",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "The oldest SJS patient's medical laboratory work was completed on what date, and what age was the patient when they initially arrived at the hospital?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT L.\"Date\", CAST(strftime('%Y', P.\"First Date\") AS INTEGER) - CAST(strftime('%Y', P.\"Birthday\") AS INTEGER) AS age FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE P.\"Diagnosis\" = 'SJS' ORDER BY P.\"Birthday\" ASC, L.\"Date\" ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        "1981-07-31",
+        69
+      ]
+    ],
+    "gold_sql": "SELECT T1.Date, STRFTIME('%Y', T2.`First Date`) - STRFTIME('%Y', T2.Birthday),T2.Birthday FROM Laboratory AS T1 INNER JOIN Patient AS T2 ON T1.ID = T2.ID WHERE T2.Diagnosis = 'SJS' AND T2.Birthday IS NOT NULL ORDER BY T2.Birthday ASC LIMIT 1",
+    "gold_answer": [
+      [
+        "1981-07-31",
+        69,
+        "1917-04-18"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 256.8922,
+    "llm_calls": 5,
+    "prompt_tokens": 5281,
+    "completion_tokens": 23580,
+    "reasoning_tokens": 22824,
+    "total_tokens": 28861,
+    "cached_prompt_tokens": 2560,
+    "usage_missing_calls": 2,
+    "reasoning_usage_missing_calls": 2,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1169",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What is the ratio of male to female patients among all those with abnormal uric acid counts?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT 1.0 * SUM(CASE WHEN P.SEX = 'M' AND L.UA <= 8.0 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN P.SEX = 'F' AND L.UA <= 6.5 THEN 1 ELSE 0 END), 0) AS Ratio FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID;",
+    "predicted_answer": [
+      [
+        0.20566810835419985
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.UA <= 8.0 AND T1.SEX = 'M' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN T2.UA <= 6.5 AND T1.SEX = 'F' THEN 1 ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID",
+    "gold_answer": [
+      [
+        0.20566810835419985
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 17.4122,
+    "llm_calls": 2,
+    "prompt_tokens": 3480,
+    "completion_tokens": 3177,
+    "reasoning_tokens": 2813,
+    "total_tokens": 6657,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1171",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "How many underage patients were examined during the course of the three-year period from 1990 to 1993?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT COUNT(DISTINCT P.ID) FROM Patient AS P INNER JOIN Examination AS E ON P.ID = E.ID WHERE CAST(strftime('%Y', E.[Examination Date]) AS INTEGER) BETWEEN 1990 AND 1993 AND CAST(strftime('%Y', E.[Examination Date]) AS INTEGER) - CAST(strftime('%Y', P.Birthday) AS INTEGER) < 18",
+    "predicted_answer": [
+      [
+        1
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(T1.ID) FROM Patient AS T1 INNER JOIN Examination AS T2 ON T1.ID = T2.ID WHERE STRFTIME('%Y', T2.`Examination Date`) BETWEEN '1990' AND '1993' AND STRFTIME('%Y', T2.`Examination Date`) - STRFTIME('%Y', T1.Birthday) < 18",
+    "gold_answer": [
+      [
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 48.34,
+    "llm_calls": 2,
+    "prompt_tokens": 3620,
+    "completion_tokens": 9387,
+    "reasoning_tokens": 8965,
+    "total_tokens": 13007,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1175",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "How old was the patient who had the highest hemoglobin count at the time of the examination, and what is the doctor's diagnosis?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CAST(strftime('%Y', E.`Examination Date`) AS INTEGER) - CAST(strftime('%Y', P.Birthday) AS INTEGER) AS age, E.Diagnosis AS diagnosis FROM Laboratory AS L INNER JOIN Examination AS E ON L.ID = E.ID AND L.`Date` = E.`Examination Date` INNER JOIN Patient AS P ON P.ID = E.ID WHERE L.HGB = (SELECT MAX(HGB) FROM Laboratory) LIMIT 1",
+    "predicted_answer": [],
+    "gold_sql": "SELECT STRFTIME('%Y', T2.Date) - STRFTIME('%Y', T1.Birthday), T1.Diagnosis FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID ORDER BY T2.HGB DESC LIMIT 1",
+    "gold_answer": [
+      [
+        28,
+        "SLE"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 33.7232,
+    "llm_calls": 2,
+    "prompt_tokens": 3390,
+    "completion_tokens": 6278,
+    "reasoning_tokens": 5765,
+    "total_tokens": 9668,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1179",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For the patient who was diagnosed with SLE on 1994/2/19, what was his/her anti-Cardiolipin antibody concentration status on 1993/11/12?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT E.\"aCL IgM\" FROM Examination AS E JOIN Patient AS P ON E.ID = P.ID WHERE P.Diagnosis = 'SLE' AND REPLACE(P.Description, '/', '-') = '1994-02-19' AND REPLACE(E.\"Examination Date\", '/', '-') = '1993-11-12' LIMIT 1",
+    "predicted_answer": [
+      [
+        4.1
+      ]
+    ],
+    "gold_sql": "SELECT `aCL IgA`, `aCL IgG`, `aCL IgM` FROM Examination WHERE ID IN ( SELECT ID FROM Patient WHERE Diagnosis = 'SLE' AND Description = '1994-02-19' ) AND `Examination Date` = '1993-11-12'",
+    "gold_answer": [
+      [
+        3,
+        5.1,
+        4.1
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 28.907,
+    "llm_calls": 2,
+    "prompt_tokens": 3437,
+    "completion_tokens": 5524,
+    "reasoning_tokens": 5116,
+    "total_tokens": 8961,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1185",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For the patient who was born on 1959/2/18, what is the decrease rate for his/her total cholesterol from November to December in 1981?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT (SUM(CASE WHEN L.\"Date\" LIKE '1981-11-%' THEN L.`T-CHO` ELSE 0 END) - SUM(CASE WHEN L.\"Date\" LIKE '1981-12-%' THEN L.`T-CHO` ELSE 0 END)) * 1.0 / NULLIF(SUM(CASE WHEN L.\"Date\" LIKE '1981-12-%' THEN L.`T-CHO` ELSE 0 END), 0) FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID WHERE P.Birthday = '1959-02-18' AND (L.\"Date\" LIKE '1981-11-%' OR L.\"Date\" LIKE '1981-12-%')",
+    "predicted_answer": [
+      [
+        0.06030150753768844
+      ]
+    ],
+    "gold_sql": "SELECT CAST((SUM(CASE WHEN T2.Date LIKE '1981-11-%' THEN T2.`T-CHO` ELSE 0 END) - SUM(CASE WHEN T2.Date LIKE '1981-12-%' THEN T2.`T-CHO` ELSE 0 END)) AS REAL) / SUM(CASE WHEN T2.Date LIKE '1981-12-%' THEN T2.`T-CHO` ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.Birthday = '1959-02-18'",
+    "gold_answer": [
+      [
+        0.06030150753768844
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 21.0477,
+    "llm_calls": 3,
+    "prompt_tokens": 6140,
+    "completion_tokens": 3813,
+    "reasoning_tokens": 2942,
+    "total_tokens": 9953,
+    "cached_prompt_tokens": 3072,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1205",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "Was the patient with the number 57266's uric acid within a normal range?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CASE WHEN (P.SEX = 'M' AND L.UA > 8.0) OR (P.SEX = 'F' AND L.UA > 6.5) THEN 'Yes' ELSE 'No' END FROM (SELECT 57266 AS ID) AS X LEFT JOIN Patient AS P ON X.ID = P.ID LEFT JOIN Laboratory AS L ON X.ID = L.ID ORDER BY L.Date DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "No"
+      ]
+    ],
+    "gold_sql": "SELECT CASE WHEN (T1.SEX = 'F' AND T2.UA > 6.5) OR (T1.SEX = 'M' AND T2.UA > 8.0) THEN true ELSE false END FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.ID = 57266",
+    "gold_answer": [
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        1
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ],
+      [
+        0
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 67.4579,
+    "llm_calls": 3,
+    "prompt_tokens": 5282,
+    "completion_tokens": 12537,
+    "reasoning_tokens": 11794,
+    "total_tokens": 17819,
+    "cached_prompt_tokens": 2560,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1225",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "List and group all patients by sex for total bilirubin (T-BIL) level not within the normal range.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT P.SEX, GROUP_CONCAT(DISTINCT P.ID) AS IDs FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE L.`T-BIL` >= 2.0 GROUP BY P.SEX",
+    "predicted_answer": [
+      [
+        "F",
+        "250391,1180510,2308236,2931207,4862013"
+      ],
+      [
+        "M",
+        "43003,444499,1137040,2307640,4618443"
+      ]
+    ],
+    "gold_sql": "SELECT T1.ID,T1.SEX FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.`T-BIL` >= 2.0 GROUP BY T1.SEX,T1.ID",
+    "gold_answer": [
+      [
+        43003,
+        "M"
+      ],
+      [
+        250391,
+        "F"
+      ],
+      [
+        444499,
+        "M"
+      ],
+      [
+        1137040,
+        "M"
+      ],
+      [
+        1180510,
+        "F"
+      ],
+      [
+        2307640,
+        "M"
+      ],
+      [
+        2308236,
+        "F"
+      ],
+      [
+        2931207,
+        "F"
+      ],
+      [
+        4618443,
+        "M"
+      ],
+      [
+        4862013,
+        "F"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 9.016,
+    "llm_calls": 2,
+    "prompt_tokens": 3287,
+    "completion_tokens": 1312,
+    "reasoning_tokens": 1114,
+    "total_tokens": 4599,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1235",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What are the patient's diagnosis for those who has lower red blood blood cell? State their ID and age.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT T1.ID, CAST(strftime('%Y', CURRENT_TIMESTAMP) AS INTEGER) - CAST(strftime('%Y', T1.Birthday) AS INTEGER) AS age, T1.Diagnosis FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.RBC < 3.5 ORDER BY T1.ID",
+    "predicted_answer": [
+      [
+        27654,
+        90,
+        "RA, SLE susp"
+      ],
+      [
+        30609,
+        82,
+        "SLE, MCTD"
+      ],
+      [
+        58139,
+        54,
+        "SJS"
+      ],
+      [
+        71417,
+        97,
+        "RA"
+      ],
+      [
+        130370,
+        74,
+        "RA"
+      ],
+      [
+        444499,
+        72,
+        "MRA"
+      ],
+      [
+        528900,
+        107,
+        "vasculitis, TA susp"
+      ],
+      [
+        619178,
+        80,
+        "SJS"
+      ],
+      [
+        912147,
+        51,
+        "MCTD, SJS"
+      ],
+      [
+        940737,
+        83,
+        "SJS, MCTD, AORTITIS"
+      ],
+      [
+        944797,
+        51,
+        "RA,SJS"
+      ],
+      [
+        1043570,
+        65,
+        "SLE"
+      ],
+      [
+        1124385,
+        82,
+        "SJS"
+      ],
+      [
+        1130007,
+        74,
+        "SLE"
+      ],
+      [
+        1138737,
+        61,
+        "RA"
+      ],
+      [
+        1180510,
+        52,
+        "Raynaud"
+      ],
+      [
+        1557464,
+        76,
+        "SJS"
+      ],
+      [
+        1567380,
+        67,
+        "SLE"
+      ],
+      [
+        1617548,
+        58,
+        "DM"
+      ],
+      [
+        1622238,
+        89,
+        "PSS, PM, SJS, RA\u001dSJS\u001dPM"
+      ],
+      [
+        1711181,
+        52,
+        "SLE, SJS, Adie"
+      ],
+      [
+        1755350,
+        82,
+        "SLE"
+      ],
+      [
+        1967597,
+        47,
+        "SLE"
+      ],
+      [
+        2083458,
+        82,
+        "Vasculitis"
+      ],
+      [
+        2256652,
+        88,
+        "RA"
+      ],
+      [
+        2265184,
+        100,
+        "PMR"
+      ],
+      [
+        2307640,
+        73,
+        "SLE"
+      ],
+      [
+        2315140,
+        91,
+        "SLE"
+      ],
+      [
+        2343945,
+        74,
+        "SLE"
+      ],
+      [
+        2370675,
+        52,
+        "SLE, SJS"
+      ],
+      [
+        2927464,
+        95,
+        "RA"
+      ],
+      [
+        2931207,
+        67,
+        "SLE, APS"
+      ],
+      [
+        2933261,
+        59,
+        "SLE"
+      ],
+      [
+        3174630,
+        52,
+        "SLE, SJS"
+      ],
+      [
+        3182521,
+        74,
+        "DM"
+      ],
+      [
+        3215988,
+        87,
+        "MRA, SJS"
+      ],
+      [
+        3310582,
+        61,
+        "SLE"
+      ],
+      [
+        3362815,
+        57,
+        "SLE"
+      ],
+      [
+        3413715,
+        72,
+        "SLE, SJS"
+      ],
+      [
+        3545964,
+        100,
+        "SJS, PN susp"
+      ],
+      [
+        3562042,
+        65,
+        "BEHCET"
+      ],
+      [
+        4007151,
+        58,
+        "PN, AGA"
+      ],
+      [
+        4416959,
+        77,
+        "RA (seronegative)"
+      ],
+      [
+        4417978,
+        85,
+        "PM"
+      ],
+      [
+        4425292,
+        72,
+        "SJS"
+      ],
+      [
+        4432946,
+        66,
+        "PNc"
+      ],
+      [
+        4466840,
+        73,
+        "ITP"
+      ],
+      [
+        4471732,
+        57,
+        "SJS, MCTD"
+      ],
+      [
+        4618443,
+        104,
+        "MRA"
+      ],
+      [
+        4632519,
+        101,
+        "RA"
+      ],
+      [
+        4632548,
+        99,
+        "SLE"
+      ],
+      [
+        4652830,
+        80,
+        "DM"
+      ],
+      [
+        4790235,
+        83,
+        "SLE"
+      ],
+      [
+        4840422,
+        64,
+        "SLE, APS\u001dAPS"
+      ],
+      [
+        4843434,
+        55,
+        "SLE"
+      ],
+      [
+        4862013,
+        62,
+        "AORTITIS susp"
+      ],
+      [
+        4865142,
+        65,
+        "RA"
+      ],
+      [
+        4885128,
+        58,
+        "SLE, neonatal LE"
+      ],
+      [
+        4894243,
+        70,
+        "SLE"
+      ],
+      [
+        4934716,
+        60,
+        "PN, AORTITIS susp"
+      ],
+      [
+        5060913,
+        58,
+        "SLE"
+      ],
+      [
+        5063068,
+        61,
+        "RA"
+      ],
+      [
+        5105683,
+        50,
+        "SLE, SJS"
+      ],
+      [
+        5117606,
+        80,
+        "DM"
+      ],
+      [
+        5119703,
+        58,
+        "PM"
+      ],
+      [
+        5122312,
+        57,
+        "SLE, APS"
+      ],
+      [
+        5164396,
+        88,
+        "SLE"
+      ],
+      [
+        5181621,
+        84,
+        "RA"
+      ],
+      [
+        5186147,
+        77,
+        "PM/DM"
+      ],
+      [
+        5295122,
+        76,
+        "FUO"
+      ],
+      [
+        5302954,
+        48,
+        "SLE"
+      ],
+      [
+        5303768,
+        75,
+        "SLE"
+      ],
+      [
+        5397059,
+        50,
+        "SLE"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T1.Diagnosis, T1.ID , STRFTIME('%Y', CURRENT_TIMESTAMP) -STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.RBC < 3.5",
+    "gold_answer": [
+      [
+        "RA, SLE susp",
+        27654,
+        90
+      ],
+      [
+        "SLE, MCTD",
+        30609,
+        82
+      ],
+      [
+        "SJS",
+        58139,
+        54
+      ],
+      [
+        "RA",
+        71417,
+        97
+      ],
+      [
+        "RA",
+        130370,
+        74
+      ],
+      [
+        "MRA",
+        444499,
+        72
+      ],
+      [
+        "vasculitis, TA susp",
+        528900,
+        107
+      ],
+      [
+        "SJS",
+        619178,
+        80
+      ],
+      [
+        "MCTD, SJS",
+        912147,
+        51
+      ],
+      [
+        "SJS, MCTD, AORTITIS",
+        940737,
+        83
+      ],
+      [
+        "RA,SJS",
+        944797,
+        51
+      ],
+      [
+        "SLE",
+        1043570,
+        65
+      ],
+      [
+        "SJS",
+        1124385,
+        82
+      ],
+      [
+        "SLE",
+        1130007,
+        74
+      ],
+      [
+        "RA",
+        1138737,
+        61
+      ],
+      [
+        "Raynaud",
+        1180510,
+        52
+      ],
+      [
+        "SJS",
+        1557464,
+        76
+      ],
+      [
+        "SLE",
+        1567380,
+        67
+      ],
+      [
+        "DM",
+        1617548,
+        58
+      ],
+      [
+        "PSS, PM, SJS, RA\u001dSJS\u001dPM",
+        1622238,
+        89
+      ],
+      [
+        "SLE, SJS, Adie",
+        1711181,
+        52
+      ],
+      [
+        "SLE",
+        1755350,
+        82
+      ],
+      [
+        "SLE",
+        1967597,
+        47
+      ],
+      [
+        "Vasculitis",
+        2083458,
+        82
+      ],
+      [
+        "RA",
+        2256652,
+        88
+      ],
+      [
+        "PMR",
+        2265184,
+        100
+      ],
+      [
+        "SLE",
+        2307640,
+        73
+      ],
+      [
+        "SLE",
+        2315140,
+        91
+      ],
+      [
+        "SLE",
+        2343945,
+        74
+      ],
+      [
+        "SLE, SJS",
+        2370675,
+        52
+      ],
+      [
+        "RA",
+        2927464,
+        95
+      ],
+      [
+        "SLE, APS",
+        2931207,
+        67
+      ],
+      [
+        "SLE",
+        2933261,
+        59
+      ],
+      [
+        "SLE, SJS",
+        3174630,
+        52
+      ],
+      [
+        "DM",
+        3182521,
+        74
+      ],
+      [
+        "MRA, SJS",
+        3215988,
+        87
+      ],
+      [
+        "SLE",
+        3310582,
+        61
+      ],
+      [
+        "SLE",
+        3362815,
+        57
+      ],
+      [
+        "SLE, SJS",
+        3413715,
+        72
+      ],
+      [
+        "SJS, PN susp",
+        3545964,
+        100
+      ],
+      [
+        "BEHCET",
+        3562042,
+        65
+      ],
+      [
+        "PN, AGA",
+        4007151,
+        58
+      ],
+      [
+        "RA (seronegative)",
+        4416959,
+        77
+      ],
+      [
+        "PM",
+        4417978,
+        85
+      ],
+      [
+        "SJS",
+        4425292,
+        72
+      ],
+      [
+        "PNc",
+        4432946,
+        66
+      ],
+      [
+        "ITP",
+        4466840,
+        73
+      ],
+      [
+        "SJS, MCTD",
+        4471732,
+        57
+      ],
+      [
+        "MRA",
+        4618443,
+        104
+      ],
+      [
+        "RA",
+        4632519,
+        101
+      ],
+      [
+        "SLE",
+        4632548,
+        99
+      ],
+      [
+        "DM",
+        4652830,
+        80
+      ],
+      [
+        "SLE",
+        4790235,
+        83
+      ],
+      [
+        "SLE, APS\u001dAPS",
+        4840422,
+        64
+      ],
+      [
+        "SLE",
+        4843434,
+        55
+      ],
+      [
+        "AORTITIS susp",
+        4862013,
+        62
+      ],
+      [
+        "RA",
+        4865142,
+        65
+      ],
+      [
+        "SLE, neonatal LE",
+        4885128,
+        58
+      ],
+      [
+        "SLE",
+        4894243,
+        70
+      ],
+      [
+        "PN, AORTITIS susp",
+        4934716,
+        60
+      ],
+      [
+        "SLE",
+        5060913,
+        58
+      ],
+      [
+        "RA",
+        5063068,
+        61
+      ],
+      [
+        "SLE, SJS",
+        5105683,
+        50
+      ],
+      [
+        "DM",
+        5117606,
+        80
+      ],
+      [
+        "PM",
+        5119703,
+        58
+      ],
+      [
+        "SLE, APS",
+        5122312,
+        57
+      ],
+      [
+        "SLE",
+        5164396,
+        88
+      ],
+      [
+        "RA",
+        5181621,
+        84
+      ],
+      [
+        "PM/DM",
+        5186147,
+        77
+      ],
+      [
+        "FUO",
+        5295122,
+        76
+      ],
+      [
+        "SLE",
+        5302954,
+        48
+      ],
+      [
+        "SLE",
+        5303768,
+        75
+      ],
+      [
+        "SLE",
+        5397059,
+        50
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 15.0611,
+    "llm_calls": 2,
+    "prompt_tokens": 3217,
+    "completion_tokens": 2807,
+    "reasoning_tokens": 2515,
+    "total_tokens": 6024,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1238",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "Among the patients who were diagnosed with SLE, who is the oldest with normal hemoglobin level. Provide the ID and sex.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT P.ID, P.SEX FROM Patient AS P WHERE P.Diagnosis = 'SLE' AND EXISTS (SELECT 1 FROM Laboratory AS L WHERE L.ID = P.ID AND L.HGB > 10 AND L.HGB < 17) ORDER BY P.Birthday ASC, P.ID ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        4792723,
+        "F"
+      ]
+    ],
+    "gold_sql": "SELECT T1.ID, T1.SEX FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.Diagnosis = 'SLE' AND T2.HGB > 10 AND T2.HGB < 17 ORDER BY T1.Birthday ASC LIMIT 1",
+    "gold_answer": [
+      [
+        4792723,
+        "F"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 52.9207,
+    "llm_calls": 3,
+    "prompt_tokens": 5226,
+    "completion_tokens": 9822,
+    "reasoning_tokens": 9309,
+    "total_tokens": 15048,
+    "cached_prompt_tokens": 2560,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1239",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "Name the ID and age of patient with two or more laboratory examinations which show their hematoclit level exceeded the normal range.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT P.ID, CAST(strftime('%Y', CURRENT_TIMESTAMP) AS INTEGER) - CAST(strftime('%Y', P.Birthday) AS INTEGER) AS age FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE L.HCT >= 52 GROUP BY P.ID, P.Birthday HAVING COUNT(L.ID) > 2 ORDER BY P.ID",
+    "predicted_answer": [
+      [
+        2307640,
+        73
+      ],
+      [
+        4007151,
+        58
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T1.ID, STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.ID IN ( SELECT ID FROM Laboratory WHERE HCT >= 52 GROUP BY ID HAVING COUNT(ID) >= 2 )",
+    "gold_answer": [
+      [
+        2307640,
+        73
+      ],
+      [
+        3182521,
+        74
+      ],
+      [
+        4007151,
+        58
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 21.8617,
+    "llm_calls": 2,
+    "prompt_tokens": 3456,
+    "completion_tokens": 4141,
+    "reasoning_tokens": 3558,
+    "total_tokens": 7597,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1241",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For patients with abnormal platelet level, state the number of patients with lower than normal range. How is it compare to the number of patients with higher than normal range?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) AS CALCULATION FROM Laboratory WHERE PLT <= 100 OR PLT >= 400;",
+    "predicted_answer": [
+      [
+        -555
+      ]
+    ],
+    "gold_sql": "SELECT SUM(CASE WHEN T2.PLT <= 100 THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.PLT >= 400 THEN 1 ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID",
+    "gold_answer": [
+      [
+        -562
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 52.0226,
+    "llm_calls": 3,
+    "prompt_tokens": 5394,
+    "completion_tokens": 9773,
+    "reasoning_tokens": 9092,
+    "total_tokens": 15167,
+    "cached_prompt_tokens": 2560,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1242",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For laboratory examinations take in 1984, list all patients below 50 years old with normal platelet level.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT DISTINCT P.ID FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE strftime('%Y', L.Date) = '1984' AND (CAST(strftime('%Y', 'now') AS INTEGER) - CAST(strftime('%Y', P.Birthday) AS INTEGER)) < 50 AND L.PLT BETWEEN 100 AND 400 ORDER BY P.ID;",
+    "predicted_answer": [
+      [
+        102490
+      ],
+      [
+        460574
+      ],
+      [
+        1086485
+      ],
+      [
+        2047892
+      ],
+      [
+        3173679
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T1.ID FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.PLT BETWEEN 100 AND 400 AND STRFTIME('%Y', T2.Date) - STRFTIME('%Y', T1.Birthday) < 50 AND STRFTIME('%Y', T2.Date) = '1984'",
+    "gold_answer": [
+      [
+        30609
+      ],
+      [
+        48473
+      ],
+      [
+        52199
+      ],
+      [
+        58139
+      ],
+      [
+        81043
+      ],
+      [
+        102490
+      ],
+      [
+        108788
+      ],
+      [
+        115272
+      ],
+      [
+        128012
+      ],
+      [
+        130312
+      ],
+      [
+        250391
+      ],
+      [
+        283032
+      ],
+      [
+        287122
+      ],
+      [
+        299839
+      ],
+      [
+        444499
+      ],
+      [
+        460574
+      ],
+      [
+        525998
+      ],
+      [
+        549080
+      ],
+      [
+        585659
+      ],
+      [
+        933793
+      ],
+      [
+        940737
+      ],
+      [
+        1043570
+      ],
+      [
+        1061042
+      ],
+      [
+        1066089
+      ],
+      [
+        1086485
+      ],
+      [
+        1491832
+      ],
+      [
+        1531448
+      ],
+      [
+        1567380
+      ],
+      [
+        1571569
+      ],
+      [
+        1610433
+      ],
+      [
+        1614305
+      ],
+      [
+        1617548
+      ],
+      [
+        1618929
+      ],
+      [
+        1622238
+      ],
+      [
+        1665879
+      ],
+      [
+        1711181
+      ],
+      [
+        1755350
+      ],
+      [
+        1757532
+      ],
+      [
+        1787610
+      ],
+      [
+        1792502
+      ],
+      [
+        1797754
+      ],
+      [
+        1923445
+      ],
+      [
+        1942213
+      ],
+      [
+        1944121
+      ],
+      [
+        2047892
+      ],
+      [
+        2052784
+      ],
+      [
+        2073196
+      ],
+      [
+        2083458
+      ],
+      [
+        2239659
+      ],
+      [
+        2256652
+      ],
+      [
+        2256779
+      ],
+      [
+        2276582
+      ],
+      [
+        2280686
+      ],
+      [
+        2289306
+      ],
+      [
+        2294836
+      ],
+      [
+        2307640
+      ],
+      [
+        2315140
+      ],
+      [
+        2343945
+      ],
+      [
+        2355809
+      ],
+      [
+        2357140
+      ],
+      [
+        2362973
+      ],
+      [
+        2370675
+      ],
+      [
+        2395148
+      ],
+      [
+        2429726
+      ],
+      [
+        2931207
+      ],
+      [
+        2933261
+      ],
+      [
+        2941804
+      ],
+      [
+        2945819
+      ],
+      [
+        2956679
+      ],
+      [
+        3150681
+      ],
+      [
+        3171569
+      ],
+      [
+        3173679
+      ],
+      [
+        3174630
+      ],
+      [
+        3175008
+      ],
+      [
+        3182521
+      ],
+      [
+        3215988
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 27.9673,
+    "llm_calls": 2,
+    "prompt_tokens": 3675,
+    "completion_tokens": 5149,
+    "reasoning_tokens": 4811,
+    "total_tokens": 8824,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1243",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For all patients who are older than 55 years old, what is the percentage of female who has abnormal prothrombin time (PT)?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN L.PT >= 14 AND P.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / SUM(CASE WHEN L.PT >= 14 THEN 1 ELSE 0 END) FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE (CAST(strftime('%Y', CURRENT_TIMESTAMP) AS INTEGER) - CAST(strftime('%Y', P.Birthday) AS INTEGER)) > 55",
+    "predicted_answer": [
+      [
+        78.3625730994152
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.PT >= 14 AND T1.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(CASE WHEN T2.PT >= 14 THEN 1 ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) > 55",
+    "gold_answer": [
+      [
+        1.2030885257676422
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 20.1621,
+    "llm_calls": 2,
+    "prompt_tokens": 3824,
+    "completion_tokens": 3576,
+    "reasoning_tokens": 3087,
+    "total_tokens": 7400,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1247",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "Among the male patients who have a normal level of white blood cells, how many of them have an abnormal fibrinogen level?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT COUNT(DISTINCT p.ID) AS count FROM Patient AS p INNER JOIN Laboratory AS l ON p.ID = l.ID WHERE p.SEX = 'M' AND l.WBC > 3.5 AND l.WBC < 9.0 AND (l.FG <= 150 OR l.FG >= 450)",
+    "predicted_answer": [
+      [
+        6
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(DISTINCT T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.FG <= 150 OR T2.FG >= 450 AND T2.WBC > 3.5 AND T2.WBC < 9.0 AND T1.SEX = 'M'",
+    "gold_answer": [
+      [
+        75
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 8.3897,
+    "llm_calls": 2,
+    "prompt_tokens": 3189,
+    "completion_tokens": 1338,
+    "reasoning_tokens": 1070,
+    "total_tokens": 4527,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1251",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "How many patients with an Ig G higher than normal?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT COUNT(DISTINCT ID) FROM Laboratory WHERE IGG >= 2000",
+    "predicted_answer": [
+      [
+        136
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(DISTINCT T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID INNER JOIN Examination AS T3 ON T3.ID = T2.ID WHERE T2.IGG >= 2000",
+    "gold_answer": [
+      [
+        9
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 5.0373,
+    "llm_calls": 2,
+    "prompt_tokens": 3076,
+    "completion_tokens": 613,
+    "reasoning_tokens": 502,
+    "total_tokens": 3689,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1252",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "Among the patients with a normal Ig G level, how many of them have symptoms?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(DISTINCT L.ID) FROM Laboratory AS L INNER JOIN Examination AS E ON L.ID = E.ID WHERE L.IGG > 900 AND L.IGG < 2000 AND E.Symptoms IS NOT NULL",
+    "predicted_answer": [
+      [
+        1
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID INNER JOIN Examination AS T3 ON T3.ID = T2.ID WHERE T2.IGG BETWEEN 900 AND 2000 AND T3.Symptoms IS NOT NULL",
+    "gold_answer": [
+      [
+        4
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 22.5459,
+    "llm_calls": 3,
+    "prompt_tokens": 4989,
+    "completion_tokens": 3845,
+    "reasoning_tokens": 3446,
+    "total_tokens": 8834,
+    "cached_prompt_tokens": 2560,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1254",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "How many patients with a normal Ig A level came to the hospital after 1990/1/1?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(DISTINCT P.ID) FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE CAST(strftime('%Y', P.\"First Date\") AS INTEGER) >= 1990 AND L.IGA > 80 AND L.IGA < 500;",
+    "predicted_answer": [
+      [
+        140
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.IGA BETWEEN 80 AND 500 AND  strftime('%Y',  T1.`First Date`) > '1990'",
+    "gold_answer": [
+      [
+        1590
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 13.011,
+    "llm_calls": 2,
+    "prompt_tokens": 3207,
+    "completion_tokens": 2397,
+    "reasoning_tokens": 2125,
+    "total_tokens": 5604,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1265",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "How many patients have a normal level of anti-ribonuclear protein and have been admitted to the hospital?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(DISTINCT P.ID) FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE P.Admission = '+' AND L.RNP IN ('negative', '0')",
+    "predicted_answer": [
+      [
+        35
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(DISTINCT T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.RNP = 'negative' OR T2.RNP = '0' AND T1.Admission = '+'",
+    "gold_answer": [
+      [
+        47
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 11.5176,
+    "llm_calls": 2,
+    "prompt_tokens": 3153,
+    "completion_tokens": 1979,
+    "reasoning_tokens": 1754,
+    "total_tokens": 5132,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-r0",
+    "agent_config_sha256": "9ddbe8712a0f473120a7d0945b5b88a4b52bfe348ca2bf3b38290532d181069f",
+    "termination": "final",
+    "run_id": "20260713T213358Z-8603f18a",
+    "trace_schema_version": 3
+  }
+]

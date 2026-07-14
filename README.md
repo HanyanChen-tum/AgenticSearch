@@ -64,6 +64,7 @@ docs/           findings ledger, offline-ingestion spec, task split
 ```bash
 python scripts/run_bird_train_fewshot.py \
   --output results/repro_trainfs_rhigh.json \
+  --model azure/seminar-gpt-5.4-mini \
   --k 1 --max-iterations 8 --reasoning-effort high
 ```
 Expect 67–70% (±1.5 run variance). Rescore any result file with the official

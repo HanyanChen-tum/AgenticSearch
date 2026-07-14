@@ -1,0 +1,139 @@
+{
+  "trace_schema_version": 3,
+  "run_id": "20260714T063422Z-e155e4d0",
+  "created_at": "2026-07-14T06:34:22.586273+00:00",
+  "status": "interrupted",
+  "completed_questions": 62,
+  "config": {
+    "dataset": "C:\\Users\\Irene\\AgenticSearch\\data\\processed\\bird_dev_500.json",
+    "dataset_sha256": "397d227d4c9f5f28590dc76e0a01dc8e2c9cd0bf4da2a2bc078c7b9c1017f5eb",
+    "ids_file": "C:\\Users\\Irene\\AgenticSearch\\data\\processed\\bird_cleancore_ids.json",
+    "ids_file_sha256": "b5f7949543409bf73d5c2fc899a23e4f7f04d39e07e77001dd1327694672b8a6",
+    "id_groups": [
+      "both_wrong",
+      "canary"
+    ],
+    "selected_question_count": 197,
+    "planned_question_count": 197,
+    "database_dir": "C:\\Users\\Irene\\AgenticSearch\\data\\raw\\bird\\minidev\\MINIDEV\\dev_databases",
+    "output": "C:\\Users\\Irene\\AgenticSearch\\results\\e3_c_core197_run2.json",
+    "model": "azure/seminar-gpt-5.4-mini",
+    "api_base": "https://gpt5openai.openai.azure.com/",
+    "api_version": "2024-12-01-preview",
+    "limit": null,
+    "max_iterations": 8,
+    "k": 1,
+    "effective_few_shot_k": 1,
+    "temperature": 0,
+    "reasoning_effort": "high",
+    "evaluation_sql_timeout_seconds": 30.0,
+    "agent_profile": "e3-c",
+    "agent_config": {
+      "profile": "e3-c",
+      "experiment_variant": "e3-c",
+      "prompt_profile": "basic",
+      "use_db_hints": false,
+      "verified_final": false,
+      "capability_gate": false,
+      "few_shot_mode": "train-retrieval",
+      "query_pattern_mode": "train-static-v1",
+      "offline_metadata_mode": "e3-c-metadata-v2",
+      "schema_context_mode": "offline-retrieval",
+      "context_mode": "direct",
+      "reasoning_mode": "none",
+      "planner_mode": "none",
+      "allowed_db_methods": [
+        "execute",
+        "sample_values"
+      ],
+      "config_schema_version": 1,
+      "capabilities": {
+        "version": 1,
+        "gate_enabled": false,
+        "allowed_db_methods": [
+          "execute",
+          "sample_values"
+        ],
+        "generic_recursive_llm": true,
+        "sha256": "98df04fcfd59d95d5034fcffacaa4100a5f02c4cfcc9263a7734cc4bd8bbbc64"
+      },
+      "prompt": {
+        "version": 1,
+        "prompt_id": "clean-protocol-v1",
+        "source": "protocol-only",
+        "source_split": "none",
+        "contains_task_specific_sql_rules": false,
+        "contains_examples": false,
+        "sha256": "1ea7ea4d3306b712394254f6feb929fb21f125d7393fedabfc66dbcd10822a70"
+      }
+    },
+    "agent_config_sha256": "a48f258a14b733ee1a569ae084c67bf04eefc54f0eab7ea368b333f35c1b34da",
+    "few_shot_retriever": {
+      "enabled": true,
+      "mode": "train-retrieval",
+      "requested_k": 1,
+      "effective_k": 1,
+      "class": "TrainFewShotRetriever",
+      "source_split": "bird-train",
+      "pool_path": "C:\\Users\\Irene\\AgenticSearch\\data\\train_pool.json",
+      "pool_sha256": "80c0326216d775eff04ae46d5656a452d741d09993d93d527b02848451ee443f",
+      "example_count": 9428,
+      "embedding_model": "all-MiniLM-L6-v2"
+    },
+    "query_pattern_library": {
+      "version": "train-static-v1",
+      "source_split": "bird-train",
+      "pool_path": "C:\\Users\\Irene\\AgenticSearch\\data\\train_pool.json",
+      "pool_sha256": "80c0326216d775eff04ae46d5656a452d741d09993d93d527b02848451ee443f",
+      "example_count": 9428,
+      "pattern_support": {
+        "aggregation_grain": 851,
+        "filtered_aggregation": 3757,
+        "top_k": 1681,
+        "output_contract": 2509,
+        "conditional_answer": 942,
+        "distinct_list": 1079,
+        "join_path": 7212,
+        "window_rank": 5
+      },
+      "artifact_sha256": "bdda5b6aa4f6d1b69f3c86d2d299e60bb1429f6c2e62b1acd58323850b34cc48"
+    },
+    "offline_metadata": {
+      "version": "e3-c-metadata-v2",
+      "path": "C:\\Users\\Irene\\AgenticSearch\\data\\processed\\e3_c_metadata_v2.json",
+      "artifact_sha256": "1e9f54d59113c2157f67d2ca3e1bb235a9726a871ff8d608b05d28b2306f9c0a",
+      "source": {
+        "database_dir": "C:\\Users\\Irene\\AgenticSearch\\data\\raw\\bird\\minidev\\MINIDEV\\dev_databases",
+        "database_dir_sha256": "f6cdb742363b88628620b58dbb172d663d3010943c5bcf0fa76f02c9b9735ea5",
+        "contains_eval_questions": false,
+        "contains_gold_sql": false
+      },
+      "database_count": 11,
+      "retrieval": {
+        "mode": "deterministic-lexical-plus-fk-neighbours",
+        "max_tables": 6,
+        "max_columns_per_table": 12
+      }
+    }
+  },
+  "token_usage": {
+    "prompt_tokens": 325878,
+    "completion_tokens": 534378,
+    "reasoning_tokens": 493479,
+    "total_tokens": 860256,
+    "cached_prompt_tokens": 135424,
+    "llm_calls": 174,
+    "usage_missing_calls": 2,
+    "reasoning_usage_missing_calls": 2,
+    "questions": 62,
+    "questions_with_complete_usage": 61,
+    "average_per_question": {
+      "prompt_tokens": 5256.1,
+      "completion_tokens": 8619.0,
+      "reasoning_tokens": 7959.34,
+      "total_tokens": 13875.1,
+      "cached_prompt_tokens": 2184.26
+    }
+  },
+  "finished_at": "2026-07-14T07:21:00.575023+00:00"
+}

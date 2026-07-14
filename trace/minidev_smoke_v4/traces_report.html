@@ -1,0 +1,546 @@
+<meta charset='utf-8'><body style='font-family:sans-serif;max-width:1100px;margin:auto'><h1>Trace report — 3 questions (1 failures, listed first)</h1>
+<p><b>run_id:</b> 20260713T045344Z-648b1e23</p>
+<p>For each failure: find the <b>wrong turn</b> and classify <b>KNOWLEDGE</b> (model lacked a fact) vs <b>REASONING</b> (had it, misused it).</p>
+<details><summary><b>bird_1472</b> [debit_card_specializing / moderate] <span style='color:#c62828'>✘ WRONG</span> — In 2012, who had the least consumption in LAM?</summary>
+<div style='margin:0.5em 1em; padding:0.5em; border-left:3px solid #999'>
+<details><summary><i>system prompt (5303 chars)</i></summary><pre style='white-space:pre-wrap'>You are a Text-to-SQL expert with access to a live database. Use it to verify your SQL before finalizing.
+
+AVAILABLE TOOLS (call these inside ```python blocks):
+  db.execute(&quot;SQL&quot;)                        — run any SELECT and see results
+  db.sample_values(&quot;table&quot;, &quot;column&quot;)     — see actual values stored in a column
+
+WORKFLOW:
+
+Turn 1 — READ HINT + EXPLORE (one code block):
+  ① Read the Hint carefully — it defines exact column values, date formats, and
+    computation formulas. Treat every definition in the Hint as ground truth.
+    Examples of what Hints tell you:
+      &quot;September 2013 refers to 201309&quot;  → WHERE date_col = &#x27;201309&#x27;  (not LIKE &#x27;2013-09%&#x27;)
+      &quot;ratio = count(A) / count(B)&quot;      → SELECT COUNT(CASE WHEN x=&#x27;A&#x27; THEN 1 END)*1.0 / COUNT(CASE WHEN x=&#x27;B&#x27; THEN 1 END)
+      &quot;meeting events refers to type = &#x27;Meeting&#x27;&quot; → WHERE type = &#x27;Meeting&#x27;
+  ② If any names, locations, or string values are NOT defined by the Hint,
+    use db.sample_values() to see how they are actually stored in the database.
+
+Turn 2 — TEST your SQL (one code block):
+  ```python
+  print(db.execute(&quot;YOUR SQL HERE&quot;))
+  ```
+
+Turn 3 — FINALIZE (plain text only, never inside a code block):
+  FINAL(&quot;YOUR SQL HERE&quot;)
+
+RULES:
+  • NEVER write FINAL() in the same message as a code block.
+  • ONE code block per turn.
+  • Schema is already provided — no need for get_tables() or get_schema().
+  • ⛔ NEVER call FINAL() if your last SQL returned 0 rows — that means your query
+    is wrong. Fix the WHERE clause, JOIN condition, or value format and retry.
+  • SELECT only the columns the question asks for, in the order mentioned.
+    Never add extra columns (no aliases, no COUNT(*) unless asked).
+  • If the question asks multiple things (&quot;What is X? Who is Y?&quot; / &quot;state A and B&quot;),
+    SELECT every asked item, in the order asked — do not answer only one part.
+    &quot;How old is the youngest driver? What is his name?&quot; → SELECT age_expr, forename, surname
+  • For superlatives (oldest/highest/best/dumbest) return exactly one row:
+    ORDER BY col ASC|DESC LIMIT 1 — never WHERE col = (SELECT MIN/MAX(...)) which returns ties.
+  • ONLY when the expected answer is literally yes or no (&quot;Did X...?&quot;, &quot;Is Y...?&quot;, &quot;Was each...?&quot;),
+    SELECT the answer itself as EXACTLY ONE column: IIF(condition, &#x27;YES&#x27;, &#x27;NO&#x27;) —
+    do not return the matching rows, do not add extra columns.
+    Comparison questions (&quot;Are there more X or Y? What is the difference?&quot;) are NOT yes/no —
+    return the value(s) asked.
+  • When using T1/T2 aliases, double-check which table each SELECTed column belongs to
+    (races.name vs circuits.name) — alias mix-ups are a top error source.
+  • NEVER concatenate columns (&quot;full name&quot; → SELECT forename, surname — two columns,
+    not forename || &#x27; &#x27; || surname). Return raw columns.
+  • When the Hint spells out a formula (DIVIDE(...), SUBTRACT(...), MULTIPLY(...), &quot;X = A / B&quot;),
+    translate it into SQL LITERALLY, term by term — do not substitute your own formula,
+    denominator, or filter, even if yours seems more correct.
+  • When a question asks for a LIST of things, add DISTINCT.
+  • When computing AVG/SUM/COUNT over a joined table, be careful about duplicates.
+    Use subqueries or DISTINCT to avoid counting the same row multiple times.
+  • For conditional aggregation use: SUM(CASE WHEN condition THEN 1 ELSE 0 END)
+    or IIF(condition, value, 0) — both work in SQLite.
+  • For ratios/percentages: CAST(numerator AS REAL) / denominator * 100
+    The denominator must be the TOTAL count of ALL rows in the relevant group,
+    NOT just the rows matching the condition.
+    ✓ COUNT(CASE WHEN cond THEN 1 END) * 1.0 / COUNT(*)
+    ✗ COUNT(CASE WHEN cond THEN 1 END) / COUNT(CASE WHEN other_cond THEN 1 END)
+  • For &quot;rank X by Y&quot; questions use a window function AND include the ranked-by
+    metric column itself: SELECT name, metric, RANK() OVER (ORDER BY metric DESC) FROM ...
+    (name + metric + rank — not just name + rank).
+  • SQLite supports IIF(condition, true_val, false_val) as </pre></details>
+<details open><summary><b>task prompt</b> (1799 chars)</summary><pre style='white-space:pre-wrap'>QUESTION: In 2012, who had the least consumption in LAM?
+⚠️  HINT (follow these definitions EXACTLY):
+  Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year.
+
+SIMILAR SOLVED EXAMPLES (different databases — copy the SQL *style* and output-column conventions, not the table names):
+
+  Q: Which product cost the least in 2013?
+  Hint: cost refers to StandardCost; cost the least refers to MIN(StandardCost);
+  SQL: SELECT ProductID FROM ProductCostHistory WHERE StartDate LIKE &#x27;2013%&#x27; ORDER BY StandardCost LIMIT 1
+
+Schema:
+DATABASE: debit_card_specializing
+
+TABLE: customers
+  CustomerID (INTEGER) [PK, NOT NULL]
+  Segment (TEXT)  e.g. &#x27;SME&#x27;, &#x27;LAM&#x27;
+  Currency (TEXT)  e.g. &#x27;EUR&#x27;, &#x27;CZK&#x27;
+
+TABLE: gasstations
+  GasStationID (INTEGER) [PK, NOT NULL]
+  ChainID (INTEGER)  e.g. 13, 6
+  Country (TEXT)  e.g. &#x27;CZE&#x27;, &#x27;SVK&#x27;
+  Segment (TEXT)  e.g. &#x27;Value for money&#x27;, &#x27;Premium&#x27;
+
+TABLE: products
+  ProductID (INTEGER) [PK, NOT NULL]
+  Description (TEXT)  e.g. &#x27;Rucní zadání&#x27;, &#x27;Nafta&#x27;
+
+TABLE: sqlite_sequence
+  name (UNKNOWN)  e.g. &#x27;transactions_1k&#x27;
+  seq (UNKNOWN)  e.g. 1000
+
+TABLE: transactions_1k
+  TransactionID (INTEGER) [PK]
+  Date (DATE)  e.g. &#x27;2012-08-24&#x27;, &#x27;2012-08-23&#x27;
+  Time (TEXT)  e.g. &#x27;09:41:00&#x27;, &#x27;10:03:00&#x27;
+  CustomerID (INTEGER)  e.g. 31543, 46707
+  CardID (INTEGER)  e.g. 486621, 550134
+  GasStationID (INTEGER)  e.g. 3704, 656
+  ProductID (INTEGER)  e.g. 2, 23
+  Amount (INTEGER)  e.g. 28, 18
+  Price (REAL)  e.g. 672.64, 430.72
+
+TABLE: yearmonth
+  CustomerID (INTEGER) [PK, NOT NULL]
+  Date (TEXT) [PK, NOT NULL]
+  Consumption (REAL)  e.g. 528.3, 1598.28
+  FK: CustomerID → customers.None
+  FK: CustomerID → customers.None
+
+Follow the Hint above, explore the DB if needed, test your SQL, then FINAL(&quot;your sql&quot;).</pre></details>
+<p><b>🤖 model turn:</b></p><pre style='background:#f0f4ff;white-space:pre-wrap'>```python
+print(db.sample_values(&quot;yearmonth&quot;, &quot;Date&quot;))
+print(db.sample_values(&quot;customers&quot;, &quot;Segment&quot;))
+```
+```python
+print(db.execute(&quot;SELECT y.CustomerID FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE c.Segment = &#x27;LAM&#x27; AND substr(y.Date, 1, 4) = &#x27;2012&#x27; ORDER BY y.Consumption ASC LIMIT 1&quot;))
+```
+FINAL(&quot;SELECT y.CustomerID FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE c.Segment = &#x27;LAM&#x27; AND substr(y.Date, 1, 4) = &#x27;2012&#x27; ORDER BY y.Consumption ASC LIMIT 1&quot;)</pre>
+<p><b>⚙️ observation:</b></p><pre style='background:#f7f7f7;white-space:pre-wrap'>{&#x27;table&#x27;: &#x27;yearmonth&#x27;, &#x27;column&#x27;: &#x27;Date&#x27;, &#x27;values&#x27;: [&#x27;201112&#x27;, &#x27;201201&#x27;, &#x27;201202&#x27;, &#x27;201203&#x27;, &#x27;201204&#x27;, &#x27;201205&#x27;, &#x27;201206&#x27;, &#x27;201207&#x27;, &#x27;201208&#x27;, &#x27;201209&#x27;], &#x27;error&#x27;: None}
+{&#x27;table&#x27;: &#x27;customers&#x27;, &#x27;column&#x27;: &#x27;Segment&#x27;, &#x27;values&#x27;: [&#x27;SME&#x27;, &#x27;LAM&#x27;, &#x27;KAM&#x27;], &#x27;error&#x27;: None}</pre>
+<p><b>🤖 model turn:</b></p><pre style='background:#f0f4ff;white-space:pre-wrap'>```python
+print(db.execute(&quot;SELECT y.CustomerID FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE c.Segment = &#x27;LAM&#x27; AND y.Date BETWEEN &#x27;201201&#x27; AND &#x27;201212&#x27; ORDER BY y.Consumption ASC LIMIT 1&quot;))
+```</pre>
+<p><b>⚙️ observation:</b></p><pre style='background:#f7f7f7;white-space:pre-wrap'>{&#x27;columns&#x27;: [&#x27;CustomerID&#x27;], &#x27;rows&#x27;: [[7653]], &#x27;truncated&#x27;: False, &#x27;error&#x27;: None}</pre>
+<p><b>🤖 model turn:</b></p><pre style='background:#f0f4ff;white-space:pre-wrap'>FINAL(&quot;SELECT y.CustomerID FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE c.Segment = &#x27;LAM&#x27; AND y.Date BETWEEN &#x27;201201&#x27; AND &#x27;201212&#x27; ORDER BY y.Consumption ASC LIMIT 1&quot;)</pre>
+<details><summary><b>structured tool events</b></summary>
+<pre style='background:#fff8e1;white-space:pre-wrap'>{
+  &quot;sequence&quot;: 1,
+  &quot;turn&quot;: 1,
+  &quot;tool&quot;: &quot;db.sample_values&quot;,
+  &quot;arguments&quot;: {
+    &quot;table&quot;: &quot;yearmonth&quot;,
+    &quot;column&quot;: &quot;Date&quot;,
+    &quot;limit&quot;: 10
+  },
+  &quot;result&quot;: {
+    &quot;table&quot;: &quot;yearmonth&quot;,
+    &quot;column&quot;: &quot;Date&quot;,
+    &quot;values&quot;: [
+      &quot;201112&quot;,
+      &quot;201201&quot;,
+      &quot;201202&quot;,
+      &quot;201203&quot;,
+      &quot;201204&quot;,
+      &quot;201205&quot;,
+      &quot;201206&quot;,
+      &quot;201207&quot;,
+      &quot;201208&quot;,
+      &quot;201209&quot;
+    ],
+    &quot;error&quot;: null
+  }
+}</pre>
+<pre style='background:#fff8e1;white-space:pre-wrap'>{
+  &quot;sequence&quot;: 2,
+  &quot;turn&quot;: 1,
+  &quot;tool&quot;: &quot;db.sample_values&quot;,
+  &quot;arguments&quot;: {
+    &quot;table&quot;: &quot;customers&quot;,
+    &quot;column&quot;: &quot;Segment&quot;,
+    &quot;limit&quot;: 10
+  },
+  &quot;result&quot;: {
+    &quot;table&quot;: &quot;customers&quot;,
+    &quot;column&quot;: &quot;Segment&quot;,
+    &quot;values&quot;: [
+      &quot;SME&quot;,
+      &quot;LAM&quot;,
+      &quot;KAM&quot;
+    ],
+    &quot;error&quot;: null
+  }
+}</pre>
+<pre style='background:#fff8e1;white-space:pre-wrap'>{
+  &quot;sequence&quot;: 3,
+  &quot;turn&quot;: 2,
+  &quot;tool&quot;: &quot;db.execute&quot;,
+  &quot;arguments&quot;: {
+    &quot;sql&quot;: &quot;SELECT y.CustomerID FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE c.Segment = &#x27;LAM&#x27; AND y.Date BETWEEN &#x27;201201&#x27; AND &#x27;201212&#x27; ORDER BY y.Consumption ASC LIMIT 1&quot;
+  },
+  &quot;result&quot;: {
+    &quot;columns&quot;: [
+      &quot;CustomerID&quot;
+    ],
+    &quot;rows&quot;: [
+      [
+        7653
+      ]
+    ],
+    &quot;truncated&quot;: false,
+    &quot;error&quot;: null
+  }
+}</pre>
+</details>
+<p><b>FINAL SQL:</b> <code>SELECT y.CustomerID FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE c.Segment = &#x27;LAM&#x27; AND y.Date BETWEEN &#x27;201201&#x27; AND &#x27;201212&#x27; ORDER BY y.Consumption ASC LIMIT 1</code></p>
+<p><b>PRED result:</b> [[7653]]</p>
+<p><b>GOLD SQL:</b> <code>SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = &#x27;LAM&#x27; AND SUBSTR(T2.Date, 1, 4) = &#x27;2012&#x27; GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1</code></p>
+<p><b>GOLD result:</b> [[47273]]</p>
+<p><i>tokens: 6487p / 3478c / 3147r / 9965 total / 3584 cached · 3 calls · 0 missing usage · 0 missing reasoning usage</i></p>
+</div></details><hr>
+<details><summary><b>bird_1471</b> [debit_card_specializing / simple] <span style='color:#2e7d32'>✔ correct</span> — What is the ratio of customers who pay in EUR against customers who pay in CZK?</summary>
+<div style='margin:0.5em 1em; padding:0.5em; border-left:3px solid #999'>
+<details><summary><i>system prompt (5303 chars)</i></summary><pre style='white-space:pre-wrap'>You are a Text-to-SQL expert with access to a live database. Use it to verify your SQL before finalizing.
+
+AVAILABLE TOOLS (call these inside ```python blocks):
+  db.execute(&quot;SQL&quot;)                        — run any SELECT and see results
+  db.sample_values(&quot;table&quot;, &quot;column&quot;)     — see actual values stored in a column
+
+WORKFLOW:
+
+Turn 1 — READ HINT + EXPLORE (one code block):
+  ① Read the Hint carefully — it defines exact column values, date formats, and
+    computation formulas. Treat every definition in the Hint as ground truth.
+    Examples of what Hints tell you:
+      &quot;September 2013 refers to 201309&quot;  → WHERE date_col = &#x27;201309&#x27;  (not LIKE &#x27;2013-09%&#x27;)
+      &quot;ratio = count(A) / count(B)&quot;      → SELECT COUNT(CASE WHEN x=&#x27;A&#x27; THEN 1 END)*1.0 / COUNT(CASE WHEN x=&#x27;B&#x27; THEN 1 END)
+      &quot;meeting events refers to type = &#x27;Meeting&#x27;&quot; → WHERE type = &#x27;Meeting&#x27;
+  ② If any names, locations, or string values are NOT defined by the Hint,
+    use db.sample_values() to see how they are actually stored in the database.
+
+Turn 2 — TEST your SQL (one code block):
+  ```python
+  print(db.execute(&quot;YOUR SQL HERE&quot;))
+  ```
+
+Turn 3 — FINALIZE (plain text only, never inside a code block):
+  FINAL(&quot;YOUR SQL HERE&quot;)
+
+RULES:
+  • NEVER write FINAL() in the same message as a code block.
+  • ONE code block per turn.
+  • Schema is already provided — no need for get_tables() or get_schema().
+  • ⛔ NEVER call FINAL() if your last SQL returned 0 rows — that means your query
+    is wrong. Fix the WHERE clause, JOIN condition, or value format and retry.
+  • SELECT only the columns the question asks for, in the order mentioned.
+    Never add extra columns (no aliases, no COUNT(*) unless asked).
+  • If the question asks multiple things (&quot;What is X? Who is Y?&quot; / &quot;state A and B&quot;),
+    SELECT every asked item, in the order asked — do not answer only one part.
+    &quot;How old is the youngest driver? What is his name?&quot; → SELECT age_expr, forename, surname
+  • For superlatives (oldest/highest/best/dumbest) return exactly one row:
+    ORDER BY col ASC|DESC LIMIT 1 — never WHERE col = (SELECT MIN/MAX(...)) which returns ties.
+  • ONLY when the expected answer is literally yes or no (&quot;Did X...?&quot;, &quot;Is Y...?&quot;, &quot;Was each...?&quot;),
+    SELECT the answer itself as EXACTLY ONE column: IIF(condition, &#x27;YES&#x27;, &#x27;NO&#x27;) —
+    do not return the matching rows, do not add extra columns.
+    Comparison questions (&quot;Are there more X or Y? What is the difference?&quot;) are NOT yes/no —
+    return the value(s) asked.
+  • When using T1/T2 aliases, double-check which table each SELECTed column belongs to
+    (races.name vs circuits.name) — alias mix-ups are a top error source.
+  • NEVER concatenate columns (&quot;full name&quot; → SELECT forename, surname — two columns,
+    not forename || &#x27; &#x27; || surname). Return raw columns.
+  • When the Hint spells out a formula (DIVIDE(...), SUBTRACT(...), MULTIPLY(...), &quot;X = A / B&quot;),
+    translate it into SQL LITERALLY, term by term — do not substitute your own formula,
+    denominator, or filter, even if yours seems more correct.
+  • When a question asks for a LIST of things, add DISTINCT.
+  • When computing AVG/SUM/COUNT over a joined table, be careful about duplicates.
+    Use subqueries or DISTINCT to avoid counting the same row multiple times.
+  • For conditional aggregation use: SUM(CASE WHEN condition THEN 1 ELSE 0 END)
+    or IIF(condition, value, 0) — both work in SQLite.
+  • For ratios/percentages: CAST(numerator AS REAL) / denominator * 100
+    The denominator must be the TOTAL count of ALL rows in the relevant group,
+    NOT just the rows matching the condition.
+    ✓ COUNT(CASE WHEN cond THEN 1 END) * 1.0 / COUNT(*)
+    ✗ COUNT(CASE WHEN cond THEN 1 END) / COUNT(CASE WHEN other_cond THEN 1 END)
+  • For &quot;rank X by Y&quot; questions use a window function AND include the ranked-by
+    metric column itself: SELECT name, metric, RANK() OVER (ORDER BY metric DESC) FROM ...
+    (name + metric + rank — not just name + rank).
+  • SQLite supports IIF(condition, true_val, false_val) as </pre></details>
+<details open><summary><b>task prompt</b> (1970 chars)</summary><pre style='white-space:pre-wrap'>QUESTION: What is the ratio of customers who pay in EUR against customers who pay in CZK?
+⚠️  HINT (follow these definitions EXACTLY):
+  ratio of customers who pay in EUR against customers who pay in CZK = count(Currency = &#x27;EUR&#x27;) / count(Currency = &#x27;CZK&#x27;).
+
+SIMILAR SOLVED EXAMPLES (different databases — copy the SQL *style* and output-column conventions, not the table names):
+
+  Q: Among the customers in Asia, how many customers are in debt?
+  Hint: customers in Asia refer to n_name where r_name = &#x27;ASIA&#x27;; customers in debt refer to c_acctbal &lt; 0;
+  SQL: SELECT COUNT(T1.n_name) FROM nation AS T1 INNER JOIN customer AS T2 ON T1.n_nationkey = T2.c_nationkey INNER JOIN region AS T3 ON T1.n_regionkey = T3.r_regionkey WHERE T2.c_acctbal &lt; 0 AND T3.r_name = &#x27;ASIA&#x27;
+
+Schema:
+DATABASE: debit_card_specializing
+
+TABLE: customers
+  CustomerID (INTEGER) [PK, NOT NULL]
+  Segment (TEXT)  e.g. &#x27;SME&#x27;, &#x27;LAM&#x27;
+  Currency (TEXT)  e.g. &#x27;EUR&#x27;, &#x27;CZK&#x27;
+
+TABLE: gasstations
+  GasStationID (INTEGER) [PK, NOT NULL]
+  ChainID (INTEGER)  e.g. 13, 6
+  Country (TEXT)  e.g. &#x27;CZE&#x27;, &#x27;SVK&#x27;
+  Segment (TEXT)  e.g. &#x27;Value for money&#x27;, &#x27;Premium&#x27;
+
+TABLE: products
+  ProductID (INTEGER) [PK, NOT NULL]
+  Description (TEXT)  e.g. &#x27;Rucní zadání&#x27;, &#x27;Nafta&#x27;
+
+TABLE: sqlite_sequence
+  name (UNKNOWN)  e.g. &#x27;transactions_1k&#x27;
+  seq (UNKNOWN)  e.g. 1000
+
+TABLE: transactions_1k
+  TransactionID (INTEGER) [PK]
+  Date (DATE)  e.g. &#x27;2012-08-24&#x27;, &#x27;2012-08-23&#x27;
+  Time (TEXT)  e.g. &#x27;09:41:00&#x27;, &#x27;10:03:00&#x27;
+  CustomerID (INTEGER)  e.g. 31543, 46707
+  CardID (INTEGER)  e.g. 486621, 550134
+  GasStationID (INTEGER)  e.g. 3704, 656
+  ProductID (INTEGER)  e.g. 2, 23
+  Amount (INTEGER)  e.g. 28, 18
+  Price (REAL)  e.g. 672.64, 430.72
+
+TABLE: yearmonth
+  CustomerID (INTEGER) [PK, NOT NULL]
+  Date (TEXT) [PK, NOT NULL]
+  Consumption (REAL)  e.g. 528.3, 1598.28
+  FK: CustomerID → customers.None
+  FK: CustomerID → customers.None
+
+Follow the Hint above, explore the DB if needed, test your SQL, then FINAL(&quot;your sql&quot;).</pre></details>
+<p><b>🤖 model turn:</b></p><pre style='background:#f0f4ff;white-space:pre-wrap'>FINAL(&quot;SELECT CAST(SUM(CASE WHEN Currency = &#x27;EUR&#x27; THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN Currency = &#x27;CZK&#x27; THEN 1 ELSE 0 END) FROM customers&quot;)</pre>
+<p><b>FINAL SQL:</b> <code>SELECT CAST(SUM(CASE WHEN Currency = &#x27;EUR&#x27; THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN Currency = &#x27;CZK&#x27; THEN 1 ELSE 0 END) FROM customers</code></p>
+<p><b>PRED result:</b> [[0.06572769953051644]]</p>
+<p><b>GOLD SQL:</b> <code>SELECT CAST(SUM(IIF(Currency = &#x27;EUR&#x27;, 1, 0)) AS FLOAT) / SUM(IIF(Currency = &#x27;CZK&#x27;, 1, 0)) AS ratio FROM customers</code></p>
+<p><b>GOLD result:</b> [[0.06572769953051644]]</p>
+<p><i>tokens: 2032p / 2252c / 2171r / 4284 total / 0 cached · 1 calls · 0 missing usage · 0 missing reasoning usage</i></p>
+</div></details><hr>
+<details><summary><b>bird_1473</b> [debit_card_specializing / moderate] <span style='color:#2e7d32'>✔ correct</span> — What was the average monthly consumption of customers in SME for the year 2013?</summary>
+<div style='margin:0.5em 1em; padding:0.5em; border-left:3px solid #999'>
+<details><summary><i>system prompt (5303 chars)</i></summary><pre style='white-space:pre-wrap'>You are a Text-to-SQL expert with access to a live database. Use it to verify your SQL before finalizing.
+
+AVAILABLE TOOLS (call these inside ```python blocks):
+  db.execute(&quot;SQL&quot;)                        — run any SELECT and see results
+  db.sample_values(&quot;table&quot;, &quot;column&quot;)     — see actual values stored in a column
+
+WORKFLOW:
+
+Turn 1 — READ HINT + EXPLORE (one code block):
+  ① Read the Hint carefully — it defines exact column values, date formats, and
+    computation formulas. Treat every definition in the Hint as ground truth.
+    Examples of what Hints tell you:
+      &quot;September 2013 refers to 201309&quot;  → WHERE date_col = &#x27;201309&#x27;  (not LIKE &#x27;2013-09%&#x27;)
+      &quot;ratio = count(A) / count(B)&quot;      → SELECT COUNT(CASE WHEN x=&#x27;A&#x27; THEN 1 END)*1.0 / COUNT(CASE WHEN x=&#x27;B&#x27; THEN 1 END)
+      &quot;meeting events refers to type = &#x27;Meeting&#x27;&quot; → WHERE type = &#x27;Meeting&#x27;
+  ② If any names, locations, or string values are NOT defined by the Hint,
+    use db.sample_values() to see how they are actually stored in the database.
+
+Turn 2 — TEST your SQL (one code block):
+  ```python
+  print(db.execute(&quot;YOUR SQL HERE&quot;))
+  ```
+
+Turn 3 — FINALIZE (plain text only, never inside a code block):
+  FINAL(&quot;YOUR SQL HERE&quot;)
+
+RULES:
+  • NEVER write FINAL() in the same message as a code block.
+  • ONE code block per turn.
+  • Schema is already provided — no need for get_tables() or get_schema().
+  • ⛔ NEVER call FINAL() if your last SQL returned 0 rows — that means your query
+    is wrong. Fix the WHERE clause, JOIN condition, or value format and retry.
+  • SELECT only the columns the question asks for, in the order mentioned.
+    Never add extra columns (no aliases, no COUNT(*) unless asked).
+  • If the question asks multiple things (&quot;What is X? Who is Y?&quot; / &quot;state A and B&quot;),
+    SELECT every asked item, in the order asked — do not answer only one part.
+    &quot;How old is the youngest driver? What is his name?&quot; → SELECT age_expr, forename, surname
+  • For superlatives (oldest/highest/best/dumbest) return exactly one row:
+    ORDER BY col ASC|DESC LIMIT 1 — never WHERE col = (SELECT MIN/MAX(...)) which returns ties.
+  • ONLY when the expected answer is literally yes or no (&quot;Did X...?&quot;, &quot;Is Y...?&quot;, &quot;Was each...?&quot;),
+    SELECT the answer itself as EXACTLY ONE column: IIF(condition, &#x27;YES&#x27;, &#x27;NO&#x27;) —
+    do not return the matching rows, do not add extra columns.
+    Comparison questions (&quot;Are there more X or Y? What is the difference?&quot;) are NOT yes/no —
+    return the value(s) asked.
+  • When using T1/T2 aliases, double-check which table each SELECTed column belongs to
+    (races.name vs circuits.name) — alias mix-ups are a top error source.
+  • NEVER concatenate columns (&quot;full name&quot; → SELECT forename, surname — two columns,
+    not forename || &#x27; &#x27; || surname). Return raw columns.
+  • When the Hint spells out a formula (DIVIDE(...), SUBTRACT(...), MULTIPLY(...), &quot;X = A / B&quot;),
+    translate it into SQL LITERALLY, term by term — do not substitute your own formula,
+    denominator, or filter, even if yours seems more correct.
+  • When a question asks for a LIST of things, add DISTINCT.
+  • When computing AVG/SUM/COUNT over a joined table, be careful about duplicates.
+    Use subqueries or DISTINCT to avoid counting the same row multiple times.
+  • For conditional aggregation use: SUM(CASE WHEN condition THEN 1 ELSE 0 END)
+    or IIF(condition, value, 0) — both work in SQLite.
+  • For ratios/percentages: CAST(numerator AS REAL) / denominator * 100
+    The denominator must be the TOTAL count of ALL rows in the relevant group,
+    NOT just the rows matching the condition.
+    ✓ COUNT(CASE WHEN cond THEN 1 END) * 1.0 / COUNT(*)
+    ✗ COUNT(CASE WHEN cond THEN 1 END) / COUNT(CASE WHEN other_cond THEN 1 END)
+  • For &quot;rank X by Y&quot; questions use a window function AND include the ranked-by
+    metric column itself: SELECT name, metric, RANK() OVER (ORDER BY metric DESC) FROM ...
+    (name + metric + rank — not just name + rank).
+  • SQLite supports IIF(condition, true_val, false_val) as </pre></details>
+<details open><summary><b>task prompt</b> (1961 chars)</summary><pre style='white-space:pre-wrap'>QUESTION: What was the average monthly consumption of customers in SME for the year 2013?
+⚠️  HINT (follow these definitions EXACTLY):
+  Average Monthly consumption = AVG(Consumption) / 12; Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year.
+
+SIMILAR SOLVED EXAMPLES (different databases — copy the SQL *style* and output-column conventions, not the table names):
+
+  Q: How many customers are from the place with the highest average income per month?
+  Hint: place with the highest average income per month refers to GEOID where MAX(INCOME_K);
+  SQL: SELECT COUNT(T1.ID) FROM Customers AS T1 INNER JOIN Demog AS T2 ON T1.GEOID = T2.GEOID ORDER BY T2.INCOME_K DESC LIMIT 1
+
+Schema:
+DATABASE: debit_card_specializing
+
+TABLE: customers
+  CustomerID (INTEGER) [PK, NOT NULL]
+  Segment (TEXT)  e.g. &#x27;SME&#x27;, &#x27;LAM&#x27;
+  Currency (TEXT)  e.g. &#x27;EUR&#x27;, &#x27;CZK&#x27;
+
+TABLE: gasstations
+  GasStationID (INTEGER) [PK, NOT NULL]
+  ChainID (INTEGER)  e.g. 13, 6
+  Country (TEXT)  e.g. &#x27;CZE&#x27;, &#x27;SVK&#x27;
+  Segment (TEXT)  e.g. &#x27;Value for money&#x27;, &#x27;Premium&#x27;
+
+TABLE: products
+  ProductID (INTEGER) [PK, NOT NULL]
+  Description (TEXT)  e.g. &#x27;Rucní zadání&#x27;, &#x27;Nafta&#x27;
+
+TABLE: sqlite_sequence
+  name (UNKNOWN)  e.g. &#x27;transactions_1k&#x27;
+  seq (UNKNOWN)  e.g. 1000
+
+TABLE: transactions_1k
+  TransactionID (INTEGER) [PK]
+  Date (DATE)  e.g. &#x27;2012-08-24&#x27;, &#x27;2012-08-23&#x27;
+  Time (TEXT)  e.g. &#x27;09:41:00&#x27;, &#x27;10:03:00&#x27;
+  CustomerID (INTEGER)  e.g. 31543, 46707
+  CardID (INTEGER)  e.g. 486621, 550134
+  GasStationID (INTEGER)  e.g. 3704, 656
+  ProductID (INTEGER)  e.g. 2, 23
+  Amount (INTEGER)  e.g. 28, 18
+  Price (REAL)  e.g. 672.64, 430.72
+
+TABLE: yearmonth
+  CustomerID (INTEGER) [PK, NOT NULL]
+  Date (TEXT) [PK, NOT NULL]
+  Consumption (REAL)  e.g. 528.3, 1598.28
+  FK: CustomerID → customers.None
+  FK: CustomerID → customers.None
+
+Follow the Hint above, explore the DB if needed, test your SQL, then FINAL(&quot;your sql&quot;).</pre></details>
+<p><b>🤖 model turn:</b></p><pre style='background:#f0f4ff;white-space:pre-wrap'>```python
+print(db.sample_values(&quot;yearmonth&quot;, &quot;Date&quot;))
+print(db.sample_values(&quot;customers&quot;, &quot;Segment&quot;))
+```
+
+FINAL(&quot;SELECT AVG(T1.Consumption) / 12 FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = &#x27;SME&#x27; AND T1.Date BETWEEN &#x27;201301&#x27; AND &#x27;201312&#x27;&quot;)</pre>
+<p><b>⚙️ observation:</b></p><pre style='background:#f7f7f7;white-space:pre-wrap'>{&#x27;table&#x27;: &#x27;yearmonth&#x27;, &#x27;column&#x27;: &#x27;Date&#x27;, &#x27;values&#x27;: [&#x27;201112&#x27;, &#x27;201201&#x27;, &#x27;201202&#x27;, &#x27;201203&#x27;, &#x27;201204&#x27;, &#x27;201205&#x27;, &#x27;201206&#x27;, &#x27;201207&#x27;, &#x27;201208&#x27;, &#x27;201209&#x27;], &#x27;error&#x27;: None}
+{&#x27;table&#x27;: &#x27;customers&#x27;, &#x27;column&#x27;: &#x27;Segment&#x27;, &#x27;values&#x27;: [&#x27;SME&#x27;, &#x27;LAM&#x27;, &#x27;KAM&#x27;], &#x27;error&#x27;: None}</pre>
+<p><b>🤖 model turn:</b></p><pre style='background:#f0f4ff;white-space:pre-wrap'>```python
+print(db.execute(&quot;SELECT AVG(T1.Consumption) / 12 FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = &#x27;SME&#x27; AND T1.Date BETWEEN &#x27;201301&#x27; AND &#x27;201312&#x27;&quot;))
+```
+
+```python
+print(db.execute(&quot;SELECT AVG(T1.Consumption) / 12 FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = &#x27;SME&#x27; AND T1.Date BETWEEN &#x27;201301&#x27; AND &#x27;201312&#x27;&quot;))
+```</pre>
+<p><b>⚙️ observation:</b></p><pre style='background:#f7f7f7;white-space:pre-wrap'>{&#x27;columns&#x27;: [&#x27;AVG(T1.Consumption) / 12&#x27;], &#x27;rows&#x27;: [[459.9562642870894]], &#x27;truncated&#x27;: False, &#x27;error&#x27;: None}</pre>
+<p><b>🤖 model turn:</b></p><pre style='background:#f0f4ff;white-space:pre-wrap'>FINAL(&quot;SELECT AVG(T1.Consumption) / 12 FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = &#x27;SME&#x27; AND T1.Date BETWEEN &#x27;201301&#x27; AND &#x27;201312&#x27;&quot;)</pre>
+<details><summary><b>structured tool events</b></summary>
+<pre style='background:#fff8e1;white-space:pre-wrap'>{
+  &quot;sequence&quot;: 1,
+  &quot;turn&quot;: 1,
+  &quot;tool&quot;: &quot;db.sample_values&quot;,
+  &quot;arguments&quot;: {
+    &quot;table&quot;: &quot;yearmonth&quot;,
+    &quot;column&quot;: &quot;Date&quot;,
+    &quot;limit&quot;: 10
+  },
+  &quot;result&quot;: {
+    &quot;table&quot;: &quot;yearmonth&quot;,
+    &quot;column&quot;: &quot;Date&quot;,
+    &quot;values&quot;: [
+      &quot;201112&quot;,
+      &quot;201201&quot;,
+      &quot;201202&quot;,
+      &quot;201203&quot;,
+      &quot;201204&quot;,
+      &quot;201205&quot;,
+      &quot;201206&quot;,
+      &quot;201207&quot;,
+      &quot;201208&quot;,
+      &quot;201209&quot;
+    ],
+    &quot;error&quot;: null
+  }
+}</pre>
+<pre style='background:#fff8e1;white-space:pre-wrap'>{
+  &quot;sequence&quot;: 2,
+  &quot;turn&quot;: 1,
+  &quot;tool&quot;: &quot;db.sample_values&quot;,
+  &quot;arguments&quot;: {
+    &quot;table&quot;: &quot;customers&quot;,
+    &quot;column&quot;: &quot;Segment&quot;,
+    &quot;limit&quot;: 10
+  },
+  &quot;result&quot;: {
+    &quot;table&quot;: &quot;customers&quot;,
+    &quot;column&quot;: &quot;Segment&quot;,
+    &quot;values&quot;: [
+      &quot;SME&quot;,
+      &quot;LAM&quot;,
+      &quot;KAM&quot;
+    ],
+    &quot;error&quot;: null
+  }
+}</pre>
+<pre style='background:#fff8e1;white-space:pre-wrap'>{
+  &quot;sequence&quot;: 3,
+  &quot;turn&quot;: 2,
+  &quot;tool&quot;: &quot;db.execute&quot;,
+  &quot;arguments&quot;: {
+    &quot;sql&quot;: &quot;SELECT AVG(T1.Consumption) / 12 FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = &#x27;SME&#x27; AND T1.Date BETWEEN &#x27;201301&#x27; AND &#x27;201312&#x27;&quot;
+  },
+  &quot;result&quot;: {
+    &quot;columns&quot;: [
+      &quot;AVG(T1.Consumption) / 12&quot;
+    ],
+    &quot;rows&quot;: [
+      [
+        459.9562642870894
+      ]
+    ],
+    &quot;truncated&quot;: false,
+    &quot;error&quot;: null
+  }
+}</pre>
+</details>
+<p><b>FINAL SQL:</b> <code>SELECT AVG(T1.Consumption) / 12 FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = &#x27;SME&#x27; AND T1.Date BETWEEN &#x27;201301&#x27; AND &#x27;201312&#x27;</code></p>
+<p><b>PRED result:</b> [[459.9562642870894]]</p>
+<p><b>GOLD SQL:</b> <code>SELECT AVG(T2.Consumption) / 12 FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = &#x27;2013&#x27; AND T1.Segment = &#x27;SME&#x27;</code></p>
+<p><b>GOLD result:</b> [[459.9562642870894]]</p>
+<p><i>tokens: 6578p / 4289c / 3924r / 10867 total / 3584 cached · 3 calls · 0 missing usage · 0 missing reasoning usage</i></p>
+</div></details><hr></body>

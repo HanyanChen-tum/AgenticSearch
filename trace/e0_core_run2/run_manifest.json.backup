@@ -1,0 +1,94 @@
+{
+  "trace_schema_version": 3,
+  "run_id": "20260713T094637Z-5caab99c",
+  "created_at": "2026-07-13T09:46:37.063725+00:00",
+  "status": "interrupted",
+  "completed_questions": 111,
+  "config": {
+    "dataset": "C:\\Users\\Irene\\AgenticSearch\\data\\processed\\bird_dev_500.json",
+    "dataset_sha256": "397d227d4c9f5f28590dc76e0a01dc8e2c9cd0bf4da2a2bc078c7b9c1017f5eb",
+    "ids_file": "C:\\Users\\Irene\\AgenticSearch\\data\\processed\\bird_cleancore_ids.json",
+    "ids_file_sha256": "b5f7949543409bf73d5c2fc899a23e4f7f04d39e07e77001dd1327694672b8a6",
+    "id_groups": [
+      "both_wrong",
+      "canary"
+    ],
+    "selected_question_count": 197,
+    "planned_question_count": 197,
+    "database_dir": "C:\\Users\\Irene\\AgenticSearch\\data\\raw\\bird\\minidev\\MINIDEV\\dev_databases",
+    "output": "C:\\Users\\Irene\\AgenticSearch\\results\\e0_core_run2.json",
+    "model": "azure/seminar-gpt-5.4-mini",
+    "api_base": "https://gpt5openai.openai.azure.com/",
+    "api_version": "2024-12-01-preview",
+    "limit": null,
+    "max_iterations": 8,
+    "k": 1,
+    "temperature": 0,
+    "reasoning_effort": "high",
+    "agent_profile": "clean-e0",
+    "agent_config": {
+      "profile": "clean-e0",
+      "experiment_variant": "e0",
+      "prompt_profile": "basic",
+      "use_db_hints": false,
+      "verified_final": false,
+      "capability_gate": false,
+      "context_mode": "direct",
+      "reasoning_mode": "none",
+      "planner_mode": "none",
+      "allowed_db_methods": [
+        "execute",
+        "sample_values"
+      ],
+      "config_schema_version": 1,
+      "capabilities": {
+        "version": 1,
+        "gate_enabled": false,
+        "allowed_db_methods": [
+          "execute",
+          "sample_values"
+        ],
+        "generic_recursive_llm": true,
+        "sha256": "98df04fcfd59d95d5034fcffacaa4100a5f02c4cfcc9263a7734cc4bd8bbbc64"
+      },
+      "prompt": {
+        "version": 1,
+        "prompt_id": "clean-protocol-v1",
+        "source": "protocol-only",
+        "source_split": "none",
+        "contains_task_specific_sql_rules": false,
+        "contains_examples": false,
+        "sha256": "1ea7ea4d3306b712394254f6feb929fb21f125d7393fedabfc66dbcd10822a70"
+      }
+    },
+    "agent_config_sha256": "46deed1647a65b37cb2d5c689a9d721d44319c17131609f29d463f896d613d0c",
+    "few_shot_retriever": {
+      "class": "TrainFewShotRetriever",
+      "source_split": "bird-train",
+      "pool_path": "C:\\Users\\Irene\\AgenticSearch\\data\\train_pool.json",
+      "pool_sha256": "80c0326216d775eff04ae46d5656a452d741d09993d93d527b02848451ee443f",
+      "example_count": 9428,
+      "embedding_model": "all-MiniLM-L6-v2"
+    },
+    "evaluation_sql_timeout_seconds": 30
+  },
+  "token_usage": {
+    "prompt_tokens": 717234,
+    "completion_tokens": 752050,
+    "reasoning_tokens": 688927,
+    "total_tokens": 1469284,
+    "cached_prompt_tokens": 329728,
+    "llm_calls": 306,
+    "usage_missing_calls": 8,
+    "reasoning_usage_missing_calls": 8,
+    "questions": 111,
+    "questions_with_complete_usage": 107,
+    "average_per_question": {
+      "prompt_tokens": 6461.57,
+      "completion_tokens": 6775.23,
+      "reasoning_tokens": 6206.55,
+      "total_tokens": 13236.79,
+      "cached_prompt_tokens": 2970.52
+    }
+  }
+}

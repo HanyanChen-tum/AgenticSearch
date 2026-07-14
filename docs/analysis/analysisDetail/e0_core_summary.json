@@ -1,0 +1,2232 @@
+{
+  "summary_schema_version": 1,
+  "generated_at": "2026-07-13T16:55:07.753028+00:00",
+  "run_count": 2,
+  "question_count": 197,
+  "config": {
+    "dataset": "C:\\Users\\Irene\\AgenticSearch\\data\\processed\\bird_dev_500.json",
+    "dataset_sha256": "397d227d4c9f5f28590dc76e0a01dc8e2c9cd0bf4da2a2bc078c7b9c1017f5eb",
+    "ids_file": "C:\\Users\\Irene\\AgenticSearch\\data\\processed\\bird_cleancore_ids.json",
+    "ids_file_sha256": "b5f7949543409bf73d5c2fc899a23e4f7f04d39e07e77001dd1327694672b8a6",
+    "id_groups": [
+      "both_wrong",
+      "canary"
+    ],
+    "selected_question_count": 197,
+    "planned_question_count": 197,
+    "database_dir": "C:\\Users\\Irene\\AgenticSearch\\data\\raw\\bird\\minidev\\MINIDEV\\dev_databases",
+    "model": "azure/seminar-gpt-5.4-mini",
+    "api_version": "2024-12-01-preview",
+    "limit": null,
+    "max_iterations": 8,
+    "k": 1,
+    "temperature": 0,
+    "reasoning_effort": "high",
+    "agent_profile": "clean-e0",
+    "agent_config": {
+      "profile": "clean-e0",
+      "experiment_variant": "e0",
+      "prompt_profile": "basic",
+      "use_db_hints": false,
+      "verified_final": false,
+      "capability_gate": false,
+      "context_mode": "direct",
+      "reasoning_mode": "none",
+      "planner_mode": "none",
+      "allowed_db_methods": [
+        "execute",
+        "sample_values"
+      ],
+      "config_schema_version": 1,
+      "capabilities": {
+        "version": 1,
+        "gate_enabled": false,
+        "allowed_db_methods": [
+          "execute",
+          "sample_values"
+        ],
+        "generic_recursive_llm": true,
+        "sha256": "98df04fcfd59d95d5034fcffacaa4100a5f02c4cfcc9263a7734cc4bd8bbbc64"
+      },
+      "prompt": {
+        "version": 1,
+        "prompt_id": "clean-protocol-v1",
+        "source": "protocol-only",
+        "source_split": "none",
+        "contains_task_specific_sql_rules": false,
+        "contains_examples": false,
+        "sha256": "1ea7ea4d3306b712394254f6feb929fb21f125d7393fedabfc66dbcd10822a70"
+      }
+    },
+    "agent_config_sha256": "46deed1647a65b37cb2d5c689a9d721d44319c17131609f29d463f896d613d0c",
+    "few_shot_retriever": {
+      "class": "TrainFewShotRetriever",
+      "source_split": "bird-train",
+      "pool_path": "C:\\Users\\Irene\\AgenticSearch\\data\\train_pool.json",
+      "pool_sha256": "80c0326216d775eff04ae46d5656a452d741d09993d93d527b02848451ee443f",
+      "example_count": 9428,
+      "embedding_model": "all-MiniLM-L6-v2"
+    }
+  },
+  "config_differences": {
+    "evaluation_sql_timeout_seconds": [
+      {
+        "run_id": "20260713T072941Z-6b75f55b",
+        "value": null
+      },
+      {
+        "run_id": "20260713T094637Z-5caab99c",
+        "value": 30
+      }
+    ]
+  },
+  "aggregate": {
+    "accuracy": {
+      "mean": 0.34264,
+      "population_stddev": 0.007614
+    },
+    "total_tokens_per_question": {
+      "mean": 13570.121827,
+      "population_stddev": 88.86802
+    },
+    "llm_calls_per_question": {
+      "mean": 2.738579,
+      "population_stddev": 0.017766
+    },
+    "db_tool_calls_per_question": {
+      "mean": 1.898477,
+      "population_stddev": 0.005076
+    },
+    "latency_seconds_per_question": {
+      "mean": 41.802545,
+      "population_stddev": 0.47567
+    }
+  },
+  "stability": {
+    "always_correct_ids": [
+      "bird_1471",
+      "bird_1480",
+      "bird_1483",
+      "bird_1506",
+      "bird_1312",
+      "bird_1334",
+      "bird_1340",
+      "bird_1344",
+      "bird_1371",
+      "bird_1380",
+      "bird_1460",
+      "bird_1464",
+      "bird_1155",
+      "bird_1156",
+      "bird_1169",
+      "bird_1171",
+      "bird_1185",
+      "bird_1039",
+      "bird_1044",
+      "bird_1076",
+      "bird_1079",
+      "bird_1088",
+      "bird_1091",
+      "bird_1103",
+      "bird_1113",
+      "bird_1114",
+      "bird_1139",
+      "bird_859",
+      "bird_904",
+      "bird_909",
+      "bird_940",
+      "bird_948",
+      "bird_964",
+      "bird_971",
+      "bird_989",
+      "bird_1003",
+      "bird_730",
+      "bird_753",
+      "bird_775",
+      "bird_825",
+      "bird_531",
+      "bird_549",
+      "bird_629",
+      "bird_665",
+      "bird_704",
+      "bird_358",
+      "bird_377",
+      "bird_379",
+      "bird_391",
+      "bird_397",
+      "bird_459",
+      "bird_462",
+      "bird_206",
+      "bird_208",
+      "bird_232",
+      "bird_249",
+      "bird_39",
+      "bird_46",
+      "bird_62",
+      "bird_79",
+      "bird_92",
+      "bird_112"
+    ],
+    "always_failed_ids": [
+      "bird_1481",
+      "bird_1482",
+      "bird_1498",
+      "bird_1500",
+      "bird_1505",
+      "bird_1524",
+      "bird_1526",
+      "bird_1529",
+      "bird_1531",
+      "bird_1322",
+      "bird_1338",
+      "bird_1399",
+      "bird_1427",
+      "bird_1166",
+      "bird_1168",
+      "bird_1175",
+      "bird_1179",
+      "bird_1205",
+      "bird_1225",
+      "bird_1239",
+      "bird_1241",
+      "bird_1242",
+      "bird_1243",
+      "bird_1247",
+      "bird_1251",
+      "bird_1252",
+      "bird_1254",
+      "bird_1265",
+      "bird_1267",
+      "bird_1029",
+      "bird_1031",
+      "bird_1058",
+      "bird_1092",
+      "bird_1094",
+      "bird_1107",
+      "bird_1134",
+      "bird_1135",
+      "bird_1144",
+      "bird_847",
+      "bird_865",
+      "bird_877",
+      "bird_879",
+      "bird_896",
+      "bird_897",
+      "bird_902",
+      "bird_906",
+      "bird_928",
+      "bird_930",
+      "bird_937",
+      "bird_950",
+      "bird_951",
+      "bird_955",
+      "bird_959",
+      "bird_963",
+      "bird_967",
+      "bird_1011",
+      "bird_1014",
+      "bird_728",
+      "bird_743",
+      "bird_751",
+      "bird_533",
+      "bird_565",
+      "bird_584",
+      "bird_586",
+      "bird_587",
+      "bird_595",
+      "bird_604",
+      "bird_639",
+      "bird_640",
+      "bird_671",
+      "bird_672",
+      "bird_682",
+      "bird_685",
+      "bird_694",
+      "bird_710",
+      "bird_340",
+      "bird_341",
+      "bird_344",
+      "bird_349",
+      "bird_352",
+      "bird_371",
+      "bird_402",
+      "bird_408",
+      "bird_465",
+      "bird_469",
+      "bird_474",
+      "bird_484",
+      "bird_486",
+      "bird_529",
+      "bird_530",
+      "bird_197",
+      "bird_198",
+      "bird_207",
+      "bird_215",
+      "bird_218",
+      "bird_219",
+      "bird_228",
+      "bird_231",
+      "bird_234",
+      "bird_247",
+      "bird_260",
+      "bird_281",
+      "bird_17",
+      "bird_24",
+      "bird_25",
+      "bird_27",
+      "bird_28",
+      "bird_37",
+      "bird_50",
+      "bird_72",
+      "bird_83",
+      "bird_85",
+      "bird_87",
+      "bird_94",
+      "bird_95",
+      "bird_115",
+      "bird_118",
+      "bird_125",
+      "bird_128",
+      "bird_129",
+      "bird_145",
+      "bird_173",
+      "bird_186",
+      "bird_189"
+    ],
+    "unstable_ids": [
+      "bird_1472",
+      "bird_1350",
+      "bird_1387",
+      "bird_1235",
+      "bird_1238",
+      "bird_944",
+      "bird_598",
+      "bird_637",
+      "bird_480",
+      "bird_518",
+      "bird_282"
+    ],
+    "per_question": [
+      {
+        "id": "bird_1471",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1472",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          false
+        ]
+      },
+      {
+        "id": "bird_1480",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1481",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1482",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1483",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1498",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1500",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1505",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1506",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1524",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1526",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1529",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1531",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1312",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1322",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1334",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1338",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1340",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1344",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1350",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          false
+        ]
+      },
+      {
+        "id": "bird_1371",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1380",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1387",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          true
+        ]
+      },
+      {
+        "id": "bird_1399",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1427",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1460",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1464",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1155",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1156",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1166",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1168",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1169",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1171",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1175",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1179",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1185",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1205",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1225",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1235",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          true
+        ]
+      },
+      {
+        "id": "bird_1238",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          true
+        ]
+      },
+      {
+        "id": "bird_1239",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1241",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1242",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1243",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1247",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1251",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1252",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1254",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1265",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1267",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1029",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1031",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1039",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1044",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1058",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1076",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1079",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1088",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1091",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1092",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1094",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1103",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1107",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1113",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1114",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1134",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1135",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1139",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1144",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_847",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_859",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_865",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_877",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_879",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_896",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_897",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_902",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_904",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_906",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_909",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_928",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_930",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_937",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_940",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_944",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          false
+        ]
+      },
+      {
+        "id": "bird_948",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_950",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_951",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_955",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_959",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_963",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_964",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_967",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_971",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_989",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1003",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_1011",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_1014",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_728",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_730",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_743",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_751",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_753",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_775",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_825",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_531",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_533",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_549",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_565",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_584",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_586",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_587",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_595",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_598",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          false
+        ]
+      },
+      {
+        "id": "bird_604",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_629",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_637",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          true
+        ]
+      },
+      {
+        "id": "bird_639",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_640",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_665",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_671",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_672",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_682",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_685",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_694",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_704",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_710",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_340",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_341",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_344",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_349",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_352",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_358",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_371",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_377",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_379",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_391",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_397",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_402",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_408",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_459",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_462",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_465",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_469",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_474",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_480",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          false
+        ]
+      },
+      {
+        "id": "bird_484",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_486",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_518",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          false
+        ]
+      },
+      {
+        "id": "bird_529",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_530",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_197",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_198",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_206",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_207",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_208",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_215",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_218",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_219",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_228",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_231",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_232",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_234",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_247",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_249",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_260",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_281",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_282",
+        "correct_runs": 1,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          false
+        ]
+      },
+      {
+        "id": "bird_17",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_24",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_25",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_27",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_28",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_37",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_39",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_46",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_50",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_62",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_72",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_79",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_83",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_85",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_87",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_92",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_94",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_95",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_112",
+        "correct_runs": 2,
+        "total_runs": 2,
+        "outcomes": [
+          true,
+          true
+        ]
+      },
+      {
+        "id": "bird_115",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_118",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_125",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_128",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_129",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_145",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_173",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_186",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      },
+      {
+        "id": "bird_189",
+        "correct_runs": 0,
+        "total_runs": 2,
+        "outcomes": [
+          false,
+          false
+        ]
+      }
+    ]
+  },
+  "transitions": [
+    {
+      "from_run_id": "20260713T072941Z-6b75f55b",
+      "to_run_id": "20260713T094637Z-5caab99c",
+      "recovered_ids": [
+        "bird_1387",
+        "bird_1235",
+        "bird_1238",
+        "bird_637"
+      ],
+      "regressed_ids": [
+        "bird_1472",
+        "bird_1350",
+        "bird_944",
+        "bird_598",
+        "bird_480",
+        "bird_518",
+        "bird_282"
+      ]
+    }
+  ],
+  "error_classes": {
+    "aggregate": {
+      "AGGREGATION_REASONING": 14,
+      "OUTPUT_CONTRACT": 6,
+      "RUNNER_OR_API": 4,
+      "SCHEMA_LINKING": 3,
+      "SEMANTIC_REVIEW_REQUIRED": 16,
+      "TOOL_ERROR": 1,
+      "UNVERIFIED_FINAL": 215
+    },
+    "subcategories": {
+      "aggregation_or_grouping_mismatch": 12,
+      "filter_scope_or_expression_mismatch": 16,
+      "final_sql_changed_after_test": 206,
+      "final_without_db_execution": 9,
+      "missing_final_sql": 2,
+      "no_assistant_output": 2,
+      "output_column_count_mismatch": 6,
+      "sort_direction_or_order_scope_mismatch": 2,
+      "table_or_join_path_mismatch": 3,
+      "unparseable_execution_observation": 1
+    }
+  },
+  "runs": [
+    {
+      "run_id": "20260713T072941Z-6b75f55b",
+      "trace_dir": "C:\\Users\\Irene\\AgenticSearch\\trace\\e0_core_run1",
+      "result_path": "C:\\Users\\Irene\\AgenticSearch\\results\\e0_core_run1.json",
+      "correct": 69,
+      "total": 197,
+      "accuracy": 0.350254,
+      "latency_seconds_per_question": 41.326875,
+      "llm_calls_per_question": 2.756345,
+      "db_tool_calls_per_question": 1.893401,
+      "db_execute_calls_per_question": 1.502538,
+      "token_usage": {
+        "prompt_tokens": 1280627,
+        "completion_tokens": 1410194,
+        "reasoning_tokens": 1301174,
+        "total_tokens": 2690821,
+        "cached_prompt_tokens": 618496,
+        "llm_calls": 543,
+        "usage_missing_calls": 9,
+        "reasoning_usage_missing_calls": 9,
+        "questions": 197,
+        "questions_with_complete_usage": 191,
+        "average_per_question": {
+          "prompt_tokens": 6500.64,
+          "completion_tokens": 7158.35,
+          "reasoning_tokens": 6604.94,
+          "total_tokens": 13658.99,
+          "cached_prompt_tokens": 3139.57
+        }
+      },
+      "error_classes": {
+        "AGGREGATION_REASONING": 5,
+        "OUTPUT_CONTRACT": 3,
+        "RUNNER_OR_API": 1,
+        "SCHEMA_LINKING": 2,
+        "SEMANTIC_REVIEW_REQUIRED": 7,
+        "UNVERIFIED_FINAL": 110
+      },
+      "subcategories": {
+        "aggregation_or_grouping_mismatch": 4,
+        "filter_scope_or_expression_mismatch": 7,
+        "final_sql_changed_after_test": 107,
+        "final_without_db_execution": 3,
+        "missing_final_sql": 1,
+        "output_column_count_mismatch": 3,
+        "sort_direction_or_order_scope_mismatch": 1,
+        "table_or_join_path_mismatch": 2
+      }
+    },
+    {
+      "run_id": "20260713T094637Z-5caab99c",
+      "trace_dir": "C:\\Users\\Irene\\AgenticSearch\\trace\\e0_core_run2",
+      "result_path": "C:\\Users\\Irene\\AgenticSearch\\results\\e0_core_run2.json",
+      "correct": 66,
+      "total": 197,
+      "accuracy": 0.335025,
+      "latency_seconds_per_question": 42.278214,
+      "llm_calls_per_question": 2.720812,
+      "db_tool_calls_per_question": 1.903553,
+      "db_execute_calls_per_question": 1.553299,
+      "token_usage": {
+        "prompt_tokens": 1265149,
+        "completion_tokens": 1390658,
+        "reasoning_tokens": 1280719,
+        "total_tokens": 2655807,
+        "cached_prompt_tokens": 596992,
+        "llm_calls": 536,
+        "usage_missing_calls": 11,
+        "reasoning_usage_missing_calls": 11,
+        "questions": 197,
+        "questions_with_complete_usage": 191,
+        "average_per_question": {
+          "prompt_tokens": 6422.08,
+          "completion_tokens": 7059.18,
+          "reasoning_tokens": 6501.11,
+          "total_tokens": 13481.25,
+          "cached_prompt_tokens": 3030.42
+        }
+      },
+      "error_classes": {
+        "AGGREGATION_REASONING": 9,
+        "OUTPUT_CONTRACT": 3,
+        "RUNNER_OR_API": 3,
+        "SCHEMA_LINKING": 1,
+        "SEMANTIC_REVIEW_REQUIRED": 9,
+        "TOOL_ERROR": 1,
+        "UNVERIFIED_FINAL": 105
+      },
+      "subcategories": {
+        "aggregation_or_grouping_mismatch": 8,
+        "filter_scope_or_expression_mismatch": 9,
+        "final_sql_changed_after_test": 99,
+        "final_without_db_execution": 6,
+        "missing_final_sql": 1,
+        "no_assistant_output": 2,
+        "output_column_count_mismatch": 3,
+        "sort_direction_or_order_scope_mismatch": 1,
+        "table_or_join_path_mismatch": 1,
+        "unparseable_execution_observation": 1
+      }
+    }
+  ]
+}

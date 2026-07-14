@@ -1,0 +1,83 @@
+{
+  "summary_schema_version": 1,
+  "experiment": "e3_f_core197_run1",
+  "run_id": "20260714T075259Z-f3c7e719",
+  "status": "interrupted",
+  "completed_questions": 53,
+  "planned_questions": 197,
+  "correct": 21,
+  "accuracy": 0.396226,
+  "historical_configuration": {
+    "query_pattern_mode": "train-mined-v1",
+    "query_pattern_artifact_sha256": "eddf772e51a1322e0a263f2425c89774e9984b4714aaf36c208df01920ac32ee",
+    "offline_metadata_mode": "e3-f-schema-v3",
+    "offline_metadata_artifact_sha256": "59975ed59948c5f47654cc0ebffbf36cebdb74df372f71dbaf81ba90a1a79bae",
+    "effective_few_shot_k": 1,
+    "capability_gate": true
+  },
+  "breakdown": {
+    "id_group": {
+      "both_wrong": {"correct": 7, "total": 36},
+      "canary": {"correct": 14, "total": 17}
+    },
+    "difficulty": {
+      "simple": {"correct": 8, "total": 14},
+      "moderate": {"correct": 8, "total": 24},
+      "challenging": {"correct": 5, "total": 15}
+    },
+    "database": {
+      "debit_card_specializing": {"correct": 5, "total": 14},
+      "student_club": {"correct": 10, "total": 14},
+      "thrombosis_prediction": {"correct": 6, "total": 23},
+      "european_football_2": {"correct": 0, "total": 2}
+    }
+  },
+  "usage": {
+    "llm_calls": 162,
+    "prompt_tokens": 364337,
+    "completion_tokens": 506283,
+    "reasoning_tokens": 466705,
+    "total_tokens": 870620,
+    "cached_prompt_tokens": 186624,
+    "latency_seconds": 2706.3943,
+    "average_total_tokens_per_question": 16426.79,
+    "average_latency_seconds_per_question": 51.06,
+    "usage_missing_calls": 4
+  },
+  "automatic_error_classes": {
+    "UNVERIFIED_FINAL": 24,
+    "OUTPUT_CONTRACT": 2,
+    "SEMANTIC_REVIEW_REQUIRED": 2,
+    "AGGREGATION_REASONING": 1,
+    "SCHEMA_LINKING": 1,
+    "RUNNER_OR_API": 1,
+    "TOOL_ERROR": 1
+  },
+  "reviewed_semantic_causes": {
+    "AGGREGATION_REASONING": 9,
+    "OUTPUT_CONTRACT": 9,
+    "SEMANTIC_REVIEW_REQUIRED": 7,
+    "SCHEMA_LINKING": 6,
+    "RUNNER_OR_API": 1
+  },
+  "retrieval_audit": {
+    "schema_gold_detail_table_miss_questions": 0,
+    "schema_gold_detail_column_miss_questions": 0,
+    "schema_selected_all_database_tables_questions": 53,
+    "schema_average_selected_tables": 5.0,
+    "query_mining_positive_top_k_questions": 52,
+    "query_mining_fallback_questions": 1,
+    "query_mining_average_selected_items": 2.85,
+    "query_mining_exact_gold_shape_questions": 16,
+    "query_mining_exact_gold_shape_rate": 0.301887
+  },
+  "matched_comparison": {
+    "e0_run1": {"correct": 19, "total": 53, "accuracy": 0.358491, "average_total_tokens": 11023.26},
+    "e0_run2": {"correct": 20, "total": 53, "accuracy": 0.377358, "average_total_tokens": 12385.91},
+    "e3_a": {"correct": 20, "total": 53, "accuracy": 0.377358, "average_total_tokens": 11565.96},
+    "e3_b": {"correct": 20, "total": 53, "accuracy": 0.377358, "average_total_tokens": 12991.62},
+    "historical_e3_c_run2": {"correct": 23, "total": 53, "accuracy": 0.433962, "average_total_tokens": 14244.40}
+  },
+  "interpretation": "Historical v1/v3 partial diagnostic only; not evidence for the repaired E3-F configuration."
+}
+

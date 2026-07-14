@@ -10,8 +10,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import re
-import ast
 import sys
 import time
 from pathlib import Path
@@ -25,155 +23,37 @@ if str(PROJECT_ROOT) not in sys.path:
 
 load_dotenv(PROJECT_ROOT / ".env")
 
-from ours.recursive_db_rlm import DBRLM, _SYSTEM_PROMPT, _STOP_SEQUENCES, _truncate_at_fake_turn, _convert_sql_blocks
-from ours.db_environment import get_db_path, DBEnvironment
+from ours.recursive_db_rlm import DBRLM
+from ours.db_environment import get_db_path
 from ours.bird_few_shot_retriever import get_bird_retriever
-from ours.db_hints import get_db_hint
+from ours.agent.config import agent_profile_names, get_agent_config
 from shared.evaluator import is_correct
 from shared.sql_executor import execute_sql
-from src.rlm.parser import parse_response, is_final
-from src.rlm.repl import REPLError
 
 BIRD_DB_DIR  = PROJECT_ROOT / "data/raw/bird/minidev/MINIDEV/dev_databases"
 BIRD_DATASET = PROJECT_ROOT / "data/processed/bird_dev_500.json"
 
 
 class InDomainFewShotDBRLM(DBRLM):
-    """DB-RLM with a single in-domain BIRD example injected per question."""
+    """Compatibility wrapper; the shared DBRLM owns the only agent loop."""
 
     def __init__(self, *args, retriever=None, k=1, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._retriever = retriever
-        self._k = k
-
-    def complete_sql(self, question: str, db_path, evidence: str = "") -> str:
-        self._db = DBEnvironment(db_path)
-        self._evidence = evidence.strip()
-        return self.complete(query=question)
-
-    async def acomplete(self, query: str = "", context: str = "", **kwargs):
-        from src.rlm.core import MaxIterationsError, MaxDepthError
-
-        if query and not context:
-            context = query
-            query = ""
-
-        if self._current_depth >= self.max_depth:
-            raise MaxDepthError(f"Max recursion depth ({self.max_depth}) exceeded")
-
-        repl_env = self._build_repl_env(query, context)
-        question = query or context
-        schema_str = self._db.format_schema() if hasattr(self, "_db") else "(no schema)"
-        evidence = getattr(self, "_evidence", "")
-
-        evidence_block = (
-            f"\n⚠️  HINT (follow these definitions EXACTLY):\n  {evidence}\n"
-            if evidence else ""
-        )
-
-        db_id = getattr(self._db, "db_path", Path("")).stem
-        db_hint = get_db_hint(db_id)
-        db_hint_block = (
-            f"\n📌 DATABASE NOTES:\n" + "\n".join(f"  {l}" for l in db_hint.splitlines()) + "\n"
-            if db_hint else ""
-        )
-
-        # Single in-domain example
-        few_shot_block = ""
-        if self._retriever:
-            few_shot_block = "\n" + self._retriever.format_examples(question, db_id=db_id, k=self._k) + "\n"
-
-        messages = [
-            {"role": "system", "content": _SYSTEM_PROMPT},
-            {
-                "role": "user",
-                "content": (
-                    f"QUESTION: {question}"
-                    f"{evidence_block}"
-                    f"{db_hint_block}"
-                    f"{few_shot_block}\n"
-                    f"Schema:\n{schema_str}\n\n"
-                    "Follow the Hint above, explore the DB if needed, test your SQL, then FINAL(\"your sql\")."
-                ),
-            },
-        ]
-
-        kwargs.setdefault("stop", _STOP_SEQUENCES)
-        last_exec_result = None
-        repeat_count = 0
-        last_was_empty = False
-
-        for iteration in range(self.max_iterations):
-            self._iterations = iteration + 1
-            response = await self._call_llm(messages, **kwargs)
-            response = _truncate_at_fake_turn(response)
-            response = _convert_sql_blocks(response)
-
-            has_code = bool(re.search(r'```python', response))
-            if is_final(response) and not has_code:
-                if last_was_empty:
-                    messages.append({"role": "assistant", "content": response})
-                    messages.append({"role": "user", "content": (
-                        "⛔ BLOCKED: last SQL returned 0 rows. Fix before calling FINAL()."
-                    )})
-                    last_was_empty = False
-                    continue
-                answer = parse_response(response, repl_env)
-                if answer is not None:
-                    return answer
-
-            response_for_repl = re.sub(r'FINAL\s*\(.*?\)', '', response, flags=re.DOTALL).strip()
-            try:
-                exec_result = self.repl.execute(response_for_repl, repl_env)
-            except REPLError as e:
-                exec_result = f"REPL Error: {e}"
-            except Exception as e:
-                exec_result = f"Error: {e}"
-
-            result_data = None
-            try:
-                result_data = ast.literal_eval(exec_result) if isinstance(exec_result, str) else None
-            except Exception:
-                pass
-
-            last_was_empty = False
-            if isinstance(result_data, dict):
-                if result_data.get("error"):
-                    exec_result += f"\n\n⚠️ SQL ERROR: {result_data['error']} — fix your SQL."
-                elif result_data.get("rows") == []:
-                    exec_result += "\n\n⚠️ WARNING: 0 rows returned. Check your WHERE/JOIN."
-                    last_was_empty = True
-                elif (rows := result_data.get("rows")) and all(
-                    all(v is None for v in row) for row in rows
-                ):
-                    exec_result += (
-                        "\n\n⚠️ WARNING: result is all NULL — the column you selected is "
-                        "empty for these rows. You likely need a JOIN to another table "
-                        "instead of this column."
-                    )
-                    last_was_empty = True
-
-            if exec_result == last_exec_result:
-                repeat_count += 1
-                if repeat_count >= 2:
-                    exec_result += "\n\nYou already have this. Call FINAL(\"your sql\")."
-                    repeat_count = 0
-            else:
-                repeat_count = 0
-            last_exec_result = exec_result
-
-            messages.append({"role": "assistant", "content": response})
-            messages.append({"role": "user", "content": exec_result})
-
-        raise MaxIterationsError("Max iterations exceeded")
+        super().__init__(*args, retriever=retriever, k=k, **kwargs)
 
 
-def run_one(example: dict, database_dir: Path, agent: InDomainFewShotDBRLM) -> dict:
+def run_one(
+    example: dict,
+    database_dir: Path,
+    agent: InDomainFewShotDBRLM,
+    capture_trace: bool = False,
+) -> dict:
+    agent.reset_stats()
     db_path = get_db_path(database_dir, example["db_id"])
     started = time.perf_counter()
     predicted_sql = ""
     termination = "error"
     error_msg = None
+    attempt_traces = []
 
     for attempt in range(3):
         try:
@@ -193,6 +73,11 @@ def run_one(example: dict, database_dir: Path, agent: InDomainFewShotDBRLM) -> d
                 time.sleep(5 * (attempt + 1))
                 continue
             break
+        finally:
+            if capture_trace:
+                snapshot = agent.trace_snapshot()
+                snapshot["attempt"] = attempt + 1
+                attempt_traces.append(snapshot)
 
     predicted_exec = (
         execute_sql(db_path, predicted_sql, read_only=True)
@@ -200,7 +85,7 @@ def run_one(example: dict, database_dir: Path, agent: InDomainFewShotDBRLM) -> d
     )
     gold_exec = execute_sql(db_path, example["gold_sql"], read_only=True)
 
-    return {
+    record = {
         "id": example["id"],
         "method": "bird_indomain_fewshot_db_rlm",
         "db_id": example["db_id"],
@@ -218,8 +103,41 @@ def run_one(example: dict, database_dir: Path, agent: InDomainFewShotDBRLM) -> d
         "error": predicted_exec.get("error") or gold_exec.get("error"),
         "latency_seconds": round(time.perf_counter() - started, 4),
         "llm_calls": agent.stats["llm_calls"],
+        "prompt_tokens": agent.stats["prompt_tokens"],
+        "completion_tokens": agent.stats["completion_tokens"],
+        "reasoning_tokens": agent.stats["reasoning_tokens"],
+        "total_tokens": agent.stats["total_tokens"],
+        "cached_prompt_tokens": agent.stats["cached_prompt_tokens"],
+        "usage_missing_calls": agent.stats["usage_missing_calls"],
+        "reasoning_usage_missing_calls": agent.stats["reasoning_usage_missing_calls"],
+        "agent_profile": agent.agent_config.profile,
+        "agent_config_sha256": agent.agent_config.sha256,
         "termination": termination,
     }
+    if capture_trace:
+        final_attempt = attempt_traces[-1] if attempt_traces else {
+            "messages": [], "events": [], "attempt": 0,
+        }
+        record["_trace"] = {
+            "messages": final_attempt.get("messages", []),
+            "events": final_attempt.get("events", []),
+            "llm_call_usage": agent.llm_call_usage_snapshot(),
+            "token_usage": {
+                key: agent.stats[key]
+                for key in (
+                    "llm_calls",
+                    "prompt_tokens",
+                    "completion_tokens",
+                    "reasoning_tokens",
+                    "total_tokens",
+                    "cached_prompt_tokens",
+                    "usage_missing_calls",
+                    "reasoning_usage_missing_calls",
+                )
+            },
+            "attempts": attempt_traces,
+        }
+    return record
 
 
 def main():
@@ -235,6 +153,15 @@ def main():
     parser.add_argument("--temperature",    type=float, default=0)
     parser.add_argument("--reasoning-effort", default=None,
                         help="gpt-5 family reasoning effort: minimal/low/medium/high")
+    parser.add_argument(
+        "--agent-profile",
+        choices=agent_profile_names(),
+        default="legacy-e0",
+        help=(
+            "agent profile; this runner uses dev-derived examples and is only for "
+            "legacy reproduction, not clean evaluation"
+        ),
+    )
     parser.add_argument("--no-fewshot", action="store_true",
                         help="disable retrieval few-shot (static prompt examples only)")
     parser.add_argument("--sleep",          type=float, default=0)
@@ -268,6 +195,7 @@ def main():
         temperature=args.temperature,
         retriever=retriever,
         k=args.k,
+        agent_config=get_agent_config(args.agent_profile),
         **extra,
     )
 
@@ -285,8 +213,6 @@ def main():
     print(f"Running {len(questions)} questions with k={args.k} in-domain BIRD example(s)")
 
     for ex in tqdm(questions, desc="BIRD-InDomainFewShot"):
-        agent._llm_calls = 0
-        agent._iterations = 0
         try:
             results.append(run_one(ex, Path(args.database_dir), agent))
         except KeyboardInterrupt:

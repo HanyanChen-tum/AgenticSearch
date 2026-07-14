@@ -1,0 +1,35 @@
+[
+  {
+    "id": "bird_1471",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN Currency = 'EUR' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN Currency = 'CZK' THEN 1 ELSE 0 END) FROM customers",
+    "predicted_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 10.1315,
+    "llm_calls": 2,
+    "prompt_tokens": 4272,
+    "completion_tokens": 1132,
+    "reasoning_tokens": 856,
+    "total_tokens": 5404,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "termination": "final",
+    "run_id": "20260713T042433Z-ffe97d4a",
+    "trace_schema_version": 3
+  }
+]
