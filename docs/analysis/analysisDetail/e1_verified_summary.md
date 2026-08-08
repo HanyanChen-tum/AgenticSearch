@@ -68,25 +68,28 @@ LLM 调用、DB 调用、token 和延迟的显著增长。
 
 ## 错误类别
 
-| 错误类别 | 数量 |
-|---|---:|
-| `AGGREGATION_REASONING` | 13 |
-| `OUTPUT_CONTRACT` | 10 |
-| `SEMANTIC_REVIEW_REQUIRED` | 9 |
-| `RUNNER_OR_API` | 5 |
-| `SCHEMA_LINKING` | 5 |
+> **2026-08-07 分类更正**：下表已用修复后分类器（`docs/analysis/README.md` §4.1）重新生成。`SCHEMA_LINKING` 从 5 升为 10（翻倍），`SEMANTIC_REVIEW_REQUIRED` 从 9 降为 6；正确/错误原始判定（28/70）不受影响，E1 的拒绝决定不变。
+
+| 错误类别（修复后） | 数量 | 原数量 |
+|---|---:|---:|
+| `AGGREGATION_REASONING` | 12 | 13 |
+| `SCHEMA_LINKING` | 10 | 5 |
+| `OUTPUT_CONTRACT` | 10 | 不变 |
+| `SEMANTIC_REVIEW_REQUIRED` | 6 | 9 |
+| `RUNNER_OR_API` | 5 | 不变 |
 
 ### 错误子类别
 
-| 子类别 | 数量 |
-|---|---:|
-| `aggregation_or_grouping_mismatch` | 12 |
-| `filter_scope_or_expression_mismatch` | 9 |
-| `output_column_count_mismatch` | 9 |
-| `table_or_join_path_mismatch` | 5 |
-| `missing_final_sql` | 5 |
-| `sort_direction_or_order_scope_mismatch` | 1 |
-| `yes_no_vs_row_output_mismatch` | 1 |
+| 子类别（修复后） | 数量 | 原数量 |
+|---|---:|---:|
+| `aggregation_or_grouping_mismatch` | 10 | 12 |
+| `table_or_join_path_mismatch` | 9 | 5 |
+| `output_column_count_mismatch` | 9 | 不变 |
+| `filter_scope_or_expression_mismatch` | 6 | 9 |
+| `missing_final_sql` | 5 | 不变 |
+| `sort_direction_or_order_scope_mismatch` | 2 | 1 |
+| `yes_no_vs_row_output_mismatch` | 1 | 不变 |
+| `join_key_or_condition_mismatch`（新增子类） | 1 | 原 0 |
 
 
 聚合或分组粒度错误：12；

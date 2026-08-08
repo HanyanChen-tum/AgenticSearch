@@ -1,8 +1,12 @@
 # DB-RLM 统一实验计划
 
+English version: [README_EN.md](README_EN.md)
+
 版本：v1.0  
-更新日期：2026-07-14  
-当前状态：E0、E1、E2-B、E3-A、E3-B 已完成；旧 E3-C run2 在 62/197 中断；旧 E3-F v1/v3 run1 在 53/197 中断且仅作诊断；E3-F Schema v4 已实现，但 Query Mining v2 的严格跨库门禁没有任何 slot 通过，因此暂停新版 E3-F 正式运行  
+更新日期：2026-07-15
+当前状态：E4-A core197 已完成并拒绝：71/197（36.04%），相对父配置 E3-C 的 77/197 下降 6 题；恢复 3、回退 9，total tokens/题增加 6.67%。当前最佳配置回退为 E3-C Schema v4。E5/E6 暂停，不把失败的 QueryPlan 带入 context store 或 Leaf。旧 E3-C run2 和旧 E3-F v1/v3 仅作历史诊断；Query Mining v2 没有 slot 通过严格跨库门禁，因此 E3-D/E3-F 仍暂停。**2026-08-07：修复了语义分类器的多处漏检并重新生成全部 7 个已完成实验的分类结果**（见 `../analysis/README.md` §4.1）；Schema/Join 从最小错误类别变为最大类别，E4-A 拒绝的决定不变，但归因方向反转——QueryPlan 让自己的目标类别（聚合/排序）变差，而非被 Schema 拖累，详见 §3.3、§3.5、§7.1、§8.1。
+
+**F-Audit 已完成（两轮）**：对 20 题过滤/Schema 疑似噪声样本做实际执行验证，确认 40%（8题）是 gold 本身缺陷（含跨 4 个数据库反复出现的"缺 DISTINCT"系统性 bug 模式）、30%（6题）是真实 Agent 错误、10% 是被误归类的输出契约问题、其余为歧义或轻微倾向性判断。详见 `../analysis/analysisDetail/filter_audit.md`。基于 F-Audit 发现衍生了两个候选机制并已测试：**"FINAL 前未核实字面量警告"（N=44 分层验证，净回退，已拒绝）**；**"防御性过度 JOIN 提醒"（N=26，v1净+1、v2净归零，样本太小且发现题级噪声，已暂停迭代，不作定论）**。详见 `../analysis/analysisDetail/e3_c_literal_check_smoke2.md`、`e3_c_join_minimal_v2_smoke1.md`。另有 Schema/Join 深度诊断确认 93.5% 的 Schema/Join 失败不是检索问题、是近义表/字段混淆（`../analysis/analysisDetail/schema_join_diagnosis_2026-08-07.md`），对应的消歧机制讨论后决定暂缓至 E5/E6 重启时再设计，不在当前阶段实现。**下一步优先 Query Mining（E3-D）诊断/改进跨库验证门禁为何 0 个 slot 通过，E5/E6 仍需等待 train-only 验证过的 QueryPlan 才能重新评估准入。**
 正式数据：`bird_cleancore_ids.json` 固定 197 题  
 原则：实验顺序由每轮错误轨迹证据决定；一次只改变一个可归因机制。每次运行后先分析完整 trace、双标签语义归因和 recovered/regressed，再决定下一轮唯一变量，不预先假定最终架构。
 
@@ -15,6 +19,21 @@
 3. **可验证的自我改进与分而治之**：Root 先形成全局 QueryPlan，根据执行反馈修正约束；只有存在明确可独立验证的复杂 SubPlan 时，才使用受控 depth-1 Leaf，并与等预算的额外 Root 思考比较。
 
 这三个机制不能直接作为一个整体实验，因为 E0 的失败来自不同层面。E0 的 259 条失败记录主要集中在聚合/排序（93）、过滤语义（67）、输出契约（56）和 Schema/Join（38），另有运行、解析和工具问题（5）；124 道稳定失败中有 110 道保持相同语义大类。同时，`UNVERIFIED_FINAL` 等控制流标签会遮住底层语义，且 E1 已显示 strict verified-final 增加成本却没有解决主要错误。因此必须先按错误形成机制分类，再用消融实验隔离每个改动的因果贡献。
+
+由全部 259 条失败得到的直接机制映射为（2026-08-07 已用修复后分类器更新，见 `../analysis/README.md` §4.1；修复前分类器不比较 GROUP BY/ORDER BY 具体字段、不检查 JOIN key，系统性低估 Schema/Join）：
+
+| E0 失败归因（修复后） | 直接机制 | 实验顺序 |
+|---|---|---|
+| 5 条运行、解析或工具问题 | 结构化 observation、重试、断点续跑和终止原因 | `E2-A`，只作为基础设施 |
+| 75 条表选择/Join 路径错误（原与下一行合计为 38） | Offline Schema Context、字段语义、PK/FK、关系基数和相关片段选择 | `E3-C` |
+| 22 条 JOIN key/条件错误（新增子类，此前未被检出） | 同上，另需核对 JOIN 条件对应的外键列 | `E3-C` |
+| 36 条过滤范围/表达式错误（原为 67 条） | 先区分 Agent 错误与 gold 歧义；再结合值语义和题目级条件结构 | `F-Audit` → `E3-C` / `E4-A`，必要时 `E5-B` |
+| 43 条聚合/分组错误（原为 82 条） | 显式统计对象、grain、分组键、聚合函数、`WHERE/HAVING` 与阶段依赖 | `E4-A`；只有剩余问题存在可分 SubPlan 才进入 `E6` |
+| 22 条排序错误（原为 11 条） | 显式排序指标、方向、Top-K、tie 和 `LIMIT` 层级 | `E4-A` |
+| 48 条输出列数错误（不变） | 固定 answer type、列数、顺序、来源和投影检查 | `E4-A` |
+| 8 条 YES/NO 与逐行输出错误（不变） | 在生成 SQL 前固定 boolean/scalar/rows 回答形式 | `E4-A` |
+
+以上细分类合计 259 条（5+75+22+36+43+22+48+8）。实验顺序依据运行后的 `semantic_error_class`，而不是被其遮盖的 `UNVERIFIED_FINAL` 控制流标签。Schema/Join（97 条）现在是全部四个语义大类中数量最大的一类，超过聚合/排序（65 条）；执行顺序碰巧仍然正确（E3-C 已先于 E4-A 运行），但 F-Audit 的抽样范围需要按新的 36 条过滤记录重新界定。
 
 实验顺序采用“**运行 → 轨迹分析 → 错误迁移 → 更新假设 → 下一实验**”闭环：
 
@@ -121,27 +140,27 @@ E0 使用 `clean-e0` / `clean-protocol-v1`、train-only `k=1` few-shot、Hint + 
 
 详细报告：[E0 summary](../analysis/analysisDetail/e0_core_summary.md)。
 
-### 3.3 E0 双标签错误分布
+### 3.3 E0 双标签错误分布（2026-08-07 已用修复后分类器更新，见 `../analysis/README.md` §4.1）
 
-两次共有 259 条失败记录。`UNVERIFIED_FINAL` 会覆盖底层语义，因此机制规划使用 `semantic_error_class`。
+两次共有 259 条失败记录。`UNVERIFIED_FINAL` 会覆盖底层语义，因此机制规划使用 `semantic_error_class`。修复前的分类器只检查 GROUP BY/ORDER BY 关键词是否出现、不比较具体字段，也完全不检查 JOIN key，系统性低估了 Schema/Join、高估了过滤类。
 
-| 实际原因 | Run1 | Run2 | 合计 | 占失败记录 |
-|---|---:|---:|---:|---:|
-| 聚合与排序 | 45 | 48 | 93 | 35.91% |
-| 过滤范围/表达式 | 33 | 34 | 67 | 25.87% |
-| 输出契约 | 29 | 27 | 56 | 21.62% |
-| Schema/Join | 20 | 18 | 38 | 14.67% |
-| 运行、解析或工具 | 1 | 4 | 5 | 1.93% |
+| 实际原因 | Run1 | Run2 | 合计 | 占失败记录 | 原合计（供对照） |
+|---|---:|---:|---:|---:|---:|
+| Schema/Join | 49 | 48 | 97 | 37.45% | 原 38（14.67%） |
+| 聚合与排序 | 32 | 33 | 65 | 25.10% | 原 93（35.91%） |
+| 输出契约 | 29 | 27 | 56 | 21.62% | 不变 |
+| 过滤范围/表达式 | 17 | 19 | 36 | 13.90% | 原 67（25.87%） |
+| 运行、解析或工具 | 1 | 4 | 5 | 1.93% | 不变 |
 
-| 稳定失败类别 | 题数 |
-|---|---:|
-| 聚合与排序 | 41 |
-| 过滤语义 | 28 |
-| 输出契约 | 25 |
-| Schema/Join | 16 |
-| 类别变化或运行噪声 | 14 |
+| 稳定失败类别（修复后） | 题数 | 原题数 |
+|---|---:|---:|
+| Schema/Join | 42 | 原 16 |
+| 聚合与排序 | 29 | 原 41 |
+| 输出契约 | 25 | 不变 |
+| 过滤语义 | 14 | 原 28 |
+| 类别变化或运行噪声 | 14 | 不变（13 类别变化 + 1 运行问题） |
 
-124 道稳定失败中，110 道保持相同语义大类，107 道保持相同子类。后续核心指标是恢复这些稳定结构性错误，不是只提高一次总分。
+124 道稳定失败中，**111 道**（原报告 110 道，非常接近但不完全相同，因个别题目在两次运行间的归因组合刚好跨过了新旧分类边界）保持相同语义大类；107 道保持相同子类这一数字尚未用新分类器重新核算。上表显示同类别的具体构成从"聚合为主"变为"Schema/Join 为主"。后续核心指标是恢复这些稳定结构性错误，不是只提高一次总分。
 
 ### 3.4 `UNVERIFIED_FINAL` 的判断
 
@@ -158,19 +177,21 @@ E0 两次共有 215 条：
 
 结论：保留为控制流诊断，不作为实验排序依据。E1 已证明 strict verified-final 不值得默认启用。
 
-### 3.5 根据 E0 错误制定的改进顺序
+### 3.5 根据 E0 错误制定的改进顺序（2026-08-07 数字已按修复后分类器更新）
 
-| 优先级 | E0 证据 | 改进机制 | 实验 |
+> 证据数字已更新，但下方执行顺序未变——因为实际执行顺序（E3-C 先于 E4-A）恰好与修正后的类别大小一致；唯一需要重新界定范围的是优先级 4 的 F-Audit（原按 67 条设计，现应按 36 条重新抽样）。
+
+| 优先级 | E0 证据（修复后） | 改进机制 | 实验 |
 |---:|---|---|---|
 | 0 | 运行/解析/工具 5 条，observation 解析影响归因 | trace、manifest、结构化 observation | E2-A |
-| 1 | Schema/Join 38 | 先独立验证 Offline metadata + PK/FK + Join path，关闭未验证的 static patterns | E3-C |
-| 2 | 聚合/排序 93、输出契约 56、过滤 67；E3-A 静态规则覆盖不足 | 从 train question + SQL 做真正 Query Mining，再条件性消融 few-shot | E3-D、E3-E |
-| 3 | 聚合/排序 93；输出契约 56 | Root QueryPlan + output contract | E4-A |
-| 4 | 过滤 67，但置信度低 | 人工审计；QueryPlan 条件结构；必要时值检索 | F-Audit、E4-A、E5-B |
+| 1 | Schema/Join 97（原 38） | 先独立验证 Offline metadata + PK/FK + Join path，关闭未验证的 static patterns | E3-C |
+| 2 | 聚合/排序 65（原 93）、输出契约 56（不变）、过滤 36（原 67）；E3-A 静态规则覆盖不足 | 从 train question + SQL 做真正 Query Mining，再条件性消融 few-shot | E3-D、E3-E |
+| 3 | 聚合/排序 65（原 93）；输出契约 56（不变） | Root QueryPlan + output contract | E4-A |
+| 4 | 过滤 36（原 67），但置信度低 | 人工审计；QueryPlan 条件结构；必要时值检索 | F-Audit、E4-A、E5-B |
 | 5 | 直接 Prompt 可能未有效使用上下文 | 同信息外部化和程序化检索 | E5-A、E5-B |
 | 6 | 多阶段复杂题仍失败 | QueryPlan 驱动 depth-1 Leaf | E6-A、E6-B |
 
-每一阶段完成后必须重新检查错误迁移；不得因为递归是最终目标就跳过 E3-C、E4-A 和 E5-B，否则无法归因。若新运行显示优先级改变，应在下一轮计划中记录证据并调整顺序。
+每一阶段完成后必须重新检查错误迁移；不得因为递归是最终目标就跳过 E3-C、E4-A 和 E5-B，否则无法归因。若新运行显示优先级改变，应在下一轮计划中记录证据并调整顺序。修复后的证据显示 Schema/Join（97）比聚合/排序（65）更大，E3-C 排在 E4-A 之前这个顺序恰好是对的，但 E4-A 面对的聚合/排序体量比原先认为的小得多，这也与 E4-A 最终被拒绝一致。
 
 ## 4. 统一实验协议
 
@@ -399,7 +420,7 @@ Offline artifact 的统一生命周期为：
 |---|---|---|---|---|
 | E3-A | E0 | 人工归纳的固定 train-only static patterns，保留 few-shot | 验证静态规则原型 | 已完成；弱证据，不作为默认父配置 |
 | E3-B | E3-A | 移除 train few-shot，保留相同 patterns | 判断 patterns 的替代价值和成本 | 已完成并拒绝 |
-| E3-C | E0 | 关闭 static patterns；保留 few-shot；用 Offline Schema Context 替代 runtime full Schema Prompt | Schema linking、字段来源、Join 与 Prompt 冗余 | 已升级为 Schema v4，下一步先做分层 smoke |
+| E3-C | E0 | 关闭 static patterns；保留 few-shot；用 Offline Schema Context 替代 runtime full Schema Prompt | Schema linking、字段来源、Join 与 Prompt 冗余 | 已完成并接受：77/197；作为 E4-A 父配置 |
 | E3-D | E3-C | 从 train question + gold SQL 自动挖掘、归一化、聚类并按题检索 Top-K patterns | 聚合、排序、过滤、输出和 Join 结构错误 | 待设计与实现 |
 | E3-E | E3-D | 仅移除 train few-shot，保留 Schema Context 与 mined patterns | 判断完整 Offline 知识能否替代 few-shot | 条件实验：仅 E3-D 通过后运行 |
 | E3-F | E0 协议与 `k=1` few-shot | `e3-f-schema-v4` + 具有跨库门禁和 abstain 的 `train-mined-v2`；关闭 static patterns | 完整 Offline 系统的集成效果 | 历史 v1/v3 已运行 53/197 并完成诊断；新版阻断：Query Mining v2 当前 0 个 slot 通过门禁 |
@@ -408,11 +429,11 @@ Offline artifact 的统一生命周期为：
 
 | Offline 内容 | 对应 E0/E3-A 证据 | 为什么属于 Offline | 实验 |
 |---|---|---|---|
-| Query Mining / patterns | 聚合/排序 93、输出契约 56、过滤 67；E3-A 静态原型对聚合和输出没有明确改善 | 可从 train question + SQL 自动提炼结构签名、支持度、触发条件、边界与反例 | E3-A/E3-B 为历史原型；E3-D 为正式 Query Mining |
-| Schema semantic metadata | Schema/Join 38 条、16 道稳定同类失败 | 表/字段描述、别名和字段语义可在答题前构建为数据库级 artifact | E3-C |
-| PK/FK、Join path 与关系基数 | 多表遗漏、错误 Join 路径及重复行污染聚合 | 可从 Schema、约束和合规数据源离线生成，不需要当前题 gold | E3-C |
+| Query Mining / patterns | 聚合/排序 65（原 93）、输出契约 56、过滤 36（原 67）；E3-A 静态原型对聚合和输出没有明确改善 | 可从 train question + SQL 自动提炼结构签名、支持度、触发条件、边界与反例 | E3-A/E3-B 为历史原型；E3-D 为正式 Query Mining |
+| Schema semantic metadata | Schema/Join **97 条（原 38 条，2026-08-07 修复后为最大类别）**、42 道稳定同类失败（原 16 道） | 表/字段描述、别名和字段语义可在答题前构建为数据库级 artifact | E3-C |
+| PK/FK、Join path 与关系基数 | 多表遗漏、错误 Join 路径及重复行污染聚合；其中 22 条是 JOIN key/条件错误（新增子类，选对表但连错外键） | 可从 Schema、约束和合规数据源离线生成，不需要当前题 gold | E3-C |
 | 值类型、格式与受控样例 | 字符串格式、日期、单位、NULL 和过滤值错误 | 可作为数据库级 metadata 的一部分离线缓存；在线仍可用 `sample_values` 验证 | E3-C |
-| Repair rules | 124 道稳定失败中 110 道保持同一语义大类，说明存在重复错误模式 | 只能从合规 train 错误轨迹提炼触发、动作、边界和反例 | 暂缓且不占当前实验编号 |
+| Repair rules | 124 道稳定失败中 111 道保持同一语义大类（原报告 110 道），说明存在重复错误模式；同一大类现以 Schema/Join 为主，不是聚合 | 只能从合规 train 错误轨迹提炼触发、动作、边界和反例 | 暂缓且不占当前实验编号 |
 
 QueryPlan、context `search/slice/compose` 和 Leaf 不属于 Offline 内容：它们分别是在线题目级形式化、在线上下文访问方式和在线递归计算，必须留在 E4、E5、E6 独立测试。
 
@@ -657,7 +678,7 @@ E3-F 只有在至少一个 Query Mining slot 通过预注册跨库门禁后，�
 
 | 子实验/任务 | 父配置 | 唯一变量 | 目标 | 状态 |
 |---|---|---|---|---|
-| E4-A | E3 阶段锁定的具体 Offline 配置 | 同一次 Root 响应生成 QueryPlan + Output Contract | 聚合、排序、输出契约和部分过滤结构 | 待运行 |
+| E4-A | E3 阶段锁定的具体 Offline 配置 | 同一次 Root 响应生成 QueryPlan + Output Contract | 聚合、排序、输出契约和部分过滤结构 | 已完成并拒绝：71/197；较 E3-C -6；恢复 3、回退 9 |
 | F-Audit | E0/E3-A/E4-A 相关样本 | 人工复核过滤边界、逻辑范围和 gold 噪声 | 确定过滤类评价集 | 支持任务，不占编号 |
 
 ### 8.1 E4-A：Root QueryPlan + Output Contract
@@ -671,6 +692,7 @@ E3-F 只有在至少一个 Query Mining slot 通过预注册跨库门禁后，�
   target_entity: ",
   grain: ",
   schema_links: [],
+  required_tables: [],
   joins: [],
   filters: [
     {
@@ -682,22 +704,42 @@ E3-F 只有在至少一个 Query Mining slot 通过预注册跨库门禁后，�
   ],
   group_by: [],
   aggregates: [],
+  aggregation_scope: none|per_entity|global,
+  aggregation_justification: null,
   having: [],
   order_by: [],
   limit: null,
   answer_type: rows|scalar|boolean,
-  output_columns: []
+  answer_scope: per_entity_rows|single_entity_row|global_scalar|boolean,
+  output_columns: [
+    {
+      position: 1,
+      semantic_item: "",
+      source_columns: ["Table.column"],
+      sql_expression: "",
+      source_justification: "",
+      aggregation: "none"
+    }
+  ],
+  candidate_purpose: explore|answer,
+  expected_result_shape: {
+    answer_type: rows|scalar|boolean,
+    column_count: 0,
+    row_grain: "
+  },
+  unresolved_assumptions: [],
+  revision: null
 }
 ```
 
 控制变量：
 
 - 父配置为第 7.9 节锁定的具体 Offline 配置；
-- 无 metadata、context store、Leaf；
+- 继承 E3-C 的 Offline Schema metadata，但不新增 Query Mining、context store 或 Leaf；
 - LLM 调用预算与选定父配置相同；
 - DB ReAct 和 FINAL 不变。
 
-记录 plan parse、首次内容与修订、SQL-plan adherence、output shape 和 token 增量。
+记录 plan parse、首次内容与修订、SQL-plan adherence、output shape 和 token 增量。若 observation 后改写 SQL，`revision` 只记录 `observation_ref`、`changed_constraints`、`updated_fields` 和 `reason` 的状态 delta，不重建一份与历史脱节的计划。第一轮只测量 adherence，不增加独立 checker LLM call。
 
 接受条件：
 
@@ -708,6 +750,53 @@ E3-F 只有在至少一个 Query Mining slot 通过预注册跨库门禁后，�
 5. Schema/Join 和 canary 无不可接受回退。
 
 若两个目标类别都未下降，停止递归，先修 QueryPlan schema、生成时机或 adherence。
+
+#### E4-A 运行前 smoke
+
+固定 4 题的 schema-v3 run3 已完成：3 题协议直接通过，`bird_1031` 在安全拦截两次无效响应后才执行。为避免重复消耗其余三题，只对该题进行协议重试：
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_bird_train_fewshot.py `
+  --agent-profile e4-a `
+  --ids-file data\processed\e4_a_protocol_retry_ids.json `
+  --output results\e4_a_protocol_retry1_run2.json `
+  --trace-dir trace\e4_a_protocol_retry1_run2 `
+  --k 1 `
+  --max-iterations 8 `
+  --temperature 0 `
+  --reasoning-effort high
+```
+
+runner 会自动生成 classification、retrieval audit 和 trajectory audit。随后执行 fail-closed 门禁：
+
+```powershell
+.\.venv\Scripts\python.exe scripts\audit_e4_a_smoke.py `
+  --trace-dir trace\e4_a_protocol_retry1_run2 `
+  --expected-count 1
+```
+
+retry run2 已满足最终门禁：审计 `passed=true`、`limit=null`、2 次 adherence 全部通过，详见 [retry run2 诊断](../analysis/analysisDetail/e4_a_protocol_retry1_run2_diagnostic.md)。它与 run3 其余三题的通过记录共同完成 schema-v3 协议 smoke。配置自此冻结，不再根据 smoke gold 调整；正式有效性由 core197 的目标错误净变化、recovered/regressed 和成本判断。
+
+#### E4-A core197 正式命令
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_bird_train_fewshot.py `
+  --agent-profile e4-a `
+  --ids-file data\processed\bird_cleancore_ids.json `
+  --id-groups both_wrong canary `
+  --output results\e4_a_core197_run1.json `
+  --trace-dir trace\e4_a_core197_run1 `
+  --k 1 `
+  --max-iterations 8 `
+  --temperature 0 `
+  --reasoning-effort high
+```
+
+正式结果：`71/197 = 36.04%`，低于 E3-C 的 `77/197 = 39.09%`；并新增 4 个 missing FINAL。预注册条件未通过，因此拒绝 E4-A。
+
+> **2026-08-07 分类更正**：此段原写"聚合/排序减少4，但输出+1、过滤+5、Schema+1"，该数字来自修复前的语义分类器（未比较 GROUP BY/ORDER BY 具体字段和 JOIN key，见 `../analysis/README.md` §4.1）。用修复后的分类器重新统计，**方向相反**：聚合/排序实际 **增加 4**（E4-A 自己的设计目标变差），Schema/Join 实际 **减少 4**（改善），输出契约 +1 不变，过滤类 +2（原报告 +5 偏大）。目标类 recovered/regressed 从原报告"3:3 持平"变为 **3:5**。拒绝 E4-A 的决定不变，但正确的归因是：QueryPlan 直接让自己最想解决的聚合/排序问题变差了，不是"目标改善、被 Schema 等旁支拖累"。
+
+详见 [summary](../analysis/analysisDetail/e4_a_core197_run1_summary.md)、[E3-C/E0 配对比较](../analysis/analysisDetail/e4_a_core197_run1_vs_e3c_e0.md)和[轨迹审计](../analysis/analysisDetail/e4_a_core197_run1_trajectory_audit.md)。
 
 ### 8.2 F-Audit：过滤错误人工审计（支持任务）
 
@@ -726,10 +815,10 @@ E3-F 只有在至少一个 Query Mining slot 通过预注册跨库门禁后，�
 
 | 子实验 | 父配置 | 唯一变量 | 目的 | 状态 |
 |---|---|---|---|---|
-| E5-A | 已验证的结构化配置 | 相同信息外部化到 context store | 验证信息等价、可达和能力隔离 | Smoke |
-| E5-B | E5-A 通过后的同一配置 | Root 使用 `search/slice/compose`，不允许 Leaf | 检验程序化上下文访问的准确率或效率价值 | 待运行 |
+| E5-A | 已验证的结构化配置 | 相同信息外部化到 context store | 验证信息等价、可达和能力隔离 | 暂停：E4-A 未通过 |
+| E5-B | E5-A 通过后的同一配置 | Root 使用 `search/slice/compose`，不允许 Leaf | 检验程序化上下文访问的准确率或效率价值 | 暂停 |
 
-### 9.1 E5-A：同信息外部化 Smoke
+### 9.1 E5-A：同信息外部化 Smoke（暂停）
 
 目的：验证第 8.2 节明确选定的结构化配置以相同信息进入 context store 后没有丢失，不用于宣称准确率提升。
 
@@ -745,7 +834,7 @@ E3-F 只有在至少一个 Query Mining slot 通过预注册跨库门禁后，�
 
 通过条件：信息集合和哈希一致、可访问、无隐藏能力。失败时修 context store，不跑 197 题。
 
-### 9.2 E5-B：Context Store + Programmatic Search + QueryPlan
+### 9.2 E5-B：Context Store + Programmatic Search + QueryPlan（暂停）
 
 父配置：E5-A 验证通过的具体结构化配置。  
 唯一机制增量：同一信息从直接 Prompt 改为 context store，允许 Root `search/slice/compose`；保留全局 QueryPlan，不允许 Leaf。
@@ -854,42 +943,37 @@ Trace folding 只属于效率优化：可压缩已完成历史，但不得删除
   ↓
 已完成：E3-B（拒绝 patterns 替代 few-shot）
   ↓
-旧 E3-C run2：62/197 中断诊断，不进入正式结果
+正式 E3-C Schema v4 run3：77/197，已接受为 Offline 父配置
   ↓
 旧 E3-F v1/v3 run1：53/197 中断，分析已完成，不进入正式结果
   ↓
-下一步 E3-C：Schema v4 + few-shot 的单组件 smoke 与归因
+E2-A observation 完整性 smoke（修复多 block 静默丢弃与结构化反馈）
   ↓
-E3-D：继续设计并验证真正 Query Mining；必须先通过跨库门禁
+已完成 E4-A：71/197，拒绝并回退 E3-C
   ↓
-E3-E：仅在 E3-D 有效后做 matched few-shot 消融
+已完成 F-Audit（两轮）：gold 缺陷 40%、真实 Agent 错误 30%、输出契约误归类 10%、歧义/倾向性 20%
   ↓
-E3-F：仅在 Schema 与 Query Mining 均通过门禁后做完整集成
+已测试并拒绝：FINAL 前未核实字面量警告（N=44，净回退）
+已测试并暂停：防御性过度 JOIN 提醒（N=26，v1净+1/v2净归零，样本太小不作定论）
+Schema 消歧机制讨论后决定暂缓，留给 E5/E6 重启时设计
   ↓
-E4-A：在线 QueryPlan + Output Contract
+下一步：Query Mining（E3-D）诊断为何 5 折跨库门禁 0 个 slot 通过
   ↓
-E5-A：context store 信息等价 smoke
-  ↓
-E5-B：程序化上下文访问
-  ↓
-E6-A：等预算 Root 对照 ↔ E6-B：受控 Leaf
+E5/E6 暂停；QueryPlan 只有通过 train-only 语义评测后才能重新进入
 ```
 
 执行清单：
 
 1. 确认 E2-A 的结构化 observation 和 trace 完整。
 2. E3-B 197 题、summary 和 vs E3-A/E0 对比已完成。
-3. 旧 E3-C run2 在 62/197 中断，保留为 `patterns + metadata + few-shot` 诊断，不作为正式结果。
+3. 旧 E3-C run2 保留为无效 API/历史诊断；正式 E3-C Schema v4 run3 已完成 197 题、语义归因、retrieval audit 和 trajectory audit，并被接受为 E4-A 父配置。
 4. 旧 E3-F v1/v3 run1 在 53/197 中断；summary、同题比较、32/32 失败语义归因和 retrieval audit 已完成，结论为停止该历史配置。
 5. 构建并审计 E3-F 的 `e3-f-schema-v4` 与 `train-mined-v2`；当前 Schema 通过结构门禁，Query Mining 未通过。
-6. 先做 Schema v4 单组件 smoke/归因并继续设计 E3-D；只有 Query Mining 出现通过预注册跨库门禁的 slot 后才正式运行 E3-F。
-7. 根据集成结果和独立归因锁定 Offline 配置，再实现、smoke、运行 E4-A。
-8. 完成 F-Audit。
-9. 完成 E5-A 信息等价 smoke。
-10. 实现并运行 E5-B。
-11. 固定触发集和预算，运行 E6-A。
-12. 运行 E6-B。
-13. 根据 paired error migration、成本和证据决定最终架构。
+6. 修复历史多 Python block 静默丢弃、重复执行和结构化 observation 可见性，并完成基础设施 smoke；不把该修复申报为准确率机制。
+7. E4-A 已完成并拒绝；正式父配置回退 E3-C。
+8. F-Audit 已完成（两轮，`../analysis/analysisDetail/filter_audit.md`）；衍生的两个候选机制已测试完毕（一拒绝一暂停，见上）。
+9. 暂停 E5-A/E5-B/E6-A/E6-B；只有新的 train-only QueryPlan 语义门禁通过后再修订计划。**优先级上 Query Mining（E3-D）诊断先于 E5/E6**——E3-D 是独立轨道，卡在验证门禁本身；E5/E6 的准入前提（train-only 验证过的 QueryPlan）目前完全不存在，跳过 E3-D 直接做递归会重复 E4-A"在 197 题 gold 上迭代"的错误。
+10. 根据 paired error migration、成本和证据决定最终架构。
 
 ## 13. 停止与回退规则
 
@@ -901,10 +985,11 @@ E6-A：等预算 Root 对照 ↔ E6-B：受控 Leaf
 | E3-D | 不运行 E3-E；若 E3-C 有效则保留 E3-C，否则回退 E0 |
 | E3-E | 拒绝移除 few-shot，保留 E3-D |
 | E3-F | 完整系统未通过时不得直接判断 Query Mining 或 Schema 单组件无效；回到 E3-C/E3-D 做拆分诊断 |
-| E4-A | 修 QueryPlan schema/adherence；不进入 Leaf |
+| E4-A | 当前 schema-v3 已正式拒绝；回退 E3-C，完成 F-Audit；不得进入 Leaf或按 eval gold 继续调 Prompt |
 | E5-A | 修外部化信息一致性 |
 | E5-B | 修检索、切片和 context API；停止递归 |
 | E6-B ≤ E6-A | 拒绝递归增益，保留 E5-B 或 E6-A |
+| **E6 整体（2026-08-08 新增前提）** | **在"模型能自适应判断何时需要额外验证"这一前提被证据支持之前，E6 不运行。** 当前证据（`../analysis/analysisDetail/react_loop_efficacy_2026-08-08.md`）显示该前提不成立：失败题的循环恢复率精确为 0，模型探索强度与是否将要出错无关。触发依据不成立时，Leaf 机制无法被公平评估，跑了也无法归因。 |
 
 当前不执行：
 
@@ -987,4 +1072,63 @@ E6-A：等预算 Root 对照 ↔ E6-B：受控 Leaf
 
 ## 15. 当前下一步
 
-当前下一步不是直接运行 E3-F。先以 `e3-f-schema-v4 + k=1 few-shot` 完成 Schema 单组件 smoke/归因，同时继续 E3-D 的 Query Mining 设计。`train-mined-v2` 已消除冲突 Top-K 和 fallback，但严格 5 折整库验证后没有 slot 通过，因此当前运行时全部 abstain。只有出现 `enabled_slot_count > 0` 且重新通过分层 smoke 后，才运行 `e3-f-schema-v4 + train-mined-v2 + k=1 few-shot` 的完整 E3-F；在此之前不得把 Schema-only 结果解释为完整 Offline 系统收益。
+> 本节此前停留在"F-Audit 尚未开始"的状态，与实际进度不同步。现更新为 2026-08-07/08 的最新状态。
+
+E3-C Schema v4 仍是当前最佳父配置（77/197=39.09%）；E4-A 已拒绝并回退（详见 §8.1，归因已修正——QueryPlan 让自己的目标类别聚合/排序变差，不是被 Schema 拖累）。
+
+**F-Audit 已完成（两轮）**：`docs/analysis/analysisDetail/filter_audit.md`。20 题实际执行验证结果：40%（8题）确认是 gold 本身缺陷（含跨 4 个数据库反复出现的"缺 DISTINCT"系统性 bug 模式）、30%（6题）是真实 Agent 错误、10% 是被误归类的输出契约问题、其余 20% 是歧义或轻微倾向性判断。8 题 gold 缺陷已写回 `classification_sheet.csv` 标记为 `DATASET_OR_GOLD_CONFLICT`。
+
+**基于 F-Audit 衍生的两个候选机制已测试完毕**：
+
+1. "FINAL 前未核实字面量警告"（`e3-c-literal-check` profile）：N=8 混合信号 → N=44 分层验证（覆盖全部11数据库）净回退（0恢复/4回退），且回退原因与机制无关，指向"扩展上下文本身有副作用"。**已拒绝**，详见 `../analysis/analysisDetail/e3_c_literal_check_smoke2.md`。
+2. "防御性过度 JOIN 提醒"（`e3-c-join-minimal`/`-v2` profile）：N=26 v1 净+1（2恢复/1回退，回退可解释为提示语泛化）→ v2 收紧措辞后目标问题修复但新增2个无关回退，净效果归零，且发现同一道题（`bird_1480`）在两个完全不同机制下都以相同方式回退，指向样本内"脆弱题"噪声。**暂停迭代，不作定论**，详见 `../analysis/analysisDetail/e3_c_join_minimal_v2_smoke1.md`。两个新 profile 的代码保留在库中（默认关闭，不影响任何现有 profile），不删除。
+
+Schema 消歧机制（近义表/字段，如 `formula_1` 的 results/driverStandings）讨论后决定暂缓，留给 E5/E6 重启时按"运行时动态检测"的方向重新设计，本阶段不实现静态硬编码版本（避免用 eval 集失败案例反推消歧内容）。
+
+### 15.1 2026-08-08 更新：ReAct 循环有效性测量改变了优先级
+
+对全部 197 题（不只失败题）重测执行状态转移后，得到三条结构性结果（详见 `../analysis/analysisDetail/react_loop_efficacy_2026-08-08.md` 与综合论证 `../analysis/SYNTHESIS.md`）：
+
+1. 循环有效但极端二值：正确题恢复率 4–14%，**错误题恢复率三次运行精确为 0**，且 99% 以上的失败题全程从未执行出匹配 gold 的结果——循环没有可救的对象。
+2. 模型不会自适应增加探索：正确题与错误题的执行次数（1.2–1.6/题）与多次执行占比（27–38%）几乎相同，8 轮预算实际只用 1–2 轮。
+3. 约 2/3 的正确答案，其提交的 FINAL SQL 从未被执行验证过。
+
+**这为 E1、E4-A、字面量核实、JOIN 精简四个机制的失败提供了统一解释**：它们都在强化 SC（自我检查）环节，而该环节对失败题的边际价值≈0。由此产生两条硬约束：
+
+- **不再设计强化自我检查/验证的机制。** 四次失败已有共同原因，第五次没有理由不同。
+- **E6（受控递归）有原则地暂缓**，理由比原来的"E4-A 未通过"更根本：分而治之要求模型可靠判断"哪个 SubPlan 需要独立验证"，而数据显示模型连单步自检都不产生因果影响、也不会在即将出错时增加探索。**触发依据不成立，因此 E6 无法被公平评估**——这不是排期问题，是前提问题。若未来该前提改变（例如换用可训练模型，或出现证据表明模型能自适应判断不确定性），应重新评估。
+
+### 15.2 E5-A 已完成并通过（2026-08-08）
+
+E5-A 解除暂停并运行完毕（此前暂停理由"不把失败的 QueryPlan 带入 context store"经复核不适用于 E5-A 本身——它只做信息外部化与等价性验证，不需要 QueryPlan，父配置直接用已验证的 E3-C）。
+
+- **通过条件一（信息等价）**：全部 197 题离线逐字节比对，197/197 一致、0 失败，无 LLM 成本。
+- **通过条件二（可达性与能力边界）**：11 题覆盖全部数据库，模型主动读取 59 次（5.36 次/题，0 题未读），事件日志仅含 `context.list`/`context.read`/`db.execute`，无越权。
+
+详见 `../analysis/analysisDetail/e5_a_context_store_smoke1.md`。
+
+### 15.3 E5-B 不建议作为准确率实验运行
+
+E5-A 的成本测量改变了 E5-B 的前景。同 11 题配对：外部化带来 **+108.9% total token、+312.3% 延迟、+100% LLM 调用，准确率持平（5/11）**；prompt token 虽降 17.5%，但推理 token 增长 283%（多轮读取，每轮携带完整隐藏推理，且观察到大量重复读取）。
+
+根本原因是结构性的：**本任务完整知识载荷仅 726–2,572 tokens，prompt 约 5,171 tokens，上下文利用率约 4%**。context store 针对"上下文装不下、须外部化按需取用"的约束，该约束在此不存在，因此外部化没有可兑现的收益。这不是实现问题——把 store 做得更快也无法创造本来不存在的收益。
+
+对照计划 §9.2 给 E5-B 的两条接受轴：
+
+- **目标错误**：`schema_join_diagnosis_2026-08-07.md` 与 `e3_c_schema_v4_summary.md` 已确认 E3-C 残留失败中 **89–93% 所需的 gold 表/字段本已完整出现在上下文中**——瓶颈是"拿到正确信息仍推理错误"，而 E5-B 增强的是**查找**能力。先验差。
+- **token**：E5-B 在 E5-A 之上增加 search/slice/compose，方向是**更多**调用轮次；要回到 E3-C 水平需削减一半以上成本。先验差。
+
+因此 E5-B 暂缓，理由与 E6 同类（前提/约束不成立，而非排期靠后）。若日后在上下文确实紧张的场景（更大 schema、更长证据、需保留长历史）重启，E5-A 的机制与验证脚本可直接复用。
+
+### 15.4 当前下一步
+
+三个 RLM 能力至此各有有原则的结论（详见 `../analysis/SYNTHESIS.md` §2.4）：能力一的约束在本任务不存在；能力二按定义不提分；能力三前提不成立。
+
+**E3-D Query Mining 亦已诊断为不可行**（2026-08-08）：28 个 slot 全部未通过跨库门禁，且决定性检验显示最佳 slot（`output_count`，覆盖 40.9%）精度 0.906 仅比模型自身判断的 0.891 高 1.5 pp，期望收益约 +0.6pp（197 题约 1 道）低于实测 Prompt 扰动噪声（±4 道）。根因是 n-gram → SQL 结构预测与强模型已有能力重叠。门禁设计本身正确。E3-F 随之继续暂停。详见 `../analysis/analysisDetail/e3_d_query_mining_diagnosis_2026-08-08.md`。
+
+**至此全部计划中的机制方向均已有结论。** 剩余工作：
+
+1. **论文化**：主要产出为一个完整的负面结论（RLM 三能力在本任务规模上均不产生预期收益，每条各有结构性原因）加两条独立发现（分类器缺陷导致的归因错误、困难子集 40% 为 gold 缺陷），材料集中于 `../analysis/SYNTHESIS.md`。
+2. **可选的重启条件**（均需外部条件改变，非当前可推进项）：能力一需上下文确实紧张的场景；能力三需可训练模型或模型具备可靠的不确定性自评；E3-D 需把挖掘目标从"问题→结构"改为"数据集书写约定"。
+
+**Query Mining（E3-D）** 属于 Offline 内容侧，独立于上述论点，可并行推进：诊断 `train-mined-v2` 为何 5 折跨库门禁 0 个 slot 通过（`enabled_slot_count=0`），是验证标准过严还是挖掘方法需返工。只有出现 `enabled_slot_count > 0` 且重新通过分层 smoke 后，才运行完整 E3-F；在此之前不得把 Schema-only 结果解释为完整 Offline 系统收益。

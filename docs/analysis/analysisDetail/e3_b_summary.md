@@ -94,15 +94,17 @@ E3-B 比 E3-A 少 1 道正确题，差值为 -0.51 pp；相对 E0 两次均值 3
 
 ## 全部 125 个失败的语义归因
 
+> **2026-08-07 分类更正**：下表已用修复后分类器（`docs/analysis/README.md` §4.1）重新生成。Schema/Join 从 22 条（17.60%）升为 59 条（47.20%），是本实验最大的失败类别；聚合从 45 降为 26；过滤从 29 降为 11。正确/错误原始判定（72/197）不受影响，"移除 few-shot 没有解决核心问题"这一结论方向不变，但 Schema/Join 才是移除 few-shot 后最突出的残留问题，不是聚合。
+
 不能使用首要 `error_class` 直接判断失败根因，因为 103 个 `UNVERIFIED_FINAL` 会遮住并行语义标签。按 `semantic_error_class` 汇总后，122 项可结构化归因，3 项属于运行或空结果问题：
 
-| 实际原因层 | 数量 | 占全部失败 | 主要表现 |
-|---|---:|---:|---|
-| `AGGREGATION_REASONING` | 45 | 36.00% | 聚合/分组 40；排序方向或范围 5 |
-| `SEMANTIC_REVIEW_REQUIRED` | 29 | 23.20% | 过滤范围、表达式或 gold 歧义 |
-| `OUTPUT_CONTRACT` | 26 | 20.80% | 输出列数 22；YES/NO 与逐行输出 4 |
-| `SCHEMA_LINKING` | 22 | 17.60% | 表选择或 Join 路径不匹配 |
-| 运行或空结果 | 3 | 2.40% | 1 个 MaxIterations、1 个 APIError、1 个空结果 |
+| 实际原因层（修复后） | 数量 | 占全部失败 | 主要表现 | 原数量 |
+|---|---:|---:|---|---:|
+| `SCHEMA_LINKING` | 59 | 47.20% | 表/Join 路径为主，另含新增 JOIN key 子类 | 原 22（17.60%） |
+| `OUTPUT_CONTRACT` | 26 | 20.80% | 输出列数 22；YES/NO 与逐行输出 4 | 不变 |
+| `AGGREGATION_REASONING` | 26 | 20.80% | 聚合/分组为主 | 原 45（36.00%） |
+| `SEMANTIC_REVIEW_REQUIRED` | 11 | 8.80% | 过滤范围、表达式或 gold 歧义 | 原 29（23.20%） |
+| 运行或空结果 | 3 | 2.40% | 1 个 MaxIterations、1 个 APIError、1 个空结果 | 不变 |
 
 ### 运行和空结果项
 
@@ -114,7 +116,7 @@ E3-B 比 E3-A 少 1 道正确题，差值为 -0.51 pp；相对 E0 两次均值 3
 
 ## 失败形成机制与判断
 
-1. 移除 few-shot 没有减少聚合、输出、过滤或 Schema/Join 错误；全部失败仍以聚合 45 项为首。
+1. 移除 few-shot 没有减少聚合、输出、过滤或 Schema/Join 错误；全部失败仍以 **Schema/Join 59 项**为首（2026-08-07 更正：原文档写"聚合45项为首"，来自修复前的分类器，见上方更正说明）。
 2. E3-B 的 96 个主要 `UNVERIFIED_FINAL` 样本中，旧 SQL 已经错误，FINAL 同步不是替代 few-shot 的解决方案。
 3. patterns 单独存在时仍缺少当前问题的题目级实例化和 Schema grounding；这与后续 E3-C metadata、E4-A QueryPlan 的动机一致。
 4. E3-B 未实现成本下降，说明移除 few-shot 后模型生成了更多推理和重试，静态 Prompt 缩短没有转化为端到端 token 节省。

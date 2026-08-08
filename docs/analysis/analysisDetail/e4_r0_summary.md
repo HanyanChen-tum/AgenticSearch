@@ -1,5 +1,7 @@
 # BIRD E4-R0 单次运行报告
 
+> **2026-08-07 说明**：`classification_sheet.csv` 已用修复后的分类器（`docs/analysis/README.md` §4.1）重新生成，全部 31 个失败的 `semantic_error_class` 分布为 SCHEMA_LINKING 11、AGGREGATION_REASONING 8、OUTPUT_CONTRACT 6、SEMANTIC_REVIEW_REQUIRED 5、TOOL_ERROR 1，与下方按首要 `error_class` 统计的表格（`UNVERIFIED_FINAL` 27 条掩盖了大部分并行语义标签）不是同一口径。E4-R0 本身只作为 capability gate 校准的基础设施证据，不用于错误类别驱动的机制决策，因此本文档其余部分未逐项更新。
+
 - 实验：E4-R0 capability-gated 直接 Prompt/ReAct 对照
 - Profile：`e4-r0`
 - Run ID：`20260713T213358Z-8603f18a`

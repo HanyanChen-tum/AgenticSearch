@@ -1,0 +1,3759 @@
+{
+  "parent_profile": "e3-c",
+  "store_profile": "e5-a",
+  "question_count": 197,
+  "equivalent_count": 197,
+  "failure_count": 0,
+  "passed": true,
+  "section_presence": {
+    "hint": 197,
+    "few_shot": 197,
+    "offline_metadata": 197
+  },
+  "failures": [],
+  "per_question": [
+    {
+      "id": "bird_1471",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "d52d3d252363f0e45e558f480ef35cd35c413b2a8b42a133a0929fd07661c622",
+        "hint": "7fd8d54d75c5db9ef8d54568ad704c4ea001102191afb7a502273576084fcca8",
+        "offline_metadata": "37eb59e5d19d3d67f69731de5c1b114a6336efe9a39232f26fdcfd832cd6be2b"
+      }
+    },
+    {
+      "id": "bird_1472",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "fef458c72e6e5cce836aeef5501d2d096f7a9422106a0ce868733cb727300922",
+        "hint": "b9dd14f594623b40f019978b21ca66f2acf2f092d848e9b415a380174c947654",
+        "offline_metadata": "1c1a8ba0fc963948fc6bd1ea4c38add3b3879c6e9eb4940cfdf2a9bb36c4687b"
+      }
+    },
+    {
+      "id": "bird_1480",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "184067f9b2a6b38781dd0d3adfd436a844eac3f3f87f7617f1078876e1d4fbef",
+        "hint": "b9cb8542b6ece8fef4d77a3a85d3f4b1a220f6aed8e892746d82ba58695744b8",
+        "offline_metadata": "2136e34ad6d6f7248dc6d8294a815b9598c64647e2512018900c7b749313f766"
+      }
+    },
+    {
+      "id": "bird_1481",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "184067f9b2a6b38781dd0d3adfd436a844eac3f3f87f7617f1078876e1d4fbef",
+        "hint": "cfd4d1956ec439bb4c32caffd91ccb7a911e2ef35d946fda6a59d41a8dc08b18",
+        "offline_metadata": "a740080ec24922a6f28a2c82e26584ed2f371ac3cdd462edca6a0c21430e9c79"
+      }
+    },
+    {
+      "id": "bird_1482",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "90fbd5c098f930a24a1f202eda154ace659216db3ef754d0c26c083c12dc4bae",
+        "hint": "8d33496cc29cf78cbdfb336422508cd7c801d2fef4d8e4cb75076cc5d4377515",
+        "offline_metadata": "2b5d0042c662896c3cdc95febd3f6dc0179e11635bbac5c7edae554ea8dbe512"
+      }
+    },
+    {
+      "id": "bird_1483",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "64f87b15c70c72528ff321513240ccbc5bda9c34681422b13ab4d2d34490742a",
+        "hint": "df002fa2fbd25e4378468a1d29c55e15ab73fd4aa21b1a8093c80265c573c3a8",
+        "offline_metadata": "cc54276ca1294e0927e4965da172246c3518ffdf40d016db88449a7039fd8fda"
+      }
+    },
+    {
+      "id": "bird_1498",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "f0377beac17780f0455e473427510c7b578a7d6604d36f4eb6ae561247b9fafe",
+        "hint": "af8acdbe4091afe58b20aa87d3f21b03a4d4e98679b2269dce1317156ba6b5c8",
+        "offline_metadata": "84643140935dbb653dc80954b20abfbc8511c35bb8becd5af782c9a555aab7d7"
+      }
+    },
+    {
+      "id": "bird_1500",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "61b8bdb9e926967614ed3c24013f9b7bb53853eccc5531c83de9a106e23bb45b",
+        "hint": "91c144d4b28e91a7b372b18b2347aba39c1529d80a72c839c41d6a6e113e0989",
+        "offline_metadata": "93d26bff5faf95b9aafd2140c69467274b9073db4f2686feb6a93246c6f512a1"
+      }
+    },
+    {
+      "id": "bird_1505",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "59bb8c4157b2c9a3c2e9c9a4c35b96191e1836340c43c8c1bd1ea4daf4348580",
+        "hint": "d15ba80f18b89dbd98235cb4e381ee88b52487f08b5fbd90a3afa09c2cb04ac7",
+        "offline_metadata": "36ac2057b813176821c0c34d538365a802baab71fec1ea3687c0c7031342096c"
+      }
+    },
+    {
+      "id": "bird_1506",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "e943ed5aeb3c6f36b38c775370c7e28633ec1e1bea9bad9fe38e02c7e0b4ab20",
+        "hint": "269f53f79771967637c5ceb885a2b87dde2d8618e726590d1f547dee6b3f4d42",
+        "offline_metadata": "b4f2c23f3666f2513592460e928673f40c425d687c26a8a8df45c42c185bda30"
+      }
+    },
+    {
+      "id": "bird_1524",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "0e9a962259b4e5aa5ad6764dadfaf84502a107db727daecbfc0bf9e732578875",
+        "hint": "74b5754ceaec47ec4a221218a8c71aa6e56240bbebb05d38b1dd254ff791f785",
+        "offline_metadata": "85b437d9836231324d4a9b56d1c2744d0180426f3ee82449f33261c5e167c74c"
+      }
+    },
+    {
+      "id": "bird_1526",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "10ffe0cff7e0552d987d8eaf0ca8f238c47b66fd882afc5bf46a6a4c922f45f4",
+        "hint": "4dd93e2baf3a26554bbb0e59588d4058796c366767ef01d342fc722184c4f545",
+        "offline_metadata": "bb5817f009cd779bdec3dc4cb9d8d6c2038fc58d8a5d3c770ea67074352cdde4"
+      }
+    },
+    {
+      "id": "bird_1529",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "f560500318c397b48229dfce0e4434066ee006460b39198e1dbd1619b1f18338",
+        "hint": "b64e932f590b39a0dc593ceb55ed0755b8e9bc443a8e8b74c31e5e203fc4db40",
+        "offline_metadata": "02327908111000d699da53dd3795d7c5efa2ef59572dbed37fd1d6fa63e3fa19"
+      }
+    },
+    {
+      "id": "bird_1531",
+      "db_id": "debit_card_specializing",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "e7115ad9c78003c480d8d04cc39f1cc20b85d33b2ddb3a049ece13ebef3de33f",
+        "hint": "a85ce611700e09d68d63ab264b69d143eda1239f430cb5ca4cff30c0fb6b53db",
+        "offline_metadata": "e33d28d57d747ecfc609eb7bc19e4c153ad3713effb2610626b244aa4401b479"
+      }
+    },
+    {
+      "id": "bird_1312",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "018a1e974da68f065e79bbfff50cba3ec501daf90b2da6d782bb689f9b80239f",
+        "hint": "d1b65cc718559a60aefca55c3cfa4e0bfb971b1ce7bc2ab5bfd57ffbfb0da696",
+        "offline_metadata": "fad0e2f246618703f6b73909835106700ff2ef63508f531abf914910d911727d"
+      }
+    },
+    {
+      "id": "bird_1322",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "56f4c2e5c849494b3d4e0e616525dcbc32407babc856a21c43b2c12e7739adde",
+        "hint": "c0c422f2e251c50f39881cdd469deb29136eff66540ebf75193447dab9d1b71d",
+        "offline_metadata": "e3e152fca22af8f199dd9465e47086d79dc8e3cc9befb53fc3800a5f00d8fcc5"
+      }
+    },
+    {
+      "id": "bird_1334",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "744fa246127aef0b5e49df976ed54ac6e23e3b5177e52ecd4a2a47be2411bbef",
+        "hint": "d7d53da07191d1a9c45b1e2c00244e8a7db68892bbc2e0afab6b1c1412776668",
+        "offline_metadata": "d878da129baa20cdd056a95e57b5f7f28a4b878e98992cdf419e5765c8ec4561"
+      }
+    },
+    {
+      "id": "bird_1338",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "ad040d64a9c49641ba3e58726aeb0124d5015b919dc121c8c510180b229088b4",
+        "hint": "4fe8fc8f09c2f664809f7e7bacad6e54859f628c25d63cddeca24b6b07f5c6db",
+        "offline_metadata": "66898e09bca61417c7fd861752ea78c803bd77c158d8f794516b38d7dc46894c"
+      }
+    },
+    {
+      "id": "bird_1340",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "11c7c7a283ded42a0bb3bf7e4cd091e21dd633de4655ea92b49c6a2b394f7ff0",
+        "hint": "aade973fe64ca1507cb1d22767ba26bbf817a103a2948d4e6e2ef359638afcb8",
+        "offline_metadata": "890422c66c3196299346291fd214b17080324b7decb7fc945dafedce3f61e78e"
+      }
+    },
+    {
+      "id": "bird_1344",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "89fc1a0a5eea069ef9e805c56d3013f2718dcceb2f6ee56316b1439c5121dc8a",
+        "hint": "3366f49c44ada0641aa8ef64919b3acb66c1eb5f9cfa296908a6ce8cca940b7d",
+        "offline_metadata": "6219adc0741e5f74d697c2f6493d1902936fa1eb22d6720cc53f3029d60f2501"
+      }
+    },
+    {
+      "id": "bird_1350",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "d81bc1e3a54b36456ba33e882a639367bb1d3667fdcb977c29062a81cec488bd",
+        "hint": "55c476a1c459a2a1c69b7ec806c5c23377b4caf8dc07854638b1e090abb9a7fa",
+        "offline_metadata": "7fd6cec4ad8c2d13f7e79aae7a7e01f94e8387dddf9fde0d3b82436272bbe642"
+      }
+    },
+    {
+      "id": "bird_1371",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "f582284dcf2ff166237b82a195f5509e48cde708e2d2d0394a00155487a16862",
+        "hint": "a508b1a6fa893e46d36bc8c419712bd4df67f5d4ac22443c6e9d792be0b87e23",
+        "offline_metadata": "ca90036e0a814ddc49aa78574acc777e725f61f7d3de7a4e18e192ec53da4cd7"
+      }
+    },
+    {
+      "id": "bird_1380",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "31e3b2e1f1aae04f314e6e3e7b1bbf873dbaa959ccb3669b6360e24317afd473",
+        "hint": "a239a5967767f5b09b89cc84fd81b54fa231565492c1fedb3a37894f84540a6e",
+        "offline_metadata": "eff26f68ac34a8503296a44b92f057d8974859351a9ac4cbe5e677ef209cef89"
+      }
+    },
+    {
+      "id": "bird_1387",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "6931a849bd7c2b7fd98af1a108ce9c8dfe777b5915475e09a795bb85d89cb80b",
+        "hint": "aad9b3d144265e69574120692da96f6e1cb5cfae8202c26015ad42e67b57bd85",
+        "offline_metadata": "012aaf65ff349d1f2e44a583c141db536f1fb251ebc68a26c3832a188a8af3ff"
+      }
+    },
+    {
+      "id": "bird_1399",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "5cb128e54d36f0fd8c6a61c74acaf47f46de46dbdffb31c3ab3d7a5d264fc296",
+        "hint": "58773baf3b5ae54e51bb37d8afada33673cc0da6ead03b1bbe4bc008714a102e",
+        "offline_metadata": "505865f2beab0c8c3789506208de3d0bbae58368290d9b187d719e6c41585eb5"
+      }
+    },
+    {
+      "id": "bird_1427",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "3f212a17b48c64a660c60e180b9e98c2c09afa39d3ba92b2c8213e1b3929bb7c",
+        "hint": "3dc7c7a6b280a3766153d13f47b332c2f02444302c1924dcbb0a24defdcf5842",
+        "offline_metadata": "cb596bae070f424e96557a779c8d92acf0a414263ac8dd0514c35ec1e2389736"
+      }
+    },
+    {
+      "id": "bird_1460",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "2854f24ff83c2ef59b206a0977bc7875103a211c1645d98666a440b826480cf4",
+        "hint": "a99ea5f74a603d591bcbde7a0df3d6b03793728f923bf330dda95c68aa3577a9",
+        "offline_metadata": "a288eac813512d27fe14a92992f205ba8fb01376425abb80d631b83223b9c8f0"
+      }
+    },
+    {
+      "id": "bird_1464",
+      "db_id": "student_club",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "1f3a0095e49558117f3a1bc6180942f47e035c4e271a43330aea986a7a4c6a93",
+        "hint": "67e886ce3fb4374d3b955ecf13d8a40c841dae9467144cf318273a3e5c8ed70b",
+        "offline_metadata": "841093acd20ca0679b280c897653f2a74bb59c175be6b8d97a8b9d355492988b"
+      }
+    },
+    {
+      "id": "bird_1155",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "65f2ca759348b8481c438a80fe374b4beca39be017a6fed3defa130e981f92ed",
+        "hint": "32892fc834fdc74e6d904034844f3fed4236692f77ce231ba4fdc58d5bac1d89",
+        "offline_metadata": "0ce7e390e1cb86cc8f4457136b818f64725f098cbc2690d73d6059aa56b74fd6"
+      }
+    },
+    {
+      "id": "bird_1156",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "541e27f84dc75492213729ebdb1e712365fd6c13d49e6b5b21edc82047240872",
+        "hint": "b7e01423b7766aad5b348134bee7e416f2b965c1dc3d2075dd69ea0aa8ae699c",
+        "offline_metadata": "bc38a83333342011e721ee26fb9c5ea6f58924cefbce34b55b7b838064f69c46"
+      }
+    },
+    {
+      "id": "bird_1166",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "541e27f84dc75492213729ebdb1e712365fd6c13d49e6b5b21edc82047240872",
+        "hint": "5956a1368ce8b10d10bcfb87800d4d103e3ddbc215c0883d0d9e2d96aa0e0f00",
+        "offline_metadata": "4e6501c741676c0a58470cbe0b51dbd752f007a509330236bd36343ba78b4045"
+      }
+    },
+    {
+      "id": "bird_1168",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "541e27f84dc75492213729ebdb1e712365fd6c13d49e6b5b21edc82047240872",
+        "hint": "b90b6731e16edfb0cdfbb1291a3ca91adb36e4785891e9dfd2f0bad0459ecd87",
+        "offline_metadata": "44f147822c6593cc5d9d1da947fd8a95aaafb673944f31df971850d6ecce5b63"
+      }
+    },
+    {
+      "id": "bird_1169",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "e8213a87c85478c43fd03da17992952f6ec3283f39db1eadaa08585d1c784f64",
+        "hint": "2ace7d0672b4e20fd3e6b540f27d75b517090a925e9810bcb45b888a6620d674",
+        "offline_metadata": "2cf615f87bf6771fa7488eeaec282a1f109bb134cc959a3fdcbded77d17c9d9c"
+      }
+    },
+    {
+      "id": "bird_1171",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "8a5fde9736c2609c0a9eb24a86ae4ede92cc0cd7f771df15bbbbc2b6e7199e14",
+        "hint": "21d94476f54f69d693ea4ad3c3b6d215f2f21ff00a8986c761e80649c077e778",
+        "offline_metadata": "ac71953ec225d4e8f62d4299cc6b54c5ee9b3986137e58fa6a14f53bbf465387"
+      }
+    },
+    {
+      "id": "bird_1175",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "fe7852ae547f6ea719cec97d2158a7c1c0d84eb2dfa6c7fdc0a504bab1213048",
+        "hint": "40fab8931c5cfab33c68ab15f79d3e00f3bc9e15e4620ba274120db07ea1fed7",
+        "offline_metadata": "20e19bcc4c423f2d06d67a38fdde22e4ddcda69549bad8e4fa5b3d4155306aff"
+      }
+    },
+    {
+      "id": "bird_1179",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "c28ee7d5fef6684c77371de25411222ebe6a44dd9233271e84b15ebc5e1a73bb",
+        "hint": "6528a61b4fedf87c3326e1ec2c7c2ac3612534e4799b57ea95490a6c4c8900b9",
+        "offline_metadata": "3d31c9087936b72d7122829579c9d1396e507030bf6502d4a9b6747c544a0bbe"
+      }
+    },
+    {
+      "id": "bird_1185",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "74d9a708352725bce039f0cad0fb4cda077f78e77cabd9b14eae2b7db2eea133",
+        "hint": "387e7cd64ac583a52762f60d88afc72762face6e65e2b2e8e2a7d0266242e0cd",
+        "offline_metadata": "65c908b71f9fc3b708755fac60cd57381c76242382b9456e4b930d3e30d19426"
+      }
+    },
+    {
+      "id": "bird_1205",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "5bf5b06fb154a11da6706c064f5113e413293b7ad7a3de2e988eb9576ad380b3",
+        "hint": "d4a668ebc1c9cee82a058bd60a1c32ffc77014907b20d66665b014186b0d0298",
+        "offline_metadata": "9a31657a96fc66d341e69d0123d9913b73b05efb81d111332bf4266669a7c7e7"
+      }
+    },
+    {
+      "id": "bird_1225",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "59530036a90ea609b59707f0a9c68c3d4e9d03b5d9b51572b0cfd96a9e2c66f9",
+        "hint": "5ffaee6b9b9bc34446a823fdde02f3311e08b3d6f32c3c216d13636fee6f5db6",
+        "offline_metadata": "c2da945e53b1610b9c3f7fd21ba34f039656a5fd661c348aa5c14add808a5b8e"
+      }
+    },
+    {
+      "id": "bird_1235",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "65f2ca759348b8481c438a80fe374b4beca39be017a6fed3defa130e981f92ed",
+        "hint": "2215d9d99ecd3d68f256b9d41edcca130d2dbffc5687397ec4caf218c5581f93",
+        "offline_metadata": "9bf3181477059e71b7bec2ba5594dcdf2ccc9b0d5e156a7de5a1a762369b7eb0"
+      }
+    },
+    {
+      "id": "bird_1238",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "541e27f84dc75492213729ebdb1e712365fd6c13d49e6b5b21edc82047240872",
+        "hint": "ef3b09f2d5797167dc81ead053657c56e8c99c2db1651494a53d72f034b297e5",
+        "offline_metadata": "e42f8ecf7af54893c6cc7b7b189ee922dbe47e4f01473c365df37a9d6c6f41f7"
+      }
+    },
+    {
+      "id": "bird_1239",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "65f2ca759348b8481c438a80fe374b4beca39be017a6fed3defa130e981f92ed",
+        "hint": "5616ba9af23df5ffbdc8a6536599adf4080b4c100768838e2be01a3245c98fda",
+        "offline_metadata": "bcacfe98dbf10907e95a5627cdf9db274dabd63567dcef21736fa4a6367a064d"
+      }
+    },
+    {
+      "id": "bird_1241",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "e6fee69849b278061114828a369683d6457ec70ef6b6b2adc1b08cdb0bf0fb2c",
+        "hint": "be28fddd8a4ef2584fc03e3b226f7a965ac79ef7158aebd84ba7e48afd871dad",
+        "offline_metadata": "12725fe8788d92ab7847b4c05977d0f6820af3333491036128924b659439fa31"
+      }
+    },
+    {
+      "id": "bird_1242",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "8a5fde9736c2609c0a9eb24a86ae4ede92cc0cd7f771df15bbbbc2b6e7199e14",
+        "hint": "a7edc37aa14c928086e83756dbbb10d53ddb72a7efc08e2eea86655a6c432626",
+        "offline_metadata": "41cc36978548506e2cfaa476ab9ce29729618a9199c4b1632155b4b13b53025a"
+      }
+    },
+    {
+      "id": "bird_1243",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "8a5fde9736c2609c0a9eb24a86ae4ede92cc0cd7f771df15bbbbc2b6e7199e14",
+        "hint": "99970263b3f09001ab500739fab7fe4d811d3c58dc80a557198d28a2a5fc572b",
+        "offline_metadata": "95394e5e94c9d648a7ab07c7d3ae328dd4b8bd717c829b80b31e32c6c273af48"
+      }
+    },
+    {
+      "id": "bird_1247",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "c267ecd5b225bc16258eed0d94d5fff7ab194181a8ef68cab6783b168eea75b2",
+        "hint": "3f1f866051e3261d6b3d0a413386b28e9f7ab8ca358d75f6f6117c251a599164",
+        "offline_metadata": "0cc0ffa7ada0f8e9eb8c17273440552b82fd96528b1d6b7a718ec6bc99f48802"
+      }
+    },
+    {
+      "id": "bird_1251",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "4307d630ef753e02eda24842616cc551799dbf2dd7fd86299d33ddc1fee90ba9",
+        "hint": "ef1a32c2a2b094856d1a35428336425c575fcacd53e2c060a6b42eac39538666",
+        "offline_metadata": "9d11817a3b3b0bef8caf0bffa53bfc84b682ab9945e8ca45f8db3377e84aff04"
+      }
+    },
+    {
+      "id": "bird_1252",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "ca26a770deea6c3bf84dde140182b8ccf0759439e8b7448effa1e790012eee2a",
+        "hint": "8bc6bfe5ec93fbd80995eac70ea3eecb1d5ee3f432e1567a6306ad692b259b19",
+        "offline_metadata": "81213f4c9e6cbc0b18c1a7b4d9ff12e3d356f82aac7ec4f536112d345fd95590"
+      }
+    },
+    {
+      "id": "bird_1254",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "ca26a770deea6c3bf84dde140182b8ccf0759439e8b7448effa1e790012eee2a",
+        "hint": "68cc5b8871188aa9ebf08b962cdc1674c2c0c32438fd89670c88074dbb0c67c6",
+        "offline_metadata": "b8142bea2bb4305050e7b3fbc3c0a1351b73ab02879bc8ad0801904bd3d7af0a"
+      }
+    },
+    {
+      "id": "bird_1265",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "ca26a770deea6c3bf84dde140182b8ccf0759439e8b7448effa1e790012eee2a",
+        "hint": "6e49813d009ac60adab72b888cfec9461f2a1328838d74a503dc25eb5ed75f2a",
+        "offline_metadata": "61668e354fc5e5df1307da2480d347e4bbf238f4c984afc0cfc486408de16f63"
+      }
+    },
+    {
+      "id": "bird_1267",
+      "db_id": "thrombosis_prediction",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "ca26a770deea6c3bf84dde140182b8ccf0759439e8b7448effa1e790012eee2a",
+        "hint": "ba1463de6f4338917d6d46782a6c379092e42dc02efdae537e209aab59621e19",
+        "offline_metadata": "deafd4301972dd3c0c8abb3e0af922eff32c27d27118dde4f5a5080f2e42f015"
+      }
+    },
+    {
+      "id": "bird_1029",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "9eabe8e74ddf48a92e070b9dd25f350b9d997db5ab62d64f88956d9c57cb08d0",
+        "hint": "d213627ab85a69063d3fda6e7f4d6303b5189b8192fb779bb94d93fedf91edde",
+        "offline_metadata": "3c9ca68fbee77f8ff3891ad71938ab0df3d4b78779be32e0c9651ea9cdfb0d7f"
+      }
+    },
+    {
+      "id": "bird_1031",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "b6685d5273bac0e644f1dd4a9f28ab6bc243b35d47d99e60b33aedc5b528b4d0",
+        "hint": "d8137f1f99cf399619888e983592630a3bff9da9a0ec8127c206371179be0a6f",
+        "offline_metadata": "27f2f22a26b900c63f926c9bea9cbd7095f2b8779220b97b24d6361b0c62665f"
+      }
+    },
+    {
+      "id": "bird_1039",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "f8d65b1199cf573d7041d7067340a5bd5854e43963d710f398faf15d2ee44aee",
+        "hint": "c2b1b09b2ef05497ab8a3e410717273ab314515679ab957a5b0d630ec260d7c7",
+        "offline_metadata": "9bff255036e776770fdcabbda01d4a185e2b07b30432777535dfe3d4084e73b1"
+      }
+    },
+    {
+      "id": "bird_1044",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "2d91261617ad0c10522cbc08df6f572c5b75496ecb5e79738d29b1f036af9d13",
+        "hint": "597131058cb39111eb0f4283097e90d2dd3ba2a2644d0d71f1401ed3f7f1b8b4",
+        "offline_metadata": "5a1625a638a7e5586ef3c3ee8390ed61bde4371804eb5686e49a0ea745917c1b"
+      }
+    },
+    {
+      "id": "bird_1058",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "4478385515681189cd2ee767892dfc0308ef96be72db8f45545192e54f0194dd",
+        "hint": "436c454ec8e3c97a7703ae343a9b5230054ce8fce930b56bd6ab2374ca42365e",
+        "offline_metadata": "8e39a58256981256215af4801cde3c4030d55057676d207c81e24f02f6bb7a5a"
+      }
+    },
+    {
+      "id": "bird_1076",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "0fcc44059e01f7fa51b59a16e566a021c209c42fdf723e4689283d99b960a6e3",
+        "hint": "35584b178655fa331354c014ee458b4834dc1f863d5ba95b08c4f5eaf1cc9db1",
+        "offline_metadata": "96e521820c70695efbc544460f3538886f2286e581b17c97eb90726e6f84dafb"
+      }
+    },
+    {
+      "id": "bird_1079",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "ea25db961eacf19f60dcac6fc07291942fa0c992fde3e557673595c951a87da9",
+        "hint": "93fe8fd0cf3c28c990ab446a8ab1629c80bbdbd0b8683ecf81ecce3355da3057",
+        "offline_metadata": "5070804137ef69b4e3128ea59f3ba7e3feba1dc75b64bdac3084993674d4442c"
+      }
+    },
+    {
+      "id": "bird_1088",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "2d91261617ad0c10522cbc08df6f572c5b75496ecb5e79738d29b1f036af9d13",
+        "hint": "07efc9b37a6bf0d039876a182b03f7aff46581eaba52d6f0d018b84e116b2443",
+        "offline_metadata": "9e974fe479bf54f30185ed4f18c81307d06cbe1d8bd2e5b6795eb959d8504d23"
+      }
+    },
+    {
+      "id": "bird_1091",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "1ba126112daa259c1c312540e33a06be2fb6c0ae3614b0d502b117bdac4d5924",
+        "hint": "e46885e57288d78090d4fae80b9592849069dd1e2acc324166b18ef6505d4ea4",
+        "offline_metadata": "72a745ad9037080e82c0c278d88b019125b784ef86592fafd8989a5377a39015"
+      }
+    },
+    {
+      "id": "bird_1092",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "0cef8e714b7e30b6ef8b60605fc0ce8a7c1fcd150e43155334eff202f418c796",
+        "hint": "25aa9f311141c640dffb5df44238ec4168c66eb9c02976f68389155b929dcecf",
+        "offline_metadata": "e632c775eb5820a8461a9ebbd3f4d19aaa021f6d73f4cabd7fcbd883e1639cf9"
+      }
+    },
+    {
+      "id": "bird_1094",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "1c59d8bf3958ef4258100afc839afebafb7e1a7091dc0dc1de37cfe332f1d887",
+        "hint": "29c09f107b47aea7028c365573dc73b523fda4cb3af57f9400b3c551636efb06",
+        "offline_metadata": "9ec08413368cd6b23f9289aae9fd75326f1ff75bf7b46de918c6a58dcc234e6b"
+      }
+    },
+    {
+      "id": "bird_1103",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "483460124e6d921f6b9286a25692fae081c620e665ca070a3d4c8bcdd02267f1",
+        "hint": "ddc0b5d1d290c608934832ac2d64791fb15d944cc9fd5614f969ca593881fd72",
+        "offline_metadata": "74493f601d7695a1aa98b78b19dd878ac47f3f5a820c66d122032befd7c79784"
+      }
+    },
+    {
+      "id": "bird_1107",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "b2d5875fccd20056e447447a06981fd50feb2f7282caefe2129ea9e1abb30663",
+        "hint": "f9b74673bbcacbf4a689c3405fa2817fda15936a2355d323d00ba829fcfe97d4",
+        "offline_metadata": "d853603e61c2c2a46e8174218f511514762f56b56c5859545f1312cbca25f698"
+      }
+    },
+    {
+      "id": "bird_1113",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "529fcd4d29980f9fdf102a97722f3bf9245e0e33c678772623c5914ae82c5434",
+        "hint": "118ef52b6e5dd19cca2ddbcb062210c721f617f6de5d0abde1a7c67a36992931",
+        "offline_metadata": "b9d35bcd39fa11f64417ede941807c551950d279118f749cbe4e11f525689503"
+      }
+    },
+    {
+      "id": "bird_1114",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "385afc273cbd431b36320e12b0b2c38ef36ca66b95bdc47238dcb5cb910eb7bb",
+        "hint": "187c341b1ce98b26bca0ac92c4953e48ceaae93f6e65335a460d114431984395",
+        "offline_metadata": "d43ce1db9eb5dbbe99cc55caf7e9410b79c9b0085f6f59b242eed2fc94156611"
+      }
+    },
+    {
+      "id": "bird_1134",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "dc316450227278b3f1ebe95a9a7680b1c56006e4d0d69cb6e73bb09adefdc269",
+        "hint": "be9e60ce2faf17c659a30c178d58801e4ba7f9c6a1ea40167c1872900e41474f",
+        "offline_metadata": "66032aa7bf867e407da155422a3ef8da39ae857de671dc73967efca3b7898053"
+      }
+    },
+    {
+      "id": "bird_1135",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "50284d5c487448383f84edae0370a75f69ffad28f325cf7b5d0d1a014d178e93",
+        "hint": "b69b9b1fbd653c7ef58d1e4ffb91d7ecc3ddf479f97bb53938940473ef1fcad0",
+        "offline_metadata": "edf337da6a995abf9033f61bfa8df7fffcc51fb35f431520fe78d2f90741f541"
+      }
+    },
+    {
+      "id": "bird_1139",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "f9f9e405704859008b68027e370cb03f4fe901665b58ca91c3d19b44d819c03f",
+        "hint": "c6edf1ddcb652158c232e163744031fc28511d4bafea79a96e74e945dfb94682",
+        "offline_metadata": "b96f8028c54e18abd3e0912e83f585a592cb82b3da415b1a65f521b774fb29ff"
+      }
+    },
+    {
+      "id": "bird_1144",
+      "db_id": "european_football_2",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "ba84ec4306b41c99f4073e599a499f01410ed154aacd1ae05dd291c7c0b6ed7f",
+        "hint": "2e7f91c7590564bd2ba92963e45e7f661b0e7786f9fa8481684317b3a326ecf7",
+        "offline_metadata": "4a411f0530400e408cab386a8cb54164f159fe104927754267b766efa5e818c0"
+      }
+    },
+    {
+      "id": "bird_847",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "77dbc018edffa1de0efda7e8b5dfd70e6ae55ac49db3d09ef03d23efaad13d12",
+        "hint": "b0c020ba9412527563b5a6e17b2f14d0d761bfe51e45da0aecd6b3d6cf9cd839",
+        "offline_metadata": "b73206695d93c9867990e654b86d0a61668bc9c8e007f084ab43da3a937615be"
+      }
+    },
+    {
+      "id": "bird_859",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a2600a2017ab025eac451c8aef89ee7daf2e8e03060360da52f43379f2c3f0a0",
+        "hint": "f1da6e1304f52e08a398a5b07c2a38028833183a4bf2dfa6301f510a1c5fd3e7",
+        "offline_metadata": "e65a284853e6e27c546e0b73c69691fcd70f3e12d622f36565fdeb1b8ede0902"
+      }
+    },
+    {
+      "id": "bird_865",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "d5febc8f202b357f98fc1c04bb30fd8f9e442405ff36f36d6ec1380341fa35b9",
+        "hint": "9a0de61cbbbea082f875b120f933fb1eef01515fb9065663618a502f3c1b1cae",
+        "offline_metadata": "218d1d8f83911652a01b9cafbd12ee52d1753b30bce7c9813c0cbe7a680b64b5"
+      }
+    },
+    {
+      "id": "bird_877",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "7ac520971b4ab190c5bd275cfa52f5d74592eb41d0812fe129603a540c54168e",
+        "hint": "1bb07bc71bba3263907a40ce68607185583135e446f919e39391af980d40078a",
+        "offline_metadata": "9d6b6de5a58890a559a9c79406bc72659e5e1adbd5d6c3c49307e2c069589836"
+      }
+    },
+    {
+      "id": "bird_879",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "0db5cbd53974345943b10a0a0ca40c4a36801f619594d68b300425b2be53fe2e",
+        "hint": "2032c79358eb226515a174362bc3b07cd2eeed7e8255c49bfa2e4b80a2884be6",
+        "offline_metadata": "95d256af9bd3b44662ae7e8f7d318becfe029e4be1d1dfdbc08fd08b44d853c3"
+      }
+    },
+    {
+      "id": "bird_896",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "b77e69dbb63f6d07cabf5c50cf196154449ab348bd98c991088f1e4138b7bd67",
+        "hint": "cfeb8b09edaa938db98daa4a45b509f74ba2e477952f442eb81a00bda6e2ebbf",
+        "offline_metadata": "f1207419a0134973e2c55dc1ac036ea694592d9bd6169886b64ecf263f0b7236"
+      }
+    },
+    {
+      "id": "bird_897",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "af306f38d205b5f775bba39594b6e1d3442c91a5234202cce6f8d747d6116bad",
+        "hint": "a907e26b10e8a8625ff88992f3a39c24c1e2b8b0b389a0217c15bf5abad410a5",
+        "offline_metadata": "3fe196097e022afdc42629ecc2ae7cf6f482460122710ac46332e7ea00f1904e"
+      }
+    },
+    {
+      "id": "bird_902",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "931b345cbad9eaa645c75fc779503d1cdb29de4c6cea8f69e976e0b5488cecd3",
+        "hint": "439012220619f8087a96c51147bb4db1ed37429994fcf07ebea453737dc057c7",
+        "offline_metadata": "b0a6e0149dd4093de7b71f106bde7b01c719a7eed0d048795e86d5c11f607354"
+      }
+    },
+    {
+      "id": "bird_904",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "0db5cbd53974345943b10a0a0ca40c4a36801f619594d68b300425b2be53fe2e",
+        "hint": "62fb3950dba4805a2a3c15378f52b9c3c133e2bf060bc8d6edbd95206f9b901e",
+        "offline_metadata": "7632002139fbce49251470fe2447312889828e928401a138708f43272c05096b"
+      }
+    },
+    {
+      "id": "bird_906",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "678631f97273d092a84889e1e0a4f751102a9b87de8856ab512852fd8634344d",
+        "hint": "c23f0661ba6a3fa743f174f4cc4b9a21958af70eb230f1f80fd6605b524239a9",
+        "offline_metadata": "d459cc914229d7cbded1d4cc9d4c7685ad79bc6467aed15f5f813c025551dbcc"
+      }
+    },
+    {
+      "id": "bird_909",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "b77e69dbb63f6d07cabf5c50cf196154449ab348bd98c991088f1e4138b7bd67",
+        "hint": "c7349483473ee645610dc9e7e28a33913496d7d9d6a3a2b874fe2e84d59ea795",
+        "offline_metadata": "2f0b3c7526dc157a07757520c4bb2f37b664ec5a97796966a2fb81eba1803222"
+      }
+    },
+    {
+      "id": "bird_928",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "694e33a5800b6a20803961407e5caacf5d4f06971829943841d45583a0ee916d",
+        "hint": "a23c6bf36f8010d2e2db4dd42e8f1c674ee8d89704372a5b310872bf8efdc6a2",
+        "offline_metadata": "f44fbc8e2760eb385ca95a616d934d6769320c36f3cf8fb2d027dab3386fc19f"
+      }
+    },
+    {
+      "id": "bird_930",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "065bc62ef58e0931a6c6c81217c5c040423e29ab3640d9f0054b513aaf1e8247",
+        "hint": "1ae8bf390bbf276015c15d69b6f5698bda888d751dec7f762d84eecf9b461985",
+        "offline_metadata": "8e390dce424824b99d00cf48715f13eb6879cfd73a43194824cbe82cd7f1f595"
+      }
+    },
+    {
+      "id": "bird_937",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a224d05af711ef368e94090499c9a17aa83857b8c986432985d2d20d46aaa15a",
+        "hint": "6c86f36eb4467c4cfab1527de8e4779f1179414e81fc88704d209c307b30415e",
+        "offline_metadata": "519591fead76679470539dd639bab9b97b10c771c5a7f5ab4cbc1f82a0d8b90e"
+      }
+    },
+    {
+      "id": "bird_940",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "13a3308d5f3ce50f9891e4c574be0db94f8bb9f7574125400feacfb1d9322807",
+        "hint": "aa1880c07a5c780b56ddef596139e72f92f2500ecb40c16e486c5b608f36d620",
+        "offline_metadata": "2346189c5f7e84cdfb2b7dbe66c4db838a43affb638365baa41b1046897d6f67"
+      }
+    },
+    {
+      "id": "bird_944",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a224d05af711ef368e94090499c9a17aa83857b8c986432985d2d20d46aaa15a",
+        "hint": "fb63c0d653658d4ee9ac62f2f08f4d52174bd5f404ccee1f7949dbc2472bfb98",
+        "offline_metadata": "a0df92c907c883341e1d2a09e177f782802d0dc25ed392e55711dc2dd62d8b56"
+      }
+    },
+    {
+      "id": "bird_948",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "54bcf16c735ae9b05e5c3415d529837346982a688bf0a68dd5a6c90ba163d198",
+        "hint": "5c5bb0dbebb6d91bbf31cf8f10732323989c11d87c9629c36a1a565248eafa14",
+        "offline_metadata": "03369ebcf7080c6546a22c51242cb088bbdfb4ede7cc3511e0cd736124eec914"
+      }
+    },
+    {
+      "id": "bird_950",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "1c2b206a1e312afc13273ddf5b3344c06abe67d0bfdeb6bf1af803637cc98d36",
+        "hint": "45dfab3e10fbceb4a8d2f1d0ea1f22d08ac97a7694377e91b4442b87000501d6",
+        "offline_metadata": "e8fc758302ea11ce20de2f3aed791a995516d33abb633e4c71c86f0452ee5d01"
+      }
+    },
+    {
+      "id": "bird_951",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "028fe082e18bdcb7957c4d257fca91d4aeb0a748e2a4540aee0a0acd319f7098",
+        "hint": "5d926bb6ccb71af2844631ad0864b4274d897e7e31c5ce08623379f85a71cc82",
+        "offline_metadata": "891b17d636289ac63b69b2ce0ce5290f2f7ba6cbeaef2dbd50a2342ba3485fd4"
+      }
+    },
+    {
+      "id": "bird_955",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "0a449ed1741b0d802abbceb4a4d7c736c96f9def919f460c4a601d177c5d8413",
+        "hint": "f8e1bf0bd9ef8a66e685a64eb63651fe88c3e53900facac147a2d853322c77ec",
+        "offline_metadata": "6bf5888c16ab9d5a405924cce49432614609a6cd0cb69848637f92dd866324d8"
+      }
+    },
+    {
+      "id": "bird_959",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a224d05af711ef368e94090499c9a17aa83857b8c986432985d2d20d46aaa15a",
+        "hint": "e8fb4ffbe756d715866824c5c8ca48365dc4273b0ee3fde97b902fba2079ba00",
+        "offline_metadata": "4729585956ee100977e336b6dc106a69ec6bf95e25d9c7aa7a775e1833442b95"
+      }
+    },
+    {
+      "id": "bird_963",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "ef017b88a9bd7673a401cbce263a4a0e22bbe2d3bdb918ca62f55a1e980e2ce2",
+        "hint": "4dfe5e39cf59b0fba6db62bd93057084defbee6275f364ec34495c584a4cd6f4",
+        "offline_metadata": "7bba7f1d5adc5b1a2baf315678cf59a07a107d7aecb42e1674e844bd47409595"
+      }
+    },
+    {
+      "id": "bird_964",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "55b1fdcf0889aba085edf37097cb7c6a445ea5f7a43433a1ee26ea5e3ced854f",
+        "hint": "b4b52f59c6381eaf4e8f5dcfb59bad2b81b1a5ab447f83658db4225bac0f8863",
+        "offline_metadata": "ecc3a0659c43e0c0006f68ce3e2657890d451d34214c1c41205efb0054775173"
+      }
+    },
+    {
+      "id": "bird_967",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "77dbc018edffa1de0efda7e8b5dfd70e6ae55ac49db3d09ef03d23efaad13d12",
+        "hint": "5e52334f0966579995f0aa6dd633d986b2c2b4f7859acd766018f4a5cd496df7",
+        "offline_metadata": "a39ee15070726d24ca0fc504e4e159149c2b135191ad1dcc7bb766d2e1bf974f"
+      }
+    },
+    {
+      "id": "bird_971",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "69353335542999865509d7582a0c57ae272e4d0486d2bc61ebb77011191cffd2",
+        "hint": "b1b0a55a36e09bed100d5b9d027673de4db7f40e79c4ea0136b3115b156d2e0c",
+        "offline_metadata": "34d5b43a0261e9ee8eb1c6b3ef0a2b236b2c3d0a26326f327dffa303ceb08238"
+      }
+    },
+    {
+      "id": "bird_989",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a34613ee86483d65e343fd9c5e326344c576f7746416f5c6522bb116301569c9",
+        "hint": "9738b8e297219a11fc72fc8554b96a9c40807cac2d3170bc9e624f59784fe110",
+        "offline_metadata": "c1d4e85db9a5477af700f8f1c36c3db2e90a7b206f8fc057c15a14b769e83fe1"
+      }
+    },
+    {
+      "id": "bird_1003",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "91c05187c570f18f3304331760b209e77f1fe59626a896ee70dedc7f65ca9277",
+        "hint": "4ad61301d70c03c410c5f8cec31d1e1b6d401a12bf301e2927e918431e39a78d",
+        "offline_metadata": "6ac26f6f2a8867cf55f748cd4bc4e45ca04d323e1d5f7c0184a8f1b11fefccba"
+      }
+    },
+    {
+      "id": "bird_1011",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "065bc62ef58e0931a6c6c81217c5c040423e29ab3640d9f0054b513aaf1e8247",
+        "hint": "da5e7133b460e29a7886c44e9c8dfb92f42264af199ba15b64bc28303f5d350c",
+        "offline_metadata": "0aa5f0b6ba20b6177c911bdb881c3e3ab3cd6a0abcb5dd5380ea9f31ebf8d1d5"
+      }
+    },
+    {
+      "id": "bird_1014",
+      "db_id": "formula_1",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a4049fdd3e88f69ae6e0e74f2c994847474b0ad0493fcd7cbc2ba684411e7387",
+        "hint": "9c710e2b17b0c7ebfa28d4f4847ae2acb6615fad4d8e3b1e4eda93be7bcc4605",
+        "offline_metadata": "5e808455410f1ab87f0857b1d45f91eea8d4aa393a2cfae4102c2f21ccc022b9"
+      }
+    },
+    {
+      "id": "bird_728",
+      "db_id": "superhero",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "0cc1a009e3a5b07e3c91399b71dc2580f2bcfcf5c9226cd915264530130796b5",
+        "hint": "e18f76e43f7938b1483249775667daebbe477898767cee05b153bec4c54ad2f5",
+        "offline_metadata": "5fc8d361a2a8ad3929f2517a74a0352d528937d8eeb3c6ae12abebcd57d7d4cc"
+      }
+    },
+    {
+      "id": "bird_730",
+      "db_id": "superhero",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "8624444b92c8dff9c0bfb0ad35c21eb7c8e9bef3b73c24a12c7c89652dae63e2",
+        "hint": "0bc6a5ff0ce9b671ec5875fce0002cc21bab88673281ed92a050cad35241f22c",
+        "offline_metadata": "4a058fda879af164dfb8139c90335829e0d7784708c15cb9bf7fda2e3f1e44ac"
+      }
+    },
+    {
+      "id": "bird_743",
+      "db_id": "superhero",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "5d5ae8e6d7bde8cf9b30a2df04a42102e82a6b7ed5f9415d524e3469e688d638",
+        "hint": "0c726320163efa21694a4a20b9e7c5b3f4269593f2ffede5a16783891372a1be",
+        "offline_metadata": "630a00f8a7ea8ac027233748a95dfbbbdc4092f6df73dce1f2598c19ea1db424"
+      }
+    },
+    {
+      "id": "bird_751",
+      "db_id": "superhero",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "32178b9aee4a5a0f916ec46bdb2c8baf14a9db1069c3894a5ac84c39d939e2dd",
+        "hint": "3bc0874feaa325bf6f5ac54581c5cbf4b5da293e7e531c036e0bfe2f594929d1",
+        "offline_metadata": "cc9dc783bc38531adea56d60da7bba22e939839076cbab165b8b11b41e81ff0d"
+      }
+    },
+    {
+      "id": "bird_753",
+      "db_id": "superhero",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "8624444b92c8dff9c0bfb0ad35c21eb7c8e9bef3b73c24a12c7c89652dae63e2",
+        "hint": "c6bb0f4fea8f705ee123f6d330842c98abca7b6b10c66c1bce11e645d79d3d92",
+        "offline_metadata": "91a4c41674f0004f57c528275ad823b21b2e01b6cf8f3d1420dba6e048dedc30"
+      }
+    },
+    {
+      "id": "bird_775",
+      "db_id": "superhero",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "79c408e7055be6c36653b2f71d3aec90cae25fafc3ee5fe1d3759652458b184b",
+        "hint": "c9612ca0244d4ae726ccdd0b4a80f91b89c847ccc7b2716752488cb168919a57",
+        "offline_metadata": "65811db981eda784e545f5311f8adbb47a892dfc2addd5276cd078111b17dc06"
+      }
+    },
+    {
+      "id": "bird_825",
+      "db_id": "superhero",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "32178b9aee4a5a0f916ec46bdb2c8baf14a9db1069c3894a5ac84c39d939e2dd",
+        "hint": "ff3d9e27dd5c42b2eb661325160d5f2a8f5476d30708a76cbf833adb32b80cc3",
+        "offline_metadata": "f30c8fc464d9594ae703a42a9c01abb1fc549c9003481c2fc56cfafb350b5de2"
+      }
+    },
+    {
+      "id": "bird_531",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "dc6503c9d3225a03f423f6880b6166b8231c5618e8339d7098af5dc9b1c69337",
+        "hint": "5e842836c4d96952bec440babf042de3dd39106bc78e148723a0cf6dd3540c8f",
+        "offline_metadata": "d40076ab48eacb9a9901458105b3a19155af5e3a6f44942c1b87b04f57532283"
+      }
+    },
+    {
+      "id": "bird_533",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "6320b96d6138f5a7e5db703598ab553699afa371190d4354af6ca45f33ffd98d",
+        "hint": "3b1ad2581d4a5da1cb7089516d41ba20d8176f1ebecf34053125673d5329bf03",
+        "offline_metadata": "dbe3eb859f7ff892ada0a3179be3c670cf9efcba6cc1f523b79e1d8ea60c371f"
+      }
+    },
+    {
+      "id": "bird_549",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "d0c6cbf0abe97629a67e13a3a9158081f4b229eb25eccc2babd5a058d346ccf6",
+        "hint": "0526436c1ce515b1c7c840efdf9706f62c44d23a6b9c67f7174c09d114417e1d",
+        "offline_metadata": "fa40e6f3bd1fc2493c64546eeb424408b2e2991627df67ef6b949ed94584dfdd"
+      }
+    },
+    {
+      "id": "bird_565",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "fdfeccb7df3c3c3b6ee4a8d224cd52c904c9e968c8176baf8046f2b862398772",
+        "hint": "0b4a59637f093ba387edab5546775a1d38b4d261cf4607d3151b1b2e32c92e20",
+        "offline_metadata": "c394fa7e80626ec2f570d0883b9c3cee3b09cf0d75cb5340b9d30011912cec69"
+      }
+    },
+    {
+      "id": "bird_584",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "b7211b33ee6f0e48f0cbb5a0d5cdc5217b03e0dd03e0fa0561aeaca896187512",
+        "hint": "ec798c4149132a18ae226183ea7910e2bf438446a2125ac79e4db609f0a8b530",
+        "offline_metadata": "b10847f177bf4ead81e64076ada1516441a0b9afaa2b5807e5a2d6d063906b64"
+      }
+    },
+    {
+      "id": "bird_586",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "e7115ad9c78003c480d8d04cc39f1cc20b85d33b2ddb3a049ece13ebef3de33f",
+        "hint": "4c43f172e5d05aed38b723b563339fd2e4e93e7ca1fc0ad359b65482c52b4a90",
+        "offline_metadata": "42c2f99ba03c7f349724ef6657ecdaf28e22cb434f4e5f4d31fb633923cf8c0c"
+      }
+    },
+    {
+      "id": "bird_587",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "bc854d01a2cb12f005b07792013bad691a9c43fb68e05372f3ccf1823faf4ee7",
+        "hint": "bc5c780f80edd03d77b596b69424c3ed3c15c9c98a9bd2b79be969c61797716b",
+        "offline_metadata": "f1f34eef94da2008bd0081c6576fd8a126648e54bfbb032408cef98496ffaad0"
+      }
+    },
+    {
+      "id": "bird_595",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "198187bfac703f0f7476b93094823a620a886e31538df285f400663b46133058",
+        "hint": "eef0156b11ce5a7ae355283cfe2f22a0f3b9820b71ba98192761cb4e65492288",
+        "offline_metadata": "eea9f06b5cab5040e1195f761bb8bce285af1b6579ad4db66b19e921ed6538e5"
+      }
+    },
+    {
+      "id": "bird_598",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "faaec732b2b312a606aafca4c4b0b9eaff0def40f60803ad5d62659f780a0a0a",
+        "hint": "d9ee370f99be2818057390d2873363e42f19c1db95866aabe7baf9d004a37ebe",
+        "offline_metadata": "d400f17d137fa3d6aa98bcd2c3c71dea4cb46c3150325694609650c44bcf41c4"
+      }
+    },
+    {
+      "id": "bird_604",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "d174ebb4214569566dc025291b64f04048a001377df1b3686207601f2e36efe0",
+        "hint": "1a5daf8c1fee091a38b2b3403f8ae753193bd7310a55040a256437ae006c64e6",
+        "offline_metadata": "4175546ce967a0c4d62c78e7480f0806ab104c7f6ca22d4cdf461d077df54803"
+      }
+    },
+    {
+      "id": "bird_629",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "b4ff7a5b8bbab09861a576180df9c9a1a44ec2ba499764ffc95af87de104ae3a",
+        "hint": "fb92be9c10ea11f8c6ff2a68c631a3e5ffa45b14939935ed16fab6e7c59f39b2",
+        "offline_metadata": "ff662b43e848ca6cbd5ca9842ffd2759c9885bc443fd3a314721bf7f8e2933ca"
+      }
+    },
+    {
+      "id": "bird_637",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "1ee1312573e5d7cc78ddf875a0640eb363812685438551e7cae4b7064c7881a8",
+        "hint": "2a68b52bab6e60ac2d086857282c1d03966cae5b4af3f79554faf15b916ac198",
+        "offline_metadata": "275daae652e19ea589f694fc1162a2a3e1db377dd8a37b8cabd97478eb932e65"
+      }
+    },
+    {
+      "id": "bird_639",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "3ed606b31255f8e5493870bb237e452a58e58947e476bc88ca7c7b8f79bb4a4a",
+        "hint": "e1748215a17a9f8fc2c7dc2c1518b73cdca84193937aee4fa5a9cd67396ec229",
+        "offline_metadata": "5d6210c4e2b474ff4ebb25ca5d7af55c79e0b56ad4ceb496db9a55ba1afca934"
+      }
+    },
+    {
+      "id": "bird_640",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "c4341880a3cda7155b79398ff55a0f7456aa6d434e4f9971f1871c7e6aa45635",
+        "hint": "e20fdf766cad37c34c2821eed58eb494196bad55b989e1c38a6102c00456a88d",
+        "offline_metadata": "0271cb464a85e6003c8da3c348929d9dc22a492397a2b544c2a28333c2e985b9"
+      }
+    },
+    {
+      "id": "bird_665",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "c4c0607bd24bd812e90e67ea11846b706d6ab115a4a1978252fe3fabe68212fe",
+        "hint": "eeccbfe27c32ed2e60f29178adf58ea8252ea6598c13ec877f71f206292de4e3",
+        "offline_metadata": "24baeaece3d7d83266a315942b9c0743b1c6a478008e9403d20801822751cb93"
+      }
+    },
+    {
+      "id": "bird_671",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "d4e348d1b6c8326be1a8c958ac53ff7f7534848589917118070ffedf60e2040f",
+        "hint": "396ffc2fbcd3472947fddee4fe71210f83ff30b772ae91be33af7be50f43fbba",
+        "offline_metadata": "1d6758c6db70e176d8333d4ef04f698655a6b58bbee5eecfbb451cf21039ede9"
+      }
+    },
+    {
+      "id": "bird_672",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "7aaf78ebf3c9f13521f49a3dd457a90d8f5dfcffc464849b6a57459c4b2c1596",
+        "hint": "96663b6f3f219f7360a03e833db9ce6ade9b43f535dec7c6f028548b575a6536",
+        "offline_metadata": "e700c54be006d6076270dfa95a842eaafb0d572cc04a044585d39d2a9d155d23"
+      }
+    },
+    {
+      "id": "bird_682",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "c707be7e679175a800a37a84e87d7ee04a0ff8640df75669f340ef62dd4eea47",
+        "hint": "bc03dd83d1a887536b837576a84a9fd297db3d560106fea7219b0dcbd0954512",
+        "offline_metadata": "a56755a63872558d0428c6e82e47ab2921157cdf88d0689f97cc0f774bdeadac"
+      }
+    },
+    {
+      "id": "bird_685",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "28681cc70d8a038cf1d6e446e24860c4af7fa921e12abbdcaa32010a9e1b9655",
+        "hint": "be5e792627e32e95e0aa453b935cb22459fc8f65e96df996a05b9b496f1c983f",
+        "offline_metadata": "be36d1f646a88dc1a6bf0563ffb40ba63d8f17e513c4b5c1537d6b5703fb6db6"
+      }
+    },
+    {
+      "id": "bird_694",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "8ac534ee229a3a6513d9b15f895eaf26251ffd1b277c9265d1fcd3535236b974",
+        "hint": "c2ab5ffd3b217716e080053672f43d512b71697efa9f01b33a1cdd747b9fa68e",
+        "offline_metadata": "84d74e2cfa3232b35b9669d502c6d7f43c01e632f233c31b4f3622bd1397cebf"
+      }
+    },
+    {
+      "id": "bird_704",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a02bbe1adf15d1931cfb60f228ebedb0a9fd2f56ecaf26848bdb5d3f8b8868e8",
+        "hint": "e6e160f92b1418bb2e90a6c0b9134597b6eb9a12abe6f37db1e49c36bf223393",
+        "offline_metadata": "e1b3e034f39e85adbce32a3492edfb82c52fd23894b0fc5ff01205fbcd433daa"
+      }
+    },
+    {
+      "id": "bird_710",
+      "db_id": "codebase_community",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "4655cb093a1ced4f8da79f66af12578e19265cca0acf4281bc48d5a2e077341e",
+        "hint": "5c3857a96104f4a743d044a695a3d81727f807558e98a3e206ba65f208d1aa6e",
+        "offline_metadata": "9373677a6c93c15c4792ba9e9185e593ef2dc9a77c7faf60e9a208431e05c3ce"
+      }
+    },
+    {
+      "id": "bird_340",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "367a4d93e4bdfe97d6d326f18bc61511c54ee1c4b16ed0d0a4067789569e50e7",
+        "hint": "4d950a77380af1ddc642a4ae6031d17e8aeead59682c432340d1915b36d9dc04",
+        "offline_metadata": "4d6fcfdbfeb775c1d14b46e88e6f80b8a18f3353c9ae8a59dda459ba1c0a606d"
+      }
+    },
+    {
+      "id": "bird_341",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "367a4d93e4bdfe97d6d326f18bc61511c54ee1c4b16ed0d0a4067789569e50e7",
+        "hint": "988785b90161248fc96662898ee2aa84cfd8758e1f9f168011fb0ca9d851bc69",
+        "offline_metadata": "d8116cf6b0dae83c625974be2facc35fbb7f23c67b07cfe0269b028f27b3c5d9"
+      }
+    },
+    {
+      "id": "bird_344",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "55d6913b5f816938724fb79ae705eadebc4801ff44337c2fc09fb6f94ea9ef1e",
+        "hint": "f3a97e24182b12ec6648be3de4309ce8ac01b571ea0c957b64d0d0ce6ae85ba1",
+        "offline_metadata": "19fd7aaba970c769e50e9ba58a98b480a75c924c65a11a9ebe2754c7987e8d8d"
+      }
+    },
+    {
+      "id": "bird_349",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "367a4d93e4bdfe97d6d326f18bc61511c54ee1c4b16ed0d0a4067789569e50e7",
+        "hint": "4d47e958d0a57c519dd2b332118a6be81ea99a8aba0509473c72eac6e70a83b6",
+        "offline_metadata": "ccfe43daaa7cc9a421ae9ab5ee49db78845bd450ba0e7af5475c7a10c55f9bc1"
+      }
+    },
+    {
+      "id": "bird_352",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "2ad82d8da3546001c6267e6a6bcd61957d85b0f7323f073a5be0d056179a78ba",
+        "hint": "236804f55173b6fdf98058bca63ad995ef68feac988e4066eb43d4f7992a7ccf",
+        "offline_metadata": "676ebc3098f59bbdb150a2a64e51604b57c544c0b646a3c8dcff71fbdfab07cd"
+      }
+    },
+    {
+      "id": "bird_358",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "367a4d93e4bdfe97d6d326f18bc61511c54ee1c4b16ed0d0a4067789569e50e7",
+        "hint": "b35a2ce8a55c009c168060a1b3e58f2b4dc47c05f1e1faf44bd8ce3022798445",
+        "offline_metadata": "51a0c1c06744f2c0027b50c36d7d4e394cad670841fbdca455f21bba42c00cd1"
+      }
+    },
+    {
+      "id": "bird_371",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a1405a4277f3b819c3712413e5089d606a4585482d2fd17e55268ab51933cab5",
+        "hint": "97b16c861cb782c6a553bcb5253c3a2152c50c1933f642e487c76f22ddd1d436",
+        "offline_metadata": "3500897f42e7c8b274c2a8b52bde53a3cc3657bb81cb6cd8cf99369c257380d2"
+      }
+    },
+    {
+      "id": "bird_377",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "2cab77a391ec0b2bd2082e2c7324444b7cef23a3d55501f86101663db512d10a",
+        "hint": "54708efb53b093a0a28aa0c0b876b0b13b91d771c956341213562da358648ed9",
+        "offline_metadata": "78a73637a46118658394d801ec454fe504f4a544406663ac4e0df358ebbce8bd"
+      }
+    },
+    {
+      "id": "bird_379",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "0b46573272467c02639ab3d7042b98219eea263516a436e6b47cf66c565f6a75",
+        "hint": "a23960cf39caccd40be223ff4df6e6df8908078ca6cce82c303fee83a4ae8ce5",
+        "offline_metadata": "d44ab68d6e80d3632302655183a761afeb42c505370774dbe08b43569246f55e"
+      }
+    },
+    {
+      "id": "bird_391",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a6b5fac75a7c5f4202f5def4000ff8a1e54d2ef52305ee4ee90cd7c67f4f938d",
+        "hint": "38acb446cf39bd89e4d8f2a01345feaa973658e0c361ad0fc7a0bf3c5d7f0a14",
+        "offline_metadata": "7d01bc788f9d31677d76ca5538879b61cd80db65f234a97b45b6e434b3ca6268"
+      }
+    },
+    {
+      "id": "bird_397",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "c6bfa28a6e1a7f96ecd6a66af85f1c366b3aeeb1831fcfad831f95d102c48de2",
+        "hint": "4fb175bf9a7e41d29e139d70d8f5ce820bf972542cfb763a37ab260552890e68",
+        "offline_metadata": "0c19ab70a92326c60ed0b80475f01c1482a63c2b518c4647f737510f217cf7ee"
+      }
+    },
+    {
+      "id": "bird_402",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "550c93f12af78fcd76b12c3aee6be45f2122504e037b737fc6eede9b578b24f2",
+        "hint": "d9dc9627f690c1cb11f234744c4c4c5b063637335d6906cf698a32be6255ef92",
+        "offline_metadata": "b41e539ed95cae9bf096a1a904c01d3ad55a9394d79a24dcfa363ef13ca9bf3d"
+      }
+    },
+    {
+      "id": "bird_408",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "bda4c003cad19a2bb5499a6ff9bf3eb08b83e680ba20511e3cff8e000fe28e69",
+        "hint": "7e4a7f57c282324b104fb0d48826b60d06f415c1d326a15bbaf61180d34379f2",
+        "offline_metadata": "ff3526e34d59d4fc6bb1b844dcd594bf20037ec780ffae189e00a7a3df9145b5"
+      }
+    },
+    {
+      "id": "bird_459",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "2ad82d8da3546001c6267e6a6bcd61957d85b0f7323f073a5be0d056179a78ba",
+        "hint": "19addf7a87bb6ca8b9c9e41eaf4a6cb549d9ad4393c82917cbc532f4221f7ea2",
+        "offline_metadata": "07c99324257bba0b6c940c3af3b3a5a9f859e31162235fde9150fea615e4394a"
+      }
+    },
+    {
+      "id": "bird_462",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "367a4d93e4bdfe97d6d326f18bc61511c54ee1c4b16ed0d0a4067789569e50e7",
+        "hint": "3472f4749b945eefd37451c2c7b58ee4167707bd644e693809e11d3646dc6388",
+        "offline_metadata": "a7cd89bea63bcb9ec97330c2be2830c4f4642822a99704b65f88d609f08c51b7"
+      }
+    },
+    {
+      "id": "bird_465",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "7ca225dc3dae45337a4c4447a967b52c2b097a44a5f08347a7f56ccd32fab14d",
+        "hint": "c2bb0c218a76871c943629dd11f003f3555ed95baa504d4f2196f7b794c9bfc7",
+        "offline_metadata": "666e08b39c477a7511a15712f3f483a71e5ae1c7243e08cb11c452192348d138"
+      }
+    },
+    {
+      "id": "bird_469",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "e2b1cfa1c8c4d652e2ee0036778d990b98ad20cde7e5bb1c74cae7af7edc6a39",
+        "hint": "8557b955790a73549bb134c3aad525a8cecf6840348c4c4d2fde5560cddd67f7",
+        "offline_metadata": "43a2b888e21ad3abdcafc46ab7210cd67807a53bf98c11e7da966963c5667960"
+      }
+    },
+    {
+      "id": "bird_474",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "7a38484bb9beef9fbda9f943e0401869f12a2dc9ae94e01c5bf801228cbef87f",
+        "hint": "89ce08b77737bc23311cd7453b98760c2479072a5fa89bbdd1ba5daf99c07bf0",
+        "offline_metadata": "a4aec4acb503b24418dc28beebd014e242f19edd821046392b0b3a768901076a"
+      }
+    },
+    {
+      "id": "bird_480",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "fbe2312be6b171fe6119656c8e6140dff958839085ddc2fe3d277ecf9b7df38a",
+        "hint": "2e17f1a42f65bfa4b0f20cf221c054d6dc1dc2590e47fda693360aa7cffd0018",
+        "offline_metadata": "c664b3262ddb3ad40495026fdde7c64a7529594eae1d59c4f4b9cf787b34ac60"
+      }
+    },
+    {
+      "id": "bird_484",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "d23268c330a13b5ee474dde5794a445fea1c94219d428d0054499e72b8988526",
+        "hint": "ed4cc625d72ba9a253254ea999dcc5ec8383eb142ec3ac655949c9809fdc1160",
+        "offline_metadata": "0387b79c851df815048d2ab06111840788bce5a6921cacc79b325f959fbd3184"
+      }
+    },
+    {
+      "id": "bird_486",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "328fffe0bbb39893e24f588afcd5b253644cdcf4c391860e439e37ecde260e94",
+        "hint": "187acd3b2eabadded4439f764585f5069c4fc57c8fa5c596143a18159dc04a02",
+        "offline_metadata": "35c6f1d31a91a732293dfe0fe9e9501b8b4373706a400cef5fb7b1d4d6b2abe0"
+      }
+    },
+    {
+      "id": "bird_518",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "e4cf74eade55e9a803d458f4b0819707f6b139c87a4ac1a978164c5ccd97cb53",
+        "hint": "6b17560d2e78c80d176c7e9f31a7e46a79cfe6a045935c7a73cfad11e5410e36",
+        "offline_metadata": "00d2d561dde3346e41c4e6e5c163ba33ec8b77f21233a46f87e3d6ad9d35a103"
+      }
+    },
+    {
+      "id": "bird_529",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "79cee7835ffd0518007234de2882cdf9983360143d0464b945b9a64e0cbe1241",
+        "hint": "844f16bdab343065eb342a6c7ed2f886f61c45f6640d55fca40ac815abf6ce05",
+        "offline_metadata": "e85cdaec53137f7a570d1de958072da32e15e84ae05ddb99d40d3e916e62497c"
+      }
+    },
+    {
+      "id": "bird_530",
+      "db_id": "card_games",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "367a4d93e4bdfe97d6d326f18bc61511c54ee1c4b16ed0d0a4067789569e50e7",
+        "hint": "af637611cf23543f59c51eaadc746ce847ef85535e1c6aa3c180b1f98833e2f1",
+        "offline_metadata": "6a9d1ca02ac7e726282aef033cb6a0e54d5a085d1d5261bab4eb648a084dd7d2"
+      }
+    },
+    {
+      "id": "bird_197",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "f33b0dcbe8f093f93d311c425bca5aa29b7bca8cb05b3410171964fe35cb8dd4",
+        "hint": "1d8e0cc09aa2b923cd30b6dad87449d214c75ae271b4a645f98cae0fc08dd0f7",
+        "offline_metadata": "21ae3835c6ee76670a8042338c3d25ff92a1bbdbbafecc9d2b9c0105767e91ba"
+      }
+    },
+    {
+      "id": "bird_198",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "4f584328e7f689e1e4699170241b5f4aae22f4ad00e02f3ef4d1fc54b5f8efc7",
+        "hint": "9922b5449ced3464a36d2794eb06b391935dacd26817a853ae74a97f413ae216",
+        "offline_metadata": "f6429768928c1a3020efa17ec714da218fc12ee333f26fec47a45d95bd3a142a"
+      }
+    },
+    {
+      "id": "bird_206",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "641d93256ff151b17829034e870a356ce8abc2fd7c2a20ffc926c6d536eb73b1",
+        "hint": "82216d0b6c5dee5060da4e8bdd533f2f9209310613d9b936c387762361814185",
+        "offline_metadata": "c506ecbaba49efbfbe3e9858cf8fd9692a0a4b60c9e642790eb84ac64d5a7207"
+      }
+    },
+    {
+      "id": "bird_207",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "d1f78340276999f5f499088125e013631242baba9c887dd57a6c595c47726b8a",
+        "hint": "cdd08553baa1dffe6143d9dca0e46053e50034b95010156e7d4d943561f41216",
+        "offline_metadata": "bc70d4091c4e7a35ce972f25347265833afa73cbb982f10f7eb11ddbc8cf4e2f"
+      }
+    },
+    {
+      "id": "bird_208",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "7de4c3bcea64adee365667aa7f97ad6b706953967ebd4dd033e00217ba7cfe4a",
+        "hint": "9774c377b842dc84e569c0ea4bb33bc7c9d664a5e6a93884e437e64745e461ee",
+        "offline_metadata": "15bc79908165de16b06a8f135530b1d9f74d59fc8ac2bc7891ca6b86f1bc2924"
+      }
+    },
+    {
+      "id": "bird_215",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "561fc4a005c705aa3a7638678c24ce91ef16c90518102344689be7885afab1d6",
+        "hint": "2c0f2028e782667c39230aaa95fa731bfc173e3af144bc0c620d1127d741ba6f",
+        "offline_metadata": "21ae3835c6ee76670a8042338c3d25ff92a1bbdbbafecc9d2b9c0105767e91ba"
+      }
+    },
+    {
+      "id": "bird_218",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "4f584328e7f689e1e4699170241b5f4aae22f4ad00e02f3ef4d1fc54b5f8efc7",
+        "hint": "0ea5458e1bb0d295caea4fad73f673317901d6b2557041618547a2a65d883547",
+        "offline_metadata": "6ce44ca40ba9d178f6610276ddd2aabbf1317e1701a97e276e5a08df629c96d4"
+      }
+    },
+    {
+      "id": "bird_219",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "4f584328e7f689e1e4699170241b5f4aae22f4ad00e02f3ef4d1fc54b5f8efc7",
+        "hint": "7055762d700cd1bfebeca10449265c052bbe9a6dc544067ac0d55404930938f3",
+        "offline_metadata": "b31e8c00ad41f64fa3a6e2d060f49692bfeb56a549cd12e5647f35eaead6bc9c"
+      }
+    },
+    {
+      "id": "bird_228",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "42b35549910ffbbd8ce25ec0e337a33f3d521b89199d6b9f5af68743831d4f1d",
+        "hint": "5330f62dbeb208d937e3d8f19ffc16f253baaa29393a8c0e5fa90501a7643089",
+        "offline_metadata": "2c9d4a3418bd0aedf96e9eff0705499a30820b93a606ce2bee4c48e680143d6b"
+      }
+    },
+    {
+      "id": "bird_231",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a4c075b32b5a28c3aa6fbb3ab50785c2d0222a420f57d9c055fc7e70d72a22a5",
+        "hint": "9928d1afde4eae2ef5f5bfa923d9e6315f2e3ade21ec66997392352543bb18e8",
+        "offline_metadata": "b31e8c00ad41f64fa3a6e2d060f49692bfeb56a549cd12e5647f35eaead6bc9c"
+      }
+    },
+    {
+      "id": "bird_232",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "7d1e19dac7c1a1686aee6bdd0dd5fc2229a761f082ad5ce3f28a94b5f5af8df9",
+        "hint": "278d3260004cef3a349c858306691bb81a6fa8093e3e5856c451d1b7d43ebc43",
+        "offline_metadata": "c70f1828dbc58d2c41087c39a44284d3065f7fe7cebd10e2ae4fb30e4963654b"
+      }
+    },
+    {
+      "id": "bird_234",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "641d93256ff151b17829034e870a356ce8abc2fd7c2a20ffc926c6d536eb73b1",
+        "hint": "3ab5d5efda00d067df9191e9a2fef5fe3c61e6f8a55bed3bef01481c2118411d",
+        "offline_metadata": "a00aa481a02d2f62293a38869e8d0a17c33fd30d324a6772ff1c51d10906004c"
+      }
+    },
+    {
+      "id": "bird_247",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "bc9ec33beb457aeeb08b7943c079cf814d02fc8b616e83a73ec84341d7e82049",
+        "hint": "c51fa4e191436413ac56aa416e59fb20771db66bf11b39a2fd5f9429a88148d7",
+        "offline_metadata": "2a96e07d70e0ad184390c105503431c965faa5911c8b2cd66c110bd0f6e869de"
+      }
+    },
+    {
+      "id": "bird_249",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "477e6855a3206d5d02b39253178a6a1c2e98bd4a96106beb29d8f8d3d3f44fc3",
+        "hint": "9ffd4e2fa8cf74c1d95cbc62cfe117368c8a9f2dbaa3caa26e77f318503f31b4",
+        "offline_metadata": "3e7a3945649bc6fb83fa245d573d2325ec2af12b02cfd8a97ca2cf71264f4588"
+      }
+    },
+    {
+      "id": "bird_260",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "477e6855a3206d5d02b39253178a6a1c2e98bd4a96106beb29d8f8d3d3f44fc3",
+        "hint": "357c882675854eb81129e089aea4c239071b99084df4286a723a3153846834b3",
+        "offline_metadata": "7b54fff8297814e13d8bcfbf656196fe18fa1a8500148234ccdc01a8d3ee6592"
+      }
+    },
+    {
+      "id": "bird_281",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "477e6855a3206d5d02b39253178a6a1c2e98bd4a96106beb29d8f8d3d3f44fc3",
+        "hint": "33263bb38d01b3e3e7760672a09a1a8cec5d70a9b3548ea02c8f25da71c405e0",
+        "offline_metadata": "d05db34db2647482ca2e6554d8e0273c2b6990169e15966f155a05cca712ccbf"
+      }
+    },
+    {
+      "id": "bird_282",
+      "db_id": "toxicology",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "08257e8caed7a0d0d211562ba6c65cf5fd14e7e8352960289b47c8cabfee62e7",
+        "hint": "b5f17a70313a5dcc20eeb5cb53c9f8caa43ab044d568ad3fcfbc479f374c7310",
+        "offline_metadata": "a0724192ec3573d6173d5036bde69f29abb817d64660945a07b807b6ac2c48d8"
+      }
+    },
+    {
+      "id": "bird_17",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "c2564f4201cb297ad2d7dadc3e72d9dd011b215b38afed6321f67a996c57be51",
+        "hint": "48b28f9219ebce24f71b9c8a7556740b561c3d3fd909d0fded47dd95cfbef5a1",
+        "offline_metadata": "e7f60e92ad84107fca822dfe06662e1d6bef6b6aa5ebf39eceec5eda6f572b8a"
+      }
+    },
+    {
+      "id": "bird_24",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "68e48c50aee7ff356719334cc476588eee7ca89bc9f457b2da76d840e1f8eded",
+        "hint": "df3ef5dfa5354e7f0ebb116baad4ba2643c561fe5da023caa87274ea0a7a476a",
+        "offline_metadata": "3de2409de9fef668c86212452c050e808323123f1a8e105a6b4040a252937ac4"
+      }
+    },
+    {
+      "id": "bird_25",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "790dcbe9dc354ca16481970e1070f4782c950f553b0407947dac62bdec8a5adb",
+        "hint": "6c8c3a1ef40a2cacbbdbae4b5d6259a693576bb392d873882abfe6789cb18d63",
+        "offline_metadata": "a3131ae99fad042c76c4228a9af161536fd2b58523ec2e476229e45467d55ca5"
+      }
+    },
+    {
+      "id": "bird_27",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "2ea09563bdbb825ecdaf35f1b0e8a06e5ced317117e52b1a15cec58d2a6cfee5",
+        "hint": "ea314b3f1999958a882b64755cba3da943d96e9e7fc867cec58db06efa64642f",
+        "offline_metadata": "f952aee800fbd37310306327d86da91ce5fba5578dc6a2d8259f35b9e8098a35"
+      }
+    },
+    {
+      "id": "bird_28",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "c6ede1b78d2454328a4c9feacf0f56e4bedf6e28f9ba3bb494251920e22a07a9",
+        "hint": "0b2ec698e675e9979d2d6fc4df4cb2ae8f6766c9aeca6f0abbb6d19d3bc678d0",
+        "offline_metadata": "6f8b7a8030504dd0c3c3d10cee07f4ae555aabd6c5effd97ee5692f8651cea13"
+      }
+    },
+    {
+      "id": "bird_37",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "67f044971b79710b4f112f5b777546329d620f758192dbcdf24b32d7506c5136",
+        "hint": "c6f5924e253568eb91e6e8e72045af40954f1617f3a519ade0852eee39e425e5",
+        "offline_metadata": "46dcf431f9f9de671813aad3acca7dd33b464f572aee356bb6858454f55ad8be"
+      }
+    },
+    {
+      "id": "bird_39",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "7a6702a9c201050e7480a6253eb1c957561ce266b70d18dd9f34458397c0a781",
+        "hint": "59245f15e55bedd7be375ce9bd2666d120e13aea81d8bd7fd7b57529826e5625",
+        "offline_metadata": "bf2121d91cfe4dab7a474f8b2049cc92fa33982a35089ad30ddf4df31084f201"
+      }
+    },
+    {
+      "id": "bird_46",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "17b2883e52559b8e687e792500fe1b796942edc2aff48163a957ac79205c01f6",
+        "hint": "a381b80ff40778d8a2af1a929156ea639d7479e5731a149de7604f1edcca37da",
+        "offline_metadata": "98d81b5c2953633a4669447519ae7b435ff432b7ebc20fca6c62cce29e465057"
+      }
+    },
+    {
+      "id": "bird_50",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "ae82d2e6eb95bba0ad3cfdf405b00a8d67946a360b6435f53883c56a0db60477",
+        "hint": "5e0043ad449377189a6ed6186d34cf83982c4daeaf1a352945cf122d7efb8ad2",
+        "offline_metadata": "eea7a05b30815dc01317fde3bbaaf66343dcfbc38903a19ae4319e8fc5687575"
+      }
+    },
+    {
+      "id": "bird_62",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "8da8008bfa14306fee4aedc7c85de5e7c8575be5f66900557c1d9bce80df7e63",
+        "hint": "a514091fedff9ef913da0da1ff144d3f0777967c5eb0b50abfc3300019c95ef6",
+        "offline_metadata": "45b81e20620ed02ee117bf5b638fd05e2e8ab995c2799bddf609f4f879e44067"
+      }
+    },
+    {
+      "id": "bird_72",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "51e86f82ecb3af7e4c1b88fb2f9c94f4cdbef711fed646f8272d4103fe381658",
+        "hint": "da292cd57bd5d0a3aeb180e3164011ceaf1d44abb8abd94e40e7eac11ea2a610",
+        "offline_metadata": "72558a86b9aa9cc9398c2219792771d470a2a56d77e09329f446fe1d48795db9"
+      }
+    },
+    {
+      "id": "bird_79",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "4a68d3c626b48d91e2e86ee49cc70fbe77b55ca29cb6ec332d30cecf203b06f7",
+        "hint": "f17a6cf70569460c0a847f151eef5bc3f8be38bbe9f703b1d101ef4dfd1d89c3",
+        "offline_metadata": "f5b468717a54397291356c2c2444bba898b7cae1ff571149188305fdde62308e"
+      }
+    },
+    {
+      "id": "bird_83",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a489feaad70dddebfa30fd46bad3c10ec972a9d9aa352ecc2263dedb912b074d",
+        "hint": "fcf2c138d1cb336f216c4008e46e57d164ebdca8d42744ed6e3d69f7015611de",
+        "offline_metadata": "27a0fee2da9321aa6cf72ecf995c127dd29e554e21828751516f2d00174cb9c2"
+      }
+    },
+    {
+      "id": "bird_85",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "822b21a51a083b654ac96ac47c870587c005c00ccef9a60ba1a1ef930bbd815e",
+        "hint": "407cb0b3e1fcc195129e08affd7583360e5e9d43dc3c27669d01a934c3364f5f",
+        "offline_metadata": "21bbb5e4a49d3a109f7ace0a7c87a7c287df58aa848c1327680a8c516d1042f9"
+      }
+    },
+    {
+      "id": "bird_87",
+      "db_id": "california_schools",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "4a68d3c626b48d91e2e86ee49cc70fbe77b55ca29cb6ec332d30cecf203b06f7",
+        "hint": "90d38aafae01cf4194237c412200da3991d453125062e7ffb3831898a6022465",
+        "offline_metadata": "31ee3278be62e7a8036cb919d6d0db23d20e5aec5fbdcad3366f3808fd430db9"
+      }
+    },
+    {
+      "id": "bird_92",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "2a7783afd91c73ae5e08cb06d038dbceb059fc1d4899d0b48201f10cba899e8e",
+        "hint": "99b04eaf7764e85451afe41acc8ad8cd53ad54313fb3cc5640e8cdf66deb0b5d",
+        "offline_metadata": "5d5195a7cc14c504b48f4656e38613155770a481b34eabee54dc4871840b7b95"
+      }
+    },
+    {
+      "id": "bird_94",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a06b4ed8d883acd328be27b50179d3d9da27e9d36e2c8dd20b1944c61945be40",
+        "hint": "3ee69190c395d9089844c3d9f72ba1536f232a855506ae5b135935d79dc9078f",
+        "offline_metadata": "383debe7334ca7b6f9c3c1cc6491663678b1c18589929c3f24dae4fba804a277"
+      }
+    },
+    {
+      "id": "bird_95",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a06b4ed8d883acd328be27b50179d3d9da27e9d36e2c8dd20b1944c61945be40",
+        "hint": "4a5fc79b65af566bdab56d6f92c207bc1b375d899f3db1d1f8ad6acc559fd14e",
+        "offline_metadata": "4531443cb9aac13c6923f983c33d4bcdbd0bf43e2882f2de07c8a5990e1765f4"
+      }
+    },
+    {
+      "id": "bird_112",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "a1fae2e3425b60b35336bd812f281241502f505fcde6f4aebbb74dc74a2003bb",
+        "hint": "087bd2ecf899771d3671fb8b00d0d98a745308305fab00d83ae2625b6e0bf211",
+        "offline_metadata": "2b08f2995e0bbcb5a72175863e1d3be0509a3162e942627aa788b095861bd9a2"
+      }
+    },
+    {
+      "id": "bird_115",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "97f7e42edd84bd28d1b059c4b69b3f8c9067ffba65c12015d1303c5f61147d32",
+        "hint": "94d30c7d64837c9fd56a3e33ad01c4912fb6bee56e76ab3067fc6a6b80a809df",
+        "offline_metadata": "8be903470ab905724f14e28fa22873c87d1eb491778c0bf8e0fe6f370cd5a899"
+      }
+    },
+    {
+      "id": "bird_118",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "663e81858b675764cfab1180953698bc289c0e2d7f13afc55e89414e516f73cf",
+        "hint": "48f5d730260839ddc355f8cc80401149b95aef524d95141973f95f3908e137c7",
+        "offline_metadata": "8974e0608892360e9289304bbcc6f81c424c6235f9f7cce3826b4e4c50beb0f3"
+      }
+    },
+    {
+      "id": "bird_125",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "9239a2a02c5d35dc8095102bc72d45ed8b51b8129bc3683678efef1f1ffe51c3",
+        "hint": "9f87b20e53dccca6c890d07c984681f72b6ccd444bb31c5049ba495acc5ad741",
+        "offline_metadata": "2a9372b2854b3440575639e6adc6b567266cf74525fd8527611cf6966162ca60"
+      }
+    },
+    {
+      "id": "bird_128",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "121774f44a33930f4b09ff5381fe75e6d9449a0954826f3cbb78c9c36db87016",
+        "hint": "ce2617284a610520bc6a9d84343d4169ac9a341361cc7c5dd6beea2a84928d32",
+        "offline_metadata": "4c638819f8f9298b231abffbdab47413a961c6f670d5f84dc38f5346926c1563"
+      }
+    },
+    {
+      "id": "bird_129",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "0a0836a311b64cb49bf4f1eb1aa92f715000fdbabdf75b7a06c888e9661eeccc",
+        "hint": "77fcc68b4fc2320df5c9450a4f9f82b1be3441f267f495b30c3baf0f02968c3e",
+        "offline_metadata": "ec4205625af70e08156c641aaff3634d21af09000a23cc5f98e612424d3aae41"
+      }
+    },
+    {
+      "id": "bird_145",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "9fe5475bc4b48363920404ec3345db29be82e391264e57fe86c4e6a0eccdc092",
+        "hint": "ef64e50d36042d843bb04742a2faa6001135d5302e62b26f237f1f39f6fe9786",
+        "offline_metadata": "cd97b094312d7ce884de437ac5802b77bf61944688495501e93583d654eb1549"
+      }
+    },
+    {
+      "id": "bird_173",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "be60615b652aa0c9ee77d73177cac715d18236ec43560103a4f479587a3948bd",
+        "hint": "eda48daae7ec6076aa8d7787f80e642e74081a095a2ee6571353fc566656536e",
+        "offline_metadata": "09accf089b1e810f35414547fa970753599284ec9de5709cba9d50d65a6540d6"
+      }
+    },
+    {
+      "id": "bird_186",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "4e7f0090a75f3e00cee77b4ee7221fc39ec71f456a590ffdd752f1b718a96bf7",
+        "hint": "f9bc6da13dd0419dd0a18c9c34dc6e87e8560f4e8b6c787df8637897df446535",
+        "offline_metadata": "a39428c81de8a2c78bea2167d4e811a050147b0c10b20eb7ee224ce3e6595d08"
+      }
+    },
+    {
+      "id": "bird_189",
+      "db_id": "financial",
+      "equivalent": true,
+      "section_count": 3,
+      "sections": [
+        "hint",
+        "few_shot",
+        "offline_metadata"
+      ],
+      "missing_from_store": [],
+      "extra_in_store": [],
+      "content_mismatch": [],
+      "section_sha256": {
+        "few_shot": "5e78d147efbb56a43d123bd7817ec0a1d5b0744e2256fb645eb6aa5417d037d5",
+        "hint": "7ecda03016fe49f7daaa5d632d38354515c0d8dd0eeb9920084b4f95acfcd41b",
+        "offline_metadata": "2356918aafbb31d4071cc434da1e1f103595ba9b3053c17c11cf84dd31cd95ca"
+      }
+    }
+  ]
+}

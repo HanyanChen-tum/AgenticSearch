@@ -1,5 +1,7 @@
 # E0 完整 197 题重复运行结果报告
 
+> **2026-08-07 分类更正**：`docs/analysis/README.md` §4.1 修复了自动语义分类器的多处漏检（GROUP BY 具体分组字段、ORDER BY 具体排序字段、JOIN key、LIMIT 均从"关键词存在性"改为"具体内容比较"）。用修复后的分类器对本报告的两次运行重新生成 `classification_sheet.csv` 后，259 条失败记录的语义分布发生系统性变化：**Schema/Join 从 38 条（14.67%，最小类别）上升为 97 条（37.5%，最大类别）**，聚合/分组从 82 条降到 43 条，过滤/低置信度从 67 条降到 36 条，输出契约 48/8 不变。正确/错误的原始判定（69/197、66/197）不受影响，只有"为什么错"的归因改变。下方 §3.1 和 §3.13 的表格已更新为修复后的数字；本文档其余更细粒度的交叉统计（如 §3.2.1 的 `UNVERIFIED_FINAL` 语义子类交叉表）仍是修复前生成，尚未逐项重新核算，引用时请留意。
+
 - 运行次数：2
 - 题目数：197
 - 平均准确率：34.26%
@@ -127,27 +129,30 @@ Run1 恢复 4 题、退化 7 题，净减少 3 道正确题，与总正确数从
 
 ### 3. 双标签错误轨迹分析
 
-#### 3.1 全部 259 条失败的语义归因
+#### 3.1 全部 259 条失败的语义归因（2026-08-07 已用修复后分类器更新）
 
 两次运行分别有 128 和 131 条失败记录，共 259 条。不能直接使用首要 `error_class` 判断失败原因，因为其中 215 条 `UNVERIFIED_FINAL` 会遮住并行的语义标签。按 `semantic_error_class` 重新统计后，254 条可以进行结构化语义归因，另外 5 条属于运行、解析或工具问题：
 
 | 实际原因层 | Run1 | Run2 | 合计 | 占全部失败 | 主要表现 |
 |---|---:|---:|---:|---:|---|
-| `AGGREGATION_REASONING` | 45 | 48 | 93 | 35.91% | 聚合/分组 82；排序方向或排序范围 11 |
-| `SEMANTIC_REVIEW_REQUIRED` | 33 | 34 | 67 | 25.87% | 过滤范围或表达式，包含可能的 gold 歧义 |
+| `SCHEMA_LINKING` | 49 | 48 | 97 | 37.45% | 表/Join 路径不匹配 75；JOIN key/条件不匹配 22（新增子类） |
+| `AGGREGATION_REASONING` | 32 | 33 | 65 | 25.10% | 聚合/分组 43；排序方向或排序范围 22 |
 | `OUTPUT_CONTRACT` | 29 | 27 | 56 | 21.62% | 输出列数 48；YES/NO 与逐行输出 8 |
-| `SCHEMA_LINKING` | 20 | 18 | 38 | 14.67% | 表选择或 Join 路径不匹配 |
+| `SEMANTIC_REVIEW_REQUIRED` | 17 | 19 | 36 | 13.90% | 过滤范围或表达式，包含可能的 gold 歧义 |
 | 运行、解析或工具问题 | 1 | 4 | 5 | 1.93% | API、空 FINAL、observation 解析或空结果 |
 
-更细的结构分布为：
+修复前的旧表（保留供对照，不再作为当前依据）：`AGGREGATION_REASONING` 93（35.91%）、`SEMANTIC_REVIEW_REQUIRED` 67（25.87%）、`OUTPUT_CONTRACT` 56（21.62%）、`SCHEMA_LINKING` 38（14.67%）、运行问题 5（1.93%）。
+
+更细的结构分布为（已更新）：
 
 | 语义子类 | 合计 |
 |---|---:|
-| 聚合或分组不匹配 | 82 |
-| 过滤范围或表达式不匹配 | 67 |
+| 表/Join 路径不匹配 | 75 |
+| JOIN key/条件不匹配（新增子类） | 22 |
+| 聚合或分组不匹配 | 43 |
+| 排序方向或排序范围不匹配 | 22 |
+| 过滤范围或表达式不匹配 | 36 |
 | 输出列数不匹配 | 48 |
-| 表选择或 Join 路径不匹配 | 38 |
-| 排序方向或排序范围不匹配 | 11 |
 | YES/NO 与逐行输出不匹配 | 8 |
 
 这些数量是两次运行的失败**记录数**，不是去重题目数；同一道稳定失败题会在 Run1 和 Run2 各计一次。后续的聚合、过滤、输出契约和 Schema/Join 小节均是对这 **259 条全部失败记录** 的展开，不是只分析 `UNVERIFIED_FINAL` 或 124 道稳定失败题。
@@ -300,21 +305,22 @@ gold 仅用于运行后诊断，不进入 Agent、Prompt、few-shot 检索或在
 
 ### 3.13 错误到改进机制映射
 
-本表只使用两次 E0 的全部 259 条失败记录及其互斥 `semantic_error_class + semantic_subcategory`。各行计数总和为 `82 + 11 + 67 + 48 + 8 + 38 + 5 = 259`。124 道稳定失败及其中 110 道同大类重复用于后续实验的二级接受指标，不与 259 条运行级记录混在“当前证据”列中。
+**2026-08-07 更正**：本表已用修复后的分类器（`docs/analysis/README.md` §4.1）重新生成，各行计数总和仍为 `43 + 22 + 36 + 48 + 8 + 75 + 22 + 5 = 259`。修复前的行计数是 `82 + 11 + 67 + 48 + 8 + 38 + 5 = 259`（同一总数，分布不同）。124 道稳定失败及其中 110 道同大类重复用于后续实验的二级接受指标，不与 259 条运行级记录混在"当前证据"列中；稳定失败的大类归属未重新核算，仅供参考。
 
-| 语义分类 | 具体归因 | 数量 | 占 259 | 主要改进机制 | 对应实验 | 接受条件 |
+| 语义分类 | 具体归因 | 数量（修复前） | 占 259 | 主要改进机制 | 对应实验 | 接受条件 |
 |---|---|---:|---:|---|---|---|
-| `AGGREGATION_REASONING` | `aggregation_or_grouping_mismatch`：统计对象、grain、`GROUP BY`、聚合函数、聚合前后过滤或多阶段聚合错误 | 82 | 31.66% | Root 在生成 SQL 前显式记录统计对象、粒度、分组键、aggregate、`WHERE/HAVING` 和阶段依赖 | `E4-A`；只有仍存在可独立 SubPlan 时才进入 `E6-A/E6-B` | 该子类净下降；目标 recovered > regressed；稳定聚合失败有可解释恢复，且不增加 Schema/输出回退 |
-| `AGGREGATION_REASONING` | `sort_direction_or_order_scope_mismatch`：排序字段、方向、Top-K 范围或 `LIMIT` 作用阶段错误 | 11 | 4.25% | QueryPlan 明确排序对象、指标、方向、tie 和 `LIMIT` 应在聚合后的哪一层执行 | `E4-A` | 该 11 条对应结构的回退少于恢复；不能通过改变输出粒度制造表面改善 |
-| `SEMANTIC_REVIEW_REQUIRED` | `filter_scope_or_expression_mismatch`：比较符、边界、日期范围、AND/OR、NULL、单位、值格式或作用层级不一致；包含潜在 gold 歧义 | 67 | 25.87% | 先人工区分 Agent 错误与 gold/问题歧义；再用 Offline 值语义与题目级条件结构明确字段、运算符、值、范围和层级 | `F-Audit` → `E3-C` / `E4-A`；必要时 `E5-B` 按需查值 | 只在人工确认的 Agent 错误上计算净变化；疑似 gold 噪声单列，不能计作机制收益 |
-| `OUTPUT_CONTRACT` | `output_column_count_mismatch`：缺少请求列、增加辅助列、多问题只回答一部分或列顺序/含义错误 | 48 | 18.53% | 在 QueryPlan 中冻结 answer type、列数、列顺序、来源与含义，并检查最终投影是否一致 | `E4-A` | 该子类净下降且 recovered > regressed；不得以牺牲聚合粒度或 Schema 正确性换取列数匹配 |
-| `OUTPUT_CONTRACT` | `yes_no_vs_row_output_mismatch`：条件标量与记录列表相互混淆 | 8 | 3.09% | 在生成 SQL 前分类回答形式：boolean/scalar/rows，并固定 YES/NO 与逐行输出边界 | `E4-A` | 8 条目标结构恢复多于回退，且不把普通比较题错误转换为 YES/NO |
-| `SCHEMA_LINKING` | `table_or_join_path_mismatch`：表选择、字段归属、直接/多跳 Join path 或 Join 重复行风险错误 | 38 | 14.67% | 用 Offline Schema Context 提供字段语义、PK/FK、关系基数、候选路径和值格式，并只交付当前题相关片段 | `E3-C` | 该子类净下降；稳定 Schema 失败 recovered > regressed；不能因 Join 重复显著增加聚合错误，片段覆盖与 artifact hash 完整记录 |
-| 无可用语义标签 | 运行、解析或工具失败：API、空 FINAL、observation 不可解析或空结果，无法可靠归因到 SQL 语义 | 5 | 1.93% | 结构化 observation、受控重试、断点续跑、终止原因和运行/语义错误分离 | `E2-A`（基础设施） | 运行失败减少且 trace 可完整归因；这类恢复单独报告，不计作推理机制收益 |
+| `SCHEMA_LINKING` | `table_or_join_path_mismatch`：表选择、字段归属、直接/多跳 Join path 或 Join 重复行风险错误 | 75（原 38） | 28.96% | 用 Offline Schema Context 提供字段语义、PK/FK、关系基数、候选路径和值格式，并只交付当前题相关片段 | `E3-C` | 该子类净下降；稳定 Schema 失败 recovered > regressed；不能因 Join 重复显著增加聚合错误，片段覆盖与 artifact hash 完整记录 |
+| `SCHEMA_LINKING` | `join_key_or_condition_mismatch`：表选对但 JOIN `ON` 条件用错外键列（新增子类，修复前完全未检出） | 22（原 0） | 8.49% | 同上，另需核对 JOIN 条件对应的外键列而不仅是表集合 | `E3-C` | 同上 |
+| `AGGREGATION_REASONING` | `aggregation_or_grouping_mismatch`：统计对象、grain、`GROUP BY`、聚合函数、聚合前后过滤或多阶段聚合错误 | 43（原 82） | 16.60% | Root 在生成 SQL 前显式记录统计对象、粒度、分组键、aggregate、`WHERE/HAVING` 和阶段依赖 | `E4-A`；只有仍存在可独立 SubPlan 时才进入 `E6-A/E6-B` | 该子类净下降；目标 recovered > regressed；稳定聚合失败有可解释恢复，且不增加 Schema/输出回退 |
+| `AGGREGATION_REASONING` | `sort_direction_or_order_scope_mismatch`：排序字段、方向、Top-K 范围或 `LIMIT` 作用阶段错误 | 22（原 11） | 8.49% | QueryPlan 明确排序对象、指标、方向、tie 和 `LIMIT` 应在聚合后的哪一层执行 | `E4-A` | 该子类对应结构的回退少于恢复；不能通过改变输出粒度制造表面改善 |
+| `SEMANTIC_REVIEW_REQUIRED` | `filter_scope_or_expression_mismatch`：比较符、边界、日期范围、AND/OR、NULL、单位、值格式或作用层级不一致；包含潜在 gold 歧义 | 36（原 67） | 13.90% | 先人工区分 Agent 错误与 gold/问题歧义；再用 Offline 值语义与题目级条件结构明确字段、运算符、值、范围和层级 | `F-Audit` → `E3-C` / `E4-A`；必要时 `E5-B` 按需查值 | 只在人工确认的 Agent 错误上计算净变化；疑似 gold 噪声单列，不能计作机制收益 |
+| `OUTPUT_CONTRACT` | `output_column_count_mismatch`：缺少请求列、增加辅助列、多问题只回答一部分或列顺序/含义错误 | 48（不变） | 18.53% | 在 QueryPlan 中冻结 answer type、列数、列顺序、来源与含义，并检查最终投影是否一致 | `E4-A` | 该子类净下降且 recovered > regressed；不得以牺牲聚合粒度或 Schema 正确性换取列数匹配 |
+| `OUTPUT_CONTRACT` | `yes_no_vs_row_output_mismatch`：条件标量与记录列表相互混淆 | 8（不变） | 3.09% | 在生成 SQL 前分类回答形式：boolean/scalar/rows，并固定 YES/NO 与逐行输出边界 | `E4-A` | 8 条目标结构恢复多于回退，且不把普通比较题错误转换为 YES/NO |
+| 无可用语义标签 | 运行、解析或工具失败：API、空 FINAL、observation 不可解析或空结果，无法可靠归因到 SQL 语义 | 5（不变） | 1.93% | 结构化 observation、受控重试、断点续跑、终止原因和运行/语义错误分离 | `E2-A`（基础设施） | 运行失败减少且 trace 可完整归因；这类恢复单独报告，不计作推理机制收益 |
 
 `UNVERIFIED_FINAL` 的 215 条是与上述语义分类并行的控制流标签，其中 180 条最近执行 SQL 已经错误；若把它加入本表会与 259 条语义记录重复计数。因此它只保留为控制流诊断，不安排独立 FINAL 同步实验，也不作为机制成功指标。
 
-由全部 259 条归因得到的直接顺序是：先用 `E2-A` 保证 5 条运行问题可观测；用 `E3-C` 处理 38 条 Schema/Join 及部分值语义；用 `F-Audit` 澄清 67 条低置信度过滤归因；再用 `E4-A` 直接处理 82 条聚合/分组、11 条排序、48 条输出列和 8 条回答形式错误。E5/E6 只有在前述直接机制完成后、剩余轨迹显示信息访问或可分解 SubPlan 是瓶颈时才启用，不能直接从 E0 的 259 条计数宣称有效。
+由全部 259 条归因得到的直接顺序（按修复后数字更新）是：先用 `E2-A` 保证 5 条运行问题可观测；用 `E3-C` 处理 97 条 Schema/Join（含新识别的 22 条 JOIN key 错误）及部分值语义；用 `F-Audit` 澄清 36 条低置信度过滤归因（原设计针对 67 条，抽样范围需相应缩小并重新界定）；再用 `E4-A` 直接处理 43 条聚合/分组、22 条排序、48 条输出列和 8 条回答形式错误。E3-C 已经在执行顺序上先处理了修复后确认的最大类别（Schema/Join），这一点没有变化；但 E4-A 面对的聚合/排序类别的真实体量（43+22=65）比修复前认为的（82+11=93）小得多，说明 E4-A 的目标类别本身并不像最初以为的那样是最大瓶颈。E5/E6 只有在前述直接机制完成后、剩余轨迹显示信息访问或可分解 SubPlan 是瓶颈时才启用，不能直接从 E0 的 259 条计数宣称有效。
 
 ### 4. 成本与延迟基线
 
