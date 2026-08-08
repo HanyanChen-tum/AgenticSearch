@@ -1,0 +1,1 @@
+run_id,id,db_id,difficulty,wrong_turn,error_class,subcategory,control_flow_class,control_flow_subcategory,semantic_error_class,semantic_subcategory,sql_change_type,semantic_fix_idea,semantic_notes,fix_idea,notes

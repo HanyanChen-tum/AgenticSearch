@@ -16,6 +16,7 @@
 |---|---|
 | [`stable_failure_audit_2026-08-08.md`](stable_failure_audit_2026-08-08.md) | 对 77 条稳定失败分层抽样 31 条，逐题人工判定失败根因，并对关键判定做执行验证 |
 | [`disambiguation_experiment_2026-08-08.md`](disambiguation_experiment_2026-08-08.md) | 反事实消歧实验：对 7 条指代歧义题只改写歧义名词、其余不变，两臂对照检验因果性 |
+| [`hint_ablation_2026-08-08.md`](hint_ablation_2026-08-08.md) | Hint 消融实验：删除 BIRD evidence 字段，三臂设计，检验 Hint 是否为致败原因 |
 
 ## 结论摘要（2026-08-08）
 
@@ -45,3 +46,15 @@
 **指代歧义被证实为真实的因果原因**——改一个名词，5 条的指代错误即被纠正，说明模型并非"选不对表"，而是题面没给出选择所需的信息。但只有 2 条整题转正，其余在指代纠正后**撞上了同一批题目并存的其它数据集侧问题**（DISTINCT 约定、输出约定、空值约定）。
 
 这条证据把结论三从观测性提升为干预性：改变题面即改变模型行为，失败源于题面信息不足，而非模型能力。
+
+**第二个干预性实验：Hint 消融**（`hint_ablation_2026-08-08.md`）。只删除 BIRD 的 evidence 字段，三臂对照：
+
+| 集合 | 有 Hint | 无 Hint |
+|---|---:|---:|
+| A　Hint 公式与 gold 矛盾、原本失败 | 0/5 | **3/5** |
+| B　同签名但原本正确 | 5/5 | 5/5 |
+| C　值编码型 Hint、原本正确 | 5/5 | 5/5 |
+
+**删除 Hint 修好 3 题、未破坏任何一题。** 机制清楚：`bird_604` 的 Hint 写 `Divide(Sum(UpVotes), Count(UserId))`，模型照做写出 `SUM/COUNT`，而 gold 用 `AVG`；删掉 Hint 后模型自行写出 `AVG`，与 gold 一致。**模型因忠实执行给定指令而被判错。**
+
+集合 C 显示 Hint 在本样本中也非必需——推测 E3-C 的 Offline Schema artifact 已携带 `value_description`，使 Hint 内容冗余。这与 legacy 时代"Hint 为 large positive"的记录不矛盾：那是在没有 Schema Context 的 harness 上测的。

@@ -1,0 +1,1320 @@
+[
+  {
+    "id": "bird_1471",
+    "db_id": "debit_card_specializing",
+    "difficulty": "simple",
+    "correct": true,
+    "diagnostic": "correct",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "customers",
+      "transactions_1k",
+      "yearmonth",
+      "gasstations"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "customers",
+      "transactions_1k",
+      "yearmonth"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "customers",
+        "to_seed": "transactions_1k",
+        "path": [
+          "customers",
+          "transactions_1k"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "customers",
+        "to_seed": "yearmonth",
+        "path": [
+          "customers",
+          "yearmonth"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "transactions_1k",
+        "to_seed": "yearmonth",
+        "path": [
+          "transactions_1k",
+          "customers",
+          "yearmonth"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "transactions_1k",
+        "neighbour": "gasstations",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "products",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "customers"
+    ],
+    "gold_columns": [],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "customers"
+    ],
+    "final_columns": [],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "CONDITIONAL"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_1076",
+    "db_id": "european_football_2",
+    "difficulty": "challenging",
+    "correct": true,
+    "diagnostic": "correct",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "Player_Attributes",
+      "Player",
+      "Team_Attributes",
+      "Match",
+      "Team",
+      "Country"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "Player_Attributes",
+      "Player",
+      "Team_Attributes",
+      "Match"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Player",
+        "path": [
+          "Player_Attributes",
+          "Player"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Team_Attributes",
+        "path": [
+          "Player_Attributes",
+          "Player",
+          "Match",
+          "Team",
+          "Team_Attributes"
+        ],
+        "added_tables": [
+          "Team"
+        ]
+      },
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Match",
+        "path": [
+          "Player_Attributes",
+          "Player",
+          "Match"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Player",
+        "to_seed": "Team_Attributes",
+        "path": [
+          "Player",
+          "Match",
+          "Team",
+          "Team_Attributes"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Player",
+        "to_seed": "Match",
+        "path": [
+          "Player",
+          "Match"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Team_Attributes",
+        "to_seed": "Match",
+        "path": [
+          "Team_Attributes",
+          "Team",
+          "Match"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "Match",
+        "neighbour": "Country",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "League",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "Player_Attributes": 26,
+      "Team_Attributes": 9,
+      "Match": 99
+    },
+    "gold_tables": [
+      "player",
+      "player_attributes"
+    ],
+    "gold_columns": [
+      "ball_control",
+      "id",
+      "player_api_id",
+      "player_name"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "CONDITIONAL"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "player",
+      "player_attributes"
+    ],
+    "final_columns": [
+      "ball_control",
+      "id",
+      "player_api_id",
+      "player_name"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "CONDITIONAL"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_775",
+    "db_id": "superhero",
+    "difficulty": "challenging",
+    "correct": true,
+    "diagnostic": "correct",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "colour",
+      "superhero",
+      "alignment",
+      "gender",
+      "race"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "colour",
+      "superhero",
+      "alignment",
+      "gender"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "colour",
+        "to_seed": "superhero",
+        "path": [
+          "colour",
+          "superhero"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "colour",
+        "to_seed": "alignment",
+        "path": [
+          "colour",
+          "superhero",
+          "alignment"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "colour",
+        "to_seed": "gender",
+        "path": [
+          "colour",
+          "superhero",
+          "gender"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "superhero",
+        "to_seed": "alignment",
+        "path": [
+          "superhero",
+          "alignment"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "superhero",
+        "to_seed": "gender",
+        "path": [
+          "superhero",
+          "gender"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "alignment",
+        "to_seed": "gender",
+        "path": [
+          "alignment",
+          "superhero",
+          "gender"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "superhero",
+        "neighbour": "race",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "hero_attribute",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "attribute",
+        "lexical_score": 1,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "hero_power",
+        "lexical_score": 1,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "publisher",
+        "lexical_score": 1,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "superpower",
+        "lexical_score": 1,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "colour",
+      "gender",
+      "superhero"
+    ],
+    "gold_columns": [
+      "colour",
+      "gender",
+      "gender_id",
+      "id",
+      "skin_colour_id"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[2+]",
+      "WHERE",
+      "CONDITIONAL"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "colour",
+      "gender",
+      "superhero"
+    ],
+    "final_columns": [
+      "colour",
+      "gender",
+      "gender_id",
+      "id",
+      "skin_colour_id"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[2+]",
+      "CONDITIONAL"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_604",
+    "db_id": "codebase_community",
+    "difficulty": "moderate",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "posts",
+      "users",
+      "comments",
+      "tags",
+      "votes",
+      "postHistory"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "posts",
+      "users",
+      "comments",
+      "tags"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "posts",
+        "to_seed": "users",
+        "path": [
+          "posts",
+          "users"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "posts",
+        "to_seed": "comments",
+        "path": [
+          "posts",
+          "comments"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "posts",
+        "to_seed": "tags",
+        "path": [
+          "posts",
+          "tags"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "users",
+        "to_seed": "comments",
+        "path": [
+          "users",
+          "comments"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "users",
+        "to_seed": "tags",
+        "path": [
+          "users",
+          "posts",
+          "tags"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "comments",
+        "to_seed": "tags",
+        "path": [
+          "comments",
+          "posts",
+          "tags"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "posts",
+        "neighbour": "votes",
+        "added": true
+      },
+      {
+        "seed": "users",
+        "neighbour": "postHistory",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "badges",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "postLinks",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "posts": 5
+    },
+    "gold_tables": [
+      "posts",
+      "users"
+    ],
+    "gold_columns": [
+      "age",
+      "id",
+      "upvotes"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "GROUP_BY",
+      "HAVING",
+      "SUBQUERY"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "posts",
+      "users"
+    ],
+    "final_columns": [
+      "age",
+      "id",
+      "owneruserid",
+      "upvotes"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "WHERE",
+      "GROUP_BY",
+      "HAVING",
+      "SUBQUERY"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_198",
+    "db_id": "toxicology",
+    "difficulty": "challenging",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "bond",
+      "molecule",
+      "atom",
+      "connected"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "bond",
+      "molecule",
+      "atom",
+      "connected"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "bond",
+        "to_seed": "molecule",
+        "path": [
+          "bond",
+          "molecule"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "atom",
+        "path": [
+          "bond",
+          "connected",
+          "atom"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "connected",
+        "path": [
+          "bond",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "molecule",
+        "to_seed": "atom",
+        "path": [
+          "molecule",
+          "atom"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "molecule",
+        "to_seed": "connected",
+        "path": [
+          "molecule",
+          "atom",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "atom",
+        "to_seed": "connected",
+        "path": [
+          "atom",
+          "connected"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "atom",
+      "bond",
+      "molecule"
+    ],
+    "gold_columns": [
+      "bond_type",
+      "label",
+      "molecule_id"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[2+]",
+      "WHERE",
+      "GROUP_BY",
+      "SUBQUERY"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "atom",
+      "bond",
+      "molecule"
+    ],
+    "final_columns": [
+      "atom_id",
+      "bond_type",
+      "label",
+      "molecule_id"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[2+]",
+      "WHERE",
+      "CONDITIONAL",
+      "SUBQUERY"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_208",
+    "db_id": "toxicology",
+    "difficulty": "moderate",
+    "correct": true,
+    "diagnostic": "correct",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "atom",
+      "bond",
+      "connected",
+      "molecule"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "atom",
+      "bond",
+      "connected",
+      "molecule"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "atom",
+        "to_seed": "bond",
+        "path": [
+          "atom",
+          "connected",
+          "bond"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "atom",
+        "to_seed": "connected",
+        "path": [
+          "atom",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "atom",
+        "to_seed": "molecule",
+        "path": [
+          "atom",
+          "molecule"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "connected",
+        "path": [
+          "bond",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "molecule",
+        "path": [
+          "bond",
+          "molecule"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "connected",
+        "to_seed": "molecule",
+        "path": [
+          "connected",
+          "atom",
+          "molecule"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "atom",
+      "molecule"
+    ],
+    "gold_columns": [
+      "element",
+      "label",
+      "molecule_id"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "WHERE",
+      "GROUP_BY",
+      "ORDER_BY[DESC]",
+      "LIMIT",
+      "SUBQUERY"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "atom",
+      "molecule"
+    ],
+    "final_columns": [
+      "element",
+      "label",
+      "molecule_id"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "WHERE",
+      "GROUP_BY",
+      "ORDER_BY[DESC]",
+      "LIMIT"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_218",
+    "db_id": "toxicology",
+    "difficulty": "challenging",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "atom",
+      "bond",
+      "molecule",
+      "connected"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "atom",
+      "bond",
+      "molecule",
+      "connected"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "atom",
+        "to_seed": "bond",
+        "path": [
+          "atom",
+          "connected",
+          "bond"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "atom",
+        "to_seed": "molecule",
+        "path": [
+          "atom",
+          "molecule"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "atom",
+        "to_seed": "connected",
+        "path": [
+          "atom",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "molecule",
+        "path": [
+          "bond",
+          "molecule"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "connected",
+        "path": [
+          "bond",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "molecule",
+        "to_seed": "connected",
+        "path": [
+          "molecule",
+          "atom",
+          "connected"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "atom",
+      "molecule"
+    ],
+    "gold_columns": [
+      "element",
+      "label",
+      "molecule_id"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "WHERE",
+      "CONDITIONAL"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "atom",
+      "molecule"
+    ],
+    "final_columns": [
+      "atom_id",
+      "element",
+      "label",
+      "molecule_id"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "WHERE",
+      "SUBQUERY"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_219",
+    "db_id": "toxicology",
+    "difficulty": "challenging",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "bond",
+      "molecule",
+      "atom",
+      "connected"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "bond",
+      "molecule",
+      "atom",
+      "connected"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "bond",
+        "to_seed": "molecule",
+        "path": [
+          "bond",
+          "molecule"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "atom",
+        "path": [
+          "bond",
+          "connected",
+          "atom"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "connected",
+        "path": [
+          "bond",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "molecule",
+        "to_seed": "atom",
+        "path": [
+          "molecule",
+          "atom"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "molecule",
+        "to_seed": "connected",
+        "path": [
+          "molecule",
+          "atom",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "atom",
+        "to_seed": "connected",
+        "path": [
+          "atom",
+          "connected"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "atom",
+      "bond",
+      "molecule"
+    ],
+    "gold_columns": [
+      "bond_type",
+      "label",
+      "molecule_id"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[2+]",
+      "WHERE",
+      "CONDITIONAL"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "bond",
+      "molecule"
+    ],
+    "final_columns": [
+      "bond_id",
+      "bond_type",
+      "label",
+      "molecule_id"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "WHERE"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_228",
+    "db_id": "toxicology",
+    "difficulty": "moderate",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "atom",
+      "bond",
+      "connected",
+      "molecule"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "atom",
+      "bond",
+      "connected",
+      "molecule"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "atom",
+        "to_seed": "bond",
+        "path": [
+          "atom",
+          "connected",
+          "bond"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "atom",
+        "to_seed": "connected",
+        "path": [
+          "atom",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "atom",
+        "to_seed": "molecule",
+        "path": [
+          "atom",
+          "molecule"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "connected",
+        "path": [
+          "bond",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "molecule",
+        "path": [
+          "bond",
+          "molecule"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "connected",
+        "to_seed": "molecule",
+        "path": [
+          "connected",
+          "atom",
+          "molecule"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "atom"
+    ],
+    "gold_columns": [
+      "atom_id",
+      "element",
+      "molecule_id"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "WHERE",
+      "CONDITIONAL"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "atom"
+    ],
+    "final_columns": [],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "WHERE"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_282",
+    "db_id": "toxicology",
+    "difficulty": "challenging",
+    "correct": true,
+    "diagnostic": "correct",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "atom",
+      "molecule",
+      "bond",
+      "connected"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "atom",
+      "molecule",
+      "bond",
+      "connected"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "atom",
+        "to_seed": "molecule",
+        "path": [
+          "atom",
+          "molecule"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "atom",
+        "to_seed": "bond",
+        "path": [
+          "atom",
+          "connected",
+          "bond"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "atom",
+        "to_seed": "connected",
+        "path": [
+          "atom",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "molecule",
+        "to_seed": "bond",
+        "path": [
+          "molecule",
+          "bond"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "molecule",
+        "to_seed": "connected",
+        "path": [
+          "molecule",
+          "atom",
+          "connected"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "bond",
+        "to_seed": "connected",
+        "path": [
+          "bond",
+          "connected"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "atom",
+      "molecule"
+    ],
+    "gold_columns": [
+      "atom_id",
+      "element",
+      "label",
+      "molecule_id"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "DISTINCT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "WHERE",
+      "GROUP_BY",
+      "CONDITIONAL",
+      "CTE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "atom",
+      "molecule"
+    ],
+    "final_columns": [
+      "element",
+      "label",
+      "molecule_id"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "WHERE",
+      "CONDITIONAL"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  }
+]

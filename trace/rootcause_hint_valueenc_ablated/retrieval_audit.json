@@ -1,0 +1,613 @@
+[
+  {
+    "id": "bird_1344",
+    "db_id": "student_club",
+    "difficulty": "simple",
+    "correct": true,
+    "diagnostic": "correct",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "event",
+      "income",
+      "expense",
+      "attendance",
+      "member",
+      "budget"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "event",
+      "income",
+      "expense"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "event",
+        "to_seed": "income",
+        "path": [
+          "event",
+          "attendance",
+          "member",
+          "income"
+        ],
+        "added_tables": [
+          "attendance",
+          "member"
+        ]
+      },
+      {
+        "from_seed": "event",
+        "to_seed": "expense",
+        "path": [
+          "event",
+          "budget",
+          "expense"
+        ],
+        "added_tables": [
+          "budget"
+        ]
+      },
+      {
+        "from_seed": "income",
+        "to_seed": "expense",
+        "path": [
+          "income",
+          "member",
+          "expense"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [
+      {
+        "table": "major",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "zip_code",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "income"
+    ],
+    "gold_columns": [],
+    "gold_shape": [
+      "SELECT",
+      "WHERE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "income"
+    ],
+    "final_columns": [
+      "date_received",
+      "notes",
+      "source"
+    ],
+    "final_shape": [
+      "SELECT",
+      "WHERE"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_1350",
+    "db_id": "student_club",
+    "difficulty": "moderate",
+    "correct": true,
+    "diagnostic": "correct",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "expense",
+      "event",
+      "budget",
+      "income",
+      "member",
+      "attendance"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "expense",
+      "event",
+      "budget",
+      "income"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "expense",
+        "to_seed": "event",
+        "path": [
+          "expense",
+          "budget",
+          "event"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "expense",
+        "to_seed": "budget",
+        "path": [
+          "expense",
+          "budget"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "expense",
+        "to_seed": "income",
+        "path": [
+          "expense",
+          "member",
+          "income"
+        ],
+        "added_tables": [
+          "member"
+        ]
+      },
+      {
+        "from_seed": "event",
+        "to_seed": "budget",
+        "path": [
+          "event",
+          "budget"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "event",
+        "to_seed": "income",
+        "path": [
+          "event",
+          "attendance",
+          "member",
+          "income"
+        ],
+        "added_tables": [
+          "attendance"
+        ]
+      },
+      {
+        "from_seed": "budget",
+        "to_seed": "income",
+        "path": [
+          "budget",
+          "expense",
+          "member",
+          "income"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [
+      {
+        "table": "major",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "zip_code",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "budget",
+      "expense"
+    ],
+    "gold_columns": [
+      "budget_id",
+      "event_status",
+      "expense_date",
+      "expense_description",
+      "link_to_budget"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "budget",
+      "event",
+      "expense"
+    ],
+    "final_columns": [
+      "budget_id",
+      "event_id",
+      "expense_date",
+      "expense_description",
+      "link_to_budget",
+      "link_to_event",
+      "status"
+    ],
+    "final_shape": [
+      "SELECT",
+      "DISTINCT",
+      "JOIN[2+]",
+      "WHERE"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_1238",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "moderate",
+    "correct": true,
+    "diagnostic": "correct",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "Laboratory",
+      "Patient",
+      "Examination"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "Laboratory",
+      "Patient",
+      "Examination"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "Laboratory",
+        "to_seed": "Patient",
+        "path": [
+          "Laboratory",
+          "Patient"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Laboratory",
+        "to_seed": "Examination",
+        "path": [
+          "Laboratory",
+          "Patient",
+          "Examination"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Patient",
+        "to_seed": "Examination",
+        "path": [
+          "Patient",
+          "Examination"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {
+      "Laboratory": 28
+    },
+    "gold_tables": [
+      "laboratory",
+      "patient"
+    ],
+    "gold_columns": [
+      "birthday",
+      "diagnosis",
+      "hgb",
+      "id",
+      "sex"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE",
+      "ORDER_BY[ASC]",
+      "LIMIT"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "examination",
+      "laboratory",
+      "patient"
+    ],
+    "final_columns": [
+      "birthday",
+      "diagnosis",
+      "hgb",
+      "id",
+      "sex"
+    ],
+    "final_shape": [
+      "SELECT",
+      "WHERE",
+      "ORDER_BY[ASC]",
+      "LIMIT"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_1103",
+    "db_id": "european_football_2",
+    "difficulty": "moderate",
+    "correct": true,
+    "diagnostic": "correct",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "Player_Attributes",
+      "Player",
+      "Match"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "Player_Attributes",
+      "Player"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Player",
+        "path": [
+          "Player_Attributes",
+          "Player"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "Player",
+        "neighbour": "Match",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "Country",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "League",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "Team",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "Team_Attributes",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "Player_Attributes": 26,
+      "Match": 99
+    },
+    "gold_tables": [
+      "player",
+      "player_attributes"
+    ],
+    "gold_columns": [
+      "date",
+      "overall_rating",
+      "player_api_id",
+      "player_name"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "player",
+      "player_attributes"
+    ],
+    "final_columns": [
+      "date",
+      "overall_rating",
+      "player_api_id",
+      "player_name"
+    ],
+    "final_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_1113",
+    "db_id": "european_football_2",
+    "difficulty": "moderate",
+    "correct": true,
+    "diagnostic": "correct",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "Team_Attributes",
+      "Match",
+      "Player_Attributes",
+      "Team",
+      "Player",
+      "Country"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "Team_Attributes",
+      "Match",
+      "Player_Attributes",
+      "Team"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "Team_Attributes",
+        "to_seed": "Match",
+        "path": [
+          "Team_Attributes",
+          "Team",
+          "Match"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Team_Attributes",
+        "to_seed": "Player_Attributes",
+        "path": [
+          "Team_Attributes",
+          "Team",
+          "Match",
+          "Player",
+          "Player_Attributes"
+        ],
+        "added_tables": [
+          "Player"
+        ]
+      },
+      {
+        "from_seed": "Team_Attributes",
+        "to_seed": "Team",
+        "path": [
+          "Team_Attributes",
+          "Team"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Match",
+        "to_seed": "Player_Attributes",
+        "path": [
+          "Match",
+          "Player",
+          "Player_Attributes"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Match",
+        "to_seed": "Team",
+        "path": [
+          "Match",
+          "Team"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Team",
+        "path": [
+          "Player_Attributes",
+          "Player",
+          "Match",
+          "Team"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "Match",
+        "neighbour": "Country",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "League",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "Team_Attributes": 9,
+      "Match": 99,
+      "Player_Attributes": 26
+    },
+    "gold_tables": [
+      "team",
+      "team_attributes"
+    ],
+    "gold_columns": [
+      "date",
+      "defenceaggressionclass",
+      "team_api_id",
+      "team_long_name"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "team",
+      "team_attributes"
+    ],
+    "final_columns": [
+      "date",
+      "defenceaggressionclass",
+      "team_api_id",
+      "team_long_name"
+    ],
+    "final_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  }
+]

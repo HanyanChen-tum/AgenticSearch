@@ -1,0 +1,16 @@
+{
+ "formula_conflict_failing": [
+  "bird_198",
+  "bird_218",
+  "bird_219",
+  "bird_228",
+  "bird_604"
+ ],
+ "currently_correct_control": [
+  "bird_282",
+  "bird_775",
+  "bird_1076",
+  "bird_1471",
+  "bird_208"
+ ]
+}
