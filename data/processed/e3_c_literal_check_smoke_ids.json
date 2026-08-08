@@ -1,0 +1,4 @@
+{
+  "target_literal_mismatch": ["bird_1267", "bird_1265"],
+  "regression_control_already_correct": ["bird_1350", "bird_1171", "bird_598", "bird_1155", "bird_1169", "bird_531"]
+}

@@ -1,0 +1,150 @@
+[
+  {
+    "id": "bird_1031",
+    "db_id": "european_football_2",
+    "difficulty": "challenging",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "Player_Attributes",
+      "Match",
+      "Team_Attributes",
+      "Player",
+      "Team",
+      "Country"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "Player_Attributes",
+      "Match",
+      "Team_Attributes",
+      "Player"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Match",
+        "path": [
+          "Player_Attributes",
+          "Player",
+          "Match"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Team_Attributes",
+        "path": [
+          "Player_Attributes",
+          "Player",
+          "Match",
+          "Team",
+          "Team_Attributes"
+        ],
+        "added_tables": [
+          "Team"
+        ]
+      },
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Player",
+        "path": [
+          "Player_Attributes",
+          "Player"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Match",
+        "to_seed": "Team_Attributes",
+        "path": [
+          "Match",
+          "Team",
+          "Team_Attributes"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Match",
+        "to_seed": "Player",
+        "path": [
+          "Match",
+          "Player"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Team_Attributes",
+        "to_seed": "Player",
+        "path": [
+          "Team_Attributes",
+          "Team",
+          "Match",
+          "Player"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "Match",
+        "neighbour": "Country",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "League",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "Player_Attributes": 26,
+      "Match": 99,
+      "Team_Attributes": 9
+    },
+    "gold_tables": [
+      "player",
+      "player_attributes"
+    ],
+    "gold_columns": [
+      "date",
+      "player_api_id",
+      "sprint_speed"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "DISTINCT",
+      "JOIN[1]",
+      "WHERE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "player",
+      "player_attributes"
+    ],
+    "final_columns": [
+      "birthday",
+      "date",
+      "player_api_id",
+      "sprint_speed"
+    ],
+    "final_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  }
+]

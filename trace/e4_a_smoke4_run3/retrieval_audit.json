@@ -1,0 +1,525 @@
+[
+  {
+    "id": "bird_1166",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "simple",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "Examination",
+      "Patient",
+      "Laboratory"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "Examination",
+      "Patient",
+      "Laboratory"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "Examination",
+        "to_seed": "Patient",
+        "path": [
+          "Examination",
+          "Patient"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Examination",
+        "to_seed": "Laboratory",
+        "path": [
+          "Examination",
+          "Patient",
+          "Laboratory"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Patient",
+        "to_seed": "Laboratory",
+        "path": [
+          "Patient",
+          "Laboratory"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {
+      "Laboratory": 28
+    },
+    "gold_tables": [
+      "examination",
+      "patient"
+    ],
+    "gold_columns": [
+      "birthday",
+      "diagnosis",
+      "id",
+      "symptoms"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE",
+      "ORDER_BY[DESC]",
+      "LIMIT"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "examination",
+      "patient"
+    ],
+    "final_columns": [
+      "birthday",
+      "diagnosis",
+      "id",
+      "symptoms"
+    ],
+    "final_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE",
+      "ORDER_BY[DESC]",
+      "LIMIT"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_1251",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "simple",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "Laboratory",
+      "Examination",
+      "Patient"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "Laboratory",
+      "Examination",
+      "Patient"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "Laboratory",
+        "to_seed": "Examination",
+        "path": [
+          "Laboratory",
+          "Patient",
+          "Examination"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Laboratory",
+        "to_seed": "Patient",
+        "path": [
+          "Laboratory",
+          "Patient"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Examination",
+        "to_seed": "Patient",
+        "path": [
+          "Examination",
+          "Patient"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {
+      "Laboratory": 28
+    },
+    "gold_tables": [
+      "examination",
+      "laboratory",
+      "patient"
+    ],
+    "gold_columns": [
+      "id",
+      "igg"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[2+]",
+      "WHERE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "laboratory"
+    ],
+    "final_columns": [],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "WHERE"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_1031",
+    "db_id": "european_football_2",
+    "difficulty": "challenging",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "Player_Attributes",
+      "Match",
+      "Team_Attributes",
+      "Player",
+      "Team",
+      "Country"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "Player_Attributes",
+      "Match",
+      "Team_Attributes",
+      "Player"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Match",
+        "path": [
+          "Player_Attributes",
+          "Player",
+          "Match"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Team_Attributes",
+        "path": [
+          "Player_Attributes",
+          "Player",
+          "Match",
+          "Team",
+          "Team_Attributes"
+        ],
+        "added_tables": [
+          "Team"
+        ]
+      },
+      {
+        "from_seed": "Player_Attributes",
+        "to_seed": "Player",
+        "path": [
+          "Player_Attributes",
+          "Player"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Match",
+        "to_seed": "Team_Attributes",
+        "path": [
+          "Match",
+          "Team",
+          "Team_Attributes"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Match",
+        "to_seed": "Player",
+        "path": [
+          "Match",
+          "Player"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Team_Attributes",
+        "to_seed": "Player",
+        "path": [
+          "Team_Attributes",
+          "Team",
+          "Match",
+          "Player"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "Match",
+        "neighbour": "Country",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "League",
+        "lexical_score": 0,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "Player_Attributes": 26,
+      "Match": 99,
+      "Team_Attributes": 9
+    },
+    "gold_tables": [
+      "player",
+      "player_attributes"
+    ],
+    "gold_columns": [
+      "date",
+      "player_api_id",
+      "sprint_speed"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "DISTINCT",
+      "JOIN[1]",
+      "WHERE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "player",
+      "player_attributes"
+    ],
+    "final_columns": [
+      "birthday",
+      "date",
+      "player_api_id",
+      "sprint_speed"
+    ],
+    "final_shape": [
+      "SELECT",
+      "DISTINCT",
+      "JOIN[1]",
+      "WHERE",
+      "ORDER_BY[ASC]",
+      "SUBQUERY"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_1011",
+    "db_id": "formula_1",
+    "difficulty": "challenging",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "qualifying",
+      "results",
+      "drivers",
+      "lapTimes",
+      "constructors",
+      "races",
+      "status",
+      "pitStops"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "qualifying",
+      "results",
+      "drivers",
+      "lapTimes"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "qualifying",
+        "to_seed": "results",
+        "path": [
+          "qualifying",
+          "constructors",
+          "results"
+        ],
+        "added_tables": [
+          "constructors"
+        ]
+      },
+      {
+        "from_seed": "qualifying",
+        "to_seed": "drivers",
+        "path": [
+          "qualifying",
+          "drivers"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "qualifying",
+        "to_seed": "lapTimes",
+        "path": [
+          "qualifying",
+          "drivers",
+          "lapTimes"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "results",
+        "to_seed": "drivers",
+        "path": [
+          "results",
+          "drivers"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "results",
+        "to_seed": "lapTimes",
+        "path": [
+          "results",
+          "drivers",
+          "lapTimes"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "drivers",
+        "to_seed": "lapTimes",
+        "path": [
+          "drivers",
+          "lapTimes"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "qualifying",
+        "neighbour": "races",
+        "added": true
+      },
+      {
+        "seed": "results",
+        "neighbour": "status",
+        "added": true
+      },
+      {
+        "seed": "drivers",
+        "neighbour": "pitStops",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "driverStandings",
+        "lexical_score": 3,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "circuits",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "constructorStandings",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "seasons",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "constructorResults",
+        "lexical_score": 1,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "results": 2
+    },
+    "gold_tables": [
+      "drivers",
+      "laptimes"
+    ],
+    "gold_columns": [
+      "driverid",
+      "forename",
+      "surname"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "GROUP_BY",
+      "ORDER_BY[ASC]",
+      "LIMIT",
+      "CONDITIONAL",
+      "SUBQUERY",
+      "CTE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "drivers",
+      "laptimes"
+    ],
+    "final_columns": [
+      "driverid",
+      "forename",
+      "milliseconds",
+      "surname"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "GROUP_BY",
+      "ORDER_BY[ASC]",
+      "LIMIT"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  }
+]

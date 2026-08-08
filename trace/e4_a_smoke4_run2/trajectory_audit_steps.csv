@@ -1,0 +1,77 @@
+﻿run_id,id,db_id,difficulty,step_index,event_sequence,turn,action_type,sql,tables,projection_count,sql_delta_from_previous,observation_state,result_matches_gold,transition_type,is_first_nonmatching_execution,retrieval_diagnostic,semantic_error_class,semantic_subcategory,state_payload
+20260714T122118Z-e091808e,bird_1166,thrombosis_prediction,simple,1,1,1,query_plan.initial,,[],,not_applicable,plan_valid,unknown,query_plan.initial,false,retrieval_complete_mining_abstained_semantic_failure,SEMANTIC_REVIEW_REQUIRED,filter_scope_or_expression_mismatch,"{""valid"": true, ""payload"": {""target_entity"": ""youngest patient with an examination record"", ""grain"": ""one examination row for the youngest patient who has at least one Examination record"", ""schema_links"": [""Examination.ID = Patient.ID""], ""joins"": [{""left_table"": ""Examination"", ""right_table"": ""Patient"", ""condition"": ""Examination.ID = Patient.ID"", ""type"": ""INNER JOIN""}], ""filters"": [""Examination.Symptoms IS NOT NULL""], ""group_by"": [], ""aggregates"": [], ""having"": [], ""order_by"": [""Patient.Birthday DESC""], ""limit"": 1, ""answer_type"": ""rows"", ""output_columns"": [""Examination.Symptoms"", ""Examination.Diagnosis""], ""candidate_purpose"": ""explore"", ""expected_result_shape"": {""answer_type"": ""rows"", ""column_count"": 2, ""row_grain"": ""single row for the youngest patient's examination record""}, ""unresolved_assumptions"": [""Whether the youngest patient is determined among all Examination-linked patients or only those with non-null Symptoms"", ""Whether multiple examination rows exist for the youngest patient and if only the first should be returned""], ""revision"": null}, ""errors"": []}"
+20260714T122118Z-e091808e,bird_1166,thrombosis_prediction,simple,2,2,1,db.execute,"SELECT E.Symptoms, E.Diagnosis, P.ID, P.Birthday, E.`Examination Date`
+FROM Examination AS E
+INNER JOIN Patient AS P ON E.ID = P.ID
+WHERE E.Symptoms IS NOT NULL
+ORDER BY P.Birthday DESC
+LIMIT 10","[""examination"", ""patient""]",5,initial_sql,nonmatching,false,initial_execution_nonmatching,true,retrieval_complete_mining_abstained_semantic_failure,SEMANTIC_REVIEW_REQUIRED,filter_scope_or_expression_mismatch,
+20260714T122118Z-e091808e,bird_1166,thrombosis_prediction,simple,3,3,1,query_plan.adherence,"SELECT E.Symptoms, E.Diagnosis, P.ID, P.Birthday, E.`Examination Date`
+FROM Examination AS E
+INNER JOIN Patient AS P ON E.ID = P.ID
+WHERE E.Symptoms IS NOT NULL
+ORDER BY P.Birthday DESC
+LIMIT 10",[],,not_applicable,adherence_failed,unknown,query_plan.adherence,false,retrieval_complete_mining_abstained_semantic_failure,SEMANTIC_REVIEW_REQUIRED,filter_scope_or_expression_mismatch,"{""schema_version"": 2, ""checks"": {""projection_count"": false, ""group_by_presence"": true, ""having_presence"": true, ""order_by_presence"": true, ""limit_presence"": true}, ""passed"": false, ""expected_projection_count"": 2, ""actual_projection_count"": 5, ""enforced"": false}"
+20260714T122118Z-e091808e,bird_1166,thrombosis_prediction,simple,4,4,2,FINAL,"SELECT E.Symptoms, E.Diagnosis FROM Examination AS E INNER JOIN Patient AS P ON E.ID = P.ID WHERE E.Symptoms IS NOT NULL ORDER BY P.Birthday DESC LIMIT 1","[""examination"", ""patient""]",2,projection_count,benchmark_nonmatching_final,false,unverified_rewrite_after_nonmatching_execution,false,retrieval_complete_mining_abstained_semantic_failure,SEMANTIC_REVIEW_REQUIRED,filter_scope_or_expression_mismatch,
+20260714T122118Z-e091808e,bird_1251,thrombosis_prediction,simple,1,1,1,query_plan.initial,,[],,not_applicable,plan_valid,unknown,query_plan.initial,false,retrieval_complete_mining_abstained_semantic_failure,SCHEMA_LINKING,table_or_join_path_mismatch,"{""valid"": true, ""payload"": {""target_entity"": ""patients with IGG higher than normal"", ""grain"": ""distinct patient ID satisfying Laboratory.IGG >= 2000"", ""schema_links"": [""Laboratory.ID""], ""joins"": [], ""filters"": [""Laboratory.IGG >= 2000""], ""group_by"": [], ""aggregates"": [""COUNT(DISTINCT Laboratory.ID)""], ""having"": [], ""order_by"": [], ""limit"": null, ""answer_type"": ""scalar"", ""output_columns"": [""count_distinct_patients""], ""candidate_purpose"": ""answer"", ""expected_result_shape"": {""answer_type"": ""scalar"", ""column_count"": 1, ""row_grain"": ""single aggregated value""}, ""unresolved_assumptions"": [], ""revision"": null}, ""errors"": []}"
+20260714T122118Z-e091808e,bird_1251,thrombosis_prediction,simple,2,2,1,db.execute,SELECT COUNT(DISTINCT ID) AS count_distinct_patients FROM Laboratory WHERE IGG >= 2000,"[""laboratory""]",1,initial_sql,nonmatching,false,initial_execution_nonmatching,true,retrieval_complete_mining_abstained_semantic_failure,SCHEMA_LINKING,table_or_join_path_mismatch,
+20260714T122118Z-e091808e,bird_1251,thrombosis_prediction,simple,3,3,1,query_plan.adherence,SELECT COUNT(DISTINCT ID) AS count_distinct_patients FROM Laboratory WHERE IGG >= 2000,[],,not_applicable,adherence_passed,unknown,query_plan.adherence,false,retrieval_complete_mining_abstained_semantic_failure,SCHEMA_LINKING,table_or_join_path_mismatch,"{""schema_version"": 2, ""checks"": {""projection_count"": true, ""group_by_presence"": true, ""having_presence"": true, ""order_by_presence"": true, ""limit_presence"": true}, ""passed"": true, ""expected_projection_count"": 1, ""actual_projection_count"": 1, ""enforced"": false}"
+20260714T122118Z-e091808e,bird_1251,thrombosis_prediction,simple,4,4,1,FINAL,SELECT COUNT(DISTINCT ID) AS count_distinct_patients FROM Laboratory WHERE IGG >= 2000,"[""laboratory""]",1,unchanged,benchmark_nonmatching_final,false,final_same_as_last_execution,false,retrieval_complete_mining_abstained_semantic_failure,SCHEMA_LINKING,table_or_join_path_mismatch,
+20260714T122118Z-e091808e,bird_1031,european_football_2,challenging,1,1,1,query_plan.initial,,[],,not_applicable,plan_valid,unknown,query_plan.initial,false,retrieval_complete_mining_abstained_semantic_failure,AGGREGATION_REASONING,aggregation_or_grouping_mismatch,"{""valid"": true, ""payload"": {""target_entity"": ""player age at present for players with sprint_speed >= 97 during 2013-2015"", ""grain"": ""player (deduplicated by player_api_id)"", ""schema_links"": [""Player.player_api_id = Player_Attributes.player_api_id""], ""joins"": [{""left_table"": ""Player"", ""right_table"": ""Player_Attributes"", ""join_type"": ""INNER"", ""on"": ""Player.player_api_id = Player_Attributes.player_api_id""}], ""filters"": [""Player_Attributes.sprint_speed >= 97"", ""YEAR(Player_Attributes.date) >= '2013' AND YEAR(Player_Attributes.date) <= '2015'""], ""group_by"": [], ""aggregates"": [""AVG(age computed from Player.birthday and current datetime)""], ""having"": [], ""order_by"": [], ""limit"": null, ""answer_type"": ""scalar"", ""output_columns"": [""AVG(age)""], ""candidate_purpose"": ""answer"", ""expected_result_shape"": {""answer_type"": ""scalar"", ""column_count"": 1, ""row_grain"": ""single aggregated value""}, ""unresolved_assumptions"": [""Whether to average over distinct players or all matching attribute rows; using DISTINCT players avoids duplicate inflation from multiple snapshots per player""], ""revision"": null}, ""errors"": []}"
+20260714T122118Z-e091808e,bird_1031,european_football_2,challenging,2,2,1,db.execute,"SELECT AVG((julianday('now') - julianday(P.birthday)) / 365.25) AS avg_age
+FROM Player AS P
+INNER JOIN (
+    SELECT DISTINCT player_api_id
+    FROM Player_Attributes
+    WHERE sprint_speed >= 97
+      AND CAST(strftime('%Y', date) AS INTEGER) >= 2013
+      AND CAST(strftime('%Y', date) AS INTEGER) <= 2015
+) AS A
+ON P.player_api_id = A.player_api_id;","[""player"", ""player_attributes""]",1,initial_sql,nonmatching,false,initial_execution_nonmatching,true,retrieval_complete_mining_abstained_semantic_failure,AGGREGATION_REASONING,aggregation_or_grouping_mismatch,
+20260714T122118Z-e091808e,bird_1031,european_football_2,challenging,3,3,1,query_plan.adherence,"SELECT AVG((julianday('now') - julianday(P.birthday)) / 365.25) AS avg_age
+FROM Player AS P
+INNER JOIN (
+    SELECT DISTINCT player_api_id
+    FROM Player_Attributes
+    WHERE sprint_speed >= 97
+      AND CAST(strftime('%Y', date) AS INTEGER) >= 2013
+      AND CAST(strftime('%Y', date) AS INTEGER) <= 2015
+) AS A
+ON P.player_api_id = A.player_api_id;",[],,not_applicable,adherence_passed,unknown,query_plan.adherence,false,retrieval_complete_mining_abstained_semantic_failure,AGGREGATION_REASONING,aggregation_or_grouping_mismatch,"{""schema_version"": 2, ""checks"": {""projection_count"": true, ""group_by_presence"": true, ""having_presence"": true, ""order_by_presence"": true, ""limit_presence"": true}, ""passed"": true, ""expected_projection_count"": 1, ""actual_projection_count"": 1, ""enforced"": false}"
+20260714T122118Z-e091808e,bird_1031,european_football_2,challenging,4,4,1,db.execute,"SELECT AVG((julianday('now') - julianday(P.birthday)) / 365.25) AS avg_age
+FROM Player AS P
+INNER JOIN (
+    SELECT DISTINCT player_api_id
+    FROM Player_Attributes
+    WHERE sprint_speed >= 97
+      AND CAST(strftime('%Y', date) AS INTEGER) >= 2013
+      AND CAST(strftime('%Y', date) AS INTEGER) <= 2015
+) AS A
+ON P.player_api_id = A.player_api_id;","[""player"", ""player_attributes""]",1,unchanged,nonmatching,false,remained_nonmatching,false,retrieval_complete_mining_abstained_semantic_failure,AGGREGATION_REASONING,aggregation_or_grouping_mismatch,
+20260714T122118Z-e091808e,bird_1031,european_football_2,challenging,5,5,1,query_plan.adherence,"SELECT AVG((julianday('now') - julianday(P.birthday)) / 365.25) AS avg_age
+FROM Player AS P
+INNER JOIN (
+    SELECT DISTINCT player_api_id
+    FROM Player_Attributes
+    WHERE sprint_speed >= 97
+      AND CAST(strftime('%Y', date) AS INTEGER) >= 2013
+      AND CAST(strftime('%Y', date) AS INTEGER) <= 2015
+) AS A
+ON P.player_api_id = A.player_api_id;",[],,not_applicable,adherence_passed,unknown,query_plan.adherence,false,retrieval_complete_mining_abstained_semantic_failure,AGGREGATION_REASONING,aggregation_or_grouping_mismatch,"{""schema_version"": 2, ""checks"": {""projection_count"": true, ""group_by_presence"": true, ""having_presence"": true, ""order_by_presence"": true, ""limit_presence"": true}, ""passed"": true, ""expected_projection_count"": 1, ""actual_projection_count"": 1, ""enforced"": false}"
+20260714T122118Z-e091808e,bird_1031,european_football_2,challenging,6,6,1,FINAL,"SELECT AVG((julianday('now') - julianday(P.birthday)) / 365.25) AS avg_age FROM Player AS P INNER JOIN (SELECT DISTINCT player_api_id FROM Player_Attributes WHERE sprint_speed >= 97 AND CAST(strftime('%Y', date) AS INTEGER) >= 2013 AND CAST(strftime('%Y', date) AS INTEGER) <= 2015) AS A ON P.player_api_id = A.player_api_id;","[""player"", ""player_attributes""]",1,expression_or_projection,benchmark_nonmatching_final,false,unverified_rewrite_after_nonmatching_execution,false,retrieval_complete_mining_abstained_semantic_failure,AGGREGATION_REASONING,aggregation_or_grouping_mismatch,
+20260714T122118Z-e091808e,bird_1011,formula_1,challenging,1,1,1,query_plan.initial,,[],,not_applicable,plan_valid,unknown,query_plan.initial,false,retrieval_complete_mining_abstained_semantic_failure,OUTPUT_CONTRACT,output_column_count_mismatch,"{""valid"": true, ""payload"": {""target_entity"": ""drivers with the smallest personal best lap times in Formula_1 races"", ""grain"": ""one row per driver"", ""schema_links"": [""lapTimes.driverId = drivers.driverId""], ""joins"": [{""left_table"": ""lapTimes"", ""right_table"": ""drivers"", ""on"": ""lapTimes.driverId = drivers.driverId"", ""type"": ""INNER JOIN""}], ""filters"": [], ""group_by"": [""drivers.driverId"", ""drivers.forename"", ""drivers.surname""], ""aggregates"": [""MIN(lapTimes.milliseconds) AS shortest_lap_ms""], ""having"": [], ""order_by"": [""shortest_lap_ms ASC"", ""drivers.forename ASC"", ""drivers.surname ASC""], ""limit"": 20, ""answer_type"": ""rows"", ""output_columns"": [""full_name""], ""candidate_purpose"": ""answer"", ""expected_result_shape"": {""answer_type"": ""rows"", ""column_count"": 1, ""row_grain"": ""one full name per driver""}, ""unresolved_assumptions"": [""Using lapTimes.milliseconds to rank shortest lap times is equivalent to ranking by the shortest lap time text values.""], ""revision"": null}, ""errors"": []}"
+20260714T122118Z-e091808e,bird_1011,formula_1,challenging,2,2,1,db.execute,"SELECT d.forename || ' ' || d.surname AS full_name
+FROM lapTimes AS lt
+INNER JOIN drivers AS d
+  ON lt.driverId = d.driverId
+GROUP BY d.driverId, d.forename, d.surname
+ORDER BY MIN(lt.milliseconds) ASC, d.forename ASC, d.surname ASC
+LIMIT 20;","[""drivers"", ""laptimes""]",1,initial_sql,nonmatching,false,initial_execution_nonmatching,true,retrieval_complete_mining_abstained_semantic_failure,OUTPUT_CONTRACT,output_column_count_mismatch,
+20260714T122118Z-e091808e,bird_1011,formula_1,challenging,3,3,1,query_plan.adherence,"SELECT d.forename || ' ' || d.surname AS full_name
+FROM lapTimes AS lt
+INNER JOIN drivers AS d
+  ON lt.driverId = d.driverId
+GROUP BY d.driverId, d.forename, d.surname
+ORDER BY MIN(lt.milliseconds) ASC, d.forename ASC, d.surname ASC
+LIMIT 20;",[],,not_applicable,adherence_passed,unknown,query_plan.adherence,false,retrieval_complete_mining_abstained_semantic_failure,OUTPUT_CONTRACT,output_column_count_mismatch,"{""schema_version"": 2, ""checks"": {""projection_count"": true, ""group_by_presence"": true, ""having_presence"": true, ""order_by_presence"": true, ""limit_presence"": true}, ""passed"": true, ""expected_projection_count"": 1, ""actual_projection_count"": 1, ""enforced"": false}"
+20260714T122118Z-e091808e,bird_1011,formula_1,challenging,4,4,4,FINAL,"SELECT d.forename || ' ' || d.surname AS full_name FROM lapTimes AS lt INNER JOIN drivers AS d ON lt.driverId = d.driverId GROUP BY d.driverId, d.forename, d.surname ORDER BY MIN(CAST(substr(lt.time, 1, instr(lt.time, ':') - 1) AS INTEGER) * 60000 + CAST(substr(lt.time, instr(lt.time, ':') + 1, 2) AS INTEGER) * 1000 + CAST(substr(lt.time, length(lt.time) - 2, 3) AS INTEGER)) ASC, d.forename ASC, d.surname ASC LIMIT 20;","[""drivers"", ""laptimes""]",1,expression_or_projection,benchmark_nonmatching_final,false,unverified_rewrite_after_nonmatching_execution,false,retrieval_complete_mining_abstained_semantic_failure,OUTPUT_CONTRACT,output_column_count_mismatch,

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "bird_1031",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "At present, calculate for the player's age who have a sprint speed of no less than 97 between 2013 to 2015.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST((julianday('now') - julianday(T.birthday)) / 365.25 AS INTEGER) AS age FROM (SELECT DISTINCT Player.player_api_id, Player.birthday FROM Player_Attributes INNER JOIN Player ON Player_Attributes.player_api_id = Player.player_api_id WHERE Player_Attributes.sprint_speed >= 97 AND CAST(strftime('%Y', Player_Attributes.date) AS INTEGER) BETWEEN 2013 AND 2015) AS T",
+    "predicted_answer": [
+      [
+        35
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT DATETIME() - T2.birthday age FROM Player_Attributes AS t1 INNER JOIN Player AS t2 ON t1.player_api_id = t2.player_api_id WHERE STRFTIME('%Y',t1.`date`) >= '2013' AND STRFTIME('%Y',t1.`date`) <= '2015' AND t1.sprint_speed >= 97",
+    "gold_answer": [
+      [
+        36
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 53.938,
+    "llm_calls": 2,
+    "prompt_tokens": 9425,
+    "completion_tokens": 10482,
+    "reasoning_tokens": 9241,
+    "total_tokens": 19907,
+    "cached_prompt_tokens": 3840,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e4-a",
+    "agent_config_sha256": "d858af0dcd516b5f0d2aa54adef42aad952b2742de16acd72f310fd9e76cc253",
+    "termination": "final",
+    "run_id": "20260714T174442Z-67c4dca1",
+    "trace_schema_version": 3
+  }
+]
