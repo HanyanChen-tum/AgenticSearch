@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import json
 import time
 import asyncio
 import copy
@@ -21,9 +22,22 @@ from src.rlm.types import Message
 from ours.db_environment import DBEnvironment, get_db_path
 from ours.agent.capabilities import GatedDBEnvironment
 from ours.agent.config import AgentConfig, get_agent_config
+from ours.agent.context_store import (
+    ContextStore,
+    GatedContextStore,
+    verify_information_equivalence,
+)
 from ours.agent.knowledge import KnowledgeAssembler
 from ours.agent.prompts import get_system_prompt
 from ours.agent.state import AgentExecutionState, ExecutionStatus
+from ours.agent.query_plan import (
+    QUERY_PLAN_MODE,
+    QueryPlanState,
+    parse_initial_plan,
+    parse_revision,
+    plan_sql_adherence,
+    protocol_manifest,
+)
 from shared.token_usage import aggregate_call_usage
 
 
@@ -57,6 +71,7 @@ class DBRLM(RLM):
             offline_metadata_mode=self.agent_config.offline_metadata_mode,
         )
         self._execution_state = AgentExecutionState()
+        self._query_plan_state = QueryPlanState()
 
     def _prepare_trace(self, question: str, db_path: str | Path, evidence: str) -> None:
         self._trace_turn = 0
@@ -64,6 +79,8 @@ class DBRLM(RLM):
         self._trace_messages: list[Message] = []
         self._trace_events: list[dict[str, Any]] = []
         self._execution_state = AgentExecutionState()
+        self._query_plan_state = QueryPlanState()
+        self._context_store = None
         self._trace_context = {
             "question": question,
             "db_path": str(Path(db_path).resolve()),
@@ -71,6 +88,11 @@ class DBRLM(RLM):
             "agent_config": self.agent_config.to_manifest(),
             "agent_config_sha256": self.agent_config.sha256,
             "knowledge_manifest": self._knowledge.manifest(),
+            "query_plan_protocol": (
+                protocol_manifest()
+                if self.agent_config.planner_mode == QUERY_PLAN_MODE
+                else None
+            ),
         }
         self._db = DBEnvironment(db_path, event_sink=self._record_tool_event)
         self._evidence = evidence.strip()
@@ -81,16 +103,32 @@ class DBRLM(RLM):
         arguments: dict[str, Any],
         result: dict[str, Any],
     ) -> None:
-        if tool == "db.execute":
-            sql = str(arguments.get("sql", ""))
-            self._execution_state.record(sql, result)
-        self._trace_events.append({
+        event = {
             "sequence": len(self._trace_events) + 1,
             "turn": self._trace_turn,
             "tool": tool,
             "arguments": copy.deepcopy(arguments),
             "result": copy.deepcopy(result),
-        })
+        }
+        self._trace_events.append(event)
+        if tool == "db.sample_values":
+            self._execution_state.record_sample_values(str(arguments.get("column", "")))
+        if tool == "db.execute":
+            sql = str(arguments.get("sql", ""))
+            self._execution_state.record(sql, result)
+            current_plan = self._query_plan_state.current_plan
+            if current_plan is not None:
+                self._trace_events.append({
+                    "sequence": len(self._trace_events) + 1,
+                    "turn": self._trace_turn,
+                    "tool": "query_plan.adherence",
+                    "arguments": {
+                        "sql": sql,
+                        "candidate_purpose": self._query_plan_state.current_candidate_purpose,
+                        "observation_ref": event["sequence"],
+                    },
+                    "result": plan_sql_adherence(current_plan, sql),
+                })
 
     def trace_snapshot(self) -> dict[str, Any]:
         calls = self._llm_call_usage[getattr(self, "_trace_usage_start", 0):]
@@ -101,7 +139,75 @@ class DBRLM(RLM):
             "llm_call_usage": copy.deepcopy(calls),
             "token_usage": aggregate_call_usage(calls),
             "execution_state": self._execution_state.to_dict(),
+            "query_plan_state": self._query_plan_state.to_dict(),
+            "context_store_reads": (
+                self._context_store.read_log()
+                if getattr(self, "_context_store", None) is not None
+                else None
+            ),
         }
+
+    def _latest_observation_ref(self) -> int | None:
+        for event in reversed(self._trace_events):
+            if str(event.get("tool", "")).startswith("db."):
+                return int(event["sequence"])
+        return None
+
+    def _record_query_plan_event(
+        self,
+        tool: str,
+        payload: dict[str, Any] | None,
+        errors: list[str],
+    ) -> None:
+        self._trace_events.append({
+            "sequence": len(self._trace_events) + 1,
+            "turn": self._trace_turn,
+            "tool": tool,
+            "arguments": {},
+            "result": {
+                "valid": not errors,
+                "payload": copy.deepcopy(payload),
+                "errors": list(errors),
+            },
+        })
+
+    def _accept_query_plan_for_action(self, response: str) -> tuple[bool, str]:
+        if self.agent_config.planner_mode != QUERY_PLAN_MODE:
+            return True, ""
+        python_block_count = len(re.findall(
+            r"```python\s*\n[\s\S]*?\n```",
+            response or "",
+            flags=re.IGNORECASE,
+        ))
+        if python_block_count < 1:
+            errors = [
+                "each E4-A action must contain at least one Python block; "
+                "found none"
+            ]
+            self._record_query_plan_event("query_plan.action_contract", None, errors)
+            return False, "Action contract invalid: " + errors[0]
+        if self._query_plan_state.initial is None:
+            plan, errors = parse_initial_plan(response)
+            self._record_query_plan_event("query_plan.initial", plan, errors)
+            if errors:
+                return False, "Initial QueryPlan invalid: " + "; ".join(errors)
+            self._query_plan_state.initial = plan
+            return True, ""
+
+        observation_ref = self._latest_observation_ref()
+        if observation_ref is None:
+            errors = ["no structured observation is available for a revision"]
+            self._record_query_plan_event("query_plan.revision", None, errors)
+            return False, "Plan revision invalid: " + errors[0]
+        revision, errors = parse_revision(
+            response,
+            latest_observation_ref=observation_ref,
+        )
+        self._record_query_plan_event("query_plan.revision", revision, errors)
+        if errors:
+            return False, "Plan revision invalid: " + "; ".join(errors)
+        self._query_plan_state.revisions.append(revision)
+        return True, ""
 
     def complete_sql(self, question: str, db_path: str | Path, evidence: str = "") -> str:
         """Synchronous entry point: question + db_path → SQL string.
@@ -163,27 +269,54 @@ class DBRLM(RLM):
             else ""
         )
         blocks = self._knowledge.blocks(question, db_id, evidence)
+        if schema_str:
+            blocks = {**blocks, "schema": f"Schema:\n{schema_str}\n\n"}
         if hasattr(self, "_trace_context"):
             self._trace_context["knowledge_selection"] = self._knowledge.selection_manifest(
                 question, db_id, evidence
             )
         system_prompt = get_system_prompt(self.agent_config.prompt_profile)
 
+        if self.agent_config.context_mode == "store-readonly":
+            self._context_store = ContextStore(blocks, event_sink=self._record_tool_event)
+            repl_env["ctx"] = GatedContextStore(
+                self._context_store, self._record_tool_event
+            )
+            if hasattr(self, "_trace_context"):
+                self._trace_context["context_store"] = {
+                    "manifest": self._context_store.manifest(),
+                    "information_equivalence": verify_information_equivalence(
+                        blocks, self._context_store
+                    ),
+                }
+            directory = "\n".join(
+                f"  - {row['section']} ({row['chars']} chars)"
+                for row in self._context_store.list()
+            )
+            user_content = (
+                f"QUESTION: {question}\n\n"
+                "CONTEXT STORE SECTIONS (read with ctx.read(\"name\")):\n"
+                f"{directory}\n\n"
+                "Read what you need, explore the DB if needed, test your SQL, "
+                "then FINAL(\"your sql\")."
+            )
+        else:
+            # Order is load-bearing: it defines the prompt hash recorded in every
+            # historical run's manifest. Do not reorder.
+            user_content = (
+                f"QUESTION: {question}"
+                f"{blocks['hint']}"
+                f"{blocks['database_notes']}"
+                f"{blocks['few_shot']}\n"
+                f"{blocks['query_patterns']}"
+                f"{blocks['offline_metadata']}"
+                f"{blocks.get('schema', '')}"
+                + "Follow the Hint above, explore the DB if needed, test your SQL, then FINAL(\"your sql\")."
+            )
+
         messages: list[Message] = [
             {"role": "system", "content": system_prompt},
-            {
-                "role": "user",
-                "content": (
-                    f"QUESTION: {question}"
-                    f"{blocks['hint']}"
-                    f"{blocks['database_notes']}"
-                    f"{blocks['few_shot']}\n"
-                    f"{blocks['query_patterns']}"
-                    f"{blocks['offline_metadata']}"
-                    + (f"Schema:\n{schema_str}\n\n" if schema_str else "")
-                    + "Follow the Hint above, explore the DB if needed, test your SQL, then FINAL(\"your sql\")."
-                ),
-            },
+            {"role": "user", "content": user_content},
         ]
         self._trace_messages = messages
 
@@ -206,6 +339,35 @@ class DBRLM(RLM):
             print('='*80)
 
             has_code = bool(re.search(r'```python', response))
+
+            if self.agent_config.planner_mode == QUERY_PLAN_MODE:
+                if has_code:
+                    accepted, plan_error = self._accept_query_plan_for_action(response)
+                    if not accepted:
+                        messages.append({"role": "assistant", "content": response})
+                        latest_ref = self._latest_observation_ref()
+                        required_block = (
+                            "a fenced queryplan JSON block"
+                            if self._query_plan_state.initial is None
+                            else (
+                                "a fenced plan-revision JSON block with integer "
+                                f"observation_ref={latest_ref}"
+                            )
+                        )
+                        messages.append({"role": "user", "content": (
+                            f"BLOCKED ACTION: {plan_error}. "
+                            f"Return {required_block} and one or more Python tool blocks "
+                            "in the same response. Do not repeat a queryplan after it has been accepted."
+                        )})
+                        continue
+                elif is_final(response) and self._query_plan_state.initial is None:
+                    errors = ["FINAL is not allowed before a valid initial QueryPlan"]
+                    self._record_query_plan_event("query_plan.final_check", None, errors)
+                    messages.append({"role": "assistant", "content": response})
+                    messages.append({"role": "user", "content": (
+                        "BLOCKED FINAL: create the required QueryPlan and execute a candidate SQL first."
+                    )})
+                    continue
 
             # FINAL is a state transition, not a string-only parser action.
             if is_final(response) and not has_code:
@@ -234,12 +396,28 @@ class DBRLM(RLM):
             # Strip inline FINAL so REPL doesn't choke on it, then execute the code
             response_for_repl = re.sub(r'FINAL\s*\(.*?\)', '', response, flags=re.DOTALL).strip()
             previous_execution = self._execution_state.last_execution
+            event_start = len(self._trace_events)
             try:
                 exec_result = self.repl.execute(response_for_repl, repl_env)
             except REPLError as e:
                 exec_result = f"REPL Error: {e}"
             except Exception as e:
                 exec_result = f"Unexpected error: {e}"
+
+            structured_events = [
+                event
+                for event in self._trace_events[event_start:]
+                if str(event.get("tool", "")).startswith("db.")
+            ]
+            if structured_events:
+                structured_observation = _format_structured_observations(structured_events)
+                if exec_result in {
+                    "Code executed successfully (no output)",
+                    "No code to execute",
+                }:
+                    exec_result = structured_observation
+                else:
+                    exec_result = f"{exec_result}\n\n{structured_observation}"
 
             current_execution = self._execution_state.last_execution
             if current_execution is not None and current_execution is not previous_execution:
@@ -256,6 +434,12 @@ class DBRLM(RLM):
                         "\n\nWARNING: Result is all NULL. Check whether the selected "
                         "column or JOIN path answers the question."
                     )
+                if self.agent_config.literal_verification_nudge:
+                    literal_warning = self._execution_state.unverified_literal_warning(
+                        current_execution.sql
+                    )
+                    if literal_warning:
+                        exec_result += f"\n\n{literal_warning}"
 
             print("REPL OUTPUT:", exec_result)
             print('-'*80)
@@ -398,3 +582,21 @@ def _convert_sql_blocks(text: str) -> str:
         return f'```python\nprint(db.execute("{escaped}"))\n```'
 
     return re.sub(r'```sql\s*\n(.*?)\n```', to_python, text, flags=re.DOTALL)
+
+
+def _format_structured_observations(events: list[dict[str, Any]]) -> str:
+    """Return authoritative tool results even when REPL stdout is empty."""
+    rendered = ["STRUCTURED TOOL OBSERVATIONS (authoritative):"]
+    for event in events:
+        payload = json.dumps(
+            event.get("result") or {},
+            ensure_ascii=False,
+            separators=(",", ":"),
+            default=str,
+        )
+        if len(payload) > 4000:
+            payload = payload[:4000] + "...[observation display truncated; trace retains full result]"
+        rendered.append(
+            f"OBSERVATION_REF {event['sequence']} {event['tool']}: {payload}"
+        )
+    return "\n".join(rendered)

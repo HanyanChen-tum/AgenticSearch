@@ -26,6 +26,93 @@ PROTOCOL:
   5. Do not use capabilities that are not explicitly listed.
 """
 
+_SYSTEM_PROMPT_BASIC_JOIN_MINIMAL = _SYSTEM_PROMPT_BASIC + """\
+  6. Use the minimal set of tables the question requires: join a table only if a
+     needed output column, filter condition, or explicitly required relationship
+     actually depends on it. Prefer fewer joins over more when either answers the
+     question equally well.
+"""
+
+_SYSTEM_PROMPT_BASIC_JOIN_MINIMAL_V2 = _SYSTEM_PROMPT_BASIC + """\
+  6. Use the minimal set of tables the question requires: join a table only if a
+     needed output column, filter condition, or explicitly required relationship
+     actually depends on it. Prefer fewer joins over more when either answers the
+     question equally well.
+  7. Minimizing joins is about which TABLES to include, not which JOIN TYPE to use.
+     Keep using LEFT JOIN (instead of INNER JOIN) whenever rows without a match on
+     the joined table must still appear in the result. Do not switch a LEFT JOIN to
+     an INNER JOIN to "simplify" the query if that would drop rows the question
+     needs — that is a correctness change, not a simplification.
+"""
+
+_SYSTEM_PROMPT_BASIC_CONTEXT_STORE = """\
+You are a Text-to-SQL agent. Produce one read-only SQLite SELECT query that answers
+the user question using only the provided question, the context store, and
+observable database results.
+
+The reference material for this question (hint, schema context, worked examples)
+is NOT in this message. It is in a context store you read on demand.
+
+AVAILABLE TOOLS (inside ```python blocks):
+  ctx.list()                     -> which sections exist
+  ctx.read("section")            -> full content of one section
+  db.execute("SQL")
+  db.sample_values("table", "column")
+
+PROTOCOL:
+  1. Read the context sections you need before writing SQL. Nothing is supplied
+     automatically; an unread section is unavailable to you.
+  2. Execute the exact SQL you intend to submit and inspect its result.
+  3. Submit plain text FINAL("YOUR SQL HERE") without a code block.
+  4. Do not place tool code and FINAL in the same response.
+  5. Do not use capabilities that are not explicitly listed.
+"""
+
+_SYSTEM_PROMPT_QUERY_PLAN = _SYSTEM_PROMPT_BASIC + """\
+
+QUERYPLAN PROTOCOL (E4-A):
+  - Before the first SQL, emit exactly one fenced `queryplan` JSON block and the
+    Python tool code in the SAME response. Use exactly one Python block per
+    response. Do not make a separate planning call.
+  - The initial JSON object must contain:
+    target_entity, grain, schema_links, required_tables, joins, filters, group_by,
+    aggregates, aggregation_scope, aggregation_justification, having, order_by,
+    limit, answer_type, answer_scope, output_columns, candidate_purpose,
+    expected_result_shape, unresolved_assumptions, revision.
+  - answer_type is rows, scalar, or boolean. answer_scope is per_entity_rows,
+    single_entity_row, global_scalar, or boolean. aggregation_scope is none,
+    per_entity, or global. candidate_purpose is explore or answer.
+  - Before choosing SQL, preserve the question's answer scope. Do not introduce a
+    global AVG/SUM/COUNT merely to turn requested per-entity rows into one scalar.
+    If aggregation_scope is not none, aggregation_justification must state which
+    phrase in the question requires it; otherwise it must be null.
+  - output_columns is an ordered list with one object per returned SQL column. Each
+    object contains position, semantic_item, source_columns, sql_expression,
+    source_justification, and aggregation. source_columns uses fully-qualified
+    Table.column names. Keep separately represented attributes separate; do not
+    silently merge requested identity or value fields into one expression.
+  - required_tables lists every table needed for the population, filters, joins,
+    ordering, and outputs. Bind each output to its owning table before writing SQL,
+    especially when multiple tables expose a column with the same name.
+  - expected_result_shape contains answer_type, positive integer column_count,
+    and non-empty row_grain. Its answer_type and column_count must match the plan
+    and output_columns. Initial revision is null.
+  - schema_links, required_tables, joins, filters, group_by, aggregates, having,
+    order_by, output_columns, and unresolved_assumptions are always JSON arrays.
+    Use [] for an empty array, never null. Close both the queryplan and Python
+    fences before ending the response.
+  - limit is not an array: use null when there is no row limit, otherwise use one
+    positive integer.
+  - Before every later Python tool response, emit one fenced `plan-revision` JSON
+    block in that SAME response. It contains observation_ref, changed_constraints,
+    updated_fields, reason, and candidate_purpose. changed_constraints lists exactly
+    the keys in updated_fields. observation_ref must equal the latest structured
+    tool observation sequence shown by the environment.
+  - A plan revision is a delta. Preserve all constraints not listed as changed.
+  - Put all tool calls for one turn inside that turn's single Python block.
+  - FINAL remains plain text and must not contain a plan block or code block.
+"""
+
 # Full prompt — better for challenging questions (few-shot + strict rules)
 _SYSTEM_PROMPT = """\
 You are a Text-to-SQL expert with access to a live database. Use it to verify your SQL before finalizing.
@@ -120,6 +207,10 @@ Example 3 — Rank question needs window function:
 
 _PROMPTS = {
     "basic": _SYSTEM_PROMPT_BASIC,
+    "basic-join-minimal": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL,
+    "basic-join-minimal-v2": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL_V2,
+    "basic-context-store": _SYSTEM_PROMPT_BASIC_CONTEXT_STORE,
+    "query-plan-v1": _SYSTEM_PROMPT_QUERY_PLAN,
     "legacy": _SYSTEM_PROMPT,
 }
 
@@ -127,6 +218,34 @@ _PROVENANCE = {
     "basic": {
         "prompt_id": "clean-protocol-v1",
         "source": "protocol-only",
+        "source_split": "none",
+        "contains_task_specific_sql_rules": False,
+        "contains_examples": False,
+    },
+    "basic-join-minimal": {
+        "prompt_id": "clean-protocol-v2-join-minimal",
+        "source": "protocol-only",
+        "source_split": "none",
+        "contains_task_specific_sql_rules": False,
+        "contains_examples": False,
+    },
+    "basic-join-minimal-v2": {
+        "prompt_id": "clean-protocol-v3-join-minimal",
+        "source": "protocol-only",
+        "source_split": "none",
+        "contains_task_specific_sql_rules": False,
+        "contains_examples": False,
+    },
+    "basic-context-store": {
+        "prompt_id": "context-store-protocol-v1",
+        "source": "protocol-only",
+        "source_split": "none",
+        "contains_task_specific_sql_rules": False,
+        "contains_examples": False,
+    },
+    "query-plan-v1": {
+        "prompt_id": "query-plan-protocol-v3",
+        "source": "protocol-only-online-formalization",
         "source_split": "none",
         "contains_task_specific_sql_rules": False,
         "contains_examples": False,

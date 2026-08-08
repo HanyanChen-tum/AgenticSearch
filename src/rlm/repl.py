@@ -1,6 +1,7 @@
 """Safe REPL executor using RestrictedPython."""
 
 import io
+import re
 import sys
 from typing import Dict, Any, Optional
 from RestrictedPython import compile_restricted_exec, safe_globals, limited_builtins, utility_builtins
@@ -79,10 +80,11 @@ class REPLExecutor:
             lines = code.strip().split('\n')
             if lines:
                 last_line = lines[-1].strip()
-                # If last line is a simple expression (no assignment, no keyword)
-                if last_line and not any(kw in last_line for kw in ['=', 'import', 'def', 'class', 'if', 'for', 'while', 'with']):
+                # Only re-read a variable name. Re-evaluating an arbitrary call
+                # such as db.execute(...) would execute the tool twice.
+                if re.fullmatch(r"[A-Za-z_]\w*", last_line):
                     try:
-                        # Try to evaluate the last line as expression
+                        # Return a previously assigned value without side effects.
                         result = eval(last_line, restricted_globals, env)
                         if result is not None:
                             output += str(result) + '\n'
@@ -115,18 +117,25 @@ class REPLExecutor:
         Returns:
             Extracted code
         """
-        # Check for markdown code blocks
-        if '```python' in text:
-            start = text.find('```python') + len('```python')
-            end = text.find('```', start)
-            if end != -1:
-                return text[start:end].strip()
+        # Execute every fenced Python block in order. Historically only the
+        # first block ran, silently discarding later db.execute calls while the
+        # model assumed they had produced observations.
+        python_blocks = re.findall(
+            r"```python\s*\n([\s\S]*?)\n```",
+            text,
+            flags=re.IGNORECASE,
+        )
+        if python_blocks:
+            unique_blocks = []
+            for block in python_blocks:
+                block = block.strip()
+                if block and (not unique_blocks or block != unique_blocks[-1]):
+                    unique_blocks.append(block)
+            return "\n".join(unique_blocks)
 
-        if '```' in text:
-            start = text.find('```') + 3
-            end = text.find('```', start)
-            if end != -1:
-                return text[start:end].strip()
+        generic_blocks = re.findall(r"```\s*\n([\s\S]*?)\n```", text)
+        if generic_blocks:
+            return "\n".join(block.strip() for block in generic_blocks if block.strip())
 
         return text
 

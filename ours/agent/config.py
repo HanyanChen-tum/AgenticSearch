@@ -7,6 +7,7 @@ import hashlib
 import json
 
 from .prompts import prompt_manifest
+from .query_plan import QUERY_PLAN_MODE, protocol_manifest
 
 
 AGENT_CONFIG_SCHEMA_VERSION = 1
@@ -34,6 +35,7 @@ class AgentConfig:
     reasoning_mode: str = "none"
     planner_mode: str = "none"
     allowed_db_methods: tuple[str, ...] = ("execute", "sample_values")
+    literal_verification_nudge: bool = False
 
     def __post_init__(self) -> None:
         if self.few_shot_mode not in {"train-retrieval", "none"}:
@@ -44,8 +46,14 @@ class AgentConfig:
             raise ValueError(f"Unknown offline metadata mode: {self.offline_metadata_mode!r}")
         if self.schema_context_mode not in {"runtime-full", "offline-retrieval"}:
             raise ValueError(f"Unknown schema context mode: {self.schema_context_mode!r}")
+        if self.context_mode not in {"direct", "store-readonly"}:
+            raise ValueError(f"Unknown context mode: {self.context_mode!r}")
         if self.schema_context_mode == "offline-retrieval" and self.offline_metadata_mode == "none":
             raise ValueError("offline-retrieval requires an offline metadata artifact")
+        if self.planner_mode not in {"none", QUERY_PLAN_MODE}:
+            raise ValueError(f"Unknown planner mode: {self.planner_mode!r}")
+        if self.planner_mode == QUERY_PLAN_MODE and self.prompt_profile != "query-plan-v1":
+            raise ValueError("root-query-plan-v1 requires prompt_profile='query-plan-v1'")
 
     def capability_manifest(self) -> dict:
         manifest = {
@@ -53,6 +61,7 @@ class AgentConfig:
             "gate_enabled": self.capability_gate,
             "allowed_db_methods": list(self.allowed_db_methods),
             "generic_recursive_llm": not self.capability_gate,
+            "context_store_readable": self.context_mode == "store-readonly",
         }
         return {**manifest, "sha256": _manifest_sha256(manifest)}
 
@@ -62,6 +71,9 @@ class AgentConfig:
         manifest["allowed_db_methods"] = list(self.allowed_db_methods)
         manifest["capabilities"] = self.capability_manifest()
         manifest["prompt"] = prompt_manifest(self.prompt_profile)
+        manifest["query_plan"] = (
+            protocol_manifest() if self.planner_mode == QUERY_PLAN_MODE else None
+        )
         return manifest
 
     @property
@@ -142,6 +154,66 @@ _PROFILES = {
         query_pattern_mode="train-mined-v2",
         offline_metadata_mode="e3-f-schema-v4",
         schema_context_mode="offline-retrieval",
+    ),
+    "e3-c-literal-check": AgentConfig(
+        profile="e3-c-literal-check",
+        experiment_variant="e3-c-literal-check",
+        prompt_profile="basic",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        literal_verification_nudge=True,
+    ),
+    "e3-c-join-minimal": AgentConfig(
+        profile="e3-c-join-minimal",
+        experiment_variant="e3-c-join-minimal",
+        prompt_profile="basic-join-minimal",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+    ),
+    "e3-c-join-minimal-v2": AgentConfig(
+        profile="e3-c-join-minimal-v2",
+        experiment_variant="e3-c-join-minimal-v2",
+        prompt_profile="basic-join-minimal-v2",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+    ),
+    # E5-A: same information as e3-c, reachable through a read-only context
+    # store instead of being concatenated into the prompt. Information-equivalence
+    # smoke only — not an accuracy mechanism, and deliberately no search/slice/
+    # compose (those are E5-B's variables).
+    "e5-a": AgentConfig(
+        profile="e5-a",
+        experiment_variant="e5-a",
+        prompt_profile="basic-context-store",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        context_mode="store-readonly",
+    ),
+    "e4-a": AgentConfig(
+        profile="e4-a",
+        experiment_variant="e4-a",
+        prompt_profile="query-plan-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        few_shot_mode="train-retrieval",
+        query_pattern_mode="none",
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        reasoning_mode="query-plan",
+        planner_mode=QUERY_PLAN_MODE,
     ),
 }
 

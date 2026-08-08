@@ -121,6 +121,12 @@ def run_one(
         record["_trace"] = {
             "messages": final_attempt.get("messages", []),
             "events": final_attempt.get("events", []),
+            "execution_state": final_attempt.get("execution_state", {}),
+            "query_plan_state": final_attempt.get("query_plan_state", {}),
+            "query_plan_protocol": final_attempt.get("query_plan_protocol"),
+            "knowledge_selection": final_attempt.get("knowledge_selection", {}),
+            "context_store": final_attempt.get("context_store"),
+            "context_store_reads": final_attempt.get("context_store_reads"),
             "llm_call_usage": agent.llm_call_usage_snapshot(),
             "token_usage": {
                 key: agent.stats[key]

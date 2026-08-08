@@ -1,3 +1,4 @@
+import dataclasses
 import sqlite3
 import tempfile
 import types
@@ -27,6 +28,7 @@ class AgentProfileTests(unittest.TestCase):
         e3_rf = get_agent_config("e3-rf")
         e3_c = get_agent_config("e3-c")
         e3_f = get_agent_config("e3-f")
+        e4_a = get_agent_config("e4-a")
 
         self.assertFalse(e0.use_db_hints)
         self.assertFalse(e0.verified_final)
@@ -47,6 +49,11 @@ class AgentProfileTests(unittest.TestCase):
         self.assertEqual(e3_f.query_pattern_mode, "train-mined-v2")
         self.assertEqual(e3_f.offline_metadata_mode, "e3-f-schema-v4")
         self.assertTrue(e3_f.capability_gate)
+        self.assertEqual(e4_a.planner_mode, "root-query-plan-v1")
+        self.assertEqual(e4_a.prompt_profile, "query-plan-v1")
+        self.assertEqual(e4_a.offline_metadata_mode, e3_c.offline_metadata_mode)
+        self.assertEqual(e4_a.query_pattern_mode, "none")
+        self.assertEqual(e4_a.few_shot_mode, "train-retrieval")
         self.assertEqual(e0.schema_context_mode, "runtime-full")
         self.assertFalse(e3.verified_final)
         self.assertFalse(e3.capability_gate)
@@ -61,8 +68,62 @@ class AgentProfileTests(unittest.TestCase):
         self.assertEqual(r0.capability_manifest()["version"], 1)
         self.assertEqual(
             agent_profile_names(),
-            ("clean-e0", "clean-e1", "e3-a", "e3-c", "e3-f", "e3-rf", "e4-r0", "legacy-e0"),
+            (
+                "clean-e0", "clean-e1", "e3-a", "e3-c", "e3-c-join-minimal",
+                "e3-c-join-minimal-v2", "e3-c-literal-check", "e3-f", "e3-rf",
+                "e4-a", "e4-r0", "e5-a", "legacy-e0",
+            ),
         )
+
+    def test_join_minimal_profile_only_changes_prompt_from_e3_c(self):
+        e3_c = get_agent_config("e3-c")
+        join_minimal = get_agent_config("e3-c-join-minimal")
+        self.assertEqual(e3_c.prompt_profile, "basic")
+        self.assertEqual(join_minimal.prompt_profile, "basic-join-minimal")
+        for name in (
+            "use_db_hints", "verified_final", "capability_gate", "few_shot_mode",
+            "query_pattern_mode", "offline_metadata_mode", "schema_context_mode",
+            "context_mode", "reasoning_mode", "planner_mode", "allowed_db_methods",
+            "literal_verification_nudge",
+        ):
+            self.assertEqual(
+                getattr(e3_c, name), getattr(join_minimal, name),
+                f"{name} should be identical to e3-c; only prompt_profile differs",
+            )
+        self.assertNotEqual(e3_c.sha256, join_minimal.sha256)
+
+    def test_join_minimal_v2_profile_only_changes_prompt_from_e3_c(self):
+        e3_c = get_agent_config("e3-c")
+        v2 = get_agent_config("e3-c-join-minimal-v2")
+        self.assertEqual(v2.prompt_profile, "basic-join-minimal-v2")
+        for name in (
+            "use_db_hints", "verified_final", "capability_gate", "few_shot_mode",
+            "query_pattern_mode", "offline_metadata_mode", "schema_context_mode",
+            "context_mode", "reasoning_mode", "planner_mode", "allowed_db_methods",
+            "literal_verification_nudge",
+        ):
+            self.assertEqual(getattr(e3_c, name), getattr(v2, name))
+        self.assertNotEqual(e3_c.sha256, v2.sha256)
+        self.assertNotEqual(
+            get_agent_config("e3-c-join-minimal").sha256, v2.sha256,
+        )
+
+    def test_literal_check_profile_only_adds_the_nudge_flag_to_e3_c(self):
+        e3_c = get_agent_config("e3-c")
+        literal_check = get_agent_config("e3-c-literal-check")
+        self.assertFalse(e3_c.literal_verification_nudge)
+        self.assertTrue(literal_check.literal_verification_nudge)
+        for name in (
+            "use_db_hints", "verified_final", "capability_gate", "few_shot_mode",
+            "query_pattern_mode", "offline_metadata_mode", "schema_context_mode",
+            "context_mode", "reasoning_mode", "planner_mode", "allowed_db_methods",
+            "prompt_profile",
+        ):
+            self.assertEqual(
+                getattr(e3_c, name), getattr(literal_check, name),
+                f"{name} should be identical to e3-c; only literal_verification_nudge differs",
+            )
+        self.assertNotEqual(e3_c.sha256, literal_check.sha256)
 
     def test_profile_hash_is_deterministic_and_changes_with_configuration(self):
         e0 = get_agent_config("clean-e0")
@@ -102,6 +163,30 @@ class AgentProfileTests(unittest.TestCase):
         self.assertFalse(manifest["contains_examples"])
         self.assertEqual(manifest["source"], "protocol-only")
         self.assertEqual(len(manifest["sha256"]), 64)
+
+    def test_join_minimal_prompt_extends_basic_and_stays_protocol_only(self):
+        basic = get_system_prompt("basic")
+        join_minimal = get_system_prompt("basic-join-minimal")
+        manifest = prompt_manifest("basic-join-minimal")
+
+        self.assertTrue(join_minimal.startswith(basic))
+        self.assertIn("minimal set of tables", join_minimal)
+        self.assertFalse(manifest["contains_task_specific_sql_rules"])
+        self.assertFalse(manifest["contains_examples"])
+        self.assertEqual(manifest["source"], "protocol-only")
+        self.assertNotEqual(manifest["sha256"], prompt_manifest("basic")["sha256"])
+
+    def test_join_minimal_v2_prompt_separates_table_count_from_join_type(self):
+        v1 = get_system_prompt("basic-join-minimal")
+        v2 = get_system_prompt("basic-join-minimal-v2")
+        manifest = prompt_manifest("basic-join-minimal-v2")
+
+        self.assertTrue(v2.startswith(v1))
+        self.assertIn("LEFT JOIN", v2)
+        self.assertIn("not which JOIN TYPE", v2)
+        self.assertFalse(manifest["contains_task_specific_sql_rules"])
+        self.assertFalse(manifest["contains_examples"])
+        self.assertNotEqual(manifest["sha256"], prompt_manifest("basic-join-minimal")["sha256"])
 
     def test_formal_profiles_share_the_same_prompt_manifest(self):
         manifests = [
@@ -171,6 +256,48 @@ class AgentExecutionStateTests(unittest.TestCase):
             state.validate_final("SELECT NULL", require_verified=True),
             (True, ""),
         )
+
+    def test_unverified_literal_warning_fires_for_unsampled_column(self):
+        state = AgentExecutionState()
+        warning = state.unverified_literal_warning(
+            "SELECT * FROM t WHERE status = 'active'"
+        )
+        self.assertIsNotNone(warning)
+        self.assertIn("status", warning)
+        self.assertIn("sample_values", warning)
+
+    def test_unverified_literal_warning_is_silent_after_sample_values(self):
+        state = AgentExecutionState()
+        state.record_sample_values("status")
+        self.assertIsNone(
+            state.unverified_literal_warning("SELECT * FROM t WHERE status = 'active'")
+        )
+
+    def test_unverified_literal_warning_matches_table_qualified_column_by_bare_name(self):
+        state = AgentExecutionState()
+        state.record_sample_values("Status")  # case-insensitive, bare name
+        self.assertIsNone(
+            state.unverified_literal_warning("SELECT * FROM t AS T1 WHERE T1.status = 'active'")
+        )
+
+    def test_unverified_literal_warning_covers_in_list_but_not_in_subquery(self):
+        state = AgentExecutionState()
+        self.assertIsNotNone(
+            state.unverified_literal_warning("SELECT * FROM t WHERE code IN ('a', 'b')")
+        )
+        state2 = AgentExecutionState()
+        self.assertIsNone(
+            state2.unverified_literal_warning(
+                "SELECT * FROM t WHERE id IN (SELECT id FROM other)"
+            )
+        )
+
+    def test_unverified_literal_warning_fires_once_per_column_per_trace(self):
+        state = AgentExecutionState()
+        first = state.unverified_literal_warning("SELECT * FROM t WHERE status = 'active'")
+        second = state.unverified_literal_warning("SELECT * FROM t WHERE status = 'inactive'")
+        self.assertIsNotNone(first)
+        self.assertIsNone(second)
 
 
 class CapabilityGateTests(unittest.TestCase):
@@ -255,6 +382,61 @@ class VerifiedFinalLoopTests(unittest.TestCase):
                 snapshot["execution_state"]["last_execution"]["normalized_sql"],
                 sql,
             )
+
+
+class LiteralVerificationNudgeLoopTests(unittest.TestCase):
+    def test_nudge_appears_in_transcript_for_unsampled_literal_and_clears_after_sample_values(self):
+        with tempfile.TemporaryDirectory() as directory:
+            db_path = CapabilityGateTests.make_database(directory)
+            config = dataclasses.replace(
+                get_agent_config("clean-e0"),
+                profile="test-literal-nudge",
+                literal_verification_nudge=True,
+            )
+            agent = DBRLM(model="test/model", max_iterations=4, agent_config=config)
+            responses = [
+                '```python\nprint(db.execute("SELECT name FROM items WHERE name = \'alpha\'"))\n```',
+                '```python\nprint(db.sample_values("items", "name"))\n```',
+                'FINAL("SELECT name FROM items WHERE name = \'alpha\'")',
+            ]
+
+            async def fake_call_llm(self, messages, **kwargs):
+                self._llm_calls += 1
+                return responses.pop(0)
+
+            agent._call_llm = types.MethodType(fake_call_llm, agent)
+            agent.complete_sql("Find alpha.", db_path)
+            snapshot = agent.trace_snapshot()
+
+            first_observation = snapshot["messages"][3]["content"]
+            self.assertIn("sample_values", first_observation)
+            self.assertIn("name", first_observation)
+            self.assertEqual(snapshot["execution_state"]["sampled_columns"], ["name"])
+
+    def test_nudge_is_silent_when_flag_is_off(self):
+        with tempfile.TemporaryDirectory() as directory:
+            db_path = CapabilityGateTests.make_database(directory)
+            config = dataclasses.replace(
+                get_agent_config("clean-e0"),
+                profile="test-literal-nudge-off",
+                literal_verification_nudge=False,
+            )
+            agent = DBRLM(model="test/model", max_iterations=4, agent_config=config)
+            responses = [
+                '```python\nprint(db.execute("SELECT name FROM items WHERE name = \'alpha\'"))\n```',
+                'FINAL("SELECT name FROM items WHERE name = \'alpha\'")',
+            ]
+
+            async def fake_call_llm(self, messages, **kwargs):
+                self._llm_calls += 1
+                return responses.pop(0)
+
+            agent._call_llm = types.MethodType(fake_call_llm, agent)
+            agent.complete_sql("Find alpha.", db_path)
+            snapshot = agent.trace_snapshot()
+
+            first_observation = snapshot["messages"][3]["content"]
+            self.assertNotIn("sample_values was never called", first_observation)
 
 
 if __name__ == "__main__":

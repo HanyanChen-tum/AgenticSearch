@@ -230,6 +230,7 @@ def _run_trace_analysis(
     output_path: Path,
     transcript_path: Path,
     trace_dir: Path,
+    agent_profile: str,
 ) -> None:
     commands = [
         [
@@ -250,6 +251,25 @@ def _run_trace_analysis(
     ]
     for command in commands:
         subprocess.run(command, cwd=PROJECT_ROOT, check=True)
+    if agent_profile in {"e3-c", "e3-f", "e4-a"}:
+        retrieval_csv = trace_dir / "retrieval_audit.csv"
+        subprocess.run([
+            sys.executable,
+            str(PROJECT_ROOT / "scripts/analyze_e3_f_retrieval.py"),
+            "--results", str(output_path),
+            "--transcripts", str(transcript_path),
+            "--out-json", str(trace_dir / "retrieval_audit.json"),
+            "--out-csv", str(retrieval_csv),
+        ], cwd=PROJECT_ROOT, check=True)
+        subprocess.run([
+            sys.executable,
+            str(PROJECT_ROOT / "scripts/analyze_trajectory_audit.py"),
+            "--transcripts", str(transcript_path),
+            "--results", str(output_path),
+            "--classification", str(trace_dir / "classification_sheet.csv"),
+            "--retrieval-audit", str(retrieval_csv),
+            "--output-prefix", str(trace_dir / "trajectory_audit"),
+        ], cwd=PROJECT_ROOT, check=True)
 
 
 def main():
@@ -441,7 +461,12 @@ def main():
     manifest["finished_at"] = datetime.now(timezone.utc).isoformat()
     write_json(manifest_path, manifest)
     if total and not args.skip_trace_analysis:
-        _run_trace_analysis(output_path, transcript_path, trace_dir)
+        _run_trace_analysis(
+            output_path,
+            transcript_path,
+            trace_dir,
+            args.agent_profile,
+        )
         print(f"Trace artifacts: {trace_dir}")
 
 
