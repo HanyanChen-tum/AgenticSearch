@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.make_classification_sheet import FIELDNAMES, classify_failure
+from scripts.make_classification_sheet import FIELDNAMES, classify_failure, semantic_classification
 
 
 def result(predicted_sql, gold_sql="SELECT value FROM t", **overrides):
@@ -130,6 +130,55 @@ class ClassificationTests(unittest.TestCase):
         self.assertEqual(classified["error_class"], "OUTPUT_CONTRACT")
         self.assertEqual(classified["semantic_error_class"], "OUTPUT_CONTRACT")
         self.assertEqual(classified["control_flow_class"], "")
+
+    def test_group_by_column_mismatch_detected_even_when_both_have_group_by(self):
+        # Regression test for the gap found in review: the old aggregate check
+        # only tested whether the literal " group by " keyword appeared on
+        # both sides, so a wrong-grain query (same keyword, different grouping
+        # column) was invisible and silently fell through to
+        # SEMANTIC_REVIEW_REQUIRED. This is the single most common failure
+        # pattern documented in docs/analysis/README.md (E0 aggregation
+        # errors), so it must be caught directly.
+        predicted = "SELECT order_id, SUM(amount) FROM orders GROUP BY order_id"
+        gold = "SELECT customer_id, SUM(amount) FROM orders GROUP BY customer_id"
+        classified = semantic_classification(result(predicted, gold), 1)
+        self.assertEqual(classified["error_class"], "AGGREGATION_REASONING")
+        self.assertEqual(classified["subcategory"], "aggregation_or_grouping_mismatch")
+
+    def test_order_by_column_mismatch_detected_when_direction_matches(self):
+        # Old check only compared ASC/DESC keywords, so sorting by a
+        # different column with the same (implicit or explicit) direction
+        # was invisible.
+        predicted = "SELECT name FROM students ORDER BY age"
+        gold = "SELECT name FROM students ORDER BY gpa"
+        classified = semantic_classification(result(predicted, gold), 1)
+        self.assertEqual(classified["error_class"], "AGGREGATION_REASONING")
+        self.assertEqual(classified["subcategory"], "sort_direction_or_order_scope_mismatch")
+
+    def test_limit_mismatch_detected(self):
+        predicted = "SELECT name FROM students ORDER BY gpa DESC LIMIT 1"
+        gold = "SELECT name FROM students ORDER BY gpa DESC LIMIT 5"
+        classified = semantic_classification(result(predicted, gold), 1)
+        self.assertEqual(classified["error_class"], "AGGREGATION_REASONING")
+        self.assertEqual(classified["subcategory"], "limit_or_topk_mismatch")
+
+    def test_join_key_mismatch_detected_when_tables_match(self):
+        predicted = "SELECT a.name FROM a JOIN b ON a.wrong_id = b.id"
+        gold = "SELECT a.name FROM a JOIN b ON a.id = b.a_id"
+        classified = semantic_classification(result(predicted, gold), 1)
+        self.assertEqual(classified["error_class"], "SCHEMA_LINKING")
+        self.assertEqual(classified["subcategory"], "join_key_or_condition_mismatch")
+
+    def test_table_mismatch_takes_priority_over_aggregate_difference(self):
+        # Both the table set and the aggregate structure differ; the wrong
+        # table is the more foundational error and must be primary, with the
+        # aggregate difference recorded as a secondary note rather than
+        # silently winning because it used to be checked first.
+        predicted = "SELECT SUM(amount) FROM orders"
+        gold = "SELECT name FROM customers"
+        classified = semantic_classification(result(predicted, gold), 1)
+        self.assertEqual(classified["error_class"], "SCHEMA_LINKING")
+        self.assertIn("其他同时检测到", classified["notes"])
 
     def test_csv_schema_keeps_primary_fields_and_adds_parallel_diagnostics(self):
         for field in (

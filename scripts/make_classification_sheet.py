@@ -256,53 +256,225 @@ def tables(sql: str) -> set[str]:
     }
 
 
+_CLAUSE_STOP_WORDS = ("having", "group", "order", "limit", "union", "except", "intersect")
+
+
+def clause_span(sql: str, keyword: str, stop_words: tuple[str, ...]) -> str:
+    """Return the raw text of a clause up to (not including) the next top-level stop keyword.
+
+    Regex-only, so a stop keyword inside a nested subquery's own clause (e.g. a
+    derived table with its own GROUP BY) can be mistaken for the outer clause's
+    boundary. This mirrors the same known limitation as ``tables()`` and
+    ``outer_projection_count()`` above; full AST parsing would remove it.
+    """
+    text = sql or ""
+    match = re.search(rf"\b{keyword}\b", text, re.I)
+    if not match:
+        return ""
+    start = match.end()
+    depth, quote, end, i = 0, None, len(text), start
+    while i < len(text):
+        char = text[i]
+        if quote:
+            if char == quote:
+                quote = None
+        elif char in ("'", '"', chr(96)):
+            quote = char
+        elif char == "[":
+            quote = "]"
+        elif char == "(":
+            depth += 1
+        elif char == ")":
+            depth = max(0, depth - 1)
+        elif depth == 0 and (char.isalpha() or char == "_"):
+            word_end = i + 1
+            while word_end < len(text) and (text[word_end].isalnum() or text[word_end] == "_"):
+                word_end += 1
+            if text[i:word_end].casefold() in stop_words:
+                end = i
+                break
+            i = word_end - 1
+        i += 1
+    return text[start:end]
+
+
+def split_top_level(clause: str) -> list[str]:
+    items: list[str] = []
+    current: list[str] = []
+    depth, quote = 0, None
+    for char in clause:
+        if quote:
+            current.append(char)
+            if char == quote:
+                quote = None
+            continue
+        if char in ("'", '"', chr(96)):
+            quote = char
+            current.append(char)
+        elif char == "[":
+            quote = "]"
+            current.append(char)
+        elif char == "(":
+            depth += 1
+            current.append(char)
+        elif char == ")":
+            depth = max(0, depth - 1)
+            current.append(char)
+        elif char == "," and depth == 0:
+            items.append("".join(current).strip())
+            current = []
+        else:
+            current.append(char)
+    if current:
+        items.append("".join(current).strip())
+    return [item for item in items if item]
+
+
+def bare_column(expr: str) -> str:
+    """Casefold and drop one leading alias/table prefix so ``t1.col`` == ``table.col``."""
+    text = re.sub(r"\s+", " ", (expr or "").strip()).casefold()
+    return re.sub(r"^[`\"\[]?[a-z_]\w*[`\"\]]?\.", "", text)
+
+
+def group_by_columns(sql: str) -> list[str]:
+    clause = clause_span(sql, "group by", _CLAUSE_STOP_WORDS)
+    return sorted({bare_column(item) for item in split_top_level(clause)})
+
+
+def order_by_items(sql: str) -> list[tuple[str, str]]:
+    clause = clause_span(sql, "order by", ("limit", "union", "except", "intersect"))
+    items = []
+    for raw in split_top_level(clause):
+        direction_match = re.search(r"\b(asc|desc)\b", raw, re.I)
+        direction = direction_match.group(1).lower() if direction_match else "asc"
+        expr = re.sub(r"\b(asc|desc)\b", "", raw, flags=re.I).strip()
+        items.append((bare_column(expr), direction))
+    return items
+
+
+def limit_value(sql: str) -> str | None:
+    match = re.search(r"\blimit\s+(\d+)", sql or "", re.I)
+    return match.group(1) if match else None
+
+
+def join_key_columns(sql: str) -> set[str]:
+    """Bare columns referenced in JOIN ... ON conditions (both sides of each predicate)."""
+    keys: set[str] = set()
+    for match in re.finditer(
+        r"\bon\s+(.+?)(?=\bjoin\b|\bwhere\b|\bgroup\s+by\b|\border\s+by\b|\blimit\b|$)",
+        sql or "", re.I | re.S,
+    ):
+        for column_match in re.finditer(
+            r"[`\"\[]?[A-Za-z_]\w*[`\"\]]?\.[`\"\[]?[A-Za-z_]\w*[`\"\]]?",
+            match.group(1),
+        ):
+            keys.add(bare_column(column_match.group(0)))
+    return keys
+
+
 def semantic_classification(result, turn):
+    """Deterministic, regex-level structural diff between predicted and gold SQL.
+
+    Runs every check (not just until the first hit) so a record can carry one
+    primary label plus a note of any other structural differences found —
+    otherwise a query that is simultaneously wrong on tables *and* on
+    aggregation would silently only ever be attributed to whichever check
+    happened to run first. Table/JOIN checks are evaluated before aggregate
+    checks because a wrong table selection is the more foundational error;
+    an aggregate/order mismatch downstream of a wrong table is a symptom, not
+    the root cause.
+    """
     predicted = str(result.get("predicted_sql") or "")
     gold = str(result.get("gold_sql") or "")
     pred, ref = predicted.casefold(), gold.casefold()
+
+    checks: list[tuple[bool, str, str, str, str]] = []
+
     pred_yes_no = "'yes'" in pred and "'no'" in pred
     gold_yes_no = "'yes'" in ref and "'no'" in ref
-    if pred_yes_no != gold_yes_no:
-        return analysis(
-            turn, "OUTPUT_CONTRACT", "yes_no_vs_row_output_mismatch",
-            "在 FINAL 前检查应返回单个 YES/NO 还是逐行原始字段。",
-            "预测与 gold 的 YES/NO 输出形式不同；可能包含 gold/Hint 冲突。", "medium",
-        )
+    checks.append((
+        pred_yes_no != gold_yes_no,
+        "OUTPUT_CONTRACT", "yes_no_vs_row_output_mismatch",
+        "在 FINAL 前检查应返回单个 YES/NO 还是逐行原始字段。",
+        "预测与 gold 的 YES/NO 输出形式不同；可能包含 gold/Hint 冲突。",
+    ))
+
     pred_count, gold_count = outer_projection_count(predicted), outer_projection_count(gold)
-    if pred_count and gold_count and pred_count != gold_count:
+    checks.append((
+        bool(pred_count and gold_count and pred_count != gold_count),
+        "OUTPUT_CONTRACT", "output_column_count_mismatch",
+        "生成输出契约并检查列数、顺序和每列含义。",
+        f"预测列数={pred_count}，gold 列数={gold_count}；需复核 gold 合理性。",
+    ))
+
+    pred_tables, gold_tables = tables(predicted), tables(gold)
+    checks.append((
+        pred_tables != gold_tables,
+        "SCHEMA_LINKING", "table_or_join_path_mismatch",
+        "生成 SQL 前记录表、字段来源和 JOIN 路径，并通过 Schema 校验。",
+        f"表集合不同：pred={sorted(pred_tables)}，gold={sorted(gold_tables)}；需复核 gold。",
+    ))
+
+    pred_join_keys, gold_join_keys = join_key_columns(predicted), join_key_columns(gold)
+    checks.append((
+        bool(
+            (pred_join_keys or gold_join_keys)
+            and pred_join_keys != gold_join_keys
+            and pred_tables == gold_tables
+        ),
+        "SCHEMA_LINKING", "join_key_or_condition_mismatch",
+        "核对 JOIN ON 条件使用的外键列是否与 gold 一致，避免选对表但连错关系。",
+        f"表集合相同，但 JOIN 条件涉及的列不同：pred={sorted(pred_join_keys)}，gold={sorted(gold_join_keys)}。",
+    ))
+
+    pred_group, gold_group = group_by_columns(predicted), group_by_columns(gold)
+    checks.append((
+        pred_group != gold_group,
+        "AGGREGATION_REASONING", "aggregation_or_grouping_mismatch",
+        "生成 SQL 前明确统计对象、分组键和聚合粒度；检查 GROUP BY 的实际字段，而不只是是否出现该关键字。",
+        f"GROUP BY 字段不同：pred={pred_group or ['none']}，gold={gold_group or ['none']}。",
+    ))
+
+    aggregate_terms = (" having ", "sum(", "avg(", "count(", "min(", "max(", "rank(")
+    agg_differences = [term.strip() for term in aggregate_terms if (term in pred) != (term in ref)]
+    checks.append((
+        bool(agg_differences),
+        "AGGREGATION_REASONING", "aggregation_or_grouping_mismatch",
+        "生成 SQL 前明确统计对象、分组键、聚合函数和聚合后的排序字段。",
+        f"预测与 gold 的聚合关键字不同：{', '.join(agg_differences)}。",
+    ))
+
+    pred_order, gold_order = order_by_items(predicted), order_by_items(gold)
+    checks.append((
+        pred_order != gold_order,
+        "AGGREGATION_REASONING", "sort_direction_or_order_scope_mismatch",
+        "显式记录排序字段、方向，以及排序发生在聚合前还是聚合后；不能只检查是否出现 ASC/DESC。",
+        f"排序结构不同：pred={pred_order or ['none']}，gold={gold_order or ['none']}。",
+    ))
+
+    pred_limit, gold_limit = limit_value(predicted), limit_value(gold)
+    checks.append((
+        bool(pred_limit or gold_limit) and pred_limit != gold_limit,
+        "AGGREGATION_REASONING", "limit_or_topk_mismatch",
+        "确认 Top-K 的 LIMIT 数值、排序依据和并列（tie）处理是否与题目一致。",
+        f"LIMIT 不同：pred={pred_limit or 'none'}，gold={gold_limit or 'none'}。",
+    ))
+
+    fired = [check for check in checks if check[0]]
+    if not fired:
         return analysis(
-            turn, "OUTPUT_CONTRACT", "output_column_count_mismatch",
-            "生成输出契约并检查列数、顺序和每列含义。",
-            f"预测列数={pred_count}，gold 列数={gold_count}；需复核 gold 合理性。", "medium",
+            turn, "SEMANTIC_REVIEW_REQUIRED", "filter_scope_or_expression_mismatch",
+            "记录过滤字段、取值、时间范围和作用层级后再生成 SQL。",
+            "最终 SQL 已执行成功，但结果与 gold 不同；列数/表集合/JOIN key/GROUP BY/聚合关键字/排序/LIMIT 均未发现"
+            "结构差异，需复核过滤范围或 gold 噪声。",
+            "low",
         )
-    aggregate_terms = (" group by ", " having ", "sum(", "avg(", "count(", "min(", "max(", "rank(")
-    differences = [term.strip() for term in aggregate_terms if (term in pred) != (term in ref)]
-    if differences:
-        return analysis(
-            turn, "AGGREGATION_REASONING", "aggregation_or_grouping_mismatch",
-            "生成 SQL 前明确统计对象、分组键、聚合函数和聚合后的排序字段。",
-            f"预测与 gold 的聚合结构不同：{', '.join(differences)}。", "medium",
-        )
-    pred_order = re.findall(r"\border\s+by\b[^;)]*?\b(asc|desc)\b", pred)
-    gold_order = re.findall(r"\border\s+by\b[^;)]*?\b(asc|desc)\b", ref)
-    if pred_order != gold_order and (pred_order or gold_order):
-        return analysis(
-            turn, "AGGREGATION_REASONING", "sort_direction_or_order_scope_mismatch",
-            "显式记录排序指标、方向以及排序发生在聚合前还是聚合后。",
-            f"排序结构不同：pred={pred_order or ['implicit']}，gold={gold_order or ['implicit']}。", "medium",
-        )
-    if tables(predicted) != tables(gold):
-        return analysis(
-            turn, "SCHEMA_LINKING", "table_or_join_path_mismatch",
-            "生成 SQL 前记录表、字段来源和 JOIN 路径，并通过 Schema 校验。",
-            f"表集合不同：pred={sorted(tables(predicted))}，gold={sorted(tables(gold))}；需复核 gold。", "medium",
-        )
-    return analysis(
-        turn, "SEMANTIC_REVIEW_REQUIRED", "filter_scope_or_expression_mismatch",
-        "记录过滤字段、取值、时间范围和作用层级后再生成 SQL。",
-        "最终 SQL 已执行成功，但结果与 gold 不同；自动规则未发现更具体结构错误，需复核过滤范围或 gold 噪声。",
-        "low",
-    )
+    _, error_class, subcategory, fix_idea, detail = fired[0]
+    notes = detail
+    if len(fired) > 1:
+        secondary = "; ".join(f"{item[1]}/{item[2]}: {item[4]}" for item in fired[1:])
+        notes = f"{detail} 其他同时检测到但未作为主标签的结构差异（供人工复核）：{secondary}"
+    return analysis(turn, error_class, subcategory, fix_idea, notes, "medium")
 
 
 def sql_change_summary(executed_sql: str, final_sql: str) -> str:
