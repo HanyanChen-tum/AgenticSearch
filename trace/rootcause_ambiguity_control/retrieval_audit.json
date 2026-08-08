@@ -1,0 +1,1081 @@
+[
+  {
+    "id": "bird_1529",
+    "db_id": "debit_card_specializing",
+    "difficulty": "moderate",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "transactions_1k",
+      "gasstations",
+      "yearmonth",
+      "customers",
+      "products"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "transactions_1k",
+      "gasstations",
+      "yearmonth",
+      "customers"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "transactions_1k",
+        "to_seed": "gasstations",
+        "path": [
+          "transactions_1k",
+          "gasstations"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "transactions_1k",
+        "to_seed": "yearmonth",
+        "path": [
+          "transactions_1k",
+          "customers",
+          "yearmonth"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "transactions_1k",
+        "to_seed": "customers",
+        "path": [
+          "transactions_1k",
+          "customers"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "gasstations",
+        "to_seed": "yearmonth",
+        "path": [
+          "gasstations",
+          "transactions_1k",
+          "customers",
+          "yearmonth"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "gasstations",
+        "to_seed": "customers",
+        "path": [
+          "gasstations",
+          "transactions_1k",
+          "customers"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "yearmonth",
+        "to_seed": "customers",
+        "path": [
+          "yearmonth",
+          "customers"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "transactions_1k",
+        "neighbour": "products",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "gasstations",
+      "transactions_1k",
+      "yearmonth"
+    ],
+    "gold_columns": [
+      "customerid",
+      "date",
+      "gasstationid",
+      "price"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[2+]",
+      "WHERE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "transactions_1k",
+      "yearmonth"
+    ],
+    "final_columns": [
+      "amount",
+      "consumption",
+      "customerid",
+      "date",
+      "price"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "WHERE",
+      "SUBQUERY"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_1166",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "simple",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "Examination",
+      "Patient",
+      "Laboratory"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "Examination",
+      "Patient",
+      "Laboratory"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "Examination",
+        "to_seed": "Patient",
+        "path": [
+          "Examination",
+          "Patient"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Examination",
+        "to_seed": "Laboratory",
+        "path": [
+          "Examination",
+          "Patient",
+          "Laboratory"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "Patient",
+        "to_seed": "Laboratory",
+        "path": [
+          "Patient",
+          "Laboratory"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [],
+    "schema_truncated_tables": [],
+    "schema_columns_truncated": {
+      "Laboratory": 28
+    },
+    "gold_tables": [
+      "examination",
+      "patient"
+    ],
+    "gold_columns": [
+      "birthday",
+      "diagnosis",
+      "id",
+      "symptoms"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE",
+      "ORDER_BY[DESC]",
+      "LIMIT"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "examination",
+      "patient"
+    ],
+    "final_columns": [
+      "birthday",
+      "diagnosis",
+      "examination date",
+      "id",
+      "symptoms"
+    ],
+    "final_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE",
+      "ORDER_BY[DESC]",
+      "LIMIT"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_902",
+    "db_id": "formula_1",
+    "difficulty": "simple",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "qualifying",
+      "drivers",
+      "driverStandings",
+      "lapTimes",
+      "constructors",
+      "results",
+      "races"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "qualifying",
+      "drivers",
+      "driverStandings",
+      "lapTimes"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "qualifying",
+        "to_seed": "drivers",
+        "path": [
+          "qualifying",
+          "drivers"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "qualifying",
+        "to_seed": "driverStandings",
+        "path": [
+          "qualifying",
+          "drivers",
+          "driverStandings"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "qualifying",
+        "to_seed": "lapTimes",
+        "path": [
+          "qualifying",
+          "drivers",
+          "lapTimes"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "drivers",
+        "to_seed": "driverStandings",
+        "path": [
+          "drivers",
+          "driverStandings"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "drivers",
+        "to_seed": "lapTimes",
+        "path": [
+          "drivers",
+          "lapTimes"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "driverStandings",
+        "to_seed": "lapTimes",
+        "path": [
+          "driverStandings",
+          "drivers",
+          "lapTimes"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "qualifying",
+        "neighbour": "constructors",
+        "added": true
+      },
+      {
+        "seed": "drivers",
+        "neighbour": "results",
+        "added": true
+      },
+      {
+        "seed": "driverStandings",
+        "neighbour": "races",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "constructorStandings",
+        "lexical_score": 4,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "circuits",
+        "lexical_score": 3,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "pitStops",
+        "lexical_score": 3,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "status",
+        "lexical_score": 3,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "seasons",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "constructorResults",
+        "lexical_score": 1,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "results": 2
+    },
+    "gold_tables": [
+      "drivers",
+      "driverstandings",
+      "races"
+    ],
+    "gold_columns": [
+      "driverid",
+      "forename",
+      "name",
+      "position",
+      "raceid",
+      "surname"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "JOIN[2+]",
+      "WHERE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "drivers",
+      "races",
+      "results"
+    ],
+    "final_columns": [
+      "driverid",
+      "forename",
+      "name",
+      "position",
+      "raceid",
+      "round",
+      "surname",
+      "year"
+    ],
+    "final_shape": [
+      "SELECT",
+      "DISTINCT",
+      "JOIN[2+]",
+      "WHERE",
+      "ORDER_BY[ASC]"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_906",
+    "db_id": "formula_1",
+    "difficulty": "moderate",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "drivers",
+      "qualifying",
+      "driverStandings",
+      "races",
+      "results",
+      "constructors",
+      "circuits"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "drivers",
+      "qualifying",
+      "driverStandings",
+      "races"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "drivers",
+        "to_seed": "qualifying",
+        "path": [
+          "drivers",
+          "qualifying"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "drivers",
+        "to_seed": "driverStandings",
+        "path": [
+          "drivers",
+          "driverStandings"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "drivers",
+        "to_seed": "races",
+        "path": [
+          "drivers",
+          "driverStandings",
+          "races"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "qualifying",
+        "to_seed": "driverStandings",
+        "path": [
+          "qualifying",
+          "drivers",
+          "driverStandings"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "qualifying",
+        "to_seed": "races",
+        "path": [
+          "qualifying",
+          "races"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "driverStandings",
+        "to_seed": "races",
+        "path": [
+          "driverStandings",
+          "races"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "drivers",
+        "neighbour": "results",
+        "added": true
+      },
+      {
+        "seed": "qualifying",
+        "neighbour": "constructors",
+        "added": true
+      },
+      {
+        "seed": "races",
+        "neighbour": "circuits",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "constructorResults",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "constructorStandings",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "lapTimes",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "pitStops",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "seasons",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "status",
+        "lexical_score": 2,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "results": 2
+    },
+    "gold_tables": [
+      "drivers",
+      "driverstandings",
+      "races"
+    ],
+    "gold_columns": [
+      "driverid",
+      "forename",
+      "name",
+      "points",
+      "raceid",
+      "surname",
+      "year"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "JOIN[2+]",
+      "WHERE",
+      "ORDER_BY[ASC]",
+      "LIMIT"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "drivers",
+      "races",
+      "results"
+    ],
+    "final_columns": [
+      "date",
+      "driverid",
+      "forename",
+      "name",
+      "points",
+      "raceid",
+      "round",
+      "surname",
+      "year"
+    ],
+    "final_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[2+]",
+      "WHERE",
+      "ORDER_BY[ASC]",
+      "LIMIT",
+      "SUBQUERY"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_584",
+    "db_id": "codebase_community",
+    "difficulty": "moderate",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "posts",
+      "comments",
+      "postHistory",
+      "users",
+      "votes",
+      "badges"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "posts",
+      "comments",
+      "postHistory",
+      "users"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "posts",
+        "to_seed": "comments",
+        "path": [
+          "posts",
+          "comments"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "posts",
+        "to_seed": "postHistory",
+        "path": [
+          "posts",
+          "postHistory"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "posts",
+        "to_seed": "users",
+        "path": [
+          "posts",
+          "users"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "comments",
+        "to_seed": "postHistory",
+        "path": [
+          "comments",
+          "posts",
+          "postHistory"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "comments",
+        "to_seed": "users",
+        "path": [
+          "comments",
+          "users"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "postHistory",
+        "to_seed": "users",
+        "path": [
+          "postHistory",
+          "users"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "posts",
+        "neighbour": "votes",
+        "added": true
+      },
+      {
+        "seed": "users",
+        "neighbour": "badges",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "postLinks",
+        "lexical_score": 1,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "tags",
+        "lexical_score": 1,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "posts": 5
+    },
+    "gold_tables": [
+      "posthistory",
+      "posts"
+    ],
+    "gold_columns": [
+      "comment",
+      "id",
+      "postid",
+      "title"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "comments",
+      "posthistory",
+      "posts"
+    ],
+    "final_columns": [
+      "id",
+      "posthistorytypeid",
+      "postid",
+      "text",
+      "title",
+      "userid"
+    ],
+    "final_shape": [
+      "SELECT",
+      "DISTINCT",
+      "JOIN[1]",
+      "WHERE",
+      "ORDER_BY[ASC]",
+      "SUBQUERY"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_465",
+    "db_id": "card_games",
+    "difficulty": "moderate",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "cards",
+      "sets",
+      "foreign_data",
+      "set_translations",
+      "rulings"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "cards",
+      "sets",
+      "foreign_data",
+      "set_translations"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "cards",
+        "to_seed": "sets",
+        "path": [
+          "cards",
+          "sets"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "cards",
+        "to_seed": "foreign_data",
+        "path": [
+          "cards",
+          "foreign_data"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "cards",
+        "to_seed": "set_translations",
+        "path": [
+          "cards",
+          "sets",
+          "set_translations"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "sets",
+        "to_seed": "foreign_data",
+        "path": [
+          "sets",
+          "cards",
+          "foreign_data"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "sets",
+        "to_seed": "set_translations",
+        "path": [
+          "sets",
+          "set_translations"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "foreign_data",
+        "to_seed": "set_translations",
+        "path": [
+          "foreign_data",
+          "cards",
+          "sets",
+          "set_translations"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "cards",
+        "neighbour": "rulings",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "legalities",
+        "lexical_score": 1,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {
+      "cards": 58,
+      "sets": 5
+    },
+    "gold_tables": [
+      "cards",
+      "set_translations"
+    ],
+    "gold_columns": [
+      "language",
+      "name",
+      "setcode",
+      "translation"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "WHERE",
+      "CONDITIONAL"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "cards",
+      "foreign_data"
+    ],
+    "final_columns": [
+      "language",
+      "name",
+      "uuid"
+    ],
+    "final_shape": [
+      "SELECT",
+      "JOIN[1]",
+      "WHERE",
+      "CONDITIONAL"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  },
+  {
+    "id": "bird_145",
+    "db_id": "financial",
+    "difficulty": "moderate",
+    "correct": false,
+    "diagnostic": "retrieval_complete_mining_abstained_semantic_failure",
+    "mining_artifact_version": "unknown",
+    "mining_selection_mode": null,
+    "mining_selected_item_ids": [],
+    "mining_selected_items": [],
+    "mining_abstained": null,
+    "schema_artifact_version": "e3-f-schema-v4",
+    "schema_selected_tables": [
+      "trans",
+      "card",
+      "disp",
+      "loan",
+      "account",
+      "client"
+    ],
+    "schema_seed_mode": "positive-lexical",
+    "schema_seeds": [
+      "trans",
+      "card",
+      "disp",
+      "loan"
+    ],
+    "schema_path_expansions": [
+      {
+        "from_seed": "trans",
+        "to_seed": "card",
+        "path": [
+          "trans",
+          "account",
+          "disp",
+          "card"
+        ],
+        "added_tables": [
+          "account"
+        ]
+      },
+      {
+        "from_seed": "trans",
+        "to_seed": "disp",
+        "path": [
+          "trans",
+          "account",
+          "disp"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "trans",
+        "to_seed": "loan",
+        "path": [
+          "trans",
+          "account",
+          "loan"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "card",
+        "to_seed": "disp",
+        "path": [
+          "card",
+          "disp"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "card",
+        "to_seed": "loan",
+        "path": [
+          "card",
+          "disp",
+          "account",
+          "loan"
+        ],
+        "added_tables": []
+      },
+      {
+        "from_seed": "disp",
+        "to_seed": "loan",
+        "path": [
+          "disp",
+          "account",
+          "loan"
+        ],
+        "added_tables": []
+      }
+    ],
+    "schema_fk_neighbour_expansions": [
+      {
+        "seed": "disp",
+        "neighbour": "client",
+        "added": true
+      }
+    ],
+    "schema_truncated_tables": [
+      {
+        "table": "order",
+        "lexical_score": 3,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      },
+      {
+        "table": "district",
+        "lexical_score": 1,
+        "selection_reasons": [],
+        "truncation_reason": "not_reached_before_max_tables_budget"
+      }
+    ],
+    "schema_columns_truncated": {},
+    "gold_tables": [
+      "account",
+      "trans"
+    ],
+    "gold_columns": [
+      "account_id",
+      "amount",
+      "date",
+      "operation"
+    ],
+    "gold_shape": [
+      "SELECT",
+      "AGGREGATE",
+      "JOIN[1]",
+      "WHERE",
+      "SUBQUERY"
+    ],
+    "gold_detail_table_misses": [],
+    "gold_detail_column_name_misses": [],
+    "final_tables": [
+      "account",
+      "client",
+      "disp",
+      "trans"
+    ],
+    "final_columns": [
+      "account_id",
+      "amount",
+      "client_id",
+      "date",
+      "operation",
+      "type"
+    ],
+    "final_shape": [
+      "SELECT",
+      "DISTINCT",
+      "AGGREGATE",
+      "JOIN[2+]",
+      "WHERE",
+      "ORDER_BY[ASC]",
+      "SUBQUERY"
+    ],
+    "final_tables_outside_detailed_context": [],
+    "predicted_sql_parse_error": null,
+    "gold_sql_parse_error": null
+  }
+]
