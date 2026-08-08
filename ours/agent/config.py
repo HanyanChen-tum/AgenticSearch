@@ -8,6 +8,7 @@ import json
 
 from .prompts import prompt_manifest
 from .query_plan import QUERY_PLAN_MODE, protocol_manifest
+from .sql_conventions import VERSION as SQL_CONVENTION_VERSION
 
 
 AGENT_CONFIG_SCHEMA_VERSION = 1
@@ -36,6 +37,7 @@ class AgentConfig:
     planner_mode: str = "none"
     allowed_db_methods: tuple[str, ...] = ("execute", "sample_values")
     literal_verification_nudge: bool = False
+    sql_convention_mode: str = "none"
 
     def __post_init__(self) -> None:
         if self.few_shot_mode not in {"train-retrieval", "none"}:
@@ -48,6 +50,8 @@ class AgentConfig:
             raise ValueError(f"Unknown schema context mode: {self.schema_context_mode!r}")
         if self.context_mode not in {"direct", "store-readonly"}:
             raise ValueError(f"Unknown context mode: {self.context_mode!r}")
+        if self.sql_convention_mode not in {"none", SQL_CONVENTION_VERSION}:
+            raise ValueError(f"Unknown SQL convention mode: {self.sql_convention_mode!r}")
         if self.schema_context_mode == "offline-retrieval" and self.offline_metadata_mode == "none":
             raise ValueError("offline-retrieval requires an offline metadata artifact")
         if self.planner_mode not in {"none", QUERY_PLAN_MODE}:
@@ -165,6 +169,38 @@ _PROFILES = {
         offline_metadata_mode="e3-f-schema-v4",
         schema_context_mode="offline-retrieval",
         literal_verification_nudge=True,
+    ),
+    # E3-C + E3-A's train-only static patterns. The two were never combined:
+    # E3-C deliberately switched patterns off to isolate the schema variable.
+    # On the E0 stable-wrong set they recover largely disjoint questions
+    # (6 and 10 respectively, overlapping on only 3), so the combination has
+    # roughly +5 questions of complementary headroom.
+    "e3-ac": AgentConfig(
+        profile="e3-ac",
+        experiment_variant="e3-ac",
+        prompt_profile="basic",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        few_shot_mode="train-retrieval",
+        query_pattern_mode="train-static-v1",
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+    ),
+    # E3-C plus deterministic post-processing of the final SQL toward BIRD's
+    # mined writing conventions. The conventions are also *stated* in E3-A's
+    # static patterns, and e3-ac showed that stating them changes nothing
+    # (24 vs 25 violations against e3-c); enforcing them here moves +5 questions.
+    "e3-c-conv": AgentConfig(
+        profile="e3-c-conv",
+        experiment_variant="e3-c-conv",
+        prompt_profile="basic",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
     ),
     "e3-c-join-minimal": AgentConfig(
         profile="e3-c-join-minimal",

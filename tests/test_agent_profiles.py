@@ -9,6 +9,10 @@ from pathlib import Path
 from ours.agent.capabilities import CapabilityDeniedError, GatedDBEnvironment
 from ours.agent.config import agent_profile_names, get_agent_config
 from ours.agent.prompts import get_system_prompt, prompt_manifest
+from ours.agent.sql_conventions import (
+    VERSION as SQL_CONVENTION_VERSION,
+    get_sql_convention_rewriter,
+)
 from ours.agent.state import AgentExecutionState, ExecutionStatus
 from ours.db_environment import DBEnvironment
 from ours.recursive_db_rlm import DBRLM
@@ -69,11 +73,27 @@ class AgentProfileTests(unittest.TestCase):
         self.assertEqual(
             agent_profile_names(),
             (
-                "clean-e0", "clean-e1", "e3-a", "e3-c", "e3-c-join-minimal",
-                "e3-c-join-minimal-v2", "e3-c-literal-check", "e3-f", "e3-rf",
+                "clean-e0", "clean-e1", "e3-a", "e3-ac", "e3-c",
+                "e3-c-conv", "e3-c-join-minimal", "e3-c-join-minimal-v2",
+                "e3-c-literal-check", "e3-f", "e3-rf",
                 "e4-a", "e4-r0", "e5-a", "legacy-e0",
             ),
         )
+
+    def test_e3_ac_combines_e3_a_patterns_with_e3_c_schema(self):
+        a, c, ac = (get_agent_config(n) for n in ("e3-a", "e3-c", "e3-ac"))
+        # takes the patterns from E3-A
+        self.assertEqual(ac.query_pattern_mode, a.query_pattern_mode)
+        # and everything else from E3-C
+        for name in (
+            "prompt_profile", "use_db_hints", "verified_final", "capability_gate",
+            "few_shot_mode", "offline_metadata_mode", "schema_context_mode",
+            "context_mode", "reasoning_mode", "planner_mode", "allowed_db_methods",
+            "literal_verification_nudge",
+        ):
+            self.assertEqual(getattr(ac, name), getattr(c, name))
+        self.assertNotEqual(ac.sha256, a.sha256)
+        self.assertNotEqual(ac.sha256, c.sha256)
 
     def test_join_minimal_profile_only_changes_prompt_from_e3_c(self):
         e3_c = get_agent_config("e3-c")
@@ -437,6 +457,100 @@ class LiteralVerificationNudgeLoopTests(unittest.TestCase):
 
             first_observation = snapshot["messages"][3]["content"]
             self.assertNotIn("sample_values was never called", first_observation)
+
+
+class SqlConventionRewriteTests(unittest.TestCase):
+    """The mined conventions are applied by the harness, never by the prompt."""
+
+    def setUp(self):
+        self.rewriter = get_sql_convention_rewriter()
+
+    def test_enabled_conventions_carry_train_support_in_the_manifest(self):
+        manifest = self.rewriter.manifest()
+        self.assertEqual(manifest["version"], SQL_CONVENTION_VERSION)
+        self.assertFalse(manifest["application"]["uses_dev_data"])
+        self.assertFalse(manifest["application"]["uses_gold_sql"])
+        for name in manifest["enabled_conventions"]:
+            self.assertGreaterEqual(manifest["conventions"][name]["train_support"], 0.80)
+
+    def test_count_distinct_is_stripped_only_when_the_query_joins(self):
+        joined = self.rewriter.rewrite(
+            "SELECT COUNT(DISTINCT a.id) FROM a JOIN b ON a.id = b.id"
+        )
+        self.assertEqual(joined.applied, ("count_no_distinct",))
+        self.assertNotIn("DISTINCT", joined.sql.upper())
+        # Without a join there is no join-induced duplication, so a DISTINCT the
+        # model wrote is far more likely to be genuinely requested.
+        single = self.rewriter.rewrite("SELECT COUNT(DISTINCT a.id) FROM a")
+        self.assertEqual(single.applied, ())
+        self.assertFalse(single.changed)
+
+    def test_select_concat_splits_into_separate_projections(self):
+        result = self.rewriter.rewrite(
+            "SELECT f || ' ' || l FROM t JOIN u ON t.id = u.id"
+        )
+        self.assertEqual(result.applied, ("no_select_concat",))
+        self.assertEqual(result.sql, "SELECT f, l FROM t JOIN u ON t.id = u.id")
+
+    def test_select_concat_declines_when_its_alias_is_referenced(self):
+        # Splitting removes the alias, so an ORDER BY on it stops resolving.
+        # Observed on bird_1011, where the split produced a hard SQL error.
+        result = self.rewriter.rewrite(
+            "SELECT f || ' ' || l AS full_name FROM t JOIN u ON t.id = u.id "
+            "ORDER BY full_name ASC"
+        )
+        self.assertEqual(result.applied, ())
+        self.assertFalse(result.changed)
+
+    def test_superlative_rewrite_only_fires_on_the_mined_shape(self):
+        simple = self.rewriter.rewrite(
+            "SELECT name FROM players WHERE height = (SELECT MAX(height) FROM players)"
+        )
+        self.assertEqual(simple.applied, ("superlative_order_limit",))
+        self.assertIn("ORDER BY", simple.sql.upper())
+        self.assertIn("LIMIT 1", simple.sql.upper())
+        # A subquery carrying its own conditions is not the near-equivalent form.
+        conditional = self.rewriter.rewrite(
+            "SELECT name FROM p WHERE h = (SELECT MAX(h) FROM p WHERE t = 'A')"
+        )
+        self.assertEqual(conditional.applied, ())
+
+    def test_unparseable_sql_is_returned_untouched(self):
+        result = self.rewriter.rewrite("SELECT COUNT(DISTINCT FROM JOIN ((")
+        self.assertEqual(result.sql, result.original_sql)
+        self.assertEqual(result.applied, ())
+
+    def test_profile_without_the_mode_never_rewrites(self):
+        agent = DBRLM(
+            model="test/model", agent_config=get_agent_config("e3-c")
+        )
+        self.assertIsNone(agent._sql_conventions)
+        self.assertEqual(agent._apply_sql_conventions("SELECT 1"), "SELECT 1")
+
+    def test_profile_with_the_mode_rewrites_and_records_the_change(self):
+        with tempfile.TemporaryDirectory() as directory:
+            db_path = CapabilityGateTests.make_database(directory)
+            agent = DBRLM(
+                model="test/model", max_iterations=4,
+                agent_config=get_agent_config("e3-c-conv"),
+            )
+            responses = [
+                'FINAL("SELECT COUNT(DISTINCT i.name) FROM items AS i '
+                'JOIN items AS j ON i.id = j.id")',
+            ]
+
+            async def fake_call_llm(self, messages, **kwargs):
+                self._llm_calls += 1
+                return responses.pop(0)
+
+            agent._call_llm = types.MethodType(fake_call_llm, agent)
+            final_sql = agent.complete_sql("How many items?", db_path)
+
+            self.assertNotIn("DISTINCT", final_sql.upper())
+            rewrite = agent.trace_snapshot()["sql_convention_rewrite"]
+            self.assertTrue(rewrite["changed"])
+            self.assertEqual(rewrite["applied"], ["count_no_distinct"])
+            self.assertIn("DISTINCT", rewrite["original_sql"].upper())
 
 
 if __name__ == "__main__":

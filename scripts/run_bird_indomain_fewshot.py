@@ -127,6 +127,8 @@ def run_one(
             "knowledge_selection": final_attempt.get("knowledge_selection", {}),
             "context_store": final_attempt.get("context_store"),
             "context_store_reads": final_attempt.get("context_store_reads"),
+            "sql_convention_manifest": final_attempt.get("sql_convention_manifest"),
+            "sql_convention_rewrite": final_attempt.get("sql_convention_rewrite"),
             "llm_call_usage": agent.llm_call_usage_snapshot(),
             "token_usage": {
                 key: agent.stats[key]

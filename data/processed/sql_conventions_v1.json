@@ -1,0 +1,71 @@
+{
+  "build_config": {
+    "min_applicable": 100,
+    "min_database_count": 8,
+    "min_support": 0.8
+  },
+  "conventions": {
+    "count_no_distinct": {
+      "choice": "COUNT(x) vs COUNT(DISTINCT x) when the query joins",
+      "enabled": true,
+      "gate": {
+        "min_applicable": 100,
+        "min_database_count": 8,
+        "min_support": 0.8,
+        "passed": true
+      },
+      "gold_preference": "COUNT(x)",
+      "rewrite": "strip DISTINCT from COUNT aggregates when the query contains a JOIN",
+      "train_applicable": 2377,
+      "train_conforming": 2118,
+      "train_database_count": 69,
+      "train_databases_majority_conforming": 65,
+      "train_databases_measured": 67,
+      "train_support": 0.891
+    },
+    "no_select_concat": {
+      "choice": "separate projected columns vs a || concatenation in the SELECT list",
+      "enabled": true,
+      "gate": {
+        "min_applicable": 100,
+        "min_database_count": 8,
+        "min_support": 0.8,
+        "passed": true
+      },
+      "gold_preference": "separate columns",
+      "rewrite": "split `a || sep || b` in the SELECT list into separate projections",
+      "train_applicable": 9428,
+      "train_conforming": 9427,
+      "train_database_count": 69,
+      "train_databases_majority_conforming": 69,
+      "train_databases_measured": 69,
+      "train_support": 0.9999
+    },
+    "superlative_order_limit": {
+      "choice": "ORDER BY ... LIMIT 1 vs WHERE x = (SELECT MAX(x) ...)",
+      "enabled": true,
+      "gate": {
+        "min_applicable": 100,
+        "min_database_count": 8,
+        "min_support": 0.8,
+        "passed": true
+      },
+      "gold_preference": "ORDER BY ... LIMIT 1",
+      "rewrite": "rewrite `WHERE x = (SELECT MAX(x) FROM t)` to `ORDER BY x DESC LIMIT 1`, only when the subquery is a bare aggregate over a single table and the outer query has no ORDER BY, LIMIT or GROUP BY of its own",
+      "train_applicable": 1542,
+      "train_conforming": 1393,
+      "train_database_count": 69,
+      "train_databases_majority_conforming": 63,
+      "train_databases_measured": 65,
+      "train_support": 0.9034
+    }
+  },
+  "dialect": "sqlite",
+  "enabled_convention_count": 3,
+  "parse_failure_count": 0,
+  "parsed_sql_count": 9428,
+  "source": "data\\train_pool.json",
+  "source_sha256": "80c0326216d775eff04ae46d5656a452d741d09993d93d527b02848451ee443f",
+  "train_example_count": 9428,
+  "version": "train-conventions-v1"
+}

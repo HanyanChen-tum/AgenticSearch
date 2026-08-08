@@ -29,6 +29,7 @@ from ours.agent.context_store import (
 )
 from ours.agent.knowledge import KnowledgeAssembler
 from ours.agent.prompts import get_system_prompt
+from ours.agent.sql_conventions import get_sql_convention_rewriter
 from ours.agent.state import AgentExecutionState, ExecutionStatus
 from ours.agent.query_plan import (
     QUERY_PLAN_MODE,
@@ -72,6 +73,11 @@ class DBRLM(RLM):
         )
         self._execution_state = AgentExecutionState()
         self._query_plan_state = QueryPlanState()
+        self._sql_conventions = (
+            get_sql_convention_rewriter()
+            if self.agent_config.sql_convention_mode != "none"
+            else None
+        )
 
     def _prepare_trace(self, question: str, db_path: str | Path, evidence: str) -> None:
         self._trace_turn = 0
@@ -81,6 +87,7 @@ class DBRLM(RLM):
         self._execution_state = AgentExecutionState()
         self._query_plan_state = QueryPlanState()
         self._context_store = None
+        self._sql_convention_rewrite = None
         self._trace_context = {
             "question": question,
             "db_path": str(Path(db_path).resolve()),
@@ -91,6 +98,11 @@ class DBRLM(RLM):
             "query_plan_protocol": (
                 protocol_manifest()
                 if self.agent_config.planner_mode == QUERY_PLAN_MODE
+                else None
+            ),
+            "sql_convention_manifest": (
+                self._sql_conventions.manifest()
+                if self._sql_conventions is not None
                 else None
             ),
         }
@@ -144,6 +156,9 @@ class DBRLM(RLM):
                 self._context_store.read_log()
                 if getattr(self, "_context_store", None) is not None
                 else None
+            ),
+            "sql_convention_rewrite": copy.deepcopy(
+                getattr(self, "_sql_convention_rewrite", None)
             ),
         }
 
@@ -214,7 +229,28 @@ class DBRLM(RLM):
         evidence: BIRD-style hint string (definitions of column values, formulas, etc.)
         """
         self._prepare_trace(question, db_path, evidence)
-        return self.complete(query=question)
+        return self._apply_sql_conventions(self.complete(query=question))
+
+    def _apply_sql_conventions(self, sql: str) -> str:
+        """Post-process the model's final SQL toward BIRD's mined conventions.
+
+        Deliberately outside the model loop: the conventions are dataset writing
+        habits rather than SQL knowledge, and stating them in the prompt was
+        measured to change nothing. Recording the rewrite keeps a run's accuracy
+        decomposable into model output and harness rewriting.
+        """
+        if self._sql_conventions is None:
+            return sql
+        result = self._sql_conventions.rewrite(sql)
+        self._sql_convention_rewrite = {
+            "applied": list(result.applied),
+            "changed": result.changed,
+            "parse_failed": result.parse_failed,
+            "notes": list(result.notes),
+            "original_sql": result.original_sql,
+            "rewritten_sql": result.sql,
+        }
+        return result.sql
 
     # ------------------------------------------------------------------
     # Override: inject `db` into the REPL environment
