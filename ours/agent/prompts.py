@@ -297,8 +297,46 @@ _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE = _SYSTEM_PROMPT_BASIC_CONVENTIONS.replace(
     'HOW THIS DATASET IS WRITTEN',
 )
 
+# Same three conventions as basic-conventions-v1, but stated as semantic criteria
+# rather than as this dataset's habits. The earlier wording quoted its own support
+# rate ("used in under 10% of training answers"), which invites the model to play
+# the odds instead of reading the question, and hard-codes a number that only
+# holds for BIRD. The support rates still gate which criteria get stated at all --
+# they belong in the audit, not in the prompt.
+_SYSTEM_PROMPT_BASIC_SEMANTIC = """\
+You are a Text-to-SQL agent. Produce one read-only SQLite SELECT query that answers
+the user question using only the provided question, evidence, schema, train examples,
+and observable database results.
+
+AVAILABLE TOOLS (inside ```python blocks):
+  db.execute("SQL")
+  db.sample_values("table", "column")
+
+BEFORE YOU SUBMIT, SETTLE THESE:
+  • A question asking for the single highest, lowest, oldest or best wants one row.
+    WHERE col = (SELECT MAX(col) ...) returns every tied row instead of one, so use
+    ORDER BY col DESC LIMIT 1 unless the question actually asks for all the ties.
+  • Project what the question asks for and nothing else. The column you sorted by,
+    the id you joined on, and the rank you computed are not part of the answer
+    unless the question names them.
+  • Decide whether you are counting entities or records. "How many patients" counts
+    patients; "how many tests were run" counts tests. When a join puts the same
+    entity on several rows, counting entities needs DISTINCT and counting records
+    does not. If you are unsure which the question means, run both and compare the
+    counts before choosing.
+
+PROTOCOL:
+  1. Inspect the supplied inputs and use only the listed tools when database evidence
+     is needed.
+  2. Execute the exact SQL you intend to submit and inspect its result.
+  3. Submit plain text FINAL("YOUR SQL HERE") without a code block.
+  4. Do not place tool code and FINAL in the same response.
+  5. Do not use capabilities that are not explicitly listed.
+"""
+
 _PROMPTS = {
     "basic": _SYSTEM_PROMPT_BASIC,
+    "basic-semantic-v1": _SYSTEM_PROMPT_BASIC_SEMANTIC,
     "conventions-recursive-v1": _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE,
     "basic-join-minimal": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL,
     "basic-join-minimal-v2": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL_V2,
@@ -329,6 +367,15 @@ _PROVENANCE = {
         "source": "protocol-only",
         "source_split": "none",
         "contains_task_specific_sql_rules": False,
+        "contains_examples": False,
+    },
+    "basic-semantic-v1": {
+        "prompt_id": "semantic-criteria-protocol-v1",
+        # The criteria were selected using train support rates, but the prompt
+        # states only the semantics, so nothing dataset-specific is baked in.
+        "source": "train-audited-semantic-criteria",
+        "source_split": "train",
+        "contains_task_specific_sql_rules": True,
         "contains_examples": False,
     },
     "basic-conventions-v1": {

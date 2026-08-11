@@ -77,6 +77,7 @@ class AgentProfileTests(unittest.TestCase):
                 "e3-c-conv", "e3-c-conv-rules", "e3-c-join-minimal",
                 "e3-c-join-minimal-v2",
                 "e3-c-literal-check", "e3-c-recursive", "e3-c-recursive-db",
+                "e3-c-semantic",
                 "e3-f", "e3-rf",
                 "e4-a", "e4-r0", "e5-a", "legacy-e0",
             ),

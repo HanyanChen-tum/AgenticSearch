@@ -233,6 +233,21 @@ _PROFILES = {
         schema_context_mode="offline-retrieval",
         sql_convention_mode=SQL_CONVENTION_VERSION,
     ),
+    # e3-c-conv-rules with the conventions restated as semantic criteria, and the
+    # deterministic rewriting switched off: the model decides per question whether
+    # a convention applies. The rewriter cannot -- it stripped DISTINCT from four
+    # questions on the natural distribution that needed it, and its benefit ratio
+    # fell from 8:1 on the adversarial subset to 7:4 outside it.
+    "e3-c-semantic": AgentConfig(
+        profile="e3-c-semantic",
+        experiment_variant="e3-c-semantic",
+        prompt_profile="basic-semantic-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+    ),
     # Recursion v2: the leaf shares the parent's gated database handle. v1's
     # text-only leaf was handed the parent's ambiguity questions and, knowing
     # strictly less, moved accuracy 0.00pp on dev 500. Carries the convention
