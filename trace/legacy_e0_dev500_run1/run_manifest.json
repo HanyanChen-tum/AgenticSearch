@@ -1,0 +1,108 @@
+{
+  "trace_schema_version": 3,
+  "run_id": "20260809T152542Z-6d93bbe0",
+  "created_at": "2026-08-09T15:25:42.162141+00:00",
+  "status": "complete",
+  "completed_questions": 500,
+  "config": {
+    "dataset": "C:\\Users\\Irene\\AgenticSearch\\data\\processed\\bird_dev_500.json",
+    "dataset_sha256": "397d227d4c9f5f28590dc76e0a01dc8e2c9cd0bf4da2a2bc078c7b9c1017f5eb",
+    "ids_file": null,
+    "ids_file_sha256": null,
+    "id_groups": [],
+    "selected_question_count": 500,
+    "planned_question_count": 500,
+    "database_dir": "C:\\Users\\Irene\\AgenticSearch\\data\\raw\\bird\\minidev\\MINIDEV\\dev_databases",
+    "output": "C:\\Users\\Irene\\AgenticSearch\\results\\legacy_e0_dev500_run1.json",
+    "model": "azure/seminar-gpt-5.4-mini",
+    "api_base": "https://gpt5openai.openai.azure.com/",
+    "api_version": "2024-12-01-preview",
+    "limit": null,
+    "max_iterations": 8,
+    "k": 1,
+    "effective_few_shot_k": 1,
+    "temperature": 0.0,
+    "reasoning_effort": "high",
+    "evaluation_sql_timeout_seconds": 30.0,
+    "agent_profile": "legacy-e0",
+    "agent_config": {
+      "profile": "legacy-e0",
+      "experiment_variant": "legacy",
+      "prompt_profile": "legacy",
+      "use_db_hints": true,
+      "verified_final": false,
+      "capability_gate": false,
+      "few_shot_mode": "train-retrieval",
+      "query_pattern_mode": "none",
+      "offline_metadata_mode": "none",
+      "schema_context_mode": "runtime-full",
+      "context_mode": "direct",
+      "reasoning_mode": "none",
+      "planner_mode": "none",
+      "allowed_db_methods": [
+        "execute",
+        "sample_values"
+      ],
+      "literal_verification_nudge": false,
+      "sql_convention_mode": "none",
+      "config_schema_version": 1,
+      "capabilities": {
+        "version": 1,
+        "gate_enabled": false,
+        "allowed_db_methods": [
+          "execute",
+          "sample_values"
+        ],
+        "generic_recursive_llm": true,
+        "context_store_readable": false,
+        "sha256": "9993e83acb5fff8c677685128cf7ed5fae776fbb9e0e9ffa3eb8e1849dce6f6c"
+      },
+      "prompt": {
+        "version": 1,
+        "prompt_id": "legacy-strong-v1",
+        "source": "legacy-eval-tuned-unaudited",
+        "source_split": "unknown",
+        "contains_task_specific_sql_rules": true,
+        "contains_examples": true,
+        "sha256": "03757d8ba593b0b738b3d65fcf95b0a5ce0955d25e4a3f6a3e673b80c4aa6dde"
+      },
+      "query_plan": null
+    },
+    "agent_config_sha256": "40fcce2b4c647bddfb30e9bca38a55302de4469cd0e7b30e120da061be3dc99e",
+    "few_shot_retriever": {
+      "enabled": true,
+      "mode": "train-retrieval",
+      "requested_k": 1,
+      "effective_k": 1,
+      "class": "TrainFewShotRetriever",
+      "source_split": "bird-train",
+      "pool_path": "C:\\Users\\Irene\\AgenticSearch\\data\\train_pool.json",
+      "pool_sha256": "80c0326216d775eff04ae46d5656a452d741d09993d93d527b02848451ee443f",
+      "example_count": 9428,
+      "embedding_model": "all-MiniLM-L6-v2",
+      "runtime_sha256": "701c64b26105aa1881baf9c30ee21e456dbea9228e8630b15b2685f9a35cc953"
+    },
+    "query_pattern_library": null,
+    "offline_metadata": null
+  },
+  "token_usage": {
+    "prompt_tokens": 4153610,
+    "completion_tokens": 1910158,
+    "reasoning_tokens": 1717072,
+    "total_tokens": 6063768,
+    "cached_prompt_tokens": 1948672,
+    "llm_calls": 1142,
+    "usage_missing_calls": 12,
+    "reasoning_usage_missing_calls": 12,
+    "questions": 500,
+    "questions_with_complete_usage": 490,
+    "average_per_question": {
+      "prompt_tokens": 8307.22,
+      "completion_tokens": 3820.32,
+      "reasoning_tokens": 3434.14,
+      "total_tokens": 12127.54,
+      "cached_prompt_tokens": 3897.34
+    }
+  },
+  "finished_at": "2026-08-09T18:40:27.874410+00:00"
+}
