@@ -1,0 +1,7080 @@
+{
+ "source": {
+  "results": "e3_c_conv_rules_dev500_run1.json",
+  "trace": "transcripts.jsonl"
+ },
+ "question_count": 500,
+ "correct_count": 337,
+ "stages": [
+  "取证",
+  "最值写法",
+  "计数粒度",
+  "输出宽度",
+  "结果状态",
+  "判定"
+ ],
+ "paths": [
+  {
+   "id": "bird_1471",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1472",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1473",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1476",
+   "db_id": "debit_card_specializing",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1479",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1480",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1481",
+   "db_id": "debit_card_specializing",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "其他写法",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1482",
+   "db_id": "debit_card_specializing",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1483",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1484",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1486",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "多问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1490",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "执行报错"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1493",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1498",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1500",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1501",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1505",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1506",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1507",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1509",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1514",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1515",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1521",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1524",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1525",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1526",
+   "db_id": "debit_card_specializing",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1528",
+   "db_id": "debit_card_specializing",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1529",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1531",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "只查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1533",
+   "db_id": "debit_card_specializing",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1312",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1317",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1322",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1323",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1331",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1334",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1338",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1339",
+   "db_id": "student_club",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1340",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1344",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1346",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1350",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1351",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1352",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1356",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1357",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1359",
+   "db_id": "student_club",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1361",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1362",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1368",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1371",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1375",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1376",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1378",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "其他写法",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1380",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1381",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1387",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1389",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1390",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1392",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1394",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1398",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1399",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1401",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1403",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1404",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1405",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1409",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1410",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1411",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1422",
+   "db_id": "student_club",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1426",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1427",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1432",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1435",
+   "db_id": "student_club",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1457",
+   "db_id": "student_club",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1460",
+   "db_id": "student_club",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1464",
+   "db_id": "student_club",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1149",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "计数无JOIN",
+    "多问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1150",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1152",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1153",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1155",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1156",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1157",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1162",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1164",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "其他写法",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1166",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1168",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1169",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1171",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1175",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1179",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1185",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1187",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1189",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1192",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1195",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1198",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1201",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1205",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1208",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1209",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1220",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1225",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1227",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1229",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1231",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1232",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1235",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1238",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1239",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1241",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1242",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1243",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1247",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1251",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1252",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1254",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1255",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1256",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1257",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1265",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1267",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1270",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1275",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1281",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1302",
+   "db_id": "thrombosis_prediction",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1025",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1028",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1029",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1030",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1031",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1032",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1035",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1036",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1037",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1039",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1040",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1042",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1044",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1048",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1057",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1058",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1068",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1076",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1078",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1079",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1080",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1084",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1088",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1091",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1092",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1094",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1096",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1098",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1102",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1103",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1105",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1107",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "= (SELECT MAX)",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1110",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1113",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1114",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1115",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1116",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1122",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1124",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1130",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1133",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1134",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1135",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "= (SELECT MAX)",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1136",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "= (SELECT MAX)",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1139",
+   "db_id": "european_football_2",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1141",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1144",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1145",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1146",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1147",
+   "db_id": "european_football_2",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1148",
+   "db_id": "european_football_2",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_846",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_847",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_850",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_854",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_857",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_859",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_861",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_862",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_865",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_866",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_868",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_869",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_872",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_875",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_877",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_879",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_880",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_881",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_884",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_892",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_894",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_895",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_896",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_897",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_898",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_901",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_902",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_904",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_906",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_909",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_910",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_912",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_915",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_928",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_930",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_931",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_933",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_937",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_940",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_944",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "空结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_945",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_948",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "其他写法",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_950",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_951",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_954",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_955",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_959",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_960",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_962",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_963",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_964",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_967",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_971",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_972",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_977",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_978",
+   "db_id": "formula_1",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_981",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_988",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_989",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_990",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_717",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_994",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1001",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1002",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1003",
+   "db_id": "formula_1",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_1011",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "执行报错"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_1014",
+   "db_id": "formula_1",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_719",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_723",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_724",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_726",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_728",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "其他写法",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_730",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_732",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_733",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_736",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_737",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_738",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_739",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_740",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_743",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_744",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_745",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_747",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_750",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_751",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_753",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_758",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_760",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "执行报错"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_761",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_764",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_765",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_766",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_769",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_772",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_773",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_775",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_779",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_781",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_782",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_785",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_786",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "= (SELECT MAX)",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_788",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_790",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_791",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_792",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_794",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_796",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_797",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_798",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_800",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_801",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_806",
+   "db_id": "superhero",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_819",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_822",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_824",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_825",
+   "db_id": "superhero",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_829",
+   "db_id": "superhero",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_531",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_532",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_533",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_539",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_537",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_544",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_547",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_549",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_555",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_557",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_563",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_565",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_567",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_568",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_571",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_572",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_573",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_576",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_578",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_581",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_584",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_586",
+   "db_id": "codebase_community",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_587",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_592",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_595",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "其他写法",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_598",
+   "db_id": "codebase_community",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_604",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_629",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_633",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_634",
+   "db_id": "codebase_community",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_637",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_639",
+   "db_id": "codebase_community",
+   "difficulty": "challenging",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_640",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_665",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_669",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_671",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_672",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_678",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_682",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_683",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_685",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_687",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_694",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_701",
+   "db_id": "codebase_community",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "= (SELECT MAX)",
+    "计数不去重",
+    "单问句·单列",
+    "执行报错"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_704",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_705",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_707",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_710",
+   "db_id": "codebase_community",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_716",
+   "db_id": "codebase_community",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_340",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_341",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_344",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_345",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_346",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_347",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_349",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_352",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_356",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_358",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_366",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_368",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_371",
+   "db_id": "card_games",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_377",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_379",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_383",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "执行报错"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_391",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_397",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_402",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_405",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_407",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_408",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_409",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_412",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_414",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_415",
+   "db_id": "card_games",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_416",
+   "db_id": "card_games",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_422",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_424",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_427",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_440",
+   "db_id": "card_games",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_459",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_462",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_465",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_466",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_468",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_469",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_472",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_473",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_474",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_477",
+   "db_id": "card_games",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_479",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_480",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_483",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "无法解析",
+    "执行报错"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_484",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "= (SELECT MAX)",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_486",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_487",
+   "db_id": "card_games",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_518",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·多列",
+    "执行报错"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_522",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_528",
+   "db_id": "card_games",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_529",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "空结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_530",
+   "db_id": "card_games",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "空结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_195",
+   "db_id": "toxicology",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_197",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_198",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_200",
+   "db_id": "toxicology",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_201",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_206",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_207",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_208",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_212",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只查值",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_213",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_215",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_218",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_219",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_220",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_226",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_227",
+   "db_id": "toxicology",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_228",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_230",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_231",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_232",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_234",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_236",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_239",
+   "db_id": "toxicology",
+   "difficulty": "simple",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_240",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_242",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_243",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_244",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_245",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_247",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_248",
+   "db_id": "toxicology",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_249",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_253",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_255",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_260",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_263",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_268",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_273",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_281",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_282",
+   "db_id": "toxicology",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_327",
+   "db_id": "toxicology",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_5",
+   "db_id": "california_schools",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_11",
+   "db_id": "california_schools",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_12",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_17",
+   "db_id": "california_schools",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_23",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_24",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_25",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_26",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_27",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_28",
+   "db_id": "california_schools",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_31",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_32",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_37",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_36",
+   "db_id": "california_schools",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_39",
+   "db_id": "california_schools",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_40",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_41",
+   "db_id": "california_schools",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "其他写法",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_45",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_46",
+   "db_id": "california_schools",
+   "difficulty": "simple",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_47",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_48",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_50",
+   "db_id": "california_schools",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_62",
+   "db_id": "california_schools",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_72",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_77",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_79",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数无JOIN",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_82",
+   "db_id": "california_schools",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_83",
+   "db_id": "california_schools",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_85",
+   "db_id": "california_schools",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_87",
+   "db_id": "california_schools",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_89",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_92",
+   "db_id": "financial",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_93",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_94",
+   "db_id": "financial",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_95",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "空结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_98",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_99",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_100",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_112",
+   "db_id": "financial",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_115",
+   "db_id": "financial",
+   "difficulty": "challenging",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_116",
+   "db_id": "financial",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_117",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_118",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_125",
+   "db_id": "financial",
+   "difficulty": "challenging",
+   "nodes": [
+    "只查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_128",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_136",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "其他写法",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_137",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_138",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_129",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "未取证",
+    "ORDER BY+LIMIT",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_137",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_138",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "计数无JOIN",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_145",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_149",
+   "db_id": "financial",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_152",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_159",
+   "db_id": "financial",
+   "difficulty": "simple",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_168",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_169",
+   "db_id": "financial",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_173",
+   "db_id": "financial",
+   "difficulty": "challenging",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "非计数题",
+    "多问句·多列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_186",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "非最值题",
+    "计数不去重",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": false
+  },
+  {
+   "id": "bird_189",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "只执行SQL",
+    "ORDER BY+LIMIT",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_192",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·单列",
+    "有结果"
+   ],
+   "correct": true
+  },
+  {
+   "id": "bird_194",
+   "db_id": "financial",
+   "difficulty": "moderate",
+   "nodes": [
+    "执行+查值",
+    "非最值题",
+    "非计数题",
+    "单问句·多列",
+    "有结果"
+   ],
+   "correct": false
+  }
+ ],
+ "links": [
+  {
+   "depth": 4,
+   "source": "有结果",
+   "target": "答对",
+   "correct": true,
+   "value": 337
+  },
+  {
+   "depth": 3,
+   "source": "单问句·单列",
+   "target": "有结果",
+   "correct": true,
+   "value": 284
+  },
+  {
+   "depth": 0,
+   "source": "只执行SQL",
+   "target": "非最值题",
+   "correct": true,
+   "value": 196
+  },
+  {
+   "depth": 1,
+   "source": "非最值题",
+   "target": "非计数题",
+   "correct": true,
+   "value": 194
+  },
+  {
+   "depth": 2,
+   "source": "非计数题",
+   "target": "单问句·单列",
+   "correct": true,
+   "value": 184
+  },
+  {
+   "depth": 4,
+   "source": "有结果",
+   "target": "答错",
+   "correct": false,
+   "value": 152
+  },
+  {
+   "depth": 3,
+   "source": "单问句·单列",
+   "target": "有结果",
+   "correct": false,
+   "value": 113
+  },
+  {
+   "depth": 0,
+   "source": "只执行SQL",
+   "target": "非最值题",
+   "correct": false,
+   "value": 80
+  },
+  {
+   "depth": 1,
+   "source": "非最值题",
+   "target": "非计数题",
+   "correct": false,
+   "value": 72
+  },
+  {
+   "depth": 0,
+   "source": "执行+查值",
+   "target": "非最值题",
+   "correct": true,
+   "value": 65
+  },
+  {
+   "depth": 2,
+   "source": "非计数题",
+   "target": "单问句·单列",
+   "correct": false,
+   "value": 65
+  },
+  {
+   "depth": 2,
+   "source": "计数不去重",
+   "target": "单问句·单列",
+   "correct": true,
+   "value": 52
+  },
+  {
+   "depth": 3,
+   "source": "单问句·多列",
+   "target": "有结果",
+   "correct": true,
+   "value": 47
+  },
+  {
+   "depth": 2,
+   "source": "非计数题",
+   "target": "单问句·多列",
+   "correct": true,
+   "value": 44
+  },
+  {
+   "depth": 1,
+   "source": "非最值题",
+   "target": "计数不去重",
+   "correct": true,
+   "value": 43
+  },
+  {
+   "depth": 0,
+   "source": "只执行SQL",
+   "target": "ORDER BY+LIMIT",
+   "correct": true,
+   "value": 39
+  },
+  {
+   "depth": 1,
+   "source": "ORDER BY+LIMIT",
+   "target": "非计数题",
+   "correct": true,
+   "value": 37
+  },
+  {
+   "depth": 0,
+   "source": "执行+查值",
+   "target": "非最值题",
+   "correct": false,
+   "value": 34
+  },
+  {
+   "depth": 2,
+   "source": "计数无JOIN",
+   "target": "单问句·单列",
+   "correct": true,
+   "value": 31
+  },
+  {
+   "depth": 3,
+   "source": "单问句·多列",
+   "target": "有结果",
+   "correct": false,
+   "value": 31
+  },
+  {
+   "depth": 1,
+   "source": "非最值题",
+   "target": "计数无JOIN",
+   "correct": true,
+   "value": 29
+  },
+  {
+   "depth": 1,
+   "source": "非最值题",
+   "target": "计数不去重",
+   "correct": false,
+   "value": 28
+  },
+  {
+   "depth": 2,
+   "source": "计数不去重",
+   "target": "单问句·单列",
+   "correct": false,
+   "value": 27
+  },
+  {
+   "depth": 2,
+   "source": "非计数题",
+   "target": "单问句·多列",
+   "correct": false,
+   "value": 26
+  },
+  {
+   "depth": 1,
+   "source": "ORDER BY+LIMIT",
+   "target": "非计数题",
+   "correct": false,
+   "value": 20
+  },
+  {
+   "depth": 1,
+   "source": "非最值题",
+   "target": "计数无JOIN",
+   "correct": false,
+   "value": 17
+  },
+  {
+   "depth": 2,
+   "source": "计数无JOIN",
+   "target": "单问句·单列",
+   "correct": false,
+   "value": 17
+  },
+  {
+   "depth": 2,
+   "source": "计数去重",
+   "target": "单问句·单列",
+   "correct": true,
+   "value": 17
+  },
+  {
+   "depth": 1,
+   "source": "非最值题",
+   "target": "计数去重",
+   "correct": true,
+   "value": 15
+  },
+  {
+   "depth": 0,
+   "source": "只执行SQL",
+   "target": "ORDER BY+LIMIT",
+   "correct": false,
+   "value": 14
+  },
+  {
+   "depth": 2,
+   "source": "计数去重",
+   "target": "单问句·单列",
+   "correct": false,
+   "value": 12
+  },
+  {
+   "depth": 1,
+   "source": "非最值题",
+   "target": "计数去重",
+   "correct": false,
+   "value": 11
+  },
+  {
+   "depth": 0,
+   "source": "执行+查值",
+   "target": "ORDER BY+LIMIT",
+   "correct": false,
+   "value": 10
+  },
+  {
+   "depth": 0,
+   "source": "只查值",
+   "target": "非最值题",
+   "correct": true,
+   "value": 10
+  },
+  {
+   "depth": 0,
+   "source": "未取证",
+   "target": "非最值题",
+   "correct": true,
+   "value": 10
+  },
+  {
+   "depth": 1,
+   "source": "ORDER BY+LIMIT",
+   "target": "计数不去重",
+   "correct": true,
+   "value": 10
+  },
+  {
+   "depth": 0,
+   "source": "执行+查值",
+   "target": "ORDER BY+LIMIT",
+   "correct": true,
+   "value": 9
+  },
+  {
+   "depth": 0,
+   "source": "未取证",
+   "target": "非最值题",
+   "correct": false,
+   "value": 9
+  },
+  {
+   "depth": 3,
+   "source": "多问句·多列",
+   "target": "有结果",
+   "correct": false,
+   "value": 8
+  },
+  {
+   "depth": 4,
+   "source": "执行报错",
+   "target": "答错",
+   "correct": false,
+   "value": 7
+  },
+  {
+   "depth": 2,
+   "source": "计数不去重",
+   "target": "单问句·多列",
+   "correct": false,
+   "value": 6
+  },
+  {
+   "depth": 1,
+   "source": "ORDER BY+LIMIT",
+   "target": "计数不去重",
+   "correct": false,
+   "value": 6
+  },
+  {
+   "depth": 3,
+   "source": "单问句·单列",
+   "target": "执行报错",
+   "correct": false,
+   "value": 5
+  },
+  {
+   "depth": 2,
+   "source": "非计数题",
+   "target": "多问句·多列",
+   "correct": false,
+   "value": 5
+  },
+  {
+   "depth": 0,
+   "source": "只查值",
+   "target": "非最值题",
+   "correct": false,
+   "value": 5
+  },
+  {
+   "depth": 0,
+   "source": "只执行SQL",
+   "target": "= (SELECT MAX)",
+   "correct": false,
+   "value": 5
+  },
+  {
+   "depth": 0,
+   "source": "只执行SQL",
+   "target": "其他写法",
+   "correct": true,
+   "value": 4
+  },
+  {
+   "depth": 2,
+   "source": "非计数题",
+   "target": "多问句·多列",
+   "correct": true,
+   "value": 4
+  },
+  {
+   "depth": 3,
+   "source": "多问句·多列",
+   "target": "有结果",
+   "correct": true,
+   "value": 4
+  },
+  {
+   "depth": 4,
+   "source": "空结果",
+   "target": "答错",
+   "correct": false,
+   "value": 4
+  },
+  {
+   "depth": 1,
+   "source": "ORDER BY+LIMIT",
+   "target": "计数无JOIN",
+   "correct": true,
+   "value": 4
+  },
+  {
+   "depth": 1,
+   "source": "= (SELECT MAX)",
+   "target": "非计数题",
+   "correct": false,
+   "value": 3
+  },
+  {
+   "depth": 3,
+   "source": "单问句·单列",
+   "target": "空结果",
+   "correct": false,
+   "value": 3
+  },
+  {
+   "depth": 2,
+   "source": "计数不去重",
+   "target": "多问句·多列",
+   "correct": false,
+   "value": 3
+  },
+  {
+   "depth": 0,
+   "source": "执行+查值",
+   "target": "其他写法",
+   "correct": false,
+   "value": 2
+  },
+  {
+   "depth": 1,
+   "source": "其他写法",
+   "target": "非计数题",
+   "correct": false,
+   "value": 2
+  },
+  {
+   "depth": 3,
+   "source": "多问句·单列",
+   "target": "有结果",
+   "correct": true,
+   "value": 2
+  },
+  {
+   "depth": 1,
+   "source": "其他写法",
+   "target": "非计数题",
+   "correct": true,
+   "value": 2
+  },
+  {
+   "depth": 2,
+   "source": "计数不去重",
+   "target": "单问句·多列",
+   "correct": true,
+   "value": 2
+  },
+  {
+   "depth": 0,
+   "source": "只查值",
+   "target": "ORDER BY+LIMIT",
+   "correct": true,
+   "value": 2
+  },
+  {
+   "depth": 0,
+   "source": "只执行SQL",
+   "target": "其他写法",
+   "correct": false,
+   "value": 2
+  },
+  {
+   "depth": 2,
+   "source": "非计数题",
+   "target": "多问句·单列",
+   "correct": true,
+   "value": 1
+  },
+  {
+   "depth": 0,
+   "source": "只查值",
+   "target": "ORDER BY+LIMIT",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 2,
+   "source": "计数无JOIN",
+   "target": "多问句·单列",
+   "correct": true,
+   "value": 1
+  },
+  {
+   "depth": 1,
+   "source": "其他写法",
+   "target": "计数去重",
+   "correct": true,
+   "value": 1
+  },
+  {
+   "depth": 1,
+   "source": "= (SELECT MAX)",
+   "target": "计数无JOIN",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 0,
+   "source": "未取证",
+   "target": "ORDER BY+LIMIT",
+   "correct": true,
+   "value": 1
+  },
+  {
+   "depth": 1,
+   "source": "其他写法",
+   "target": "计数不去重",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 0,
+   "source": "只执行SQL",
+   "target": "= (SELECT MAX)",
+   "correct": true,
+   "value": 1
+  },
+  {
+   "depth": 1,
+   "source": "= (SELECT MAX)",
+   "target": "计数去重",
+   "correct": true,
+   "value": 1
+  },
+  {
+   "depth": 1,
+   "source": "其他写法",
+   "target": "计数去重",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 1,
+   "source": "= (SELECT MAX)",
+   "target": "计数不去重",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 2,
+   "source": "计数无JOIN",
+   "target": "单问句·多列",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 2,
+   "source": "非计数题",
+   "target": "无法解析",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 3,
+   "source": "无法解析",
+   "target": "执行报错",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 3,
+   "source": "单问句·多列",
+   "target": "执行报错",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 3,
+   "source": "单问句·多列",
+   "target": "空结果",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 2,
+   "source": "计数无JOIN",
+   "target": "单问句·多列",
+   "correct": true,
+   "value": 1
+  },
+  {
+   "depth": 1,
+   "source": "其他写法",
+   "target": "计数不去重",
+   "correct": true,
+   "value": 1
+  },
+  {
+   "depth": 0,
+   "source": "未取证",
+   "target": "ORDER BY+LIMIT",
+   "correct": false,
+   "value": 1
+  }
+ ]
+}
