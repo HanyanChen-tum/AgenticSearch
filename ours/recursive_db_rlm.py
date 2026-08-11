@@ -30,6 +30,12 @@ from ours.agent.context_store import (
 from ours.agent.knowledge import KnowledgeAssembler
 from ours.agent.leaf import LEAF_PROMPT_VERSION, run_leaf
 from ours.agent.prompts import get_system_prompt
+from ours.agent.reasoning_capture import (
+    RESPONSES_API_VERSION,
+    manifest as reasoning_capture_manifest,
+    parse_response as parse_reasoning_response,
+    split_messages,
+)
 from ours.agent.sql_conventions import get_sql_convention_rewriter
 from ours.agent.state import AgentExecutionState, ExecutionStatus
 from ours.agent.query_plan import (
@@ -40,7 +46,7 @@ from ours.agent.query_plan import (
     plan_sql_adherence,
     protocol_manifest,
 )
-from shared.token_usage import aggregate_call_usage
+from shared.token_usage import aggregate_call_usage, extract_response_usage
 
 
 # Stop sequences that prevent the model from hallucinating fake turns
@@ -89,6 +95,7 @@ class DBRLM(RLM):
         self._query_plan_state = QueryPlanState()
         self._context_store = None
         self._sql_convention_rewrite = None
+        self._reasoning_capture = []
         self._trace_context = {
             "question": question,
             "db_path": str(Path(db_path).resolve()),
@@ -104,6 +111,11 @@ class DBRLM(RLM):
             "sql_convention_manifest": (
                 self._sql_conventions.manifest()
                 if self._sql_conventions is not None
+                else None
+            ),
+            "reasoning_capture_manifest": (
+                reasoning_capture_manifest()
+                if self.agent_config.reasoning_capture != "none"
                 else None
             ),
         }
@@ -160,6 +172,9 @@ class DBRLM(RLM):
             ),
             "sql_convention_rewrite": copy.deepcopy(
                 getattr(self, "_sql_convention_rewrite", None)
+            ),
+            "reasoning_capture": copy.deepcopy(
+                getattr(self, "_reasoning_capture", None) or None
             ),
         }
 
@@ -252,6 +267,68 @@ class DBRLM(RLM):
             "rewritten_sql": result.sql,
         }
         return result.sql
+
+    async def _call_llm(self, messages: list[Message], **kwargs: Any) -> str:
+        """Route through the Responses API when reasoning capture is on.
+
+        Chat Completions never returns the reasoning, only its token count. This
+        path returns summary sections, and because it runs during the generation
+        that produces the answer, the reasoning belongs to that answer -- a replay
+        afterwards does not, since sampling is not pinned.
+        """
+        if self.agent_config.reasoning_capture == "none":
+            return await super()._call_llm(messages, **kwargs)
+
+        self._llm_calls += 1
+        instructions, body = split_messages(messages)
+        call_kwargs: dict[str, Any] = {
+            k: v for k, v in {**self.llm_kwargs, **kwargs}.items()
+            # Chat-only parameters the Responses API rejects.
+            if k not in {"stop", "temperature", "reasoning_effort", "api_version", "timeout"}
+        }
+        if self.api_base:
+            call_kwargs["api_base"] = self.api_base
+        if self.api_key:
+            call_kwargs["api_key"] = self.api_key
+        effort = {**self.llm_kwargs, **kwargs}.get("reasoning_effort", "high")
+
+        started = time.perf_counter()
+        try:
+            response = await asyncio.wait_for(
+                litellm.aresponses(
+                    model=self.model, instructions=instructions, input=body,
+                    api_version=RESPONSES_API_VERSION,
+                    reasoning={"effort": effort, "summary": "detailed"},
+                    **call_kwargs,
+                ),
+                timeout=120,
+            )
+        except Exception as exc:
+            self._record_llm_call(
+                model=self.model, latency_seconds=time.perf_counter() - started,
+                error=type(exc).__name__,
+            )
+            raise
+
+        payload = response.model_dump() if hasattr(response, "model_dump") else dict(response)
+        parsed = parse_reasoning_response(payload)
+        # extract_response_usage already normalises the Responses field names
+        # (input_tokens / output_tokens_details); hand-building the record here
+        # skipped the fields _record_llm_call expects.
+        self._record_llm_call(
+            model=self.model, latency_seconds=time.perf_counter() - started,
+            usage=extract_response_usage(response),
+        )
+        if not hasattr(self, "_reasoning_capture"):
+            self._reasoning_capture = []
+        self._reasoning_capture.append({
+            "turn": getattr(self, "_trace_turn", 0),
+            "reasoning_sections": parsed["reasoning_sections"],
+            "section_count": parsed["section_count"],
+            "reasoning_tokens": parsed["reasoning_tokens"],
+            "visible_output": parsed["text"],
+        })
+        return parsed["text"]
 
     def _traced_recursive_fn(self):
         """Wrap the recursion primitive so every call is recorded.

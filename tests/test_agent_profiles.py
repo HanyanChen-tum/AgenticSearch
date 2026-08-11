@@ -77,7 +77,7 @@ class AgentProfileTests(unittest.TestCase):
                 "e3-c-conv", "e3-c-conv-rules", "e3-c-join-minimal",
                 "e3-c-join-minimal-v2",
                 "e3-c-literal-check", "e3-c-recursive", "e3-c-recursive-db",
-                "e3-c-semantic",
+                "e3-c-rules-reasoning", "e3-c-semantic",
                 "e3-f", "e3-rf",
                 "e4-a", "e4-r0", "e5-a", "legacy-e0",
             ),
@@ -685,6 +685,51 @@ class RecursionExposureTests(unittest.TestCase):
             self.assertEqual(len(events), 1)
             self.assertEqual(events[0]["arguments"]["sub_query"], "which column?")
             self.assertEqual(events[0]["arguments"]["sub_context_chars"], 8)
+
+
+class ReasoningCaptureTests(unittest.TestCase):
+    """Reasoning must be captured during the run that produced the answer."""
+
+    def test_only_the_capture_profile_changes_the_api_path(self):
+        base, cap = (get_agent_config(n) for n in ("e3-c-conv-rules", "e3-c-rules-reasoning"))
+        differing = [
+            f.name for f in dataclasses.fields(cap)
+            if getattr(cap, f.name) != getattr(base, f.name)
+        ]
+        self.assertEqual(differing, ["profile", "experiment_variant", "reasoning_capture"])
+
+    def test_manifest_states_that_summaries_are_not_the_raw_chain(self):
+        from ours.agent.reasoning_capture import manifest
+        m = manifest()
+        self.assertEqual(m["api"], "responses")
+        # The deployment does not return raw reasoning tokens; a run that implied
+        # otherwise would misrepresent what was captured.
+        self.assertFalse(m["captures_raw_reasoning"])
+
+    def test_system_messages_become_instructions(self):
+        from ours.agent.reasoning_capture import split_messages
+        instructions, body = split_messages([
+            {"role": "system", "content": "S"},
+            {"role": "user", "content": "U"},
+            {"role": "assistant", "content": "A"},
+        ])
+        self.assertEqual(instructions, "S")
+        self.assertEqual([m["role"] for m in body], ["user", "assistant"])
+
+    def test_reasoning_sections_and_text_are_separated(self):
+        from ours.agent.reasoning_capture import parse_response
+        parsed = parse_response({
+            "output": [
+                {"type": "reasoning", "summary": [
+                    {"text": "**Plan** first"}, {"text": "**Check** second"}]},
+                {"type": "message", "content": [{"text": 'FINAL("SELECT 1")'}]},
+            ],
+            "usage": {"input_tokens": 10, "output_tokens": 90,
+                      "output_tokens_details": {"reasoning_tokens": 80}},
+        })
+        self.assertEqual(parsed["section_count"], 2)
+        self.assertIn("SELECT 1", parsed["text"])
+        self.assertEqual(parsed["reasoning_tokens"], 80)
 
 
 if __name__ == "__main__":

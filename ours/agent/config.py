@@ -8,6 +8,7 @@ import json
 
 from .prompts import prompt_manifest
 from .query_plan import QUERY_PLAN_MODE, protocol_manifest
+from .reasoning_capture import CAPTURE_MODE as REASONING_CAPTURE_MODE
 from .sql_conventions import VERSION as SQL_CONVENTION_VERSION
 
 
@@ -42,6 +43,10 @@ class AgentConfig:
     # recursion can be ablated on its own. Flipping capability_gate instead would
     # change two things at once.
     recursion_mode: str = "none"
+    # Routes generation through the Responses API so reasoning summaries are
+    # captured alongside the answer they produced. Diagnostic only: it changes
+    # the API path, so accuracy is not comparable to Chat Completions runs.
+    reasoning_capture: str = "none"
 
     def __post_init__(self) -> None:
         if self.few_shot_mode not in {"train-retrieval", "none"}:
@@ -56,6 +61,8 @@ class AgentConfig:
             raise ValueError(f"Unknown context mode: {self.context_mode!r}")
         if self.sql_convention_mode not in {"none", SQL_CONVENTION_VERSION}:
             raise ValueError(f"Unknown SQL convention mode: {self.sql_convention_mode!r}")
+        if self.reasoning_capture not in {"none", REASONING_CAPTURE_MODE}:
+            raise ValueError(f"Unknown reasoning capture mode: {self.reasoning_capture!r}")
         if self.recursion_mode not in {"none", "leaf-v1", "leaf-db-v1"}:
             raise ValueError(f"Unknown recursion mode: {self.recursion_mode!r}")
         # The primitive was present in three earlier profiles but no prompt named
@@ -247,6 +254,21 @@ _PROFILES = {
         capability_gate=True,
         offline_metadata_mode="e3-f-schema-v4",
         schema_context_mode="offline-retrieval",
+    ),
+    # e3-c-conv-rules routed through the Responses API so each turn's reasoning is
+    # recorded with the answer it produced. Diagnostic: the API path differs, so
+    # its accuracy is not directly comparable until that is measured.
+    "e3-c-rules-reasoning": AgentConfig(
+        profile="e3-c-rules-reasoning",
+        experiment_variant="e3-c-rules-reasoning",
+        prompt_profile="basic-conventions-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        reasoning_capture=REASONING_CAPTURE_MODE,
     ),
     # Recursion v2: the leaf shares the parent's gated database handle. v1's
     # text-only leaf was handed the parent's ambiguity questions and, knowing
