@@ -28,6 +28,7 @@ from ours.agent.context_store import (
     verify_information_equivalence,
 )
 from ours.agent.knowledge import KnowledgeAssembler
+from ours.agent.leaf import LEAF_PROMPT_VERSION, run_leaf
 from ours.agent.prompts import get_system_prompt
 from ours.agent.sql_conventions import get_sql_convention_rewriter
 from ours.agent.state import AgentExecutionState, ExecutionStatus
@@ -252,6 +253,53 @@ class DBRLM(RLM):
         }
         return result.sql
 
+    def _traced_recursive_fn(self):
+        """Wrap the recursion primitive so every call is recorded.
+
+        The primitive sat unused in the REPL for the whole project because no
+        prompt named it; nothing in the trace would have revealed that. Recording
+        each call means "the model ignored the tool" and "the tool did not help"
+        stay distinguishable.
+
+        Under leaf-db-v1 the child is a LeafAgent sharing this agent's gated
+        database handle, because v1's text-only child knew strictly less than its
+        caller and moved accuracy 0.00pp on dev 500.
+        """
+        mode = self.agent_config.recursion_mode
+        inner = self._make_recursive_fn() if mode == "leaf-v1" else None
+
+        def recursive_llm(sub_query: str, sub_context: str) -> str:
+            if inner is not None:
+                answer, detail = inner(sub_query, sub_context), {}
+            else:
+                result = run_leaf(
+                    self._call_llm,
+                    self._build_repl_env("", "").get("db"),
+                    sub_query,
+                    sub_context,
+                    schema=getattr(self, "_leaf_schema", ""),
+                )
+                answer = result["answer"]
+                detail = {
+                    "turns": result["turns"],
+                    "terminated": result["terminated"],
+                    "queried": result.get("queried"),
+                    "transcript": result.get("transcript"),
+                }
+            self._record_tool_event(
+                "recursive_llm",
+                {
+                    "sub_query": sub_query,
+                    "sub_context_chars": len(sub_context or ""),
+                    "sub_context": sub_context,
+                    "mode": mode,
+                },
+                {"answer": answer, **detail},
+            )
+            return answer
+
+        return recursive_llm
+
     # ------------------------------------------------------------------
     # Override: inject `db` into the REPL environment
     # ------------------------------------------------------------------
@@ -263,6 +311,8 @@ class DBRLM(RLM):
                 "query": query,
                 "re": re,
             }
+            if self.agent_config.recursion_mode != "none":
+                env["recursive_llm"] = self._traced_recursive_fn()
             if hasattr(self, "_db"):
                 env["db"] = GatedDBEnvironment(
                     self._db,
@@ -307,6 +357,9 @@ class DBRLM(RLM):
         blocks = self._knowledge.blocks(question, db_id, evidence)
         if schema_str:
             blocks = {**blocks, "schema": f"Schema:\n{schema_str}\n\n"}
+        # A delegated sub-agent shares the parent's database handle, so it needs
+        # the parent's view of that database to know what to query.
+        self._leaf_schema = blocks.get("offline_metadata") or blocks.get("schema") or ""
         if hasattr(self, "_trace_context"):
             self._trace_context["knowledge_selection"] = self._knowledge.selection_manifest(
                 question, db_id, evidence
