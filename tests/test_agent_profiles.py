@@ -74,8 +74,10 @@ class AgentProfileTests(unittest.TestCase):
             agent_profile_names(),
             (
                 "clean-e0", "clean-e1", "e3-a", "e3-ac", "e3-c",
-                "e3-c-conv", "e3-c-join-minimal", "e3-c-join-minimal-v2",
-                "e3-c-literal-check", "e3-f", "e3-rf",
+                "e3-c-conv", "e3-c-conv-rules", "e3-c-join-minimal",
+                "e3-c-join-minimal-v2",
+                "e3-c-literal-check", "e3-c-recursive", "e3-c-recursive-db",
+                "e3-f", "e3-rf",
                 "e4-a", "e4-r0", "e5-a", "legacy-e0",
             ),
         )
@@ -551,6 +553,137 @@ class SqlConventionRewriteTests(unittest.TestCase):
             self.assertTrue(rewrite["changed"])
             self.assertEqual(rewrite["applied"], ["count_no_distinct"])
             self.assertIn("DISTINCT", rewrite["original_sql"].upper())
+
+
+class TrainAuditedConventionPromptTests(unittest.TestCase):
+    """Only the legacy-prompt rules that train data supports may be restated."""
+
+    def test_prompt_states_the_supported_rules_and_omits_the_refuted_ones(self):
+        prompt = get_system_prompt("basic-conventions-v1")
+        self.assertIn("ORDER BY col ASC|DESC LIMIT 1", prompt)
+        self.assertIn("projects exactly one column", prompt)
+        # Train contradicts both of these, so restating them would import the
+        # legacy prompt's eval tuning along with its useful parts.
+        self.assertNotIn("YES", prompt)
+        self.assertNotIn("every asked item", prompt)
+
+    def test_provenance_declares_the_train_split(self):
+        manifest = prompt_manifest("basic-conventions-v1")
+        self.assertEqual(manifest["source_split"], "train")
+        self.assertEqual(manifest["source"], "train-mined-conventions")
+        self.assertFalse(manifest["contains_examples"])
+
+    def test_isolates_the_prompt_against_e3_c_conv(self):
+        base, rules = (get_agent_config(n) for n in ("e3-c-conv", "e3-c-conv-rules"))
+        differing = [
+            f.name for f in dataclasses.fields(rules)
+            if getattr(rules, f.name) != getattr(base, f.name)
+        ]
+        self.assertEqual(
+            differing, ["profile", "experiment_variant", "prompt_profile"]
+        )
+        self.assertEqual(rules.sql_convention_mode, base.sql_convention_mode)
+
+
+class RecursionExposureTests(unittest.TestCase):
+    """The recursion primitive was present but unnamed, so it was never invoked."""
+
+    def test_only_the_recursive_profile_puts_the_primitive_in_the_repl(self):
+        for profile, expected in (("e3-c", False), ("e3-c-recursive", True)):
+            agent = DBRLM(model="test/model", agent_config=get_agent_config(profile))
+            env = agent._build_repl_env("q", "ctx")
+            self.assertEqual("recursive_llm" in env, expected, profile)
+            # The db gate stays on in both, so recursion is the only variable.
+            self.assertEqual(
+                agent.agent_config.allowed_db_methods, ("execute", "sample_values")
+            )
+
+    def test_the_prompt_names_the_tool_and_its_limits(self):
+        prompt = get_system_prompt("basic-recursive-v1")
+        self.assertIn("recursive_llm(", prompt)
+        # The child is a plain RLM: no database, no schema, no history. Saying so
+        # matters, otherwise the model spends calls on things the leaf cannot do.
+        self.assertIn("no database access", prompt)
+        self.assertNotIn("recursive_llm", get_system_prompt("basic"))
+
+    def test_recursion_mode_requires_the_prompt_that_documents_it(self):
+        with self.assertRaises(ValueError):
+            dataclasses.replace(
+                get_agent_config("e3-c-recursive"), prompt_profile="basic"
+            )
+
+    def test_capability_manifest_records_exposure_separately_from_the_gate(self):
+        recursive = get_agent_config("e3-c-recursive").capability_manifest()
+        plain = get_agent_config("e3-c").capability_manifest()
+        self.assertTrue(recursive["recursion_exposed"])
+        self.assertFalse(plain["recursion_exposed"])
+        self.assertTrue(recursive["gate_enabled"])
+
+    def test_leaf_db_mode_gives_the_child_the_gated_database(self):
+        from ours.agent.leaf import LeafAgent
+
+        calls = []
+
+        async def fake_llm(messages):
+            calls.append(messages)
+            if len(calls) == 1:
+                return '```python\nprint(db.sample_values("items", "name"))\n```'
+            return 'FINAL("the column holds the value alpha")'
+
+        with tempfile.TemporaryDirectory() as directory:
+            db_path = CapabilityGateTests.make_database(directory)
+            db = GatedDBEnvironment(
+                DBEnvironment(db_path), ("execute", "sample_values"), lambda *a: None
+            )
+            import asyncio
+            result = asyncio.run(
+                LeafAgent(fake_llm, db).answer("which values?", "some material")
+            )
+
+        self.assertEqual(result["terminated"], "final")
+        self.assertIn("alpha", result["answer"])
+        # v1's leaf could not do this: the child now reaches the database.
+        self.assertIn("db.sample_values", calls[1][2]["content"]
+                      if len(calls[1]) > 2 else str(calls[1]))
+
+    def test_leaf_reports_running_out_of_turns_instead_of_guessing(self):
+        from ours.agent.leaf import LeafAgent
+        import asyncio
+
+        async def never_finishes(messages):
+            return '```python\nprint(1)\n```'
+
+        result = asyncio.run(
+            LeafAgent(never_finishes, None, max_iterations=2).answer("q", "")
+        )
+        self.assertEqual(result["terminated"], "max_iterations")
+        self.assertIn("no answer", result["answer"])
+
+    def test_every_recursive_call_is_recorded_in_the_trace(self):
+        with tempfile.TemporaryDirectory() as directory:
+            db_path = CapabilityGateTests.make_database(directory)
+            agent = DBRLM(
+                model="test/model", max_iterations=4,
+                agent_config=get_agent_config("e3-c-recursive"),
+            )
+            agent._make_recursive_fn = lambda: (lambda q, c: f"leaf saw {len(c)} chars")
+            responses = [
+                '```python\nprint(recursive_llm("which column?", "name, id"))\n```',
+                'FINAL("SELECT name FROM items")',
+            ]
+
+            async def fake_call_llm(self, messages, **kwargs):
+                self._llm_calls += 1
+                return responses.pop(0)
+
+            agent._call_llm = types.MethodType(fake_call_llm, agent)
+            agent.complete_sql("Find alpha.", db_path)
+
+            events = [e for e in agent.trace_snapshot()["events"]
+                      if e["tool"] == "recursive_llm"]
+            self.assertEqual(len(events), 1)
+            self.assertEqual(events[0]["arguments"]["sub_query"], "which column?")
+            self.assertEqual(events[0]["arguments"]["sub_context_chars"], 8)
 
 
 if __name__ == "__main__":

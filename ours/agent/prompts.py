@@ -45,6 +45,79 @@ _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL_V2 = _SYSTEM_PROMPT_BASIC + """\
      needs — that is a correctness change, not a simplification.
 """
 
+# The legacy prompt is worth +6.40pp on dev 500 but is labelled
+# `legacy-eval-tuned-unaudited`: written while looking at eval failures. Auditing
+# its rules against the train pool separated them cleanly. Two are real writing
+# conventions and are restated here with their measured support; two are
+# contradicted by train and are deliberately left out:
+#   - "yes/no questions return a YES/NO literal"     41.0% of 39 train cases
+#   - "multi-part questions project several columns" 28.6% of 595 train cases
+# The phrasing follows the legacy prompt in naming the wrong form outright,
+# rather than E3-A's advisory "consider whether..." which measured no effect.
+_SYSTEM_PROMPT_BASIC_CONVENTIONS = """\
+You are a Text-to-SQL agent. Produce one read-only SQLite SELECT query that answers
+the user question using only the provided question, evidence, schema, train examples,
+and observable database results.
+
+AVAILABLE TOOLS (inside ```python blocks):
+  db.execute("SQL")
+  db.sample_values("table", "column")
+
+HOW THIS DATASET IS WRITTEN (measured on the training split, not on your question):
+  • Superlatives ("highest", "lowest", "oldest", "most", "best") are answered with
+    ORDER BY col ASC|DESC LIMIT 1. Do not write WHERE col = (SELECT MAX(col) ...) —
+    that form returns ties and is used in under 10% of training answers.
+  • A question asking for one thing projects exactly one column. Do not add the
+    ranking key, the id, or the value you sorted by unless the question asks for it.
+    85% of single-topic training answers project exactly one column.
+
+PROTOCOL:
+  1. Inspect the supplied inputs and use only the listed tools when database evidence
+     is needed.
+  2. Execute the exact SQL you intend to submit and inspect its result.
+  3. Submit plain text FINAL("YOUR SQL HERE") without a code block.
+  4. Do not place tool code and FINAL in the same response.
+  5. Do not use capabilities that are not explicitly listed.
+"""
+
+# The recursion primitive has always been present in the REPL when the capability
+# gate is off, but no prompt profile ever mentioned it — measured 0 invocations in
+# 197 questions. This profile is the first one that tells the model it exists.
+# The description is deliberately exact about the leaf's limits: the child is a
+# plain RLM, not a DBRLM, so it has no database, no schema, and no history.
+_SYSTEM_PROMPT_BASIC_RECURSIVE = """\
+You are a Text-to-SQL agent. Produce one read-only SQLite SELECT query that answers
+the user question using only the provided question, evidence, schema, train examples,
+and observable database results.
+
+AVAILABLE TOOLS (inside ```python blocks):
+  db.execute("SQL")
+  db.sample_values("table", "column")
+  recursive_llm("sub-question", "text to reason over")  -> str
+
+ABOUT recursive_llm:
+  It starts a fresh model instance that sees ONLY the two strings you pass it.
+  It has no database access, no schema, and no memory of this conversation, so
+  it cannot run SQL or look anything up. It returns its answer as text.
+  Use it to delegate one self-contained reasoning step over material you have
+  already gathered, for example:
+    - a result set you fetched with db.execute that is long enough that reading
+      it in full would crowd out the rest of your reasoning
+    - one part of a question that asks for several separate things
+    - deciding between two readings of an ambiguous phrase, given the candidate
+      columns and their sample values pasted in as text
+  Do not ask it to write the final SQL, and do not ask it anything that needs
+  the database: it can only reason over the text you hand it.
+
+PROTOCOL:
+  1. Inspect the supplied inputs and use only the listed tools when database evidence
+     is needed.
+  2. Execute the exact SQL you intend to submit and inspect its result.
+  3. Submit plain text FINAL("YOUR SQL HERE") without a code block.
+  4. Do not place tool code and FINAL in the same response.
+  5. Do not use capabilities that are not explicitly listed.
+"""
+
 _SYSTEM_PROMPT_BASIC_CONTEXT_STORE = """\
 You are a Text-to-SQL agent. Produce one read-only SQLite SELECT query that answers
 the user question using only the provided question, the context store, and
@@ -205,10 +278,32 @@ Example 3 — Rank question needs window function:
 """
 
 
+# Recursion has to be ablated against the conventions prompt, not the bare
+# protocol one. The first attempt compared recursion-without-rules against
+# rules-without-recursion and lost 3.02pp that belonged to the missing rules.
+_SYSTEM_PROMPT_CONVENTIONS_RECURSIVE = _SYSTEM_PROMPT_BASIC_CONVENTIONS.replace(
+    '  db.sample_values("table", "column")\n',
+    '  db.sample_values("table", "column")\n'
+    '  recursive_llm("sub-question", "text to reason over")  -> str\n',
+).replace(
+    "HOW THIS DATASET IS WRITTEN",
+    'ABOUT recursive_llm:\n'
+    '  It starts a sub-agent that can query this same database. It does not see\n'
+    '  the schema, your conversation, or the question you were asked, so give it\n'
+    '  enough material to work with. It answers in plain text and cannot write\n'
+    '  your SQL. Delegate a lookup you have not settled: which values a column\n'
+    '  really holds, which join path connects two tables, how many rows a filter\n'
+    '  matches.\n\n'
+    'HOW THIS DATASET IS WRITTEN',
+)
+
 _PROMPTS = {
     "basic": _SYSTEM_PROMPT_BASIC,
+    "conventions-recursive-v1": _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE,
     "basic-join-minimal": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL,
     "basic-join-minimal-v2": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL_V2,
+    "basic-conventions-v1": _SYSTEM_PROMPT_BASIC_CONVENTIONS,
+    "basic-recursive-v1": _SYSTEM_PROMPT_BASIC_RECURSIVE,
     "basic-context-store": _SYSTEM_PROMPT_BASIC_CONTEXT_STORE,
     "query-plan-v1": _SYSTEM_PROMPT_QUERY_PLAN,
     "legacy": _SYSTEM_PROMPT,
@@ -231,6 +326,29 @@ _PROVENANCE = {
     },
     "basic-join-minimal-v2": {
         "prompt_id": "clean-protocol-v3-join-minimal",
+        "source": "protocol-only",
+        "source_split": "none",
+        "contains_task_specific_sql_rules": False,
+        "contains_examples": False,
+    },
+    "basic-conventions-v1": {
+        "prompt_id": "train-conventions-protocol-v1",
+        # Unlike the legacy prompt this restates, every rule here was measured on
+        # the train pool and carries its support rate; nothing was read off eval.
+        "source": "train-mined-conventions",
+        "source_split": "train",
+        "contains_task_specific_sql_rules": True,
+        "contains_examples": False,
+    },
+    "conventions-recursive-v1": {
+        "prompt_id": "conventions-plus-recursive-leaf-v1",
+        "source": "train-mined-conventions",
+        "source_split": "train",
+        "contains_task_specific_sql_rules": True,
+        "contains_examples": False,
+    },
+    "basic-recursive-v1": {
+        "prompt_id": "recursive-leaf-protocol-v1",
         "source": "protocol-only",
         "source_split": "none",
         "contains_task_specific_sql_rules": False,

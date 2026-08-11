@@ -38,6 +38,10 @@ class AgentConfig:
     allowed_db_methods: tuple[str, ...] = ("execute", "sample_values")
     literal_verification_nudge: bool = False
     sql_convention_mode: str = "none"
+    # Exposes the RLM recursion primitive without lifting the db-method gate, so
+    # recursion can be ablated on its own. Flipping capability_gate instead would
+    # change two things at once.
+    recursion_mode: str = "none"
 
     def __post_init__(self) -> None:
         if self.few_shot_mode not in {"train-retrieval", "none"}:
@@ -52,6 +56,18 @@ class AgentConfig:
             raise ValueError(f"Unknown context mode: {self.context_mode!r}")
         if self.sql_convention_mode not in {"none", SQL_CONVENTION_VERSION}:
             raise ValueError(f"Unknown SQL convention mode: {self.sql_convention_mode!r}")
+        if self.recursion_mode not in {"none", "leaf-v1", "leaf-db-v1"}:
+            raise ValueError(f"Unknown recursion mode: {self.recursion_mode!r}")
+        # The primitive was present in three earlier profiles but no prompt named
+        # it, so it was never invoked. Requiring the prompt that documents it
+        # prevents that silent no-op from recurring.
+        if self.recursion_mode != "none" and self.prompt_profile not in {
+            "basic-recursive-v1", "conventions-recursive-v1"
+        }:
+            raise ValueError(
+                f"recursion_mode={self.recursion_mode!r} requires a prompt profile "
+                "that documents recursive_llm"
+            )
         if self.schema_context_mode == "offline-retrieval" and self.offline_metadata_mode == "none":
             raise ValueError("offline-retrieval requires an offline metadata artifact")
         if self.planner_mode not in {"none", QUERY_PLAN_MODE}:
@@ -66,6 +82,7 @@ class AgentConfig:
             "allowed_db_methods": list(self.allowed_db_methods),
             "generic_recursive_llm": not self.capability_gate,
             "context_store_readable": self.context_mode == "store-readonly",
+            "recursion_exposed": self.recursion_mode != "none",
         }
         return {**manifest, "sha256": _manifest_sha256(manifest)}
 
@@ -201,6 +218,52 @@ _PROFILES = {
         offline_metadata_mode="e3-f-schema-v4",
         schema_context_mode="offline-retrieval",
         sql_convention_mode=SQL_CONVENTION_VERSION,
+    ),
+    # e3-c-conv plus the two legacy-prompt rules that survived a train audit.
+    # Single variable against e3-c-conv: only the prompt profile differs, so the
+    # deterministic post-processing stays identical on both sides.
+    "e3-c-conv-rules": AgentConfig(
+        profile="e3-c-conv-rules",
+        experiment_variant="e3-c-conv-rules",
+        prompt_profile="basic-conventions-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+    ),
+    # Recursion v2: the leaf shares the parent's gated database handle. v1's
+    # text-only leaf was handed the parent's ambiguity questions and, knowing
+    # strictly less, moved accuracy 0.00pp on dev 500. Carries the convention
+    # post-processing and audited rules so it builds on the current best.
+    "e3-c-recursive-db": AgentConfig(
+        profile="e3-c-recursive-db",
+        experiment_variant="e3-c-recursive-db",
+        prompt_profile="conventions-recursive-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        recursion_mode="leaf-db-v1",
+    ),
+    # First profile in the project that actually exposes RLM recursion. The
+    # primitive has been in the REPL whenever capability_gate is off, but no
+    # prompt profile ever named it — measured 0 invocations across 197 questions,
+    # so every "recursion doesn't help" conclusion so far was about something else.
+    # Single variable against e3-c: prompt names the tool, and the tool is present.
+    "e3-c-recursive": AgentConfig(
+        profile="e3-c-recursive",
+        experiment_variant="e3-c-recursive",
+        prompt_profile="basic-recursive-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        recursion_mode="leaf-v1",
     ),
     "e3-c-join-minimal": AgentConfig(
         profile="e3-c-join-minimal",
