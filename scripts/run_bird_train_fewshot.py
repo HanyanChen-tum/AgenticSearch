@@ -39,6 +39,7 @@ from ours.agent.offline_metadata import get_offline_metadata
 from shared.trace_io import TRACE_SCHEMA_VERSION, append_jsonl, load_jsonl, write_json
 from shared.token_usage import summarize_result_usage
 from shared.llm_config import resolve_llm_config
+from shared.sampling_params import effective_sampling_params
 from shared.sql_executor import DEFAULT_QUERY_TIMEOUT_SECONDS
 
 BIRD_DB_DIR  = PROJECT_ROOT / "data/raw/bird/minidev/MINIDEV/dev_databases"
@@ -362,7 +363,14 @@ def main():
         "max_iterations": args.max_iterations,
         "k": args.k,
         "effective_few_shot_k": effective_k,
-        "temperature": args.temperature,
+        "temperature_requested": args.temperature,
+        # What the provider is actually sent, which is not the same thing.
+        # gpt-5 models reject temperature=0 and litellm.drop_params silently
+        # removes it, so every run recorded as temperature=0 in fact ran at the
+        # API default. Recording the request alone hid that for the whole project.
+        "sampling_params_sent": effective_sampling_params(
+            llm_config.model, args.temperature, args.reasoning_effort
+        ),
         "reasoning_effort": args.reasoning_effort,
         "evaluation_sql_timeout_seconds": DEFAULT_QUERY_TIMEOUT_SECONDS,
         "agent_profile": args.agent_profile,
