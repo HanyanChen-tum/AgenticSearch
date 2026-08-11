@@ -94,7 +94,7 @@ Prompt 哈希未变：`e3-c-conv` 与 `e3-c` 同为 `1ea7ea4d3306`，从哈希�
 
 ## 四、同配置重跑方差：6 题（本项目首次直接测量）
 
-`e3-c-conv` 与 `e3-c` run3 超参逐项对齐（`max_iterations=8`、`k=1`、`temperature=0`、
+`e3-c-conv` 与 `e3-c` run3 超参逐项对齐（`max_iterations=8`、`k=1`、`temperature=0`（**注：该参数被静默丢弃，实际以 API 默认采样运行**，见 SYNTHESIS §4.5）、
 `reasoning_effort=high`、同一 ids-file 与 id-groups），只差 `sql_convention_mode`。
 利用 `sql_convention_rewrite.original_sql` 可还原本次运行**后处理前**的成绩：
 
@@ -104,7 +104,12 @@ Prompt 哈希未变：`e3-c-conv` 与 `e3-c` 同为 `1ea7ea4d3306`，从哈希�
 | 后处理后准确率 | （未启用） | 76/197 | |
 
 模型侧逐题比较：对→错 7 题，错→对 6 题，**SQL 逐字相同的仅 10.7%**。
-`temperature=0` 并不锁定输出，因为约 93% 的 completion token 是每次不同的隐藏推理。
+
+> **2026-08-11 更正**：此处原写「`temperature=0` 并不锁定输出，因为约 93% 的 completion token
+> 是每次不同的隐藏推理」。该因果解释错误。实测证明 **`temperature=0` 从未被发送**——gpt-5 系模型
+> 只接受 `temperature=1`，而 `litellm.drop_params = True` 会把不受支持的参数静默丢弃，因此所有运行
+> 都以 API 默认值采样。方差的直接原因是**采样从未被固定**，隐藏推理每次不同是这一点的结果而非原因。
+> 详见 `SYNTHESIS.md` §4.5。
 
 ### 由此必须收回的一个结论
 

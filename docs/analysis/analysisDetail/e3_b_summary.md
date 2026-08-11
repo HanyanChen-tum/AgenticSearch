@@ -13,7 +13,7 @@
 - 运行：`e3_b_core197_run1`
 - run_id：`20260714T023630Z-7eab3a22`
 - 数据：`bird_cleancore_ids.json` 固定 197 题
-- 模型：`azure/seminar-gpt-5.4-mini`，`reasoning_effort=high`，`temperature=0`
+- 模型：`azure/seminar-gpt-5.4-mini`，`reasoning_effort=high`，`temperature=0`（**该参数被静默丢弃，实际以 API 默认采样运行**，见 `../SYNTHESIS.md` §4.5）
 - requested `k=1`，effective `k=0`
 - query patterns：`train-static-v1`
 - pattern artifact SHA-256：`bdda5b6aa4f6d1b69f3c86d2d299e60bb1429f6c2e62b1acd58323850b34cc48`

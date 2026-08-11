@@ -14,7 +14,7 @@ E3-A Prompt = E0 Prompt + 固定 train-only SQL pattern library
 两组都使用：
 
 - 固定的 `both_wrong + canary` 197 题；
-- `azure/seminar-gpt-5.4-mini`、`reasoning_effort=high`、`temperature=0`；
+- `azure/seminar-gpt-5.4-mini`、`reasoning_effort=high`、`temperature=0`（**该参数被静默丢弃，实际以 API 默认采样运行**，见 `../SYNTHESIS.md` §4.5）；
 - 1 个 train few-shot、最多 8 次 Agent 迭代；
 - 相同的 DB ReAct、宽松 FINAL 协议和执行结果评测；
 - 无 legacy DB hints、无 strict verified-final、无 capability gate、无递归和 Planner。

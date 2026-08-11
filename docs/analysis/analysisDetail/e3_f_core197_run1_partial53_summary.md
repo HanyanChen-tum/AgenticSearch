@@ -9,7 +9,7 @@
 - 完成时间：2026-07-14
 - 完成范围：53/197；仅覆盖 4 个数据库
 - 模型：`azure/seminar-gpt-5.4-mini`
-- `reasoning_effort=high`，`temperature=0`，`max_iterations=8`
+- `reasoning_effort=high`，`temperature=0`（**该参数被静默丢弃，实际以 API 默认采样运行**，见 `../SYNTHESIS.md` §4.5），`max_iterations=8`
 - train few-shot：`k=1`
 - Query Mining：历史版 `train-mined-v1`，artifact SHA-256=`eddf772e51a1322e0a263f2425c89774e9984b4714aaf36c208df01920ac32ee`
 - Offline Schema：历史版 `e3-f-schema-v3`，artifact SHA-256=`59975ed59948c5f47654cc0ebffbf36cebdb74df372f71dbaf81ba90a1a79bae`

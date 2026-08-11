@@ -21,7 +21,7 @@
 | `bird_1166` | "Identify **their diagnosis**" | "Identify **that patient's own overall diagnosis, rather than the diagnosis noted for that particular examination**" |
 | `bird_1529` | "the **amount spent** by customer" | "the total **money** spent by customer" |
 
-**两臂对照**，配置完全相同（`e3-c`、`k=1`、`max_iterations=8`、`temperature=0`、`reasoning_effort=high`），唯一差别是数据集中这 7 条的 question 字段：
+**两臂对照**，配置完全相同（`e3-c`、`k=1`、`max_iterations=8`、`temperature=0`（**注：该参数被静默丢弃，实际以 API 默认采样运行**，见 SYNTHESIS §4.5）、`reasoning_effort=high`），唯一差别是数据集中这 7 条的 question 字段：
 
 - 对照臂：原问题 → `results/rootcause_ambiguity_control.json`
 - 处理臂：消歧问题 → `results/rootcause_ambiguity_disambiguated.json`

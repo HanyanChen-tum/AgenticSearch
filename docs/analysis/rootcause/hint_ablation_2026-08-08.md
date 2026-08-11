@@ -14,7 +14,7 @@
 
 ## 三臂设计
 
-配置完全相同（`e3-c`、`k=1`、`max_iterations=8`、`temperature=0`、`reasoning_effort=high`），唯一差别是被测题目的 `evidence` 字段是否置空。
+配置完全相同（`e3-c`、`k=1`、`max_iterations=8`、`temperature=0`（**注：该参数被静默丢弃，实际以 API 默认采样运行**，见 SYNTHESIS §4.5）、`reasoning_effort=high`），唯一差别是被测题目的 `evidence` 字段是否置空。
 
 | 集合 | 构成 | 目的 |
 |---|---|---|

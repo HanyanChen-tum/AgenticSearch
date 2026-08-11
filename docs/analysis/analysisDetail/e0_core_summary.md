@@ -19,7 +19,7 @@
 - run_id：`20260713T072941Z-6b75f55b`、`20260713T094637Z-5caab99c`
 - 数据：`data/processed/bird_dev_500.json` 中由 `bird_cleancore_ids.json` 选出的 197 题
 - 分组：`both_wrong` 137 题、`canary` 60 题
-- 模型：`azure/seminar-gpt-5.4-mini`，`reasoning_effort=high`，`temperature=0`
+- 模型：`azure/seminar-gpt-5.4-mini`，`reasoning_effort=high`，`temperature=0`（**该参数被静默丢弃，实际以 API 默认采样运行**，见 `../SYNTHESIS.md` §4.5）
 - 运行参数：`k=1`、`max_iterations=8`
 - Profile：`clean-e0`；无 query patterns、legacy DB hints、strict verified-final、capability gate、Planner 或递归
 - 已知配置差异：Run1 的 `evaluation_sql_timeout_seconds=None`，Run2 为 30 秒
