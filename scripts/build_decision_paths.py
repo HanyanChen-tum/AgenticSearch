@@ -11,8 +11,12 @@ visible is the trajectory: which tools it called, what shape of SQL it committed
 to, whether the result came back empty. Those are decisions too, and they are
 recorded for every question already.
 
-The nodes below are not chosen for symmetry; each one separated correct from
-incorrect answers somewhere in the 115-question and 52-question audits.
+The nodes are not hand-picked. `rank_decision_points.py` scores fourteen
+candidates by how much knowing each one reduces uncertainty about correctness,
+and the stages here are its top six. That matters: the first version of this
+chart chose five by intuition, and the ranking put two of them seventh and
+eighth while the two strongest -- query structure and result size -- were not
+in the set at all. Query structure alone spans 40.6 points of success rate.
 """
 
 from __future__ import annotations
@@ -31,6 +35,7 @@ if str(PROJECT_ROOT) not in sys.path:
 import sqlglot
 from sqlglot import exp
 
+from scripts.rank_decision_points import candidates
 from shared.evaluator import is_correct
 
 SUPERLATIVE = re.compile(
@@ -113,13 +118,16 @@ def stage_result(row: dict) -> str:
     return "空结果" if empty else "有结果"
 
 
-STAGES = ["取证", "最值写法", "计数粒度", "输出宽度", "结果状态"]
+# The top six by information gain, in trajectory order rather than rank order
+# so the ribbon reads left-to-right as the run unfolded.
+STAGES = ["Hint 类型", "查询结构", "输出宽度", "最值写法", "结果行数", "结果状态"]
 
 
 def build(results_path: Path, trace_path: Path) -> dict:
     rows = json.loads(results_path.read_text(encoding="utf-8"))
     events_by_id: dict[str, list[dict]] = {}
     model_sql: dict[str, str] = {}
+    tables_by_id: dict[str, set] = {}
     if trace_path.exists():
         with trace_path.open(encoding="utf-8") as handle:
             for line in handle:
@@ -132,18 +140,20 @@ def build(results_path: Path, trace_path: Path) -> dict:
                 rewrite = trace.get("sql_convention_rewrite") or {}
                 if rewrite.get("changed") and rewrite.get("original_sql"):
                     model_sql[record["id"]] = rewrite["original_sql"]
+                sel = ((trace.get("knowledge_selection") or {}).get("offline_schema") or {})
+                cands = ((sel.get("table_selection") or {}).get("candidates") or [])
+                tables_by_id[record["id"]] = {
+                    c["table"].casefold() for c in cands if c.get("selected")}
+
+    hints = {r["id"]: r.get("evidence") or "" for r in json.loads(
+        (PROJECT_ROOT / "data/processed/bird_dev_500.json").read_text(encoding="utf-8"))}
 
     paths = []
     for row in rows:
         tree = _tree(model_sql.get(row["id"], row.get("predicted_sql")))
-        question = row.get("question", "")
-        node_values = [
-            stage_grounding(events_by_id.get(row["id"], [])),
-            stage_ranking(question, tree),
-            stage_grain(tree),
-            stage_projection(question, tree),
-            stage_result(row),
-        ]
+        values = candidates(row, tree, events_by_id.get(row["id"], []),
+                            tables_by_id.get(row["id"], set()), hints.get(row["id"], ""))
+        node_values = [values[name] for name in STAGES]
         paths.append({
             "id": row["id"],
             "db_id": row.get("db_id"),
