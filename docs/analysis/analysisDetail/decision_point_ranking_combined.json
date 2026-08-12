@@ -1,0 +1,561 @@
+[
+ {
+  "family": "SQL表面特征",
+  "node": "查询结构",
+  "mi_bits": 0.0567,
+  "spread": 0.406,
+  "branches": 3,
+  "branches_ge10": 3,
+  "values": [
+   {
+    "value": "平铺",
+    "n": 433,
+    "rate": 0.727
+   },
+   {
+    "value": "含子查询",
+    "n": 56,
+    "rate": 0.321
+   },
+   {
+    "value": "含 CTE",
+    "n": 11,
+    "rate": 0.364
+   }
+  ]
+ },
+ {
+  "family": "轨迹结构特征",
+  "node": "结果形状",
+  "mi_bits": 0.0454,
+  "spread": 0.553,
+  "branches": 3,
+  "values": [
+   {
+    "value": "行数量级一致",
+    "n": 472,
+    "rate": 0.703
+   },
+   {
+    "value": "gold多行->pred单行",
+    "n": 20,
+    "rate": 0.15
+   },
+   {
+    "value": "gold单行->pred多行",
+    "n": 8,
+    "rate": 0.25
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "结果状态",
+  "mi_bits": 0.0363,
+  "spread": 0.0,
+  "branches": 3,
+  "branches_ge10": 1,
+  "values": [
+   {
+    "value": "有结果",
+    "n": 489,
+    "rate": 0.689
+   },
+   {
+    "value": "执行报错",
+    "n": 7,
+    "rate": 0.0
+   },
+   {
+    "value": "空结果",
+    "n": 4,
+    "rate": 0.0
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "结果行数",
+  "mi_bits": 0.0336,
+  "spread": 0.108,
+  "branches": 5,
+  "branches_ge10": 3,
+  "values": [
+   {
+    "value": "1 行",
+    "n": 345,
+    "rate": 0.704
+   },
+   {
+    "value": "2-10 行",
+    "n": 84,
+    "rate": 0.679
+   },
+   {
+    "value": "10+ 行",
+    "n": 62,
+    "rate": 0.597
+   },
+   {
+    "value": "非行集",
+    "n": 5,
+    "rate": 0.0
+   },
+   {
+    "value": "0 行",
+    "n": 4,
+    "rate": 0.0
+   }
+  ]
+ },
+ {
+  "family": "轨迹结构特征",
+  "node": "总调用次数",
+  "mi_bits": 0.0307,
+  "spread": 0.406,
+  "branches": 4,
+  "values": [
+   {
+    "value": "3-5",
+    "n": 258,
+    "rate": 0.667
+   },
+   {
+    "value": "1-2",
+    "n": 193,
+    "rate": 0.751
+   },
+   {
+    "value": "6+",
+    "n": 29,
+    "rate": 0.345
+   },
+   {
+    "value": "0",
+    "n": 20,
+    "rate": 0.5
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "输出宽度",
+  "mi_bits": 0.0197,
+  "spread": 0.368,
+  "branches": 5,
+  "branches_ge10": 3,
+  "values": [
+   {
+    "value": "单问句·单列",
+    "n": 405,
+    "rate": 0.701
+   },
+   {
+    "value": "单问句·多列",
+    "n": 80,
+    "rate": 0.588
+   },
+   {
+    "value": "多问句·多列",
+    "n": 12,
+    "rate": 0.333
+   },
+   {
+    "value": "多问句·单列",
+    "n": 2,
+    "rate": 1.0
+   },
+   {
+    "value": "无法解析",
+    "n": 1,
+    "rate": 0.0
+   }
+  ]
+ },
+ {
+  "family": "轨迹结构特征",
+  "node": "轮数",
+  "mi_bits": 0.015,
+  "spread": 0.245,
+  "branches": 4,
+  "values": [
+   {
+    "value": "2",
+    "n": 324,
+    "rate": 0.716
+   },
+   {
+    "value": "3+",
+    "n": 158,
+    "rate": 0.614
+   },
+   {
+    "value": "1",
+    "n": 17,
+    "rate": 0.471
+   },
+   {
+    "value": "0",
+    "n": 1,
+    "rate": 0.0
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "最值写法",
+  "mi_bits": 0.0115,
+  "spread": 0.025,
+  "branches": 4,
+  "branches_ge10": 2,
+  "values": [
+   {
+    "value": "非最值题",
+    "n": 409,
+    "rate": 0.687
+   },
+   {
+    "value": "ORDER BY+LIMIT",
+    "n": 77,
+    "rate": 0.662
+   },
+   {
+    "value": "其他写法",
+    "n": 8,
+    "rate": 0.5
+   },
+   {
+    "value": "= (SELECT MAX)",
+    "n": 6,
+    "rate": 0.167
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "Hint 类型",
+  "mi_bits": 0.0104,
+  "spread": 0.15,
+  "branches": 2,
+  "branches_ge10": 2,
+  "values": [
+   {
+    "value": "无公式",
+    "n": 411,
+    "rate": 0.701
+   },
+   {
+    "value": "含显式公式",
+    "n": 89,
+    "rate": 0.551
+   }
+  ]
+ },
+ {
+  "family": "轨迹结构特征",
+  "node": "首轮已下FINAL",
+  "mi_bits": 0.0098,
+  "spread": 0.265,
+  "branches": 4,
+  "values": [
+   {
+    "value": "首轮带调用+FINAL",
+    "n": 395,
+    "rate": 0.671
+   },
+   {
+    "value": "首轮仅调用",
+    "n": 87,
+    "rate": 0.736
+   },
+   {
+    "value": "首轮仅FINAL",
+    "n": 17,
+    "rate": 0.471
+   },
+   {
+    "value": "无轮次",
+    "n": 1,
+    "rate": 0.0
+   }
+  ]
+ },
+ {
+  "family": "轨迹结构特征",
+  "node": "末轮是否改写首轮猜测",
+  "mi_bits": 0.0089,
+  "spread": 0.153,
+  "branches": 3,
+  "values": [
+   {
+    "value": "末轮与早前猜测雷同",
+    "n": 260,
+    "rate": 0.719
+   },
+   {
+    "value": "不适用",
+    "n": 180,
+    "rate": 0.644
+   },
+   {
+    "value": "末轮已改写",
+    "n": 60,
+    "rate": 0.567
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "取证方式",
+  "mi_bits": 0.0075,
+  "spread": 0.18,
+  "branches": 4,
+  "branches_ge10": 4,
+  "values": [
+   {
+    "value": "只执行SQL",
+    "n": 341,
+    "rate": 0.704
+   },
+   {
+    "value": "执行+查值",
+    "n": 120,
+    "rate": 0.617
+   },
+   {
+    "value": "未取证",
+    "n": 21,
+    "rate": 0.524
+   },
+   {
+    "value": "只查值",
+    "n": 18,
+    "rate": 0.667
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "计数粒度",
+  "mi_bits": 0.007,
+  "spread": 0.12,
+  "branches": 4,
+  "branches_ge10": 4,
+  "values": [
+   {
+    "value": "非计数题",
+    "n": 330,
+    "rate": 0.706
+   },
+   {
+    "value": "计数不去重",
+    "n": 90,
+    "rate": 0.6
+   },
+   {
+    "value": "计数无JOIN",
+    "n": 51,
+    "rate": 0.647
+   },
+   {
+    "value": "计数去重",
+    "n": 29,
+    "rate": 0.586
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "执行轮数",
+  "mi_bits": 0.0062,
+  "spread": 0.136,
+  "branches": 4,
+  "branches_ge10": 4,
+  "values": [
+   {
+    "value": "1 次",
+    "n": 323,
+    "rate": 0.703
+   },
+   {
+    "value": "2 次",
+    "n": 108,
+    "rate": 0.648
+   },
+   {
+    "value": "0 次",
+    "n": 39,
+    "rate": 0.59
+   },
+   {
+    "value": "3+ 次",
+    "n": 30,
+    "rate": 0.567
+   }
+  ]
+ },
+ {
+  "family": "轨迹结构特征",
+  "node": "首轮重复调用",
+  "mi_bits": 0.0061,
+  "spread": 0.096,
+  "branches": 5,
+  "values": [
+   {
+    "value": "重复2次",
+    "n": 220,
+    "rate": 0.691
+   },
+   {
+    "value": "重复3+次",
+    "n": 141,
+    "rate": 0.638
+   },
+   {
+    "value": "不重复",
+    "n": 115,
+    "rate": 0.704
+   },
+   {
+    "value": "无调用",
+    "n": 23,
+    "rate": 0.609
+   },
+   {
+    "value": "无轮次",
+    "n": 1,
+    "rate": 0.0
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "拼接输出",
+  "mi_bits": 0.0044,
+  "spread": 0.127,
+  "branches": 3,
+  "branches_ge10": 2,
+  "values": [
+   {
+    "value": "无拼接",
+    "n": 489,
+    "rate": 0.673
+   },
+   {
+    "value": "有 || 拼接",
+    "n": 10,
+    "rate": 0.8
+   },
+   {
+    "value": "无法解析",
+    "n": 1,
+    "rate": 0.0
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "越出检索范围",
+  "mi_bits": 0.0039,
+  "spread": 0.0,
+  "branches": 3,
+  "branches_ge10": 1,
+  "values": [
+   {
+    "value": "只用检索选中的表",
+    "n": 490,
+    "rate": 0.673
+   },
+   {
+    "value": "引入未选中的表",
+    "n": 9,
+    "rate": 0.778
+   },
+   {
+    "value": "无法判定",
+    "n": 1,
+    "rate": 0.0
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "排序方向",
+  "mi_bits": 0.0038,
+  "spread": 0.093,
+  "branches": 3,
+  "branches_ge10": 3,
+  "values": [
+   {
+    "value": "未排序",
+    "n": 315,
+    "rate": 0.695
+   },
+   {
+    "value": "仅 ASC",
+    "n": 97,
+    "rate": 0.67
+   },
+   {
+    "value": "含 DESC",
+    "n": 88,
+    "rate": 0.602
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "JOIN 数量",
+  "mi_bits": 0.0028,
+  "spread": 0.142,
+  "branches": 4,
+  "branches_ge10": 4,
+  "values": [
+   {
+    "value": "1 个",
+    "n": 291,
+    "rate": 0.687
+   },
+   {
+    "value": "无 JOIN",
+    "n": 121,
+    "rate": 0.678
+   },
+   {
+    "value": "2 个",
+    "n": 66,
+    "rate": 0.652
+   },
+   {
+    "value": "3+ 个",
+    "n": 22,
+    "rate": 0.545
+   }
+  ]
+ },
+ {
+  "family": "SQL表面特征",
+  "node": "是非题形式",
+  "mi_bits": 0.0024,
+  "spread": 0.0,
+  "branches": 3,
+  "branches_ge10": 1,
+  "values": [
+   {
+    "value": "非是非题",
+    "n": 491,
+    "rate": 0.676
+   },
+   {
+    "value": "YES/NO 字面量",
+    "n": 5,
+    "rate": 0.4
+   },
+   {
+    "value": "返回匹配行",
+    "n": 4,
+    "rate": 0.75
+   }
+  ]
+ }
+]

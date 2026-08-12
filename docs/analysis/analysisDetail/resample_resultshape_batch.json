@@ -1,0 +1,631 @@
+{
+ "bird_1322": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 6
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT COUNT(*) FROM (SELECT e.event_id FROM event AS e JOIN attendance AS a ON e.event_id = a.link_to_event WHERE e.type = 'Meeting' GROUP BY e.event_id HAVING COUNT(a.link_to_event) > 10)",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT COUNT(*) FROM (SELECT a.link_to_event FROM attendance a JOIN event e ON a.link_to_event = e.event_id WHERE e.type = 'Meeting' GROUP BY a.link_to_event HAVING COUNT(a.link_to_event) > 10) t;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT COUNT(*) FROM (SELECT e.event_id FROM event e JOIN attendance a ON e.event_id = a.link_to_event GROUP BY e.event_id HAVING COUNT(e.event_id) > 10 AND e.type = 'Meeting') AS t",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT COUNT(*) FROM (SELECT e.event_id FROM event e JOIN attendance a ON a.link_to_event = e.event_id WHERE e.type = 'Meeting' GROUP BY e.event_id HAVING COUNT(*) > 10);",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 3
+  }
+ ],
+ "bird_798": [
+  {
+   "sample": 0,
+   "sql": "SELECT publisher_name FROM superhero JOIN publisher ON superhero.publisher_id = publisher.id WHERE superhero_name IN ('Hawkman', 'Karate Kid', 'Speedy')",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT DISTINCT p.publisher_name FROM superhero s JOIN publisher p ON s.publisher_id = p.id WHERE s.superhero_name IN ('Hawkman', 'Karate Kid', 'Speedy')",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT publisher.publisher_name FROM superhero JOIN publisher ON superhero.publisher_id = publisher.id WHERE superhero.superhero_name IN ('Hawkman', 'Karate Kid', 'Speedy') ORDER BY superhero.superhero_name",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT DISTINCT p.publisher_name FROM superhero s JOIN publisher p ON s.publisher_id = p.id WHERE s.superhero_name IN ('Hawkman', 'Karate Kid', 'Speedy')",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT p.publisher_name FROM superhero s JOIN publisher p ON s.publisher_id = p.id WHERE s.superhero_name IN ('Hawkman', 'Karate Kid', 'Speedy')",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 7
+  }
+ ],
+ "bird_1399": [
+  {
+   "sample": 0,
+   "sql": "SELECT CASE WHEN EXISTS ( SELECT 1 FROM attendance AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN event AS T3 ON T1.link_to_event = T3.event_id WHERE T2.first_name = 'Maya' AND T2.last_name = 'Mclean' AND T3.event_name = 'Women''s Soccer' ) THEN 'Yes' ELSE 'No' END",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT COUNT(*) FROM attendance AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN event AS T3 ON T1.link_to_event = T3.event_id WHERE T2.first_name = 'Maya' AND T2.last_name = 'Mclean' AND T3.event_name = 'Women''s Soccer';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT COUNT(*) FROM attendance INNER JOIN member ON attendance.link_to_member = member.member_id INNER JOIN event ON attendance.link_to_event = event.event_id WHERE member.first_name = 'Maya' AND member.last_name = 'Mclean' AND event.event_name = 'Women''s Soccer'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT EXISTS(SELECT 1 FROM attendance AS a JOIN member AS m ON a.link_to_member = m.member_id JOIN event AS e ON a.link_to_event = e.event_id WHERE m.first_name = 'Maya' AND m.last_name = 'Mclean' AND e.event_name = 'Women''s Soccer')",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT EXISTS (SELECT 1 FROM attendance AS a JOIN member AS m ON a.link_to_member = m.member_id JOIN event AS e ON a.link_to_event = e.event_id WHERE m.first_name = 'Maya' AND m.last_name = 'Mclean' AND e.event_name = 'Women''s Soccer');",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 22
+  }
+ ],
+ "bird_1011": [
+  {
+   "sample": 0,
+   "sql": "SELECT d.forename || ' ' || d.surname AS full_name FROM lapTimes AS lt INNER JOIN drivers AS d ON lt.driverId = d.driverId GROUP BY d.driverId, d.forename, d.surname ORDER BY MIN(lt.milliseconds) ASC, d.forename ASC, d.surname ASC LIMIT 20;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 39
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT d.forename || ' ' || d.surname AS full_name FROM lapTimes AS lt INNER JOIN drivers AS d ON lt.driverId = d.driverId GROUP BY d.driverId, d.forename, d.surname ORDER BY MIN(lt.milliseconds) ASC LIMIT 20",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT d.forename || ' ' || d.surname AS full_name FROM lapTimes AS l INNER JOIN drivers AS d ON l.driverId = d.driverId GROUP BY d.driverId, d.forename, d.surname ORDER BY MIN(l.milliseconds) ASC LIMIT 20",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 32
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT d.forename || ' ' || d.surname AS full_name FROM lapTimes AS lt INNER JOIN drivers AS d ON lt.driverId = d.driverId GROUP BY d.driverId, d.forename, d.surname ORDER BY MIN(lt.milliseconds) ASC LIMIT 20",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 24
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT d.forename || ' ' || d.surname AS full_name FROM lapTimes AS lt INNER JOIN drivers AS d ON lt.driverId = d.driverId GROUP BY d.driverId, d.forename, d.surname ORDER BY MIN(lt.milliseconds) ASC LIMIT 20;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 37
+  }
+ ],
+ "bird_637": [
+  {
+   "sample": 0,
+   "sql": "WITH RECURSIVE split(post_id, rest, tag) AS ( SELECT p.Id, substr(p.Tags, instr(p.Tags, '>') + 1), substr(p.Tags, 2, instr(p.Tags, '>') - 2) FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND instr(p.Tags, '>') > 0 UNION ALL SELECT post_id, substr(rest, instr(rest, '>') + 1), substr(rest, 2, instr(rest, '>') - 2) FROM split WHERE instr(rest, '>') > 0 ) SELECT DISTINCT tag FROM split WHERE tag <> '' ORDER BY tag",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 15
+  },
+  {
+   "sample": 1,
+   "sql": "WITH RECURSIVE split(tag_text, tag) AS (SELECT substr(p.Tags, 2, length(p.Tags) - 2), NULL FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL UNION ALL SELECT CASE WHEN instr(tag_text, '><') = 0 THEN '' ELSE substr(tag_text, instr(tag_text, '><') + 2) END, CASE WHEN instr(tag_text, '><') = 0 THEN tag_text ELSE substr(tag_text, 1, instr(tag_text, '><') - 1) END FROM split WHERE tag_text <> '') SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 31
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT DISTINCT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL ORDER BY p.Tags",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 7
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 3
+  }
+ ],
+ "bird_1205": [
+  {
+   "sample": 0,
+   "sql": "SELECT CASE WHEN COUNT(*) > 0 THEN 'Yes' ELSE 'No' END AS answer FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID WHERE P.ID = 57266 AND ((P.SEX = 'M' AND L.UA > 8.0) OR (P.SEX = 'F' AND L.UA > 6.5))",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 40
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT CASE WHEN ((L.UA > 8.0 AND P.SEX = 'M') OR (L.UA > 6.5 AND P.SEX = 'F')) THEN 'yes' ELSE 'no' END AS answer FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID WHERE P.ID = 57266 ORDER BY L.Date DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 15
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CASE WHEN ((P.SEX = 'M' AND L.UA > 8.0) OR (P.SEX = 'F' AND L.UA > 6.5)) THEN 'Yes' ELSE 'No' END FROM Patient AS P LEFT JOIN Laboratory AS L ON P.ID = L.ID WHERE P.ID = 57266 ORDER BY L.Date DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 34
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT CASE WHEN EXISTS (SELECT 1 FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID WHERE L.ID = 57266 AND ((L.UA > 8.0 AND P.SEX = 'M') OR (L.UA > 6.5 AND P.SEX = 'F'))) THEN 'Yes' ELSE 'No' END AS answer",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 32
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT COALESCE((SELECT CASE WHEN (L.UA > 8.0 AND P.SEX = 'M') OR (L.UA > 6.5 AND P.SEX = 'F') THEN 'Yes' ELSE 'No' END FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID WHERE L.ID = 57266 ORDER BY L.Date DESC LIMIT 1), 'No') AS answer;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 33
+  }
+ ],
+ "bird_469": [
+  {
+   "sample": 0,
+   "sql": "SELECT CASE WHEN EXISTS (SELECT 1 FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code WHERE c.name = 'Angel of Mercy' AND s.mtgoCode IS NOT NULL) THEN 'Yes' ELSE 'No' END AS appeared_on_mtgo;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 23
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 12
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CASE WHEN EXISTS (SELECT 1 FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code WHERE c.name = 'Angel of Mercy' AND s.mtgoCode IS NOT NULL) THEN 'Yes' ELSE 'No' END;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 23
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT CASE WHEN EXISTS (SELECT 1 FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code WHERE c.name = 'Angel of Mercy' AND s.mtgoCode IS NOT NULL) THEN 'Yes' ELSE 'No' END;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 34
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT CASE WHEN EXISTS (SELECT 1 FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code WHERE c.name = 'Angel of Mercy' AND s.mtgoCode IS NOT NULL) THEN 'Yes' ELSE 'No' END AS answer;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 19
+  }
+ ],
+ "bird_1135": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT player_api_id FROM Player_Attributes WHERE preferred_foot = 'right' AND potential = (SELECT MIN(potential) FROM Player_Attributes) ORDER BY player_api_id ASC LIMIT 4",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT player_api_id FROM Player_Attributes WHERE preferred_foot = 'right' AND potential IS NOT NULL GROUP BY player_api_id ORDER BY MIN(potential) ASC, player_api_id ASC LIMIT 4;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 54
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT DISTINCT player_api_id FROM Player_Attributes WHERE preferred_foot = 'right' AND potential = (SELECT MIN(potential) FROM Player_Attributes) ORDER BY player_api_id ASC LIMIT 4",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 24
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT DISTINCT player_api_id FROM Player_Attributes WHERE preferred_foot = 'right' AND potential = (SELECT MIN(potential) FROM Player_Attributes) ORDER BY player_api_id LIMIT 4",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 43
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT player_api_id FROM Player_Attributes WHERE preferred_foot = 'right' AND potential = (SELECT MIN(potential) FROM Player_Attributes) ORDER BY player_api_id LIMIT 4",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 18
+  }
+ ],
+ "bird_412": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 30
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT fd.name FROM cards c JOIN foreign_data fd ON fd.uuid = c.uuid WHERE fd.language = 'French' AND c.type = 'Creature' AND c.layout = 'normal' AND c.borderColor = 'black' AND c.artist = 'Matthew D. Wilson';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT f.name FROM cards AS c JOIN foreign_data AS f ON c.uuid = f.uuid WHERE f.language = 'French' AND c.type LIKE '%Creature%' AND c.layout = 'normal' AND c.borderColor = 'black' AND c.artist = 'Matthew D. Wilson'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 34
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT f.name FROM cards c JOIN foreign_data f ON f.uuid = c.uuid WHERE f.language = 'French' AND c.type = 'Creature' AND c.layout = 'normal' AND c.borderColor = 'black' AND c.artist = 'Matthew D. Wilson'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT foreign_data.name FROM cards JOIN foreign_data ON foreign_data.uuid = cards.uuid WHERE foreign_data.language = 'French' AND cards.type = 'Creature' AND cards.layout = 'normal' AND cards.borderColor = 'black' AND cards.artist = 'Matthew D. Wilson'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 26
+  }
+ ],
+ "bird_483": [
+  {
+   "sample": 0,
+   "sql": "SELECT foreign_data.text FROM cards JOIN sets ON cards.setCode = sets.code JOIN foreign_data ON cards.uuid = foreign_data.uuid WHERE sets.name = 'Coldsnap' AND foreign_data.language = 'Italian' ORDER BY cards.name",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT T3.text FROM cards AS T1 INNER JOIN sets AS T2 ON T1.setCode = T2.code INNER JOIN foreign_data AS T3 ON T1.uuid = T3.uuid WHERE T2.name = 'Coldsnap' AND T3.language = 'Italian' ORDER BY T1.id",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT f.text FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON c.uuid = f.uuid WHERE s.name = 'Coldsnap' AND f.language = 'Italian'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT fd.text FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS fd ON c.uuid = fd.uuid WHERE s.name = 'Coldsnap' AND fd.language = 'Italian'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT f.text FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON c.uuid = f.uuid WHERE s.name = 'Coldsnap' AND f.language = 'Italian'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 8
+  }
+ ],
+ "bird_529": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT s.name FROM sets AS s INNER JOIN set_translations AS st ON s.code = st.setCode WHERE st.language = 'Korean' AND NOT EXISTS (SELECT 1 FROM set_translations AS st2 WHERE st2.setCode = s.code AND st2.language LIKE '%Japanese%')",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT DISTINCT T1.name FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.language = 'Korean' AND NOT EXISTS (SELECT 1 FROM set_translations AS T3 WHERE T3.setCode = T1.code AND T3.language LIKE '%Japanese%') ORDER BY T1.name",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 11
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 5
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT s.name FROM sets AS s WHERE EXISTS (SELECT 1 FROM set_translations AS st WHERE st.setCode = s.code AND st.language = 'Korean') AND NOT EXISTS (SELECT 1 FROM set_translations AS st WHERE st.setCode = s.code AND st.language LIKE '%Japanese%') ORDER BY s.name",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  }
+ ],
+ "bird_473": [
+  {
+   "sample": 0,
+   "sql": "SELECT s.isForeignOnly FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code WHERE c.name = 'Adarkar Valkyrie'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT s.isForeignOnly FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code WHERE c.name = 'Adarkar Valkyrie'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT s.isForeignOnly FROM sets AS s INNER JOIN cards AS c ON s.code = c.setCode WHERE c.name = 'Adarkar Valkyrie'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT s.isForeignOnly FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code WHERE c.name = 'Adarkar Valkyrie' LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 24
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 11
+  }
+ ],
+ "bird_213": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT b.bond_type FROM connected AS c INNER JOIN bond AS b ON c.bond_id = b.bond_id WHERE (c.atom_id = 'TR004_8' AND c.atom_id2 = 'TR004_20') OR (c.atom_id = 'TR004_20' AND c.atom_id2 = 'TR004_8')",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT b.bond_type FROM bond AS b JOIN connected AS c ON b.bond_id = c.bond_id WHERE (c.atom_id = 'TR004_8' AND c.atom_id2 = 'TR004_20') OR (c.atom_id = 'TR004_20' AND c.atom_id2 = 'TR004_8') LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT b.bond_type FROM connected AS c JOIN bond AS b ON c.bond_id = b.bond_id WHERE (c.atom_id = 'TR004_8' AND c.atom_id2 = 'TR004_20') OR (c.atom_id = 'TR004_20' AND c.atom_id2 = 'TR004_8')",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT b.bond_type FROM connected AS c INNER JOIN bond AS b ON c.bond_id = b.bond_id WHERE (c.atom_id = 'TR004_8' AND c.atom_id2 = 'TR004_20') OR (c.atom_id = 'TR004_20' AND c.atom_id2 = 'TR004_8') LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT bond.bond_type FROM bond INNER JOIN connected ON bond.bond_id = connected.bond_id WHERE (connected.atom_id = 'TR004_8' AND connected.atom_id2 = 'TR004_20') OR (connected.atom_id = 'TR004_20' AND connected.atom_id2 = 'TR004_8') LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 2
+  }
+ ],
+ "bird_530": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT cards.frameVersion, cards.name FROM cards INNER JOIN legalities ON cards.uuid = legalities.uuid WHERE cards.artist = 'Allen Williams' AND legalities.status = 'Banned' ORDER BY cards.frameVersion, cards.name",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT DISTINCT c.frameVersion, c.name FROM cards AS c INNER JOIN legalities AS l ON c.uuid = l.uuid WHERE c.artist = 'Allen Williams' AND l.status = 'Banned' ORDER BY c.frameVersion, c.name",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT cards.frameVersion, cards.name FROM cards WHERE cards.artist = 'Allen Williams' AND EXISTS (SELECT 1 FROM legalities WHERE legalities.uuid = cards.uuid AND legalities.status = 'Banned')",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT DISTINCT cards.frameVersion, cards.name FROM cards INNER JOIN legalities ON cards.uuid = legalities.uuid WHERE cards.artist = 'Allen Williams' AND legalities.status = 'Banned'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT c.frameVersion, c.name FROM cards AS c INNER JOIN legalities AS l ON c.uuid = l.uuid WHERE c.artist = 'Allen Williams' AND l.status = 'Banned' ORDER BY c.frameVersion, c.name;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  }
+ ],
+ "bird_149": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT disp.type FROM disp JOIN account ON disp.account_id = account.account_id JOIN district ON account.district_id = district.district_id WHERE district.A11 > 8000 AND district.A11 <= 9000 AND disp.type <> 'OWNER' ORDER BY disp.type",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 4
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT DISTINCT disp.type FROM disp JOIN account ON disp.account_id = account.account_id JOIN district ON account.district_id = district.district_id WHERE disp.type <> 'OWNER' AND district.A11 > 8000 AND district.A11 <= 9000 ORDER BY disp.type",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT DISTINCT disp.type FROM disp JOIN account ON disp.account_id = account.account_id JOIN district ON account.district_id = district.district_id WHERE disp.type <> 'OWNER' AND district.A11 > 8000 AND district.A11 <= 9000 ORDER BY disp.type",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT disp.type FROM disp JOIN account ON disp.account_id = account.account_id JOIN district ON account.district_id = district.district_id WHERE district.A11 > 8000 AND district.A11 <= 9000 AND disp.type <> 'OWNER' ORDER BY disp.type",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 12
+  }
+ ],
+ "bird_72": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 14
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 10
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUM(f.`Enrollment (Ages 5-17)`) FROM schools AS s INNER JOIN frpm AS f ON f.CDSCode = s.CDSCode WHERE s.City = 'Fremont' AND s.EdOpsCode = 'SSS' AND f.`Academic Year` = '2014-2015'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 24
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(f.\"Enrollment (Ages 5-17)\") FROM frpm AS f JOIN schools AS s ON s.CDSCode = f.CDSCode WHERE s.City = 'Fremont' AND s.EdOpsCode = 'SSS' AND f.\"Academic Year\" = '2014-2015'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(F.[Enrollment (Ages 5-17)]) FROM frpm AS F INNER JOIN schools AS S ON F.CDSCode = S.CDSCode WHERE F.[Academic Year] = '2014-2015' AND S.City = 'Fremont' AND S.EdOpsCode = 'SSS'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 25
+  }
+ ],
+ "bird_41": [
+  {
+   "sample": 0,
+   "sql": "SELECT School FROM (SELECT s.School, s.Virtual, ROW_NUMBER() OVER (PARTITION BY s.County ORDER BY sc.AvgScrRead DESC) AS rn FROM schools AS s INNER JOIN satscores AS sc ON s.CDSCode = sc.cds WHERE sc.AvgScrRead IS NOT NULL) AS ranked WHERE rn <= 5 AND Virtual = 'F'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT School FROM (SELECT COALESCE(s.School, sc.sname) AS School, s.Virtual, s.County, sc.AvgScrRead, ROW_NUMBER() OVER (PARTITION BY s.County ORDER BY sc.AvgScrRead DESC) AS rn FROM schools AS s INNER JOIN satscores AS sc ON s.CDSCode = sc.cds WHERE sc.AvgScrRead IS NOT NULL) WHERE Virtual = 'F' AND rn <= 5",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 24
+  },
+  {
+   "sample": 2,
+   "sql": "WITH ranked AS (SELECT s.School, s.Virtual, s.County, sc.AvgScrRead, ROW_NUMBER() OVER (PARTITION BY s.County ORDER BY sc.AvgScrRead DESC) AS rn FROM schools AS s JOIN satscores AS sc ON s.CDSCode = sc.cds WHERE sc.AvgScrRead IS NOT NULL) SELECT School FROM ranked WHERE Virtual = 'F' AND rn <= 5 ORDER BY County, rn, School;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 23
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT School FROM (SELECT COALESCE(T1.School, T2.sname) AS School, T1.Virtual AS Virtual, RANK() OVER (PARTITION BY T1.County ORDER BY T2.AvgScrRead DESC) AS rnk FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T2.AvgScrRead IS NOT NULL) WHERE Virtual = 'F' AND rnk <= 5",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 35
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT School FROM (SELECT schools.School AS School, schools.Virtual AS Virtual, ROW_NUMBER() OVER (PARTITION BY schools.County ORDER BY satscores.AvgScrRead DESC) AS rn FROM schools INNER JOIN satscores ON schools.CDSCode = satscores.cds WHERE satscores.AvgScrRead IS NOT NULL) AS t WHERE Virtual = 'F' AND rn <= 5",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 28
+  }
+ ]
+}

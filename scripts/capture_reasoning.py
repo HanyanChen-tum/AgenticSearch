@@ -99,7 +99,27 @@ def capture(cfg, instructions: str, body: list[dict], summary: str) -> dict:
     }
 
 
+def process_one(cfg, trace_path: Path, question_id: str, turn: int, summary: str) -> dict | None:
+    """One question's full capture, isolated so a thread pool can run many in parallel."""
+    messages = load_turns(trace_path, question_id)
+    if not messages:
+        print(f"  {question_id:<12} 跳过：trace 中无该题或无消息")
+        return None
+    instructions, body = as_responses_input(messages, turn)
+    try:
+        result = capture(cfg, instructions, body, summary)
+    except Exception as exc:
+        print(f"  {question_id:<12} 失败：{type(exc).__name__}: {str(exc)[:120]}")
+        return None
+    print(f"  {question_id:<12} 推理段 {result['section_count']} 段"
+          f" | reasoning_tokens {result['reasoning_tokens']}")
+    return {"id": question_id, "turn": turn, **result}
+
+
 if __name__ == "__main__":
+    import threading
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--trace", required=True, help="path to transcripts.jsonl")
     parser.add_argument("--ids", nargs="+", required=True)
@@ -107,27 +127,35 @@ if __name__ == "__main__":
                         help="which assistant turn to reproduce (default: the first)")
     parser.add_argument("--summary", default="detailed", choices=["detailed", "auto"])
     parser.add_argument("--output", required=True)
+    parser.add_argument("--jobs", type=int, default=6,
+                        help="concurrent API calls (I/O-bound, safe to parallelize)")
     args = parser.parse_args()
 
     cfg = resolve_llm_config("azure/seminar-gpt-5.4-mini")
     trace_path = Path(args.trace).resolve()
-    captured = []
-    for question_id in args.ids:
-        messages = load_turns(trace_path, question_id)
-        if not messages:
-            print(f"  {question_id:<12} 跳过：trace 中无该题或无消息")
-            continue
-        instructions, body = as_responses_input(messages, args.turn)
-        try:
-            result = capture(cfg, instructions, body, args.summary)
-        except Exception as exc:
-            print(f"  {question_id:<12} 失败：{type(exc).__name__}: {str(exc)[:120]}")
-            continue
-        captured.append({"id": question_id, "turn": args.turn, **result})
-        print(f"  {question_id:<12} 推理段 {result['section_count']} 段"
-              f" | reasoning_tokens {result['reasoning_tokens']}")
-
     out = Path(args.output).resolve()
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(captured, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"\n已写入 {out}（{len(captured)} 题）")
+
+    # Resumable: a large batch that dies partway through must not lose what
+    # already completed -- re-running the same command should only fill gaps.
+    captured: list[dict] = json.loads(out.read_text(encoding="utf-8")) if out.exists() else []
+    done_ids = {c["id"] for c in captured if c.get("turn") == args.turn}
+    todo = [i for i in args.ids if i not in done_ids]
+    print(f"{len(args.ids)} 题，已完成 {len(done_ids)}，待抓 {len(todo)}（jobs={args.jobs}）")
+
+    lock = threading.Lock()
+
+    def run_and_save(question_id: str):
+        record = process_one(cfg, trace_path, question_id, args.turn, args.summary)
+        if record is None:
+            return
+        with lock:
+            captured.append(record)
+            out.write_text(json.dumps(captured, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    with ThreadPoolExecutor(max_workers=args.jobs) as pool:
+        futures = [pool.submit(run_and_save, qid) for qid in todo]
+        for f in as_completed(futures):
+            f.result()  # surface any thread exception immediately
+
+    print(f"\n已写入 {out}（累计 {len(captured)} 题）")

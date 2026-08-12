@@ -1,0 +1,72 @@
+[
+ {
+  "sample": 0,
+  "sql": "SELECT League.name FROM Match JOIN League ON Match.league_id = League.id WHERE Match.season = '2008/2009' GROUP BY League.name ORDER BY COUNT(*) DESC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 3
+ },
+ {
+  "sample": 1,
+  "sql": "SELECT League.name FROM Match JOIN League ON Match.league_id = League.id WHERE Match.season = '2008/2009' GROUP BY League.name ORDER BY COUNT(*) DESC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 30
+ },
+ {
+  "sample": 2,
+  "sql": "SELECT name FROM League WHERE id = ( SELECT league_id FROM Match WHERE season = '2008/2009' GROUP BY league_id ORDER BY COUNT(*) DESC LIMIT 1 )",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 19
+ },
+ {
+  "sample": 3,
+  "sql": null,
+  "correct": null,
+  "error": "no FINAL() found",
+  "section_count": 14
+ },
+ {
+  "sample": 4,
+  "sql": "SELECT League.name FROM Match JOIN League ON Match.league_id = League.id WHERE Match.season = '2008/2009' GROUP BY League.name ORDER BY COUNT(*) DESC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 2
+ },
+ {
+  "sample": 5,
+  "sql": "SELECT name FROM League WHERE id = ( SELECT league_id FROM `Match` WHERE season = '2008/2009' GROUP BY league_id ORDER BY COUNT(*) DESC LIMIT 1 )",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 17
+ },
+ {
+  "sample": 6,
+  "sql": "SELECT League.name FROM Match JOIN League ON Match.league_id = League.id WHERE Match.season = '2008/2009' GROUP BY League.name ORDER BY COUNT(*) DESC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 2
+ },
+ {
+  "sample": 7,
+  "sql": "SELECT League.name FROM League WHERE League.id = ( SELECT league_id FROM `Match` WHERE season = '2008/2009' GROUP BY league_id ORDER BY COUNT(*) DESC LIMIT 1 )",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 14
+ },
+ {
+  "sample": 8,
+  "sql": null,
+  "correct": null,
+  "error": "no FINAL() found",
+  "section_count": 25
+ },
+ {
+  "sample": 9,
+  "sql": "SELECT name FROM League WHERE id = ( SELECT league_id FROM Match WHERE season = '2008/2009' GROUP BY league_id ORDER BY COUNT(*) DESC LIMIT 1 )",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 18
+ }
+]

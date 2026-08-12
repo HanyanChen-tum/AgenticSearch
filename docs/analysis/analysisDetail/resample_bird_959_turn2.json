@@ -1,0 +1,72 @@
+[
+ {
+  "sample": 0,
+  "sql": "SELECT results.fastestLap FROM results JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND results.position = 1 AND results.time NOT LIKE '+%' ORDER BY races.date ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 29
+ },
+ {
+  "sample": 1,
+  "sql": "SELECT results.fastestLap FROM results JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND results.time NOT LIKE '+%' AND results.fastestLap IS NOT NULL ORDER BY races.date ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 47
+ },
+ {
+  "sample": 2,
+  "sql": "SELECT results.fastestLap FROM results JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND results.position = 1 ORDER BY races.date ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 28
+ },
+ {
+  "sample": 3,
+  "sql": "SELECT results.fastestLap FROM results JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND results.driverId = (SELECT ds.driverId FROM driverStandings ds JOIN races r ON ds.raceId = r.raceId WHERE r.year = 2009 AND ds.position = 1 ORDER BY r.date DESC LIMIT 1) AND results.fastestLap IS NOT NULL AND results.fastestLapTime IS NOT NULL ORDER BY results.fastestLapTime ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 34
+ },
+ {
+  "sample": 4,
+  "sql": "SELECT results.fastestLap FROM results JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND results.time NOT LIKE '+%' ORDER BY races.date LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 20
+ },
+ {
+  "sample": 5,
+  "sql": null,
+  "correct": null,
+  "error": "no FINAL() found",
+  "section_count": 38
+ },
+ {
+  "sample": 6,
+  "sql": null,
+  "correct": null,
+  "error": "no FINAL() found",
+  "section_count": 64
+ },
+ {
+  "sample": 7,
+  "sql": "SELECT results.fastestLap FROM results JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND results.position = 1 AND results.time NOT LIKE '+%' ORDER BY races.date ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 31
+ },
+ {
+  "sample": 8,
+  "sql": "SELECT fastestLap FROM results WHERE raceId IN (SELECT raceId FROM races WHERE year = 2009) AND driverId = (SELECT driverId FROM driverStandings WHERE raceId = (SELECT raceId FROM races WHERE year = 2009 ORDER BY date DESC LIMIT 1) ORDER BY position ASC LIMIT 1) AND fastestLap IS NOT NULL ORDER BY fastestLapTime ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 45
+ },
+ {
+  "sample": 9,
+  "sql": "SELECT results.fastestLap FROM results JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND results.position = 1 AND results.time NOT LIKE '+%' ORDER BY races.round ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 37
+ }
+]

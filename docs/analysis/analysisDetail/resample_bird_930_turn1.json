@@ -1,0 +1,72 @@
+[
+ {
+  "sample": 0,
+  "sql": "SELECT races.name FROM results INNER JOIN drivers ON results.driverId = drivers.driverId INNER JOIN races ON results.raceId = races.raceId WHERE drivers.forename = 'Lewis' AND drivers.surname = 'Hamilton' AND results.rank IS NOT NULL ORDER BY results.rank ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 8
+ },
+ {
+  "sample": 1,
+  "sql": "SELECT races.name FROM results JOIN drivers ON results.driverId = drivers.driverId JOIN races ON results.raceId = races.raceId WHERE drivers.forename = 'Lewis' AND drivers.surname = 'Hamilton' AND results.rank IS NOT NULL ORDER BY results.rank ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 14
+ },
+ {
+  "sample": 2,
+  "sql": "SELECT races.name FROM results INNER JOIN drivers ON results.driverId = drivers.driverId INNER JOIN races ON results.raceId = races.raceId WHERE drivers.forename = 'Lewis' AND drivers.surname = 'Hamilton' AND results.rank IS NOT NULL ORDER BY results.rank ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 6
+ },
+ {
+  "sample": 3,
+  "sql": "SELECT races.name FROM results JOIN drivers ON results.driverId = drivers.driverId JOIN races ON results.raceId = races.raceId WHERE drivers.forename = 'Lewis' AND drivers.surname = 'Hamilton' AND results.rank IS NOT NULL ORDER BY results.rank ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 1
+ },
+ {
+  "sample": 4,
+  "sql": "SELECT r.name FROM results AS res JOIN drivers AS d ON res.driverId = d.driverId JOIN races AS r ON res.raceId = r.raceId WHERE d.forename = 'Lewis' AND d.surname = 'Hamilton' AND res.rank IS NOT NULL ORDER BY res.rank ASC, r.year ASC, r.round ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 16
+ },
+ {
+  "sample": 5,
+  "sql": "SELECT races.name FROM results INNER JOIN drivers ON results.driverId = drivers.driverId INNER JOIN races ON results.raceId = races.raceId WHERE drivers.forename = 'Lewis' AND drivers.surname = 'Hamilton' AND results.rank IS NOT NULL ORDER BY results.rank ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 15
+ },
+ {
+  "sample": 6,
+  "sql": "SELECT races.name FROM results JOIN drivers ON results.driverId = drivers.driverId JOIN races ON results.raceId = races.raceId WHERE drivers.forename = 'Lewis' AND drivers.surname = 'Hamilton' AND results.rank IS NOT NULL ORDER BY results.rank ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 0
+ },
+ {
+  "sample": 7,
+  "sql": "SELECT races.name FROM results JOIN drivers ON results.driverId = drivers.driverId JOIN races ON results.raceId = races.raceId WHERE drivers.forename = 'Lewis' AND drivers.surname = 'Hamilton' AND results.rank IS NOT NULL ORDER BY results.rank ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 3
+ },
+ {
+  "sample": 8,
+  "sql": "SELECT r.name FROM results AS res JOIN drivers AS d ON res.driverId = d.driverId JOIN races AS r ON res.raceId = r.raceId WHERE d.forename = 'Lewis' AND d.surname = 'Hamilton' AND res.rank IS NOT NULL ORDER BY res.rank ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 5
+ },
+ {
+  "sample": 9,
+  "sql": "SELECT r.name FROM results AS res INNER JOIN drivers AS d ON res.driverId = d.driverId INNER JOIN races AS r ON res.raceId = r.raceId WHERE d.forename = 'Lewis' AND d.surname = 'Hamilton' AND res.rank IS NOT NULL ORDER BY res.rank ASC LIMIT 1",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 8
+ }
+]
