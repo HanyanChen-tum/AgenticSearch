@@ -6,12 +6,12 @@
  "question_count": 500,
  "correct_count": 337,
  "stages": [
-  "Hint 类型",
+  "总调用次数",
   "查询结构",
   "输出宽度",
-  "最值写法",
   "结果行数",
   "结果状态",
+  "结果形状",
   "判定"
  ],
  "paths": [
@@ -20,12 +20,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -34,12 +34,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -48,12 +48,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -62,12 +62,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -76,12 +76,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -90,12 +90,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -104,12 +104,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "含 CTE",
     "单问句·多列",
-    "其他写法",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -118,12 +118,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "含 CTE",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "gold单行->pred多行"
    ],
    "correct": false
   },
@@ -132,12 +132,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -146,12 +146,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -160,12 +160,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "多问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -174,12 +174,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "非行集",
-    "执行报错"
+    "执行报错",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -188,12 +188,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -202,12 +202,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -216,12 +216,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -230,12 +230,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -244,12 +244,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -258,12 +258,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -272,12 +272,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -286,12 +286,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -300,12 +300,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -314,12 +314,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -328,12 +328,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -342,12 +342,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -356,12 +356,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -370,12 +370,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "6+",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -384,12 +384,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -398,12 +398,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "多问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -412,12 +412,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "多问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -426,12 +426,12 @@
    "db_id": "debit_card_specializing",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -440,12 +440,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -454,12 +454,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -468,12 +468,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -482,12 +482,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -496,12 +496,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -510,12 +510,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -524,12 +524,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -538,12 +538,12 @@
    "db_id": "student_club",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -552,12 +552,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -566,12 +566,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -580,12 +580,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -594,12 +594,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -608,12 +608,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -622,12 +622,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -636,12 +636,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -650,12 +650,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -664,12 +664,12 @@
    "db_id": "student_club",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -678,12 +678,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -692,12 +692,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -706,12 +706,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -720,12 +720,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -734,12 +734,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -748,12 +748,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -762,12 +762,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "其他写法",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -776,12 +776,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -790,12 +790,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -804,12 +804,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -818,12 +818,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -832,12 +832,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -846,12 +846,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -860,12 +860,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -874,12 +874,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -888,12 +888,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -902,12 +902,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -916,12 +916,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -930,12 +930,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "gold单行->pred多行"
    ],
    "correct": false
   },
@@ -944,12 +944,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -958,12 +958,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -972,12 +972,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -986,12 +986,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1000,12 +1000,12 @@
    "db_id": "student_club",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1014,12 +1014,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1028,12 +1028,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1042,12 +1042,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1056,12 +1056,12 @@
    "db_id": "student_club",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1070,12 +1070,12 @@
    "db_id": "student_club",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1084,12 +1084,12 @@
    "db_id": "student_club",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1098,12 +1098,12 @@
    "db_id": "student_club",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1112,12 +1112,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "0",
     "平铺",
     "多问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1126,12 +1126,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1140,12 +1140,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1154,12 +1154,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1168,12 +1168,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1182,12 +1182,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1196,12 +1196,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1210,12 +1210,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1224,12 +1224,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "其他写法",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1238,12 +1238,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1252,12 +1252,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1266,12 +1266,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1280,12 +1280,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1294,12 +1294,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1308,12 +1308,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1322,12 +1322,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1336,12 +1336,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1350,12 +1350,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1364,12 +1364,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1378,12 +1378,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1392,12 +1392,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1406,12 +1406,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1420,12 +1420,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -1434,12 +1434,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1448,12 +1448,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1462,12 +1462,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1476,12 +1476,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1490,12 +1490,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "0",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1504,12 +1504,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1518,12 +1518,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1532,12 +1532,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1546,12 +1546,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1560,12 +1560,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1574,12 +1574,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1588,12 +1588,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1602,12 +1602,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1616,12 +1616,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1630,12 +1630,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1644,12 +1644,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1658,12 +1658,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1672,12 +1672,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1686,12 +1686,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1700,12 +1700,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1714,12 +1714,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1728,12 +1728,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1742,12 +1742,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1756,12 +1756,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1770,12 +1770,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1784,12 +1784,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1798,12 +1798,12 @@
    "db_id": "thrombosis_prediction",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1812,12 +1812,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1826,12 +1826,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1840,12 +1840,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1854,12 +1854,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1868,12 +1868,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "0",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1882,12 +1882,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1896,12 +1896,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1910,12 +1910,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1924,12 +1924,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -1938,12 +1938,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1952,12 +1952,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1966,12 +1966,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1980,12 +1980,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -1994,12 +1994,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2008,12 +2008,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2022,12 +2022,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2036,12 +2036,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2050,12 +2050,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2064,12 +2064,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2078,12 +2078,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2092,12 +2092,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2106,12 +2106,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2120,12 +2120,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2134,12 +2134,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2148,12 +2148,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -2162,12 +2162,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2176,12 +2176,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2190,12 +2190,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2204,12 +2204,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2218,12 +2218,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2232,12 +2232,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2246,12 +2246,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "= (SELECT MAX)",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2260,12 +2260,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2274,12 +2274,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2288,12 +2288,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2302,12 +2302,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "含 CTE",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2316,12 +2316,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2330,12 +2330,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2344,12 +2344,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2358,12 +2358,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2372,12 +2372,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2386,12 +2386,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2400,12 +2400,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "= (SELECT MAX)",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -2414,12 +2414,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "= (SELECT MAX)",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2428,12 +2428,12 @@
    "db_id": "european_football_2",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2442,12 +2442,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2456,12 +2456,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2470,12 +2470,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2484,12 +2484,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2498,12 +2498,12 @@
    "db_id": "european_football_2",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2512,12 +2512,12 @@
    "db_id": "european_football_2",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2526,12 +2526,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2540,12 +2540,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2554,12 +2554,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2568,12 +2568,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "gold单行->pred多行"
    ],
    "correct": true
   },
@@ -2582,12 +2582,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "0",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2596,12 +2596,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2610,12 +2610,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2624,12 +2624,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2638,12 +2638,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2652,12 +2652,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2666,12 +2666,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2680,12 +2680,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2694,12 +2694,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2708,12 +2708,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2722,12 +2722,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2736,12 +2736,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2750,12 +2750,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含 CTE",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2764,12 +2764,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2778,12 +2778,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2792,12 +2792,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2806,12 +2806,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2820,12 +2820,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2834,12 +2834,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2848,12 +2848,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2862,12 +2862,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "多问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2876,12 +2876,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2890,12 +2890,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2904,12 +2904,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2918,12 +2918,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "0",
     "含子查询",
     "多问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -2932,12 +2932,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2946,12 +2946,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2960,12 +2960,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2974,12 +2974,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -2988,12 +2988,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3002,12 +3002,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -3016,12 +3016,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3030,12 +3030,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3044,12 +3044,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3058,12 +3058,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3072,12 +3072,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "6+",
     "含 CTE",
     "单问句·单列",
-    "非最值题",
     "0 行",
-    "空结果"
+    "空结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3086,12 +3086,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3100,12 +3100,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "其他写法",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3114,12 +3114,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3128,12 +3128,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3142,12 +3142,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3156,12 +3156,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3170,12 +3170,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -3184,12 +3184,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3198,12 +3198,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3212,12 +3212,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3226,12 +3226,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3240,12 +3240,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3254,12 +3254,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3268,12 +3268,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3282,12 +3282,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3296,12 +3296,12 @@
    "db_id": "formula_1",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3310,12 +3310,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "多问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3324,12 +3324,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3338,12 +3338,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3352,12 +3352,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3366,12 +3366,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3380,12 +3380,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3394,12 +3394,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3408,12 +3408,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含 CTE",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3422,12 +3422,12 @@
    "db_id": "formula_1",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3436,12 +3436,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "非行集",
-    "执行报错"
+    "执行报错",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -3450,12 +3450,12 @@
    "db_id": "formula_1",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "6+",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "gold单行->pred多行"
    ],
    "correct": false
   },
@@ -3464,12 +3464,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3478,12 +3478,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3492,12 +3492,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3506,12 +3506,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3520,12 +3520,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "其他写法",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3534,12 +3534,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3548,12 +3548,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3562,12 +3562,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3576,12 +3576,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3590,12 +3590,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3604,12 +3604,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3618,12 +3618,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3632,12 +3632,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3646,12 +3646,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3660,12 +3660,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3674,12 +3674,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3688,12 +3688,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3702,12 +3702,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3716,12 +3716,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3730,12 +3730,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3744,12 +3744,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3758,12 +3758,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "非行集",
-    "执行报错"
+    "执行报错",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3772,12 +3772,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3786,12 +3786,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3800,12 +3800,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3814,12 +3814,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3828,12 +3828,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3842,12 +3842,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -3856,12 +3856,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3870,12 +3870,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3884,12 +3884,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3898,12 +3898,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3912,12 +3912,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3926,12 +3926,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3940,12 +3940,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "= (SELECT MAX)",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3954,12 +3954,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3968,12 +3968,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3982,12 +3982,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -3996,12 +3996,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4010,12 +4010,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4024,12 +4024,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4038,12 +4038,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4052,12 +4052,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": true
   },
@@ -4066,12 +4066,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4080,12 +4080,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4094,12 +4094,12 @@
    "db_id": "superhero",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4108,12 +4108,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4122,12 +4122,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4136,12 +4136,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4150,12 +4150,12 @@
    "db_id": "superhero",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4164,12 +4164,12 @@
    "db_id": "superhero",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4178,12 +4178,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4192,12 +4192,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4206,12 +4206,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4220,12 +4220,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4234,12 +4234,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4248,12 +4248,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4262,12 +4262,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4276,12 +4276,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4290,12 +4290,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4304,12 +4304,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4318,12 +4318,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4332,12 +4332,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4346,12 +4346,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4360,12 +4360,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4374,12 +4374,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4388,12 +4388,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4402,12 +4402,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4416,12 +4416,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4430,12 +4430,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "多问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4444,12 +4444,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4458,12 +4458,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4472,12 +4472,12 @@
    "db_id": "codebase_community",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4486,12 +4486,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "0",
     "含子查询",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4500,12 +4500,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4514,12 +4514,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "其他写法",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4528,12 +4528,12 @@
    "db_id": "codebase_community",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4542,12 +4542,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "含子查询",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4556,12 +4556,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4570,12 +4570,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4584,12 +4584,12 @@
    "db_id": "codebase_community",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4598,12 +4598,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "含 CTE",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -4612,12 +4612,12 @@
    "db_id": "codebase_community",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4626,12 +4626,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4640,12 +4640,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4654,12 +4654,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4668,12 +4668,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4682,12 +4682,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4696,12 +4696,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4710,12 +4710,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4724,12 +4724,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4738,12 +4738,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4752,12 +4752,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4766,12 +4766,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4780,12 +4780,12 @@
    "db_id": "codebase_community",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "= (SELECT MAX)",
     "1 行",
-    "执行报错"
+    "执行报错",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4794,12 +4794,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4808,12 +4808,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4822,12 +4822,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4836,12 +4836,12 @@
    "db_id": "codebase_community",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4850,12 +4850,12 @@
    "db_id": "codebase_community",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4864,12 +4864,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4878,12 +4878,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4892,12 +4892,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4906,12 +4906,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4920,12 +4920,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4934,12 +4934,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4948,12 +4948,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "多问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4962,12 +4962,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -4976,12 +4976,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -4990,12 +4990,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5004,12 +5004,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5018,12 +5018,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5032,12 +5032,12 @@
    "db_id": "card_games",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5046,12 +5046,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5060,12 +5060,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5074,12 +5074,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "非行集",
-    "执行报错"
+    "执行报错",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5088,12 +5088,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5102,12 +5102,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5116,12 +5116,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含子查询",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "gold单行->pred多行"
    ],
    "correct": false
   },
@@ -5130,12 +5130,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5144,12 +5144,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5158,12 +5158,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5172,12 +5172,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5186,12 +5186,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -5200,12 +5200,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5214,12 +5214,12 @@
    "db_id": "card_games",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5228,12 +5228,12 @@
    "db_id": "card_games",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5242,12 +5242,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5256,12 +5256,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5270,12 +5270,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5284,12 +5284,12 @@
    "db_id": "card_games",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5298,12 +5298,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5312,12 +5312,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5326,12 +5326,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5340,12 +5340,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5354,12 +5354,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5368,12 +5368,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -5382,12 +5382,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5396,12 +5396,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -5410,12 +5410,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5424,12 +5424,12 @@
    "db_id": "card_games",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5438,12 +5438,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5452,12 +5452,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5466,12 +5466,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "0",
     "平铺",
     "无法解析",
-    "非最值题",
     "非行集",
-    "执行报错"
+    "执行报错",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -5480,12 +5480,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "= (SELECT MAX)",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5494,12 +5494,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5508,12 +5508,12 @@
    "db_id": "card_games",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5522,12 +5522,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "10+ 行",
-    "执行报错"
+    "执行报错",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5536,12 +5536,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5550,12 +5550,12 @@
    "db_id": "card_games",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5564,12 +5564,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "0 行",
-    "空结果"
+    "空结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -5578,12 +5578,12 @@
    "db_id": "card_games",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "0 行",
-    "空结果"
+    "空结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -5592,12 +5592,12 @@
    "db_id": "toxicology",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5606,12 +5606,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "0",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5620,12 +5620,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5634,12 +5634,12 @@
    "db_id": "toxicology",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5648,12 +5648,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5662,12 +5662,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "gold单行->pred多行"
    ],
    "correct": true
   },
@@ -5676,12 +5676,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5690,12 +5690,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5704,12 +5704,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5718,12 +5718,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": true
   },
@@ -5732,12 +5732,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5746,12 +5746,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5760,12 +5760,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5774,12 +5774,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5788,12 +5788,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5802,12 +5802,12 @@
    "db_id": "toxicology",
    "difficulty": "simple",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5816,12 +5816,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5830,12 +5830,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5844,12 +5844,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "多问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5858,12 +5858,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5872,12 +5872,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5886,12 +5886,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5900,12 +5900,12 @@
    "db_id": "toxicology",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5914,12 +5914,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5928,12 +5928,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5942,12 +5942,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5956,12 +5956,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -5970,12 +5970,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5984,12 +5984,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -5998,12 +5998,12 @@
    "db_id": "toxicology",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6012,12 +6012,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6026,12 +6026,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6040,12 +6040,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6054,12 +6054,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6068,12 +6068,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6082,12 +6082,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6096,12 +6096,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6110,12 +6110,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6124,12 +6124,12 @@
    "db_id": "toxicology",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6138,12 +6138,12 @@
    "db_id": "toxicology",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6152,12 +6152,12 @@
    "db_id": "california_schools",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6166,12 +6166,12 @@
    "db_id": "california_schools",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6180,12 +6180,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6194,12 +6194,12 @@
    "db_id": "california_schools",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6208,12 +6208,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "多问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6222,12 +6222,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6236,12 +6236,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6250,12 +6250,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6264,12 +6264,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6278,12 +6278,12 @@
    "db_id": "california_schools",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "含 CTE",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6292,12 +6292,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6306,12 +6306,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6320,12 +6320,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "多问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6334,12 +6334,12 @@
    "db_id": "california_schools",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6348,12 +6348,12 @@
    "db_id": "california_schools",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6362,12 +6362,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6376,12 +6376,12 @@
    "db_id": "california_schools",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "含 CTE",
     "单问句·单列",
-    "其他写法",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -6390,12 +6390,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6404,12 +6404,12 @@
    "db_id": "california_schools",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6418,12 +6418,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6432,12 +6432,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6446,12 +6446,12 @@
    "db_id": "california_schools",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6460,12 +6460,12 @@
    "db_id": "california_schools",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6474,12 +6474,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": false
   },
@@ -6488,12 +6488,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6502,12 +6502,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6516,12 +6516,12 @@
    "db_id": "california_schools",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6530,12 +6530,12 @@
    "db_id": "california_schools",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "多问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "gold单行->pred多行"
    ],
    "correct": false
   },
@@ -6544,12 +6544,12 @@
    "db_id": "california_schools",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6558,12 +6558,12 @@
    "db_id": "california_schools",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "gold单行->pred多行"
    ],
    "correct": false
   },
@@ -6572,12 +6572,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6586,12 +6586,12 @@
    "db_id": "financial",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6600,12 +6600,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6614,12 +6614,12 @@
    "db_id": "financial",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·多列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6628,12 +6628,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "0 行",
-    "空结果"
+    "空结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6642,12 +6642,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6656,12 +6656,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6670,12 +6670,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6684,12 +6684,12 @@
    "db_id": "financial",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6698,12 +6698,12 @@
    "db_id": "financial",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6712,12 +6712,12 @@
    "db_id": "financial",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "含 CTE",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6726,12 +6726,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6740,12 +6740,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6754,12 +6754,12 @@
    "db_id": "financial",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "1-2",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6768,12 +6768,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6782,12 +6782,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "其他写法",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6796,12 +6796,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6810,12 +6810,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6824,12 +6824,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "0",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "2-10 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6838,12 +6838,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6852,12 +6852,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6866,12 +6866,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "含子查询",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6880,12 +6880,12 @@
    "db_id": "financial",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "gold多行->pred单行"
    ],
    "correct": true
   },
@@ -6894,12 +6894,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6908,12 +6908,12 @@
    "db_id": "financial",
    "difficulty": "simple",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6922,12 +6922,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6936,12 +6936,12 @@
    "db_id": "financial",
    "difficulty": "challenging",
    "nodes": [
-    "含显式公式",
+    "3-5",
     "含 CTE",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6950,12 +6950,12 @@
    "db_id": "financial",
    "difficulty": "challenging",
    "nodes": [
-    "无公式",
+    "3-5",
     "含子查询",
     "多问句·多列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6964,12 +6964,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "1-2",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   },
@@ -6978,12 +6978,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "ORDER BY+LIMIT",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -6992,12 +6992,12 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "3-5",
     "平铺",
     "单问句·单列",
-    "非最值题",
     "1 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": true
   },
@@ -7006,30 +7006,30 @@
    "db_id": "financial",
    "difficulty": "moderate",
    "nodes": [
-    "无公式",
+    "6+",
     "平铺",
     "单问句·多列",
-    "非最值题",
     "10+ 行",
-    "有结果"
+    "有结果",
+    "行数量级一致"
    ],
    "correct": false
   }
  ],
  "links": [
   {
-   "depth": 5,
+   "depth": 4,
    "source": "有结果",
-   "target": "答对",
+   "target": "行数量级一致",
    "correct": true,
-   "value": 337
+   "value": 332
   },
   {
-   "depth": 0,
-   "source": "无公式",
-   "target": "平铺",
+   "depth": 5,
+   "source": "行数量级一致",
+   "target": "答对",
    "correct": true,
-   "value": 271
+   "value": 332
   },
   {
    "depth": 1,
@@ -7039,7 +7039,7 @@
    "value": 265
   },
   {
-   "depth": 4,
+   "depth": 3,
    "source": "1 行",
    "target": "有结果",
    "correct": true,
@@ -7048,44 +7048,44 @@
   {
    "depth": 2,
    "source": "单问句·单列",
-   "target": "非最值题",
-   "correct": true,
-   "value": 237
-  },
-  {
-   "depth": 3,
-   "source": "非最值题",
    "target": "1 行",
    "correct": true,
-   "value": 193
+   "value": 215
+  },
+  {
+   "depth": 0,
+   "source": "3-5",
+   "target": "平铺",
+   "correct": true,
+   "value": 162
   },
   {
    "depth": 5,
-   "source": "有结果",
+   "source": "行数量级一致",
    "target": "答错",
    "correct": false,
-   "value": 152
+   "value": 140
+  },
+  {
+   "depth": 0,
+   "source": "1-2",
+   "target": "平铺",
+   "correct": true,
+   "value": 133
   },
   {
    "depth": 4,
+   "source": "有结果",
+   "target": "行数量级一致",
+   "correct": false,
+   "value": 133
+  },
+  {
+   "depth": 3,
    "source": "1 行",
    "target": "有结果",
    "correct": false,
    "value": 101
-  },
-  {
-   "depth": 2,
-   "source": "单问句·单列",
-   "target": "非最值题",
-   "correct": false,
-   "value": 98
-  },
-  {
-   "depth": 0,
-   "source": "无公式",
-   "target": "平铺",
-   "correct": false,
-   "value": 95
   },
   {
    "depth": 1,
@@ -7095,32 +7095,25 @@
    "value": 87
   },
   {
-   "depth": 3,
-   "source": "非最值题",
+   "depth": 2,
+   "source": "单问句·单列",
    "target": "1 行",
    "correct": false,
-   "value": 79
+   "value": 82
   },
   {
-   "depth": 4,
+   "depth": 0,
+   "source": "3-5",
+   "target": "平铺",
+   "correct": false,
+   "value": 62
+  },
+  {
+   "depth": 3,
    "source": "2-10 行",
    "target": "有结果",
    "correct": true,
    "value": 57
-  },
-  {
-   "depth": 3,
-   "source": "非最值题",
-   "target": "2-10 行",
-   "correct": true,
-   "value": 51
-  },
-  {
-   "depth": 3,
-   "source": "ORDER BY+LIMIT",
-   "target": "1 行",
-   "correct": true,
-   "value": 45
   },
   {
    "depth": 1,
@@ -7130,35 +7123,21 @@
    "value": 45
   },
   {
-   "depth": 0,
-   "source": "含显式公式",
-   "target": "平铺",
-   "correct": true,
-   "value": 44
-  },
-  {
    "depth": 2,
    "source": "单问句·单列",
-   "target": "ORDER BY+LIMIT",
+   "target": "2-10 行",
    "correct": true,
    "value": 42
   },
   {
-   "depth": 2,
-   "source": "单问句·多列",
-   "target": "非最值题",
-   "correct": true,
-   "value": 38
-  },
-  {
-   "depth": 3,
-   "source": "非最值题",
-   "target": "10+ 行",
-   "correct": true,
+   "depth": 0,
+   "source": "1-2",
+   "target": "平铺",
+   "correct": false,
    "value": 37
   },
   {
-   "depth": 4,
+   "depth": 3,
    "source": "10+ 行",
    "target": "有结果",
    "correct": true,
@@ -7172,14 +7151,21 @@
    "value": 29
   },
   {
-   "depth": 4,
+   "depth": 3,
    "source": "2-10 行",
    "target": "有结果",
    "correct": false,
    "value": 27
   },
   {
-   "depth": 4,
+   "depth": 2,
+   "source": "单问句·单列",
+   "target": "10+ 行",
+   "correct": true,
+   "value": 27
+  },
+  {
+   "depth": 3,
    "source": "10+ 行",
    "target": "有结果",
    "correct": false,
@@ -7195,42 +7181,28 @@
   {
    "depth": 2,
    "source": "单问句·多列",
-   "target": "非最值题",
-   "correct": false,
-   "value": 24
+   "target": "1 行",
+   "correct": true,
+   "value": 22
   },
   {
    "depth": 0,
-   "source": "无公式",
+   "source": "3-5",
    "target": "含子查询",
    "correct": false,
-   "value": 23
+   "value": 20
   },
   {
-   "depth": 0,
-   "source": "含显式公式",
-   "target": "平铺",
-   "correct": false,
-   "value": 23
-  },
-  {
-   "depth": 3,
-   "source": "非最值题",
-   "target": "10+ 行",
-   "correct": false,
-   "value": 21
-  },
-  {
-   "depth": 3,
-   "source": "非最值题",
+   "depth": 2,
+   "source": "单问句·单列",
    "target": "2-10 行",
    "correct": false,
-   "value": 21
+   "value": 19
   },
   {
-   "depth": 3,
-   "source": "ORDER BY+LIMIT",
-   "target": "1 行",
+   "depth": 5,
+   "source": "gold多行->pred单行",
+   "target": "答错",
    "correct": false,
    "value": 17
   },
@@ -7243,45 +7215,87 @@
   },
   {
    "depth": 2,
+   "source": "单问句·多列",
+   "target": "2-10 行",
+   "correct": true,
+   "value": 15
+  },
+  {
+   "depth": 2,
+   "source": "单问句·多列",
+   "target": "1 行",
+   "correct": false,
+   "value": 14
+  },
+  {
+   "depth": 0,
+   "source": "6+",
+   "target": "平铺",
+   "correct": false,
+   "value": 14
+  },
+  {
+   "depth": 4,
+   "source": "有结果",
+   "target": "gold多行->pred单行",
+   "correct": false,
+   "value": 13
+  },
+  {
+   "depth": 2,
    "source": "单问句·单列",
-   "target": "ORDER BY+LIMIT",
+   "target": "10+ 行",
    "correct": false,
-   "value": 15
+   "value": 13
   },
   {
    "depth": 0,
-   "source": "无公式",
+   "source": "1-2",
    "target": "含子查询",
    "correct": true,
-   "value": 15
+   "value": 12
   },
   {
    "depth": 0,
-   "source": "含显式公式",
+   "source": "1-2",
    "target": "含子查询",
    "correct": false,
-   "value": 15
+   "value": 10
+  },
+  {
+   "depth": 0,
+   "source": "6+",
+   "target": "平铺",
+   "correct": true,
+   "value": 10
+  },
+  {
+   "depth": 0,
+   "source": "0",
+   "target": "平铺",
+   "correct": true,
+   "value": 10
   },
   {
    "depth": 2,
    "source": "单问句·多列",
-   "target": "ORDER BY+LIMIT",
+   "target": "10+ 行",
    "correct": true,
-   "value": 9
+   "value": 10
   },
   {
    "depth": 2,
    "source": "单问句·多列",
-   "target": "ORDER BY+LIMIT",
+   "target": "10+ 行",
+   "correct": false,
+   "value": 10
+  },
+  {
+   "depth": 2,
+   "source": "单问句·多列",
+   "target": "2-10 行",
    "correct": false,
    "value": 8
-  },
-  {
-   "depth": 5,
-   "source": "执行报错",
-   "target": "答错",
-   "correct": false,
-   "value": 7
   },
   {
    "depth": 1,
@@ -7291,9 +7305,30 @@
    "value": 7
   },
   {
-   "depth": 3,
-   "source": "ORDER BY+LIMIT",
-   "target": "2-10 行",
+   "depth": 4,
+   "source": "有结果",
+   "target": "gold单行->pred多行",
+   "correct": false,
+   "value": 6
+  },
+  {
+   "depth": 5,
+   "source": "gold单行->pred多行",
+   "target": "答错",
+   "correct": false,
+   "value": 6
+  },
+  {
+   "depth": 0,
+   "source": "3-5",
+   "target": "含子查询",
+   "correct": true,
+   "value": 6
+  },
+  {
+   "depth": 2,
+   "source": "多问句·多列",
+   "target": "1 行",
    "correct": false,
    "value": 6
   },
@@ -7305,20 +7340,6 @@
    "value": 6
   },
   {
-   "depth": 3,
-   "source": "ORDER BY+LIMIT",
-   "target": "2-10 行",
-   "correct": true,
-   "value": 6
-  },
-  {
-   "depth": 0,
-   "source": "无公式",
-   "target": "含 CTE",
-   "correct": false,
-   "value": 5
-  },
-  {
    "depth": 1,
    "source": "含 CTE",
    "target": "单问句·单列",
@@ -7326,79 +7347,72 @@
    "value": 5
   },
   {
-   "depth": 4,
+   "depth": 3,
    "source": "非行集",
    "target": "执行报错",
    "correct": false,
    "value": 5
   },
   {
-   "depth": 2,
-   "source": "多问句·多列",
-   "target": "非最值题",
+   "depth": 4,
+   "source": "执行报错",
+   "target": "行数量级一致",
    "correct": false,
    "value": 5
+  },
+  {
+   "depth": 0,
+   "source": "0",
+   "target": "含子查询",
+   "correct": false,
+   "value": 5
+  },
+  {
+   "depth": 0,
+   "source": "0",
+   "target": "平铺",
+   "correct": false,
+   "value": 5
+  },
+  {
+   "depth": 0,
+   "source": "3-5",
+   "target": "含 CTE",
+   "correct": false,
+   "value": 4
   },
   {
    "depth": 2,
    "source": "单问句·单列",
-   "target": "= (SELECT MAX)",
-   "correct": false,
-   "value": 5
-  },
-  {
-   "depth": 3,
-   "source": "非最值题",
    "target": "非行集",
    "correct": false,
    "value": 4
   },
   {
-   "depth": 2,
-   "source": "单问句·单列",
-   "target": "其他写法",
+   "depth": 0,
+   "source": "3-5",
+   "target": "含 CTE",
    "correct": true,
-   "value": 4
-  },
-  {
-   "depth": 3,
-   "source": "其他写法",
-   "target": "1 行",
-   "correct": true,
-   "value": 4
-  },
-  {
-   "depth": 3,
-   "source": "= (SELECT MAX)",
-   "target": "1 行",
-   "correct": false,
    "value": 4
   },
   {
    "depth": 2,
    "source": "多问句·多列",
-   "target": "非最值题",
+   "target": "1 行",
    "correct": true,
    "value": 4
   },
   {
-   "depth": 4,
+   "depth": 3,
    "source": "0 行",
    "target": "空结果",
    "correct": false,
    "value": 4
   },
   {
-   "depth": 5,
-   "source": "空结果",
-   "target": "答错",
-   "correct": false,
-   "value": 4
-  },
-  {
-   "depth": 2,
-   "source": "多问句·多列",
-   "target": "ORDER BY+LIMIT",
+   "depth": 0,
+   "source": "6+",
+   "target": "含子查询",
    "correct": false,
    "value": 3
   },
@@ -7417,23 +7431,23 @@
    "value": 3
   },
   {
-   "depth": 3,
-   "source": "非最值题",
+   "depth": 2,
+   "source": "单问句·单列",
    "target": "0 行",
    "correct": false,
    "value": 3
   },
   {
-   "depth": 2,
-   "source": "单问句·单列",
-   "target": "其他写法",
-   "correct": false,
+   "depth": 4,
+   "source": "有结果",
+   "target": "gold多行->pred单行",
+   "correct": true,
    "value": 3
   },
   {
-   "depth": 0,
-   "source": "含显式公式",
-   "target": "含子查询",
+   "depth": 5,
+   "source": "gold多行->pred单行",
+   "target": "答对",
    "correct": true,
    "value": 3
   },
@@ -7441,13 +7455,6 @@
    "depth": 1,
    "source": "含 CTE",
    "target": "单问句·多列",
-   "correct": false,
-   "value": 2
-  },
-  {
-   "depth": 3,
-   "source": "其他写法",
-   "target": "1 行",
    "correct": false,
    "value": 2
   },
@@ -7461,7 +7468,7 @@
   {
    "depth": 2,
    "source": "多问句·单列",
-   "target": "非最值题",
+   "target": "1 行",
    "correct": true,
    "value": 2
   },
@@ -7473,39 +7480,53 @@
    "value": 2
   },
   {
-   "depth": 0,
-   "source": "无公式",
-   "target": "含 CTE",
+   "depth": 4,
+   "source": "有结果",
+   "target": "gold单行->pred多行",
+   "correct": true,
+   "value": 2
+  },
+  {
+   "depth": 5,
+   "source": "gold单行->pred多行",
+   "target": "答对",
    "correct": true,
    "value": 2
   },
   {
    "depth": 0,
-   "source": "含显式公式",
-   "target": "含 CTE",
-   "correct": true,
-   "value": 2
-  },
-  {
-   "depth": 0,
-   "source": "含显式公式",
+   "source": "6+",
    "target": "含 CTE",
    "correct": false,
    "value": 2
   },
   {
-   "depth": 3,
-   "source": "其他写法",
-   "target": "10+ 行",
+   "depth": 4,
+   "source": "空结果",
+   "target": "行数量级一致",
+   "correct": false,
+   "value": 2
+  },
+  {
+   "depth": 4,
+   "source": "执行报错",
+   "target": "gold多行->pred单行",
+   "correct": false,
+   "value": 2
+  },
+  {
+   "depth": 4,
+   "source": "空结果",
+   "target": "gold多行->pred单行",
    "correct": false,
    "value": 2
   },
   {
    "depth": 2,
-   "source": "单问句·多列",
-   "target": "其他写法",
+   "source": "多问句·多列",
+   "target": "10+ 行",
    "correct": false,
-   "value": 1
+   "value": 2
   },
   {
    "depth": 1,
@@ -7523,27 +7544,6 @@
   },
   {
    "depth": 3,
-   "source": "ORDER BY+LIMIT",
-   "target": "非行集",
-   "correct": false,
-   "value": 1
-  },
-  {
-   "depth": 2,
-   "source": "单问句·单列",
-   "target": "= (SELECT MAX)",
-   "correct": true,
-   "value": 1
-  },
-  {
-   "depth": 3,
-   "source": "= (SELECT MAX)",
-   "target": "1 行",
-   "correct": true,
-   "value": 1
-  },
-  {
-   "depth": 4,
    "source": "1 行",
    "target": "执行报错",
    "correct": false,
@@ -7559,35 +7559,28 @@
   {
    "depth": 2,
    "source": "无法解析",
-   "target": "非最值题",
+   "target": "非行集",
    "correct": false,
    "value": 1
   },
   {
    "depth": 3,
-   "source": "= (SELECT MAX)",
-   "target": "10+ 行",
-   "correct": false,
-   "value": 1
-  },
-  {
-   "depth": 3,
-   "source": "ORDER BY+LIMIT",
-   "target": "10+ 行",
-   "correct": false,
-   "value": 1
-  },
-  {
-   "depth": 4,
    "source": "10+ 行",
    "target": "执行报错",
    "correct": false,
    "value": 1
   },
   {
-   "depth": 3,
-   "source": "ORDER BY+LIMIT",
+   "depth": 2,
+   "source": "单问句·多列",
    "target": "0 行",
+   "correct": false,
+   "value": 1
+  },
+  {
+   "depth": 0,
+   "source": "1-2",
+   "target": "含 CTE",
    "correct": false,
    "value": 1
   },

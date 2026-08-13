@@ -4,19 +4,26 @@ Harshal's ask from the Praktikum session: for 90% of cases, what path does the
 model take, and for the long tail, where does it branch? Each branch point is a
 decision, and an error is a decision made wrong.
 
-The Thought Anchors repository does this at sentence level over reasoning chains.
-That is not reproducible here -- this deployment returns reasoning token counts
-but never the reasoning, so 86% of what the model produced is invisible. What is
-visible is the trajectory: which tools it called, what shape of SQL it committed
-to, whether the result came back empty. Those are decisions too, and they are
-recorded for every question already.
+The nodes are not hand-picked. `rank_decision_points.py` scored fourteen
+SQL-shape candidates; `mine_trajectory_patterns.py` added six more read straight
+off the real conversation (call count, turn count, whether a FINAL got written
+before any tool result came back, whether the last turn revises that guess,
+result shape against gold). The six stages here are the merged top six by
+information gain across all twenty (`decision_point_ranking_combined.json`).
+That matters twice over: the first version of this chart chose five nodes by
+intuition and missed the two strongest entirely; this version's previous
+six-SQL-feature ranking would have missed that two trajectory-only features
+(result shape, call count) outrank all but one SQL-shape feature.
 
-The nodes are not hand-picked. `rank_decision_points.py` scores fourteen
-candidates by how much knowing each one reduces uncertainty about correctness,
-and the stages here are its top six. That matters: the first version of this
-chart chose five by intuition, and the ranking put two of them seventh and
-eighth while the two strongest -- query structure and result size -- were not
-in the set at all. Query structure alone spans 40.6 points of success rate.
+Result shape needs gold to compute, same as the older result-state/result-count
+nodes -- it is a diagnostic bin over the finished run, not something the model
+itself could have checked. Reading the actual reasoning behind it also showed it
+is not one mechanism: of twenty resampled cases, only three or four reproduce as
+"never checks for ties," four don't reproduce at all, three are gold logic bugs,
+the rest split across the already-known yes/no and output-width nodes (see
+`reasoning_trace_findings_2026-08-12.md` for the full breakdown). The statistic
+survives at this scale; treat the node as a strong, honest lead, not a single
+clean bug.
 """
 
 from __future__ import annotations
@@ -35,6 +42,7 @@ if str(PROJECT_ROOT) not in sys.path:
 import sqlglot
 from sqlglot import exp
 
+from scripts.mine_trajectory_patterns import result_shape, trajectory_features
 from scripts.rank_decision_points import candidates
 from shared.evaluator import is_correct
 
@@ -118,9 +126,12 @@ def stage_result(row: dict) -> str:
     return "空结果" if empty else "有结果"
 
 
-# The top six by information gain, in trajectory order rather than rank order
-# so the ribbon reads left-to-right as the run unfolded.
-STAGES = ["Hint 类型", "查询结构", "输出宽度", "最值写法", "结果行数", "结果状态"]
+# The merged top six by information gain (SQL-shape + trajectory-shape),
+# ordered by when the underlying choice is actually made rather than by rank,
+# so the ribbon reads left-to-right as the run unfolded: exploration effort,
+# then the SQL shape drafted from it, then what came back on execution, then
+# how that compares to gold.
+STAGES = ["总调用次数", "查询结构", "输出宽度", "结果行数", "结果状态", "结果形状"]
 
 
 def build(results_path: Path, trace_path: Path) -> dict:
@@ -128,12 +139,14 @@ def build(results_path: Path, trace_path: Path) -> dict:
     events_by_id: dict[str, list[dict]] = {}
     model_sql: dict[str, str] = {}
     tables_by_id: dict[str, set] = {}
+    messages_by_id: dict[str, list[dict]] = {}
     if trace_path.exists():
         with trace_path.open(encoding="utf-8") as handle:
             for line in handle:
                 record = json.loads(line)
                 trace = record.get("_trace") or record
                 events_by_id[record["id"]] = trace.get("events") or []
+                messages_by_id[record["id"]] = trace.get("messages") or []
                 # `predicted_sql` is post-rewrite. Charting it would show the
                 # harness's choices as if they were the model's -- with the
                 # DISTINCT rule on, no query ends up counting distinct at all.
@@ -153,6 +166,8 @@ def build(results_path: Path, trace_path: Path) -> dict:
         tree = _tree(model_sql.get(row["id"], row.get("predicted_sql")))
         values = candidates(row, tree, events_by_id.get(row["id"], []),
                             tables_by_id.get(row["id"], set()), hints.get(row["id"], ""))
+        values.update(trajectory_features(messages_by_id.get(row["id"], [])))
+        values["结果形状"] = result_shape(row)
         node_values = [values[name] for name in STAGES]
         paths.append({
             "id": row["id"],
