@@ -1,0 +1,114 @@
+[
+ {
+  "id": "bird_944",
+  "repeat": 1,
+  "infra_error": "APIError: litellm.APIError: AzureException APIError - ",
+  "n_calls": 5
+ },
+ {
+  "id": "bird_944",
+  "repeat": 2,
+  "infra_error": "APIError: litellm.APIError: AzureException APIError - ",
+  "n_calls": 1
+ },
+ {
+  "id": "bird_944",
+  "repeat": 3,
+  "infra_error": "APIError: litellm.APIError: AzureException APIError - ",
+  "n_calls": 5
+ },
+ {
+  "id": "bird_944",
+  "repeat": 4,
+  "infra_error": null,
+  "n_calls": 6,
+  "correct": false,
+  "sql": "WITH race AS (SELECT raceId FROM races WHERE year = 2008 ORDER BY date ASC LIMIT 1), champion AS (SELECT milliseconds AS champion_ms FROM results WHERE raceId = (SELECT raceId FROM race) AND time IS NOT NULL AND milliseconds IS NOT NULL ORDER BY milliseconds ASC LIMIT 1), last_driver AS (SELECT milliseconds AS last_ms FROM results WHERE raceId = (SELECT raceId FROM race) AND time IS NOT NULL AND milliseconds IS NOT NULL ORDER BY milliseconds DESC LIMIT 1) SELECT 100.0 * (last_ms - champion_ms) / last_ms FROM champion, last_driver;"
+ },
+ {
+  "id": "bird_944",
+  "repeat": 5,
+  "infra_error": "APIError: litellm.APIError: AzureException APIError - ",
+  "n_calls": 3
+ },
+ {
+  "id": "bird_1524",
+  "repeat": 1,
+  "infra_error": null,
+  "n_calls": 2,
+  "correct": false,
+  "sql": "SELECT T2.Currency FROM customers AS T2 INNER JOIN transactions_1k AS T1 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-24' AND T1.Price = 548.4"
+ },
+ {
+  "id": "bird_1524",
+  "repeat": 2,
+  "infra_error": null,
+  "n_calls": 6,
+  "correct": false,
+  "sql": "SELECT DISTINCT C.Currency FROM customers AS C INNER JOIN transactions_1k AS T ON C.CustomerID = T.CustomerID WHERE T.Date = '2012-08-24' AND ROUND(T.Amount * T.Price, 1) = 548.4"
+ },
+ {
+  "id": "bird_1524",
+  "repeat": 3,
+  "infra_error": null,
+  "n_calls": 10,
+  "correct": false,
+  "sql": "SELECT C.Currency FROM transactions_1k AS T INNER JOIN customers AS C ON T.CustomerID = C.CustomerID WHERE T.Date = '2012-08-24' AND T.Price = 548.4 LIMIT 1"
+ },
+ {
+  "id": "bird_1524",
+  "repeat": 4,
+  "infra_error": null,
+  "n_calls": 11,
+  "correct": false,
+  "sql": "SELECT T1.Currency FROM customers AS T1 INNER JOIN transactions_1k AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Date = '2012-08-24' AND T2.Price = 548.4 LIMIT 1"
+ },
+ {
+  "id": "bird_1524",
+  "repeat": 5,
+  "infra_error": null,
+  "n_calls": 8,
+  "correct": false,
+  "sql": "SELECT DISTINCT C.Currency FROM transactions_1k AS T JOIN customers AS C ON T.CustomerID = C.CustomerID WHERE T.Date = '2012-08-24' GROUP BY C.CustomerID, C.Currency HAVING ROUND(SUM(T.Amount * T.Price), 1) = 548.4"
+ },
+ {
+  "id": "bird_1526",
+  "repeat": 1,
+  "infra_error": null,
+  "n_calls": 8,
+  "correct": false,
+  "sql": "SELECT (SUM(CASE WHEN substr(ym.Date,1,4) = '2012' THEN ym.Consumption ELSE 0 END) - SUM(CASE WHEN substr(ym.Date,1,4) = '2013' THEN ym.Consumption ELSE 0 END)) / SUM(CASE WHEN substr(ym.Date,1,4) = '2012' THEN ym.Consumption ELSE 0 END) FROM yearmonth AS ym WHERE ym.CustomerID = (SELECT t.CustomerID FROM transactions_1k AS t WHERE t.Date = '2012-08-25' ORDER BY ABS(t.Amount * t.Price - 634.8) ASC, t.CustomerID ASC LIMIT 1)"
+ },
+ {
+  "id": "bird_1526",
+  "repeat": 2,
+  "infra_error": null,
+  "n_calls": 4,
+  "correct": false,
+  "sql": "SELECT (SUM(CASE WHEN substr(Date,1,4)='2012' THEN Consumption ELSE 0 END) - SUM(CASE WHEN substr(Date,1,4)='2013' THEN Consumption ELSE 0 END)) * 1.0 / SUM(CASE WHEN substr(Date,1,4)='2012' THEN Consumption ELSE 0 END) FROM yearmonth WHERE CustomerID = (SELECT CustomerID FROM transactions_1k WHERE Date = '2012-08-25' AND Price = 634.8 LIMIT 1)"
+ },
+ {
+  "id": "bird_1526",
+  "repeat": 3,
+  "infra_error": null,
+  "n_calls": 2,
+  "correct": true,
+  "sql": "SELECT (SUM(CASE WHEN SUBSTR(Date,1,4)='2012' THEN Consumption ELSE 0 END) - SUM(CASE WHEN SUBSTR(Date,1,4)='2013' THEN Consumption ELSE 0 END)) * 1.0 / SUM(CASE WHEN SUBSTR(Date,1,4)='2012' THEN Consumption ELSE 0 END) FROM yearmonth WHERE CustomerID = (SELECT CustomerID FROM transactions_1k WHERE Date = '2012-08-25' GROUP BY CustomerID HAVING ROUND(SUM(Amount * Price), 1) = 634.8 LIMIT 1)"
+ },
+ {
+  "id": "bird_1526",
+  "repeat": 4,
+  "infra_error": null,
+  "n_calls": 3,
+  "correct": true,
+  "sql": "SELECT (SUM(CASE WHEN Date LIKE '2012%' THEN Consumption ELSE 0 END) - SUM(CASE WHEN Date LIKE '2013%' THEN Consumption ELSE 0 END)) / SUM(CASE WHEN Date LIKE '2012%' THEN Consumption ELSE 0 END) FROM yearmonth WHERE CustomerID = (SELECT CustomerID FROM transactions_1k WHERE Date = '2012-08-25' AND ROUND(Amount * Price, 1) = 634.8)"
+ },
+ {
+  "id": "bird_1526",
+  "repeat": 5,
+  "infra_error": null,
+  "n_calls": 1,
+  "correct": false,
+  "sql": "SELECT (SUM(CASE WHEN Date LIKE '2012%' THEN Consumption ELSE 0 END) - SUM(CASE WHEN Date LIKE '2013%' THEN Consumption ELSE 0 END)) * 1.0 / SUM(CASE WHEN Date LIKE '2012%' THEN Consumption ELSE 0 END) FROM yearmonth WHERE CustomerID = (SELECT CustomerID FROM transactions_1k WHERE Date = '2012-08-25' AND Price = 634.8 LIMIT 1)"
+ }
+]
