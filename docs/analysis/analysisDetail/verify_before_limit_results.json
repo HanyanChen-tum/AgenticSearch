@@ -1,0 +1,666 @@
+[
+ {
+  "id": "bird_1479",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1498",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1480",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1376",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1472",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1389",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1403",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1392",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1398",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": true,
+  "new_sql": "SELECT DISTINCT e.event_name FROM budget AS b JOIN event AS e ON e.event_id = b.link_to_event WHERE b.category = 'Advertisement' AND b.spent = (SELECT MAX(spent) FROM budget WHERE category = 'Advertisement') ORDER BY e.event_name",
+  "error": null
+ },
+ {
+  "id": "bird_1531",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1166",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1281",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1255",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1238",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1028",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1032",
+  "before_correct": true,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT League.name, COUNT(Match.league_id) AS matches FROM Match JOIN League ON Match.league_id = League.id GROUP BY League.id, League.name HAVING COUNT(Match.league_id) = (SELECT MAX(cnt) FROM (SELECT COUNT(league_id) AS cnt FROM Match GROUP BY league_id)) ORDER BY League.name ASC",
+  "error": null
+ },
+ {
+  "id": "bird_1030",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1078",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1079",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1025",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1098",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1168",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1092",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1107",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1116",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1175",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT CAST(strftime('%Y', E.[Examination Date]) AS INTEGER) - CAST(strftime('%Y', P.Birthday) AS INTEGER) AS age, E.Diagnosis FROM Laboratory AS L JOIN Patient AS P ON P.ID = L.ID JOIN Examination AS E ON E.ID = L.ID WHERE L.HGB IS NOT NULL ORDER BY L.HGB DESC LIMIT 1;",
+  "error": null
+ },
+ {
+  "id": "bird_1146",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1147",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_847",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_865",
+  "before_correct": true,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT d.forename || ' ' || d.surname FROM results r JOIN drivers d ON r.driverId = d.driverId WHERE r.raceId = 592 AND r.time IS NOT NULL ORDER BY d.dob ASC LIMIT 1;",
+  "error": null
+ },
+ {
+  "id": "bird_877",
+  "before_correct": true,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT d.forename || ' ' || d.surname FROM results AS r INNER JOIN drivers AS d ON r.driverId = d.driverId WHERE r.raceId = 872 AND r.time IS NOT NULL ORDER BY d.dob DESC LIMIT 1",
+  "error": null
+ },
+ {
+  "id": "bird_1102",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": true,
+  "new_sql": "SELECT p.player_name FROM Player AS p JOIN Player_Attributes AS pa ON p.player_api_id = pa.player_api_id WHERE pa.overall_rating = 77 AND pa.date LIKE '2016-06-23%' AND p.birthday = (SELECT MIN(p2.birthday) FROM Player AS p2 JOIN Player_Attributes AS pa2 ON p2.player_api_id = pa2.player_api_id WHERE pa2.overall_rating = 77 AND pa2.date LIKE '2016-06-23%')",
+  "error": null
+ },
+ {
+  "id": "bird_879",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1122",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_892",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1144",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_898",
+  "before_correct": true,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT (CAST(strftime('%Y', CURRENT_TIMESTAMP) AS INTEGER) - CAST(strftime('%Y', dob) AS INTEGER)) AS age, forename || ' ' || surname AS name FROM drivers WHERE nationality = 'Japanese' ORDER BY dob DESC LIMIT 1",
+  "error": null
+ },
+ {
+  "id": "bird_904",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": true,
+  "new_sql": "SELECT DISTINCT r.name, r.year FROM lapTimes AS lt JOIN drivers AS d ON lt.driverId = d.driverId JOIN races AS r ON lt.raceId = r.raceId WHERE d.forename = 'Michael' AND d.surname = 'Schumacher' AND lt.milliseconds = (SELECT MIN(lt2.milliseconds) FROM lapTimes AS lt2 JOIN drivers AS d2 ON lt2.driverId = d2.driverId WHERE d2.forename = 'Michael' AND d2.surname = 'Schumacher') ORDER BY r.year, r.name",
+  "error": null
+ },
+ {
+  "id": "bird_1058",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "WITH avg_finishing AS (SELECT P.player_name, P.player_api_id, AVG(PA.finishing) AS avg_finishing FROM Player AS P INNER JOIN Player_Attributes AS PA ON P.player_api_id = PA.player_api_id WHERE P.height BETWEEN (SELECT MIN(height) FROM Player) AND (SELECT MAX(height) FROM Player) GROUP BY P.player_api_id, P.player_name) SELECT player_name FROM avg_finishing WHERE avg_finishing = (SELECT MAX(avg_finishing) FROM avg_finishing);",
+  "error": null
+ },
+ {
+  "id": "bird_894",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_915",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_930",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_906",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT r.name, res.points FROM drivers d JOIN results res ON d.driverId = res.driverId JOIN races r ON res.raceId = r.raceId WHERE d.forename = 'Lewis' AND d.surname = 'Hamilton' AND r.year = (SELECT MIN(r2.year) FROM results res2 JOIN races r2 ON res2.raceId = r2.raceId JOIN drivers d2 ON res2.driverId = d2.driverId WHERE d2.forename = 'Lewis' AND d2.surname = 'Hamilton') ORDER BY r.round",
+  "error": null
+ },
+ {
+  "id": "bird_928",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_931",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_869",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": true,
+  "new_sql": "SELECT DISTINCT T2.url FROM constructorResults AS T1 INNER JOIN constructors AS T2 ON T1.constructorId = T2.constructorId WHERE T1.raceId = 9 AND T1.points = (SELECT MAX(points) FROM constructorResults WHERE raceId = 9)",
+  "error": null
+ },
+ {
+  "id": "bird_971",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_981",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_994",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_959",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_1001",
+  "before_correct": true,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT drivers.forename || ' ' || drivers.surname FROM qualifying INNER JOIN races ON races.raceId = qualifying.raceId INNER JOIN circuits ON circuits.circuitId = races.circuitId INNER JOIN drivers ON drivers.driverId = qualifying.driverId WHERE circuits.name = 'Marina Bay Street Circuit' AND races.year = 2008 AND qualifying.q3 IS NOT NULL ORDER BY qualifying.q3 ASC LIMIT 1",
+  "error": null
+ },
+ {
+  "id": "bird_1003",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_736",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": true,
+  "new_sql": "SELECT s.superhero_name FROM hero_attribute AS ha INNER JOIN attribute AS a ON ha.attribute_id = a.id INNER JOIN superhero AS s ON ha.hero_id = s.id WHERE a.attribute_name = 'Intelligence' ORDER BY ha.attribute_value ASC LIMIT 1",
+  "error": null
+ },
+ {
+  "id": "bird_766",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_769",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_531",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_897",
+  "before_correct": true,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT d.forename || ' ' || d.surname AS full_name, d.nationality, MAX(ds.points) AS max_points FROM driverStandings AS ds JOIN drivers AS d ON ds.driverId = d.driverId GROUP BY d.driverId, d.forename, d.surname, d.nationality ORDER BY SUM(ds.wins) DESC LIMIT 1",
+  "error": null
+ },
+ {
+  "id": "bird_732",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": true,
+  "new_sql": "SELECT DISTINCT P.publisher_name FROM hero_attribute AS HA INNER JOIN attribute AS A ON HA.attribute_id = A.id INNER JOIN superhero AS S ON HA.hero_id = S.id INNER JOIN publisher AS P ON S.publisher_id = P.id WHERE A.attribute_name = 'Speed' AND HA.attribute_value = (SELECT MIN(HA2.attribute_value) FROM hero_attribute AS HA2 INNER JOIN attribute AS A2 ON HA2.attribute_id = A2.id WHERE A2.attribute_name = 'Speed') ORDER BY P.publisher_name",
+  "error": null
+ },
+ {
+  "id": "bird_990",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": true,
+  "new_sql": "SELECT DISTINCT T1.constructorRef, T1.url FROM constructors AS T1 INNER JOIN results AS T2 ON T1.constructorId = T2.constructorId INNER JOIN races AS T3 ON T2.raceId = T3.raceId WHERE T3.year = 2009 AND T3.name = 'Singapore Grand Prix' ORDER BY T2.time DESC LIMIT 1",
+  "error": null
+ },
+ {
+  "id": "bird_671",
+  "before_correct": true,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT u.DisplayName FROM badges b JOIN users u ON b.UserId = u.Id WHERE b.Name = 'Autobiographer' AND b.Date = (SELECT MIN(Date) FROM badges WHERE Name = 'Autobiographer')",
+  "error": null
+ },
+ {
+  "id": "bird_678",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_682",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_687",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_707",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_195",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_794",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_349",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_244",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_208",
+  "before_correct": true,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'h' GROUP BY T2.label ORDER BY COUNT(T2.label) DESC",
+  "error": null
+ },
+ {
+  "id": "bird_231",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT b.bond_type, m.label FROM bond AS b INNER JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.molecule_id = 'TR010' GROUP BY b.bond_type, m.label ORDER BY COUNT(b.bond_type) DESC;",
+  "error": null
+ },
+ {
+  "id": "bird_12",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_37",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_79",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_212",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_82",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_412",
+  "before_correct": false,
+  "after_correct": true,
+  "changed": true,
+  "new_sql": "SELECT DISTINCT fd.name FROM cards AS c JOIN foreign_data AS fd ON fd.uuid = c.uuid WHERE fd.language = 'French' AND c.types = 'Creature' AND c.layout = 'normal' AND c.borderColor = 'black' AND c.artist = 'Matthew D. Wilson' ORDER BY fd.name",
+  "error": null
+ },
+ {
+  "id": "bird_40",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_46",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_94",
+  "before_correct": false,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT DISTINCT a.account_id, (SELECT MAX(A11) FROM district) - (SELECT MIN(A11) FROM district) AS gap FROM client AS c INNER JOIN disp AS di ON c.client_id = di.client_id INNER JOIN account AS a ON di.account_id = a.account_id INNER JOIN district AS d ON c.district_id = d.district_id WHERE c.gender = 'F' AND c.birth_date = (SELECT birth_date FROM client WHERE gender = 'F' ORDER BY birth_date ASC LIMIT 1) AND d.A11 = (SELECT MIN(A11) FROM district) ORDER BY a.account_id",
+  "error": null
+ },
+ {
+  "id": "bird_98",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ },
+ {
+  "id": "bird_99",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": true,
+  "new_sql": "SELECT a.account_id FROM loan AS l JOIN account AS a ON l.account_id = a.account_id WHERE l.duration > 12 AND STRFTIME('%Y', a.date) = '1993' AND l.amount = (SELECT MAX(l2.amount) FROM loan AS l2 JOIN account AS a2 ON l2.account_id = a2.account_id WHERE l2.duration > 12 AND STRFTIME('%Y', a2.date) = '1993') ORDER BY a.account_id",
+  "error": null
+ },
+ {
+  "id": "bird_189",
+  "before_correct": true,
+  "after_correct": false,
+  "changed": true,
+  "new_sql": "SELECT dp.account_id FROM client c JOIN disp dp ON c.client_id = dp.client_id JOIN district di ON c.district_id = di.district_id WHERE c.gender = 'F' ORDER BY c.birth_date ASC, di.A11 ASC",
+  "error": null
+ },
+ {
+  "id": "bird_459",
+  "before_correct": true,
+  "after_correct": true,
+  "changed": false,
+  "new_sql": null,
+  "error": null
+ }
+]

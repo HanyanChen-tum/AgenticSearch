@@ -133,14 +133,62 @@
 3. ~~Phase 5：重建 Sankey~~ **完成**：`build_decision_paths.py` 现在用合并后的前六（总调用次数/查询结构/输出宽度/结果行数/结果状态/结果形状）；新写了 `render_decision_paths_html.py`——此前的图是手改 SVG、没有生成脚本，现在换成从 JSON 算布局，数据一变就能重新生成，不用再手调坐标
 4. ~~"总调用次数"因果验证~~ **完成**（2.3.2）：三道原本 15-18 次调用的题，独立重跑后调用次数从未接近原值（1-11 次），
    证实极端高调用次数本身是异常值、不是题目难度的固有属性；但调用次数与对错的关系题目间不一致，样本太小不能下"少查更准"的结论
-5. **整理给 Harshal 的材料**：`bird_959` 时间线图 + 重采样数字、20 节点合并排序表、结果形状分解表（含 2.3.1 的是非题发现）、新版 Sankey，配合 2.4 节的统计旁证
+5. ~~整理给 Harshal 的材料~~ **完成**：已发布为独立页面（见文件列表）
 
 ---
 
-## 五、涉及文件一览
+## 五、从诊断到干预：三次尝试改善结果，三次都是负面结论
+
+2.3 节的"默认唯一"机制诊断清楚之后，追问了一步：**这能不能变成真的提升准确率的东西**。三条路径全部量化测试过，全部不能用——但这本身是有价值的结论，且相互印证。
+
+### 6.1 硬编码检测并列，净负
+
+对全 500 题里以 `LIMIT 1` 收尾的 90 道题，用 `LIMIT 1→LIMIT 2` 直接执行比对 rank1/rank2 是否真并列（不是猜，是执行验证）：
+可修复 3 题（`bird_1175`、`bird_1144`、`bird_349`），会误伤 7 题（当前答对、但技术上存在并列，gold 只要其中一个）。
+**净负，不能上线**——跟项目已有的四次验证类干预失败是同一模式。
+
+### 6.2 是非题不答布尔值，dev 信号是样本量假象
+
+dev 500 题里 9 道是非题，9/9 gold 都不是干净布尔值，看着是零风险的规则。但按项目规矩上线前必须过 train 验证：
+train pool 里同类题只有 45 道，其中 **13/45（29%）gold 本身就是裸布尔/CASE 写法**。
+dev 的"9/9"是小样本巧合，规则本身是错的，**不能上线**。
+
+### 6.3 `bird_352`/`bird_465` 表选反问题，覆盖面太小
+
+card_games 库里涉及 `foreign_data`/`set_translations` 的 21 道题，模型选对表的有 19 道（90.5%），
+选反的只有最早发现的那 2 道。**天花板是 500 题里的 2 题，且是单库单表对的特例，不构成可推广机制。**
+
+### 6.4 harness 门控式复核（新架构，仍然失败）
+
+不满足于硬编码，设计了一个不同性质的机制：不直接改写 SQL，而是检测到 `LIMIT 1` 且实际存在多个不同取值时，
+把这个**具体执行结果**作为新的 observation 喂回模型（和真实工具调用返回的格式一样），让模型自己判断这次的多值要不要紧，
+而不是 harness 替它决定。在 83 道命中"LIMIT 1 但实际多值"的题上完整测试：
+
+- 23 题模型真的改写了 SQL（证明模型认真看了这条反馈，不是无视）
+- **恢复 1 题**（`bird_412`，正是设计这个机制时想解决的那道）
+- **打坏 9 题**（`bird_1032`、`bird_865`、`bird_877`、`bird_898`、`bird_1001`、`bird_897`、`bird_671`、`bird_208`、`bird_189`）
+- **净 -8**
+
+机制本身工作正常（该改的地方改了），但让模型在**已经提交 FINAL 之后**重新审视，系统性地把更多正确答案改错，
+而不是把错误答案改对。这跟 2.4 节"末轮是否改写首轮猜测"的相关性发现（改写后 56.7% vs 不改写 71.9%）方向完全一致——
+这次是用受控实验把那个相关性坐实成了因果。
+
+**含义**：算上项目更早的四次验证类干预失败，加上这次，一共**五次**独立尝试"让模型在已有答案后重新核实"，五次全部净负。
+不再是某种具体实现方式的问题，是这套模型 + harness 组合结构性地不擅长"事后复核"——不管复核的触发条件多精确、
+反馈多具体，只要发生在 FINAL 之后，大概率越改越差。**这条方向可以判定为已排除，不需要再测新的变体。**
+
+真正能提升准确率的机制，历史上全部发生在**承诺之前**（Offline Schema Context +3.2pp、约定后处理 +6 题、
+train 审计规则 +2.8pp）——这批推理轨迹分析目前没有找到新的"承诺前"机制，只是把"事后复核这条路走不通"验证得更彻底了。
+
+---
+
+## 六、涉及文件一览
 
 数据：`docs/analysis/analysisDetail/reasoning_capture_{probe,genuine_errors,core197,dev500}.json`、
 `reasoning_timeline_{core197,dev500}.{json,md}`、`resample_*.json`、
-`trajectory_pattern_ranking_dev500.json`、`decision_point_ranking{,_combined}.json`
+`trajectory_pattern_ranking_dev500.json`、`decision_point_ranking{,_combined}.json`、
+`verify_before_limit_results.json`（83 题的 harness 门控式复核实验结果）
 
-脚本：`scripts/{capture_reasoning,build_reasoning_timeline,resample_turn,mine_trajectory_patterns,rank_decision_points,counterfactual_decision,build_decision_paths}.py`
+脚本：`scripts/{capture_reasoning,build_reasoning_timeline,resample_turn,resample_full_trajectory,mine_trajectory_patterns,rank_decision_points,counterfactual_decision,build_decision_paths,render_decision_paths_html,verify_before_limit}.py`
+
+线上材料：https://claude.ai/code/artifact/1e517717-b010-4dfa-967f-6c2ee7b9a2a7
