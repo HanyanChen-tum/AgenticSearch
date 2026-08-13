@@ -1,0 +1,2102 @@
+[
+ {
+  "id": "bird_1479",
+  "db_id": "debit_card_specializing",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "customerid"
+  ],
+  "checkable_terms": [
+   "customerid"
+  ],
+  "mentioned_terms": [
+   "customerid"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 6
+ },
+ {
+  "id": "bird_1481",
+  "db_id": "debit_card_specializing",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 56
+ },
+ {
+  "id": "bird_1482",
+  "db_id": "debit_card_specializing",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 31
+ },
+ {
+  "id": "bird_1490",
+  "db_id": "debit_card_specializing",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 26
+ },
+ {
+  "id": "bird_1498",
+  "db_id": "debit_card_specializing",
+  "layer": "过滤字面量",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_1524",
+  "db_id": "debit_card_specializing",
+  "layer": "表选择",
+  "missed_terms": [
+   "country",
+   "gasstationid",
+   "gasstations"
+  ],
+  "checkable_terms": [
+   "country",
+   "gasstationid",
+   "gasstations"
+  ],
+  "mentioned_terms": [
+   "country"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 23
+ },
+ {
+  "id": "bird_1526",
+  "db_id": "debit_card_specializing",
+  "layer": "表选择",
+  "missed_terms": [
+   "gasstationid",
+   "gasstations"
+  ],
+  "checkable_terms": [
+   "gasstationid",
+   "gasstations"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 21
+ },
+ {
+  "id": "bird_1529",
+  "db_id": "debit_card_specializing",
+  "layer": "表选择",
+  "missed_terms": [
+   "gasstationid",
+   "gasstations",
+   "price"
+  ],
+  "checkable_terms": [
+   "gasstationid",
+   "gasstations",
+   "price"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 35
+ },
+ {
+  "id": "bird_1531",
+  "db_id": "debit_card_specializing",
+  "layer": "表选择",
+  "missed_terms": [
+   "consumption",
+   "yearmonth"
+  ],
+  "checkable_terms": [
+   "consumption",
+   "yearmonth"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_1322",
+  "db_id": "student_club",
+  "layer": "聚合函数",
+  "missed_terms": [
+   "event_name"
+  ],
+  "checkable_terms": [
+   "event_name"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 5
+ },
+ {
+  "id": "bird_1381",
+  "db_id": "student_club",
+  "layer": "分组",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_1399",
+  "db_id": "student_club",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 5
+ },
+ {
+  "id": "bird_1404",
+  "db_id": "student_club",
+  "layer": "过滤列",
+  "missed_terms": [
+   "type"
+  ],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无法判定(仅通用词)",
+  "reasoning_sections": 14
+ },
+ {
+  "id": "bird_1422",
+  "db_id": "student_club",
+  "layer": "表选择",
+  "missed_terms": [
+   "budget",
+   "category",
+   "event_id",
+   "link_to_event"
+  ],
+  "checkable_terms": [
+   "budget",
+   "event_id",
+   "link_to_event"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_1427",
+  "db_id": "student_club",
+  "layer": "投影列数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 5
+ },
+ {
+  "id": "bird_1166",
+  "db_id": "thrombosis_prediction",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 13
+ },
+ {
+  "id": "bird_1168",
+  "db_id": "thrombosis_prediction",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 43
+ },
+ {
+  "id": "bird_1175",
+  "db_id": "thrombosis_prediction",
+  "layer": "多用了表",
+  "missed_terms": [
+   "date"
+  ],
+  "checkable_terms": [
+   "date"
+  ],
+  "mentioned_terms": [
+   "date"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 43
+ },
+ {
+  "id": "bird_1179",
+  "db_id": "thrombosis_prediction",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "acl iga",
+   "acl igg"
+  ],
+  "checkable_terms": [
+   "acl iga",
+   "acl igg"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_1189",
+  "db_id": "thrombosis_prediction",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 22
+ },
+ {
+  "id": "bird_1205",
+  "db_id": "thrombosis_prediction",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 26
+ },
+ {
+  "id": "bird_1225",
+  "db_id": "thrombosis_prediction",
+  "layer": "分组",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 3
+ },
+ {
+  "id": "bird_1227",
+  "db_id": "thrombosis_prediction",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 16
+ },
+ {
+  "id": "bird_1229",
+  "db_id": "thrombosis_prediction",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 6
+ },
+ {
+  "id": "bird_1231",
+  "db_id": "thrombosis_prediction",
+  "layer": "过滤字面量",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 1
+ },
+ {
+  "id": "bird_1239",
+  "db_id": "thrombosis_prediction",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_1241",
+  "db_id": "thrombosis_prediction",
+  "layer": "表选择",
+  "missed_terms": [
+   "patient"
+  ],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无法判定(仅通用词)",
+  "reasoning_sections": 22
+ },
+ {
+  "id": "bird_1242",
+  "db_id": "thrombosis_prediction",
+  "layer": "排序/LIMIT",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 17
+ },
+ {
+  "id": "bird_1243",
+  "db_id": "thrombosis_prediction",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 12
+ },
+ {
+  "id": "bird_1247",
+  "db_id": "thrombosis_prediction",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_1251",
+  "db_id": "thrombosis_prediction",
+  "layer": "表选择",
+  "missed_terms": [
+   "examination",
+   "patient"
+  ],
+  "checkable_terms": [
+   "examination"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 2
+ },
+ {
+  "id": "bird_1254",
+  "db_id": "thrombosis_prediction",
+  "layer": "过滤字面量",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 12
+ },
+ {
+  "id": "bird_1255",
+  "db_id": "thrombosis_prediction",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 20
+ },
+ {
+  "id": "bird_1257",
+  "db_id": "thrombosis_prediction",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 15
+ },
+ {
+  "id": "bird_1265",
+  "db_id": "thrombosis_prediction",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_1275",
+  "db_id": "thrombosis_prediction",
+  "layer": "过滤字面量",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 6
+ },
+ {
+  "id": "bird_1029",
+  "db_id": "european_football_2",
+  "layer": "表选择",
+  "missed_terms": [
+   "team",
+   "team_api_id"
+  ],
+  "checkable_terms": [
+   "team_api_id"
+  ],
+  "mentioned_terms": [
+   "team_api_id"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 29
+ },
+ {
+  "id": "bird_1031",
+  "db_id": "european_football_2",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 28
+ },
+ {
+  "id": "bird_1037",
+  "db_id": "european_football_2",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "player_api_id"
+  ],
+  "checkable_terms": [
+   "player_api_id"
+  ],
+  "mentioned_terms": [
+   "player_api_id"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 6
+ },
+ {
+  "id": "bird_1058",
+  "db_id": "european_football_2",
+  "layer": "分组",
+  "missed_terms": [
+   "result"
+  ],
+  "checkable_terms": [
+   "result"
+  ],
+  "mentioned_terms": [
+   "result"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_1084",
+  "db_id": "european_football_2",
+  "layer": "聚合函数",
+  "missed_terms": [
+   "player_name"
+  ],
+  "checkable_terms": [
+   "player_name"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 2
+ },
+ {
+  "id": "bird_1092",
+  "db_id": "european_football_2",
+  "layer": "分组",
+  "missed_terms": [
+   "match_count"
+  ],
+  "checkable_terms": [
+   "match_count"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 18
+ },
+ {
+  "id": "bird_1094",
+  "db_id": "european_football_2",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 17
+ },
+ {
+  "id": "bird_1107",
+  "db_id": "european_football_2",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "player_fifa_api_id"
+  ],
+  "checkable_terms": [
+   "player_fifa_api_id"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_1135",
+  "db_id": "european_football_2",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 12
+ },
+ {
+  "id": "bird_1136",
+  "db_id": "european_football_2",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 11
+ },
+ {
+  "id": "bird_1144",
+  "db_id": "european_football_2",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 16
+ },
+ {
+  "id": "bird_847",
+  "db_id": "formula_1",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 21
+ },
+ {
+  "id": "bird_861",
+  "db_id": "formula_1",
+  "layer": "表选择",
+  "missed_terms": [
+   "driverid",
+   "drivers"
+  ],
+  "checkable_terms": [
+   "driverid",
+   "drivers"
+  ],
+  "mentioned_terms": [
+   "driverid",
+   "drivers"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 20
+ },
+ {
+  "id": "bird_866",
+  "db_id": "formula_1",
+  "layer": "投影列数",
+  "missed_terms": [
+   "forename",
+   "surname"
+  ],
+  "checkable_terms": [
+   "forename",
+   "surname"
+  ],
+  "mentioned_terms": [
+   "forename",
+   "surname"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 30
+ },
+ {
+  "id": "bird_879",
+  "db_id": "formula_1",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_881",
+  "db_id": "formula_1",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 7
+ },
+ {
+  "id": "bird_896",
+  "db_id": "formula_1",
+  "layer": "表选择",
+  "missed_terms": [
+   "driverstandings",
+   "driverstandingsid"
+  ],
+  "checkable_terms": [
+   "driverstandings",
+   "driverstandingsid"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_902",
+  "db_id": "formula_1",
+  "layer": "表选择",
+  "missed_terms": [
+   "driverstandings"
+  ],
+  "checkable_terms": [
+   "driverstandings"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 35
+ },
+ {
+  "id": "bird_906",
+  "db_id": "formula_1",
+  "layer": "表选择",
+  "missed_terms": [
+   "driverstandings"
+  ],
+  "checkable_terms": [
+   "driverstandings"
+  ],
+  "mentioned_terms": [
+   "driverstandings"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_928",
+  "db_id": "formula_1",
+  "layer": "过滤列",
+  "missed_terms": [
+   "forename",
+   "rank",
+   "surname"
+  ],
+  "checkable_terms": [
+   "forename",
+   "surname"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 5
+ },
+ {
+  "id": "bird_930",
+  "db_id": "formula_1",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 3
+ },
+ {
+  "id": "bird_937",
+  "db_id": "formula_1",
+  "layer": "过滤列",
+  "missed_terms": [
+   "rank"
+  ],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无法判定(仅通用词)",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_944",
+  "db_id": "formula_1",
+  "layer": "表选择",
+  "missed_terms": [
+   "name",
+   "races",
+   "time_seconds",
+   "year"
+  ],
+  "checkable_terms": [
+   "name",
+   "races",
+   "time_seconds",
+   "year"
+  ],
+  "mentioned_terms": [
+   "name",
+   "races",
+   "year"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 25
+ },
+ {
+  "id": "bird_951",
+  "db_id": "formula_1",
+  "layer": "表选择",
+  "missed_terms": [
+   "constructorstandings"
+  ],
+  "checkable_terms": [
+   "constructorstandings"
+  ],
+  "mentioned_terms": [
+   "constructorstandings"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 36
+ },
+ {
+  "id": "bird_955",
+  "db_id": "formula_1",
+  "layer": "聚合函数",
+  "missed_terms": [
+   "time_seconds"
+  ],
+  "checkable_terms": [
+   "time_seconds"
+  ],
+  "mentioned_terms": [
+   "time_seconds"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 39
+ },
+ {
+  "id": "bird_959",
+  "db_id": "formula_1",
+  "layer": "多用了表",
+  "missed_terms": [
+   "time"
+  ],
+  "checkable_terms": [
+   "time"
+  ],
+  "mentioned_terms": [
+   "time"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 50
+ },
+ {
+  "id": "bird_963",
+  "db_id": "formula_1",
+  "layer": "过滤列",
+  "missed_terms": [
+   "time"
+  ],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无法判定(仅通用词)",
+  "reasoning_sections": 13
+ },
+ {
+  "id": "bird_967",
+  "db_id": "formula_1",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 44
+ },
+ {
+  "id": "bird_978",
+  "db_id": "formula_1",
+  "layer": "多用了表",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 21
+ },
+ {
+  "id": "bird_1011",
+  "db_id": "formula_1",
+  "layer": "分组",
+  "missed_terms": [
+   "min_time_in_seconds",
+   "time",
+   "time_in_seconds"
+  ],
+  "checkable_terms": [
+   "min_time_in_seconds",
+   "time_in_seconds"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 26
+ },
+ {
+  "id": "bird_1014",
+  "db_id": "formula_1",
+  "layer": "表选择",
+  "missed_terms": [
+   "fastestlaptime",
+   "min_time_in_seconds",
+   "results",
+   "time_in_seconds"
+  ],
+  "checkable_terms": [
+   "fastestlaptime",
+   "min_time_in_seconds",
+   "results",
+   "time_in_seconds"
+  ],
+  "mentioned_terms": [
+   "results"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 25
+ },
+ {
+  "id": "bird_726",
+  "db_id": "superhero",
+  "layer": "投影列数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_728",
+  "db_id": "superhero",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_743",
+  "db_id": "superhero",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_751",
+  "db_id": "superhero",
+  "layer": "排序/LIMIT",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 3
+ },
+ {
+  "id": "bird_760",
+  "db_id": "superhero",
+  "layer": "聚合函数",
+  "missed_terms": [
+   "publisher_name"
+  ],
+  "checkable_terms": [
+   "publisher_name"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_772",
+  "db_id": "superhero",
+  "layer": "多用了表",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_533",
+  "db_id": "codebase_community",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 3
+ },
+ {
+  "id": "bird_557",
+  "db_id": "codebase_community",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 2
+ },
+ {
+  "id": "bird_565",
+  "db_id": "codebase_community",
+  "layer": "排序/LIMIT",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 14
+ },
+ {
+  "id": "bird_584",
+  "db_id": "codebase_community",
+  "layer": "多用了表",
+  "missed_terms": [
+   "comment"
+  ],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无法判定(仅通用词)",
+  "reasoning_sections": 33
+ },
+ {
+  "id": "bird_586",
+  "db_id": "codebase_community",
+  "layer": "投影列数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_587",
+  "db_id": "codebase_community",
+  "layer": "过滤字面量",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 23
+ },
+ {
+  "id": "bird_595",
+  "db_id": "codebase_community",
+  "layer": "表选择",
+  "missed_terms": [
+   "posthistorytypeid",
+   "posts",
+   "viewcount"
+  ],
+  "checkable_terms": [
+   "posthistorytypeid",
+   "posts",
+   "viewcount"
+  ],
+  "mentioned_terms": [
+   "posts",
+   "viewcount"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 24
+ },
+ {
+  "id": "bird_604",
+  "db_id": "codebase_community",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "post_count"
+  ],
+  "checkable_terms": [
+   "post_count"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 12
+ },
+ {
+  "id": "bird_637",
+  "db_id": "codebase_community",
+  "layer": "表选择",
+  "missed_terms": [
+   "posthistory",
+   "postid",
+   "userid"
+  ],
+  "checkable_terms": [
+   "posthistory",
+   "postid",
+   "userid"
+  ],
+  "mentioned_terms": [
+   "postid",
+   "userid"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 17
+ },
+ {
+  "id": "bird_639",
+  "db_id": "codebase_community",
+  "layer": "表选择",
+  "missed_terms": [
+   "excerptpostid",
+   "posthistory",
+   "postid",
+   "tagname",
+   "userid"
+  ],
+  "checkable_terms": [
+   "excerptpostid",
+   "posthistory",
+   "postid",
+   "tagname",
+   "userid"
+  ],
+  "mentioned_terms": [
+   "excerptpostid",
+   "postid",
+   "tagname",
+   "userid"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 20
+ },
+ {
+  "id": "bird_640",
+  "db_id": "codebase_community",
+  "layer": "表选择",
+  "missed_terms": [
+   "posthistory",
+   "postid",
+   "userid"
+  ],
+  "checkable_terms": [
+   "posthistory",
+   "postid",
+   "userid"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 2
+ },
+ {
+  "id": "bird_682",
+  "db_id": "codebase_community",
+  "layer": "过滤列",
+  "missed_terms": [
+   "creationdate"
+  ],
+  "checkable_terms": [
+   "creationdate"
+  ],
+  "mentioned_terms": [
+   "creationdate"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 14
+ },
+ {
+  "id": "bird_683",
+  "db_id": "codebase_community",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 14
+ },
+ {
+  "id": "bird_685",
+  "db_id": "codebase_community",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "lasteditoruserid"
+  ],
+  "checkable_terms": [
+   "lasteditoruserid"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 7
+ },
+ {
+  "id": "bird_694",
+  "db_id": "codebase_community",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "owneruserid"
+  ],
+  "checkable_terms": [
+   "owneruserid"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 12
+ },
+ {
+  "id": "bird_701",
+  "db_id": "codebase_community",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "max_reputation"
+  ],
+  "checkable_terms": [
+   "max_reputation"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_710",
+  "db_id": "codebase_community",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_340",
+  "db_id": "card_games",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 7
+ },
+ {
+  "id": "bird_341",
+  "db_id": "card_games",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 18
+ },
+ {
+  "id": "bird_344",
+  "db_id": "card_games",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 14
+ },
+ {
+  "id": "bird_347",
+  "db_id": "card_games",
+  "layer": "排序/LIMIT",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_349",
+  "db_id": "card_games",
+  "layer": "过滤列",
+  "missed_terms": [
+   "count_uuid"
+  ],
+  "checkable_terms": [
+   "count_uuid"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 6
+ },
+ {
+  "id": "bird_352",
+  "db_id": "card_games",
+  "layer": "表选择",
+  "missed_terms": [
+   "cards",
+   "foreign_data",
+   "uuid"
+  ],
+  "checkable_terms": [
+   "foreign_data",
+   "uuid"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 5
+ },
+ {
+  "id": "bird_383",
+  "db_id": "card_games",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_402",
+  "db_id": "card_games",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 19
+ },
+ {
+  "id": "bird_407",
+  "db_id": "card_games",
+  "layer": "投影列数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 15
+ },
+ {
+  "id": "bird_408",
+  "db_id": "card_games",
+  "layer": "表选择",
+  "missed_terms": [
+   "rulings",
+   "uuid"
+  ],
+  "checkable_terms": [
+   "rulings",
+   "uuid"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 2
+ },
+ {
+  "id": "bird_412",
+  "db_id": "card_games",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 22
+ },
+ {
+  "id": "bird_424",
+  "db_id": "card_games",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_465",
+  "db_id": "card_games",
+  "layer": "表选择",
+  "missed_terms": [
+   "set_translations",
+   "setcode",
+   "translation"
+  ],
+  "checkable_terms": [
+   "set_translations",
+   "setcode",
+   "translation"
+  ],
+  "mentioned_terms": [
+   "translation"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 14
+ },
+ {
+  "id": "bird_469",
+  "db_id": "card_games",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 36
+ },
+ {
+  "id": "bird_473",
+  "db_id": "card_games",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 17
+ },
+ {
+  "id": "bird_474",
+  "db_id": "card_games",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 11
+ },
+ {
+  "id": "bird_483",
+  "db_id": "card_games",
+  "layer": "预测SQL无法解析",
+  "missed_terms": [
+   "cards",
+   "code",
+   "foreign_data",
+   "language",
+   "name",
+   "setcode",
+   "sets",
+   "text",
+   "uuid"
+  ],
+  "checkable_terms": [
+   "code",
+   "foreign_data",
+   "language",
+   "name",
+   "setcode",
+   "sets",
+   "uuid"
+  ],
+  "mentioned_terms": [
+   "code",
+   "foreign_data",
+   "language",
+   "name",
+   "setcode",
+   "sets",
+   "uuid"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_484",
+  "db_id": "card_games",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 13
+ },
+ {
+  "id": "bird_486",
+  "db_id": "card_games",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 6
+ },
+ {
+  "id": "bird_518",
+  "db_id": "card_games",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 33
+ },
+ {
+  "id": "bird_529",
+  "db_id": "card_games",
+  "layer": "排序/LIMIT",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 6
+ },
+ {
+  "id": "bird_530",
+  "db_id": "card_games",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 10
+ },
+ {
+  "id": "bird_197",
+  "db_id": "toxicology",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "oxygen_count"
+  ],
+  "checkable_terms": [
+   "oxygen_count"
+  ],
+  "mentioned_terms": [
+   "oxygen_count"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 25
+ },
+ {
+  "id": "bird_198",
+  "db_id": "toxicology",
+  "layer": "过滤列",
+  "missed_terms": [
+   "single_bond_count"
+  ],
+  "checkable_terms": [
+   "single_bond_count"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 23
+ },
+ {
+  "id": "bird_201",
+  "db_id": "toxicology",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 14
+ },
+ {
+  "id": "bird_207",
+  "db_id": "toxicology",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "molecule_id"
+  ],
+  "checkable_terms": [
+   "molecule_id"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 10
+ },
+ {
+  "id": "bird_215",
+  "db_id": "toxicology",
+  "layer": "表选择",
+  "missed_terms": [
+   "bond_id",
+   "connected"
+  ],
+  "checkable_terms": [
+   "bond_id",
+   "connected"
+  ],
+  "mentioned_terms": [
+   "connected"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 17
+ },
+ {
+  "id": "bird_218",
+  "db_id": "toxicology",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 15
+ },
+ {
+  "id": "bird_219",
+  "db_id": "toxicology",
+  "layer": "表选择",
+  "missed_terms": [
+   "atom"
+  ],
+  "checkable_terms": [
+   "atom"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_226",
+  "db_id": "toxicology",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 7
+ },
+ {
+  "id": "bird_231",
+  "db_id": "toxicology",
+  "layer": "多用了表",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 12
+ },
+ {
+  "id": "bird_234",
+  "db_id": "toxicology",
+  "layer": "表选择",
+  "missed_terms": [
+   "bond",
+   "molecule_id"
+  ],
+  "checkable_terms": [
+   "molecule_id"
+  ],
+  "mentioned_terms": [
+   "molecule_id"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 9
+ },
+ {
+  "id": "bird_245",
+  "db_id": "toxicology",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 32
+ },
+ {
+  "id": "bird_247",
+  "db_id": "toxicology",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 12
+ },
+ {
+  "id": "bird_248",
+  "db_id": "toxicology",
+  "layer": "表选择",
+  "missed_terms": [
+   "atom",
+   "atom_id2"
+  ],
+  "checkable_terms": [
+   "atom_id2"
+  ],
+  "mentioned_terms": [
+   "atom_id2"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 17
+ },
+ {
+  "id": "bird_255",
+  "db_id": "toxicology",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_260",
+  "db_id": "toxicology",
+  "layer": "表选择",
+  "missed_terms": [
+   "atom_id",
+   "molecule"
+  ],
+  "checkable_terms": [
+   "atom_id"
+  ],
+  "mentioned_terms": [
+   "atom_id"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 16
+ },
+ {
+  "id": "bird_263",
+  "db_id": "toxicology",
+  "layer": "表选择",
+  "missed_terms": [
+   "molecule"
+  ],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无法判定(仅通用词)",
+  "reasoning_sections": 29
+ },
+ {
+  "id": "bird_273",
+  "db_id": "toxicology",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 10
+ },
+ {
+  "id": "bird_281",
+  "db_id": "toxicology",
+  "layer": "分组",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 5
+ },
+ {
+  "id": "bird_11",
+  "db_id": "california_schools",
+  "layer": "表选择",
+  "missed_terms": [
+   "cdscode",
+   "schools"
+  ],
+  "checkable_terms": [
+   "cdscode"
+  ],
+  "mentioned_terms": [
+   "cdscode"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 37
+ },
+ {
+  "id": "bird_17",
+  "db_id": "california_schools",
+  "layer": "投影列数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_23",
+  "db_id": "california_schools",
+  "layer": "投影列数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 13
+ },
+ {
+  "id": "bird_25",
+  "db_id": "california_schools",
+  "layer": "表选择",
+  "missed_terms": [
+   "charter funding type",
+   "district name",
+   "frpm",
+   "sname"
+  ],
+  "checkable_terms": [
+   "charter funding type",
+   "district name",
+   "frpm",
+   "sname"
+  ],
+  "mentioned_terms": [
+   "charter funding type",
+   "frpm",
+   "sname"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 38
+ },
+ {
+  "id": "bird_26",
+  "db_id": "california_schools",
+  "layer": "过滤列",
+  "missed_terms": [
+   "free meal count (ages 5-17)",
+   "school name",
+   "school type"
+  ],
+  "checkable_terms": [
+   "free meal count (ages 5-17)",
+   "school name",
+   "school type"
+  ],
+  "mentioned_terms": [
+   "school name",
+   "school type"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 33
+ },
+ {
+  "id": "bird_27",
+  "db_id": "california_schools",
+  "layer": "过滤字面量",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 46
+ },
+ {
+  "id": "bird_28",
+  "db_id": "california_schools",
+  "layer": "过滤列",
+  "missed_terms": [
+   "doc"
+  ],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无法判定(仅通用词)",
+  "reasoning_sections": 18
+ },
+ {
+  "id": "bird_32",
+  "db_id": "california_schools",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 21
+ },
+ {
+  "id": "bird_37",
+  "db_id": "california_schools",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_36",
+  "db_id": "california_schools",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "admfname2",
+   "admfname3",
+   "admlname2",
+   "admlname3"
+  ],
+  "checkable_terms": [
+   "admfname2",
+   "admfname3",
+   "admlname2",
+   "admlname3"
+  ],
+  "mentioned_terms": [
+   "admfname2",
+   "admfname3",
+   "admlname2",
+   "admlname3"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 20
+ },
+ {
+  "id": "bird_41",
+  "db_id": "california_schools",
+  "layer": "过滤列",
+  "missed_terms": [
+   "rnk"
+  ],
+  "checkable_terms": [
+   "rnk"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 23
+ },
+ {
+  "id": "bird_48",
+  "db_id": "california_schools",
+  "layer": "过滤列",
+  "missed_terms": [
+   "statustype"
+  ],
+  "checkable_terms": [
+   "statustype"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 10
+ },
+ {
+  "id": "bird_50",
+  "db_id": "california_schools",
+  "layer": "多用了表",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 20
+ },
+ {
+  "id": "bird_72",
+  "db_id": "california_schools",
+  "layer": "过滤字面量",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 22
+ },
+ {
+  "id": "bird_83",
+  "db_id": "california_schools",
+  "layer": "过滤列",
+  "missed_terms": [
+   "gsoffered"
+  ],
+  "checkable_terms": [
+   "gsoffered"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 46
+ },
+ {
+  "id": "bird_85",
+  "db_id": "california_schools",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 1
+ },
+ {
+  "id": "bird_87",
+  "db_id": "california_schools",
+  "layer": "表选择",
+  "missed_terms": [
+   "cdscode",
+   "frpm"
+  ],
+  "checkable_terms": [
+   "cdscode",
+   "frpm"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 34
+ },
+ {
+  "id": "bird_92",
+  "db_id": "financial",
+  "layer": "聚合函数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 16
+ },
+ {
+  "id": "bird_93",
+  "db_id": "financial",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 5
+ },
+ {
+  "id": "bird_94",
+  "db_id": "financial",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 28
+ },
+ {
+  "id": "bird_95",
+  "db_id": "financial",
+  "layer": "过滤列",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 24
+ },
+ {
+  "id": "bird_115",
+  "db_id": "financial",
+  "layer": "JOIN 键",
+  "missed_terms": [
+   "client_id"
+  ],
+  "checkable_terms": [
+   "client_id"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_118",
+  "db_id": "financial",
+  "layer": "聚合函数",
+  "missed_terms": [
+   "account_id"
+  ],
+  "checkable_terms": [
+   "account_id"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 4
+ },
+ {
+  "id": "bird_125",
+  "db_id": "financial",
+  "layer": "投影列数",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 21
+ },
+ {
+  "id": "bird_128",
+  "db_id": "financial",
+  "layer": "多用了表",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 13
+ },
+ {
+  "id": "bird_129",
+  "db_id": "financial",
+  "layer": "分组",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 12
+ },
+ {
+  "id": "bird_145",
+  "db_id": "financial",
+  "layer": "多用了表",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 16
+ },
+ {
+  "id": "bird_152",
+  "db_id": "financial",
+  "layer": "JOIN 键",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 23
+ },
+ {
+  "id": "bird_159",
+  "db_id": "financial",
+  "layer": "表选择",
+  "missed_terms": [
+   "account",
+   "client",
+   "trans_id"
+  ],
+  "checkable_terms": [
+   "account",
+   "trans_id"
+  ],
+  "mentioned_terms": [
+   "account"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 11
+ },
+ {
+  "id": "bird_168",
+  "db_id": "financial",
+  "layer": "多用了表",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 8
+ },
+ {
+  "id": "bird_169",
+  "db_id": "financial",
+  "layer": "过滤列",
+  "missed_terms": [
+   "type"
+  ],
+  "checkable_terms": [
+   "type"
+  ],
+  "mentioned_terms": [
+   "type"
+  ],
+  "considered": "推理中提到过",
+  "reasoning_sections": 16
+ },
+ {
+  "id": "bird_186",
+  "db_id": "financial",
+  "layer": "表选择",
+  "missed_terms": [
+   "district",
+   "district_id"
+  ],
+  "checkable_terms": [
+   "district",
+   "district_id"
+  ],
+  "mentioned_terms": [],
+  "considered": "推理中从未提到",
+  "reasoning_sections": 6
+ },
+ {
+  "id": "bird_194",
+  "db_id": "financial",
+  "layer": "纯格式/列序",
+  "missed_terms": [],
+  "checkable_terms": [],
+  "mentioned_terms": [],
+  "considered": "无遗漏项",
+  "reasoning_sections": 18
+ }
+]
