@@ -28,6 +28,7 @@ from ours.db_environment import get_db_path
 from ours.bird_few_shot_retriever import get_bird_retriever
 from ours.agent.config import agent_profile_names, get_agent_config
 from shared.evaluator import is_correct
+from shared.llm_config import resolve_llm_config
 from shared.sql_executor import execute_sql
 
 BIRD_DB_DIR  = PROJECT_ROOT / "data/raw/bird/minidev/MINIDEV/dev_databases"
@@ -183,8 +184,21 @@ def main():
         api_key = os.environ.get("GROQ_API_KEY")
         api_base = args.api_base
     elif "azure" in args.model:
-        api_key = os.environ.get("LLM_API_KEY")
-        api_base = args.api_base or os.environ.get("LLM_BASE_URL")
+        # Via the shared resolver, not a bare LLM_API_KEY lookup: this .env
+        # carries the legacy lowercase names (`api_key`, `azure_endpoint`), so
+        # the direct lookup silently returned None and every question in a run
+        # came back `Missing credentials` with an empty predicted_sql -- an
+        # infrastructure failure that scores exactly like a catastrophic
+        # accuracy regression. resolve_llm_config accepts both spellings.
+        cfg = resolve_llm_config(args.model, args.api_base)
+        api_key = cfg.api_key
+        api_base = cfg.api_base
+        if not api_key:
+            raise SystemExit(
+                "No Azure API key found. Set LLM_API_KEY (or api_key) in .env "
+                "before running -- refusing to start a run that would record "
+                "credential failures as wrong answers."
+            )
     else:
         api_key = None
         api_base = args.api_base

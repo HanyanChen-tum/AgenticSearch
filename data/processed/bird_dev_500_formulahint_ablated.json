@@ -1,0 +1,803 @@
+[
+ {
+  "id": "bird_1471",
+  "db_id": "debit_card_specializing",
+  "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+  "difficulty": "simple",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1473",
+  "db_id": "debit_card_specializing",
+  "question": "What was the average monthly consumption of customers in SME for the year 2013?",
+  "evidence": "",
+  "gold_sql": "SELECT AVG(T2.Consumption) / 12 FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1526",
+  "db_id": "debit_card_specializing",
+  "question": "For the customer who paid 634.8 in 2012/8/25, what was the consumption decrease rate from Year 2012 to 2013?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) - SUM(IIF(SUBSTRING(Date, 1, 4) = '2013', Consumption, 0)) AS FLOAT) / SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) FROM yearmonth WHERE CustomerID = ( SELECT T1.CustomerID FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-25' AND T1.Price  = 1513.12 )",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1340",
+  "db_id": "student_club",
+  "question": "Calculate the difference of the total amount spent in all events by the Student_Club in year 2019 and 2020.",
+  "evidence": "",
+  "gold_sql": "SELECT SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2019' THEN T2.spent ELSE 0 END) - SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2020' THEN T2.spent ELSE 0 END) AS num FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1390",
+  "db_id": "student_club",
+  "question": "Based on the total cost for all event, what is the percentage of cost for Yearly Kickoff event?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.event_name = 'Yearly Kickoff' THEN T3.cost ELSE 0 END) AS REAL) * 100 / SUM(T3.cost) FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1432",
+  "db_id": "student_club",
+  "question": "Among the members with t-shirt size of medium, what is the percentage of the amount 50 received by the Student_Club?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.amount = 50 THEN 1.0 ELSE 0 END) AS REAL) * 100 / COUNT(T2.income_id) FROM member AS T1 INNER JOIN income AS T2 ON T1.member_id = T2.link_to_member WHERE T1.position = 'Member' AND T1.t_shirt_size = 'Medium'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1149",
+  "db_id": "thrombosis_prediction",
+  "question": "Are there more in-patient or outpatient who were male? What is the deviation in percentage?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN Admission = '+' THEN 1 ELSE 0 END) AS REAL) * 100 / SUM(CASE WHEN Admission = '-' THEN 1 ELSE 0 END) FROM Patient WHERE SEX = 'M'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1150",
+  "db_id": "thrombosis_prediction",
+  "question": "What is the percentage of female patient were born after 1930?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN STRFTIME('%Y', Birthday) > '1930' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(*) FROM Patient WHERE SEX = 'F'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1152",
+  "db_id": "thrombosis_prediction",
+  "question": "What is the ratio of outpatient to inpatient followed up treatment among all the 'SLE' diagnosed patient?",
+  "evidence": "",
+  "gold_sql": "SELECT SUM(CASE WHEN Admission = '+' THEN 1.0 ELSE 0 END) / SUM(CASE WHEN Admission = '-' THEN 1 ELSE 0 END) FROM Patient WHERE Diagnosis = 'SLE'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1169",
+  "db_id": "thrombosis_prediction",
+  "question": "What is the ratio of male to female patients among all those with abnormal uric acid counts?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.UA <= 8.0 AND T1.SEX = 'M' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN T2.UA <= 6.5 AND T1.SEX = 'F' THEN 1 ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1185",
+  "db_id": "thrombosis_prediction",
+  "question": "For the patient who was born on 1959/2/18, what is the decrease rate for his/her total cholesterol from November to December in 1981?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST((SUM(CASE WHEN T2.Date LIKE '1981-11-%' THEN T2.`T-CHO` ELSE 0 END) - SUM(CASE WHEN T2.Date LIKE '1981-12-%' THEN T2.`T-CHO` ELSE 0 END)) AS REAL) / SUM(CASE WHEN T2.Date LIKE '1981-12-%' THEN T2.`T-CHO` ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.Birthday = '1959-02-18'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1189",
+  "db_id": "thrombosis_prediction",
+  "question": "What number of patients with a degree of thrombosis level 2 and ANA pattern of only S, have a level of anti-Cardiolip in antibody (IgM) 20% higher than average?",
+  "evidence": "",
+  "gold_sql": "SELECT COUNT(*) FROM Examination WHERE Thrombosis = 2 AND `ANA Pattern` = 'S' AND `aCL IgM` > (SELECT AVG(`aCL IgM`) * 1.2 FROM Examination WHERE Thrombosis = 2 AND `ANA Pattern` = 'S')",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1201",
+  "db_id": "thrombosis_prediction",
+  "question": "What percentage of patients who were born in 1980 and were diagnosed with RA are women?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(ID) FROM Patient WHERE Diagnosis = 'RA' AND STRFTIME('%Y', Birthday) = '1980'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1227",
+  "db_id": "thrombosis_prediction",
+  "question": "What is the average age of the male patient with high cholesterol?",
+  "evidence": "",
+  "gold_sql": "SELECT AVG(STRFTIME('%Y', date('NOW')) - STRFTIME('%Y', T1.Birthday)) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.`T-CHO` >= 250 AND T1.SEX = 'M'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1229",
+  "db_id": "thrombosis_prediction",
+  "question": "For all patients with triglyceride (TG) level beyond the normal range, how many are age more than 50 years?",
+  "evidence": "",
+  "gold_sql": "SELECT COUNT(DISTINCT T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.TG >= 200 AND STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) > 50",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1232",
+  "db_id": "thrombosis_prediction",
+  "question": "Provide ID, sex and age of patient who has blood glucose (GLU) not within normal range but with total cholesterol(T-CHO) within normal range.",
+  "evidence": "",
+  "gold_sql": "SELECT DISTINCT T1.ID, T1.SEX , STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.GLU >= 180 AND T2.`T-CHO` < 250",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1235",
+  "db_id": "thrombosis_prediction",
+  "question": "What are the patient's diagnosis for those who has lower red blood blood cell? State their ID and age.",
+  "evidence": "",
+  "gold_sql": "SELECT DISTINCT T1.Diagnosis, T1.ID , STRFTIME('%Y', CURRENT_TIMESTAMP) -STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.RBC < 3.5",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1239",
+  "db_id": "thrombosis_prediction",
+  "question": "Name the ID and age of patient with two or more laboratory examinations which show their hematoclit level exceeded the normal range.",
+  "evidence": "",
+  "gold_sql": "SELECT DISTINCT T1.ID, STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.ID IN ( SELECT ID FROM Laboratory WHERE HCT >= 52 GROUP BY ID HAVING COUNT(ID) >= 2 )",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1241",
+  "db_id": "thrombosis_prediction",
+  "question": "For patients with abnormal platelet level, state the number of patients with lower than normal range. How is it compare to the number of patients with higher than normal range?",
+  "evidence": "",
+  "gold_sql": "SELECT SUM(CASE WHEN T2.PLT <= 100 THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.PLT >= 400 THEN 1 ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1242",
+  "db_id": "thrombosis_prediction",
+  "question": "For laboratory examinations take in 1984, list all patients below 50 years old with normal platelet level.",
+  "evidence": "",
+  "gold_sql": "SELECT DISTINCT T1.ID FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.PLT BETWEEN 100 AND 400 AND STRFTIME('%Y', T2.Date) - STRFTIME('%Y', T1.Birthday) < 50 AND STRFTIME('%Y', T2.Date) = '1984'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1243",
+  "db_id": "thrombosis_prediction",
+  "question": "For all patients who are older than 55 years old, what is the percentage of female who has abnormal prothrombin time (PT)?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.PT >= 14 AND T1.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(CASE WHEN T2.PT >= 14 THEN 1 ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) > 55",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1031",
+  "db_id": "european_football_2",
+  "question": "At present, calculate for the player's age who have a sprint speed of no less than 97 between 2013 to 2015.",
+  "evidence": "",
+  "gold_sql": "SELECT DISTINCT DATETIME() - T2.birthday age FROM Player_Attributes AS t1 INNER JOIN Player AS t2 ON t1.player_api_id = t2.player_api_id WHERE STRFTIME('%Y',t1.`date`) >= '2013' AND STRFTIME('%Y',t1.`date`) <= '2015' AND t1.sprint_speed >= 97",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1037",
+  "db_id": "european_football_2",
+  "question": "Calculate the percentage of players who prefer left foot, who were born between 1987 and 1992.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN t2.preferred_foot = 'left' THEN t1.id ELSE NULL END) AS REAL) * 100 / COUNT(t1.id) percent FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE SUBSTR(t1.birthday, 1, 4) BETWEEN '1987' AND '1992'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1039",
+  "db_id": "european_football_2",
+  "question": "Find the average number of long-shot done by Ahmed Samir Farag.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(t2.long_shots) AS REAL) / COUNT(t2.`date`) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.player_name = 'Ahmed Samir Farag'",
+  "difficulty": "simple",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1040",
+  "db_id": "european_football_2",
+  "question": "List the top 10 players' names whose heights are above 180 in descending order of average heading accuracy.",
+  "evidence": "",
+  "gold_sql": "SELECT t1.player_name FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.height > 180 GROUP BY t1.id ORDER BY CAST(SUM(t2.heading_accuracy) AS REAL) / COUNT(t2.`player_fifa_api_id`) DESC LIMIT 10",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1042",
+  "db_id": "european_football_2",
+  "question": "List the name of leagues in which the average goals by the home team is higher than the away team in the 2009/2010 season.",
+  "evidence": "",
+  "gold_sql": "SELECT t1.name FROM League AS t1 INNER JOIN Match AS t2 ON t1.id = t2.league_id WHERE t2.season = '2009/2010' GROUP BY t1.name HAVING (CAST(SUM(t2.home_team_goal) AS REAL) / COUNT(DISTINCT t2.id)) - (CAST(SUM(t2.away_team_goal) AS REAL) / COUNT(DISTINCT t2.id)) > 0",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1057",
+  "db_id": "european_football_2",
+  "question": "Calculate the average home team goal in the 2010/2011 season in the country of Poland.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(t2.home_team_goal) AS REAL) / COUNT(t2.id) FROM Country AS t1 INNER JOIN Match AS t2 ON t1.id = t2.country_id WHERE t1.name = 'Poland' AND t2.season = '2010/2011'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1058",
+  "db_id": "european_football_2",
+  "question": "Who has the highest average finishing rate between the highest and shortest football player?",
+  "evidence": "",
+  "gold_sql": "SELECT A FROM ( SELECT AVG(finishing) result, 'Max' A FROM Player AS T1 INNER JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.height = ( SELECT MAX(height) FROM Player ) UNION SELECT AVG(finishing) result, 'Min' A FROM Player AS T1 INNER JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.height = ( SELECT MIN(height) FROM Player ) ) ORDER BY result DESC LIMIT 1",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1068",
+  "db_id": "european_football_2",
+  "question": "From 2010 to 2015, what was the average overall rating of players who are higher than 170?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(t2.overall_rating) AS REAL) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.height > 170 AND STRFTIME('%Y',t2.`date`) >= '2010' AND STRFTIME('%Y',t2.`date`) <= '2015'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1076",
+  "db_id": "european_football_2",
+  "question": "What is the difference of the average ball control score between Abdou Diallo and Aaron Appindangoye\n?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN t1.player_name = 'Abdou Diallo' THEN t2.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN t1.player_name = 'Abdou Diallo' THEN t2.id ELSE NULL END) - CAST(SUM(CASE WHEN t1.player_name = 'Aaron Appindangoye' THEN t2.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN t1.player_name = 'Aaron Appindangoye' THEN t2.id ELSE NULL END) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1094",
+  "db_id": "european_football_2",
+  "question": "How much higher in percentage is Ariel Borysiuk's overall rating than that of Paulin Puel?",
+  "evidence": "",
+  "gold_sql": "SELECT (SUM(CASE WHEN t1.player_name = 'Ariel Borysiuk' THEN t2.overall_rating ELSE 0 END) * 1.0 - SUM(CASE WHEN t1.player_name = 'Paulin Puel' THEN t2.overall_rating ELSE 0 END)) * 100 / SUM(CASE WHEN t1.player_name = 'Paulin Puel' THEN t2.overall_rating ELSE 0 END) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_880",
+  "db_id": "formula_1",
+  "question": "Paul di Resta was in the No. 853 race, what percent faster did he finish in the 853rd race than the next race for the fastest lap speed?",
+  "evidence": "",
+  "gold_sql": "SELECT (SUM(IIF(T2.raceId = 853, T2.fastestLapSpeed, 0)) - SUM(IIF(T2.raceId = 854, T2.fastestLapSpeed, 0))) * 100 / SUM(IIF(T2.raceId = 853, T2.fastestLapSpeed, 0)) FROM drivers AS T1 INNER JOIN results AS T2 ON T2.driverId = T1.driverId WHERE T1.forename = 'Paul' AND T1.surname = 'di Resta'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_895",
+  "db_id": "formula_1",
+  "question": "What is the average lap time for Lewis Hamilton in the 2009 Malaysian Grand Prix?",
+  "evidence": "",
+  "gold_sql": "SELECT AVG(T2.milliseconds) FROM races AS T1 INNER JOIN lapTimes AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.forename = 'Lewis' AND T3.surname = 'Hamilton' AND T1.year = 2009 AND T1.name = 'Malaysian Grand Prix'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_896",
+  "db_id": "formula_1",
+  "question": "Calculate the percentage whereby Hamilton was not at the 1st track of the the f1 circuit since 2010.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.position <> 1 THEN T2.position END) AS REAL) * 100 / COUNT(T2.driverStandingsId) FROM races AS T1 INNER JOIN driverStandings AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.surname = 'Hamilton' AND T1.year >= 2010",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_909",
+  "db_id": "formula_1",
+  "question": "Among all European Grand Prix races, what is the percentage of the races were hosted in Germany?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T1.country = 'Germany' THEN T2.circuitID END) AS REAL) * 100 / COUNT(T2.circuitId) FROM circuits AS T1 INNER JOIN races AS T2 ON T2.circuitID = T1.circuitId WHERE T2.name = 'European Grand Prix'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_944",
+  "db_id": "formula_1",
+  "question": "How much faster in percentage is the champion than the driver who finished the race last in the 2008 Australian Grand Prix?",
+  "evidence": "",
+  "gold_sql": "WITH time_in_seconds AS ( SELECT T1.positionOrder, CASE WHEN T1.positionOrder = 1 THEN (CAST(SUBSTR(T1.time, 1, 1) AS REAL) * 3600) + (CAST(SUBSTR(T1.time, 3, 2) AS REAL) * 60) + CAST(SUBSTR(T1.time, 6) AS REAL) ELSE CAST(SUBSTR(T1.time, 2) AS REAL) END AS time_seconds FROM results AS T1 INNER JOIN races AS T2 ON T1.raceId = T2.raceId WHERE T2.name = 'Australian Grand Prix' AND T1.time IS NOT NULL AND T2.year = 2008 ), champion_time AS ( SELECT time_seconds FROM time_in_seconds WHERE positionOrder = 1), last_driver_incremental AS ( SELECT time_seconds FROM time_in_seconds WHERE positionOrder = (SELECT MAX(positionOrder) FROM time_in_seconds) ) SELECT (CAST((SELECT time_seconds FROM last_driver_incremental) AS REAL) * 100) / (SELECT time_seconds + (SELECT time_seconds FROM last_driver_incremental) FROM champion_time)",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_948",
+  "db_id": "formula_1",
+  "question": "What are the maximum points of British constructors?",
+  "evidence": "",
+  "gold_sql": "SELECT MAX(T1.points) FROM constructorStandings AS T1 INNER JOIN constructors AS T2 on T1.constructorId = T2.constructorId WHERE T2.nationality = 'British'",
+  "difficulty": "simple",
+  "source": "bird"
+ },
+ {
+  "id": "bird_954",
+  "db_id": "formula_1",
+  "question": "Please calculate the race completion percentage of Japanese drivers from 2007 to 2009.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(IIF(T1.time IS NOT NULL, 1, 0)) AS REAL) * 100 / COUNT(T1.raceId) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN drivers AS T3 on T1.driverId = T3.driverId WHERE T3.nationality = 'Japanese' AND T2.year BETWEEN 2007 AND 2009",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_962",
+  "db_id": "formula_1",
+  "question": "From 2000 to 2005, what percentage of drivers who were born before 1985 and the lap numbers were over 50?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(IIF(STRFTIME('%Y', T3.dob) < '1985' AND T1.laps > 50, 1, 0)) AS REAL) * 100 / COUNT(*) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN drivers AS T3 on T1.driverId = T3.driverId WHERE T2.year BETWEEN 2000 AND 2005",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_1002",
+  "db_id": "formula_1",
+  "question": "As of the present, what is the full name of the youngest racer? Indicate her nationality and the name of the race to which he/she first joined.",
+  "evidence": "",
+  "gold_sql": "SELECT T1.forename, T1.surname, T1.nationality, T3.name FROM drivers AS T1 INNER JOIN driverStandings AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 on T2.raceId = T3.raceId ORDER BY JULIANDAY(T1.dob) DESC LIMIT 1",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_743",
+  "db_id": "superhero",
+  "question": "What is the percentage of superheroes who act in their own self-interest or make decisions based on their own moral code? Indicate how many of the said superheroes were published by Marvel Comics.",
+  "evidence": "",
+  "gold_sql": "SELECT (CAST(COUNT(*) AS REAL) * 100 / (SELECT COUNT(*) FROM superhero)), CAST(SUM(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END) AS REAL) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN alignment AS T3 ON T3.id = T1.alignment_id WHERE T3.alignment = 'Bad'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_744",
+  "db_id": "superhero",
+  "question": "Between DC and Marvel Comics, which publisher has published more superheroes? Find the difference in the number of superheroes they have published.",
+  "evidence": "",
+  "gold_sql": "SELECT SUM(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.publisher_name = 'DC Comics' THEN 1 ELSE 0 END) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_760",
+  "db_id": "superhero",
+  "question": "In superheroes with height between 150 to 180, what is the percentage of heroes published by Marvel Comics?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id WHERE T1.height_cm BETWEEN 150 AND 180",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_761",
+  "db_id": "superhero",
+  "question": "Among the male superheroes, list the super hero names of superheroes with weight greater than the 79% average weight of all superheroes.",
+  "evidence": "",
+  "gold_sql": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Male' AND T1.weight_kg * 100 > ( SELECT AVG(weight_kg) FROM superhero ) * 79",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_775",
+  "db_id": "superhero",
+  "question": "What is the percentage of blue female superheroes among all female superheroes?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.colour = 'Blue' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id INNER JOIN colour AS T3 ON T1.skin_colour_id = T3.id WHERE T2.gender = 'Female'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_788",
+  "db_id": "superhero",
+  "question": "How many percent of female heroes were published by Marvel Comics?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.gender = 'Female' AND T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) AS REAL) / COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) * 100 FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN gender AS T3 ON T1.gender_id = T3.id",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_790",
+  "db_id": "superhero",
+  "question": "Calculate the difference between Emil Blonsky's weight and Charles Chandler's weight.",
+  "evidence": "",
+  "gold_sql": "SELECT ( SELECT weight_kg FROM superhero WHERE full_name LIKE 'Emil Blonsky' ) - ( SELECT weight_kg FROM superhero WHERE full_name LIKE 'Charles Chandler' ) AS CALCULATE",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_791",
+  "db_id": "superhero",
+  "question": "Calculate the average height for all superhero.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(height_cm) AS REAL) / COUNT(id) FROM superhero",
+  "difficulty": "simple",
+  "source": "bird"
+ },
+ {
+  "id": "bird_800",
+  "db_id": "superhero",
+  "question": "Calculate the percentage of superheroes with blue eyes.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.colour = 'Blue' THEN 1 ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.eye_colour_id = T2.id",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_801",
+  "db_id": "superhero",
+  "question": "Find the ratio between male superheroes and female superheroes.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.gender = 'Male' THEN T1.id ELSE NULL END) AS REAL) / COUNT(CASE WHEN T2.gender = 'Female' THEN T1.id ELSE NULL END) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_819",
+  "db_id": "superhero",
+  "question": "In superheroes with missing weight data, calculate the difference between the number of superheroes with blue eyes and no eye color.",
+  "evidence": "",
+  "gold_sql": "SELECT SUM(CASE WHEN T2.id = 7 THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.id = 1 THEN 1 ELSE 0 END) FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.eye_colour_id = T2.id WHERE T1.weight_kg = 0 OR T1.weight_kg is NULL",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_829",
+  "db_id": "superhero",
+  "question": "Which publisher created more superheroes: DC or Marvel Comics? Find the difference in the number of superheroes.",
+  "evidence": "",
+  "gold_sql": "SELECT SUM(CASE WHEN T2.publisher_name = 'DC Comics' THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_557",
+  "db_id": "codebase_community",
+  "question": "Among the posts with a score of over 5, what is the percentage of them being owned by an elder user?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(IIF(T2.Age > 65, 1, 0)) AS REAL) * 100 / COUNT(T1.Id) FROM posts AS T1 INNER JOIN users AS T2 ON T1.OwnerUserId = T2.Id WHERE T1.Score > 5",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_571",
+  "db_id": "codebase_community",
+  "question": "For the user No.24, how many times is the number of his/her posts compared to his/her votes?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(DISTINCT T2.Id) AS REAL) / COUNT(DISTINCT T1.Id) FROM votes AS T1 INNER JOIN posts AS T2 ON T1.UserId = T2.OwnerUserId WHERE T1.UserId = 24",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_587",
+  "db_id": "codebase_community",
+  "question": "Calculate the average view count of each post tagged as 'humor' and list the title and the comment of each post.",
+  "evidence": "",
+  "gold_sql": "SELECT AVG(T2.ViewCount), T2.Title, T1.Text FROM comments AS T1 INNER JOIN posts AS T2 ON T2.Id = T1.PostId  WHERE T2.Tags = '<humor>' GROUP BY T2.Title, T1.Text ",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_598",
+  "db_id": "codebase_community",
+  "question": "What is the percentage difference of student badges given during 2010 and 2011?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(IIF(STRFTIME('%Y', Date) = '2010', 1, 0)) AS REAL) * 100 / COUNT(Id) - CAST(SUM(IIF(STRFTIME('%Y', Date) = '2011', 1, 0)) AS REAL) * 100 / COUNT(Id) FROM badges WHERE Name = 'Student'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_604",
+  "db_id": "codebase_community",
+  "question": "What is the average of the up votes and the average user age for users creating more than 10 posts?",
+  "evidence": "",
+  "gold_sql": "SELECT AVG(T1.UpVotes), AVG(T1.Age) FROM users AS T1 INNER JOIN ( SELECT OwnerUserId, COUNT(*) AS post_count FROM posts GROUP BY OwnerUserId HAVING post_count > 10) AS T2 ON T1.Id = T2.OwnerUserId",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_634",
+  "db_id": "codebase_community",
+  "question": "Among posts by Harvey Motulsky and Noah Snyder, which one has higher popularity?",
+  "evidence": "",
+  "gold_sql": "SELECT T1.DisplayName FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T2.PostId = T3.Id WHERE T1.DisplayName = 'Harvey Motulsky' OR T1.DisplayName = 'Noah Snyder' GROUP BY T1.DisplayName ORDER BY SUM(T3.ViewCount) DESC LIMIT 1",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_640",
+  "db_id": "codebase_community",
+  "question": "Calculate the difference in view count from post posted by Mornington and view count from posts posted by Amos.",
+  "evidence": "",
+  "gold_sql": "SELECT SUM(IIF(T1.DisplayName = 'Mornington', T3.ViewCount, 0)) - SUM(IIF(T1.DisplayName = 'Amos', T3.ViewCount, 0)) AS diff FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T3.Id = T2.PostId",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_665",
+  "db_id": "codebase_community",
+  "question": "What is the average monthly number of links created in 2010 for posts that have no more than 2 answers?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(T1.Id) AS REAL) / 12 FROM postLinks AS T1 INNER JOIN posts AS T2 ON T1.PostId = T2.Id WHERE T2.AnswerCount <= 2 AND STRFTIME('%Y', T1.CreationDate) = '2010'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_683",
+  "db_id": "codebase_community",
+  "question": "What is the percentage of posts whose owners had a reputation of over 1000 in 2011?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(IIF(STRFTIME('%Y', T2.CreaionDate) = '2011' AND T1.Reputation > 1000, 1, 0)) AS REAL) * 100 / COUNT(T1.Id) FROM users AS T1 INNER JOIN posts AS T2 ON T1.Id = T2.OwnerUserId",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_701",
+  "db_id": "codebase_community",
+  "question": "Among all the posts posted by the most influential user, identify the percentage with a score above 50.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.Score > 50 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.Id) FROM users T1 INNER JOIN posts T2 ON T1.Id = T2.OwnerUserId INNER JOIN ( SELECT MAX(Reputation) AS max_reputation FROM users ) T3 ON T1.Reputation = T3.max_reputation",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_716",
+  "db_id": "codebase_community",
+  "question": "Among the comments with scores between 5 to 10, what is the percentage of the users with 0 up votes?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(IIF(T1.UpVotes = 0, 1, 0)) AS REAL) * 100/ COUNT(T1.Id) AS per FROM users AS T1 INNER JOIN comments AS T2 ON T1.Id = T2.UserId WHERE T2.Score BETWEEN 5 AND 10",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_352",
+  "db_id": "card_games",
+  "question": "Calculate the percentage of the cards availabe in Chinese Simplified.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_368",
+  "db_id": "card_games",
+  "question": "What is the percentage of borderless cards?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN borderColor = 'borderless' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM cards",
+  "difficulty": "simple",
+  "source": "bird"
+ },
+ {
+  "id": "bird_371",
+  "db_id": "card_games",
+  "question": "What is the percentage of cards whose language is French among the Story Spotlight cards?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.language = 'French' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.isStorySpotlight = 1",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_402",
+  "db_id": "card_games",
+  "question": "What is the percentage of Story Spotlight cards that do not have a text box? List them by their ID.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN isTextless = 0 AND  isStorySpotlight = 1 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM cards",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_416",
+  "db_id": "card_games",
+  "question": "What percentage of cards without power are in French?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.language = 'French' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.power IS NULL OR T1.power = '*'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_486",
+  "db_id": "card_games",
+  "question": "What is the percentage of the cards with a converted mana cost of 7 in the set Coldsnap?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.convertedManaCost = 7 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T2.name = 'Coldsnap'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_197",
+  "db_id": "toxicology",
+  "question": "Calculate the average number of oxygen atoms in single-bonded molecules.",
+  "evidence": "",
+  "gold_sql": "SELECT AVG(oxygen_count) FROM (SELECT T1.molecule_id, COUNT(T1.element) AS oxygen_count FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id  WHERE T2.bond_type = '-' AND T1.element = 'o'  GROUP BY T1.molecule_id) AS oxygen_counts",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_198",
+  "db_id": "toxicology",
+  "question": "On average how many carcinogenic molecules are single bonded?",
+  "evidence": "",
+  "gold_sql": "SELECT AVG(single_bond_count) FROM (SELECT T3.molecule_id, COUNT(T1.bond_type) AS single_bond_count FROM bond AS T1  INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN molecule AS T3 ON T3.molecule_id = T2.molecule_id WHERE T1.bond_type = '-' AND T3.label = '+' GROUP BY T3.molecule_id) AS subquery",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_201",
+  "db_id": "toxicology",
+  "question": "What is the percentage of carbon in double-bond molecules?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element = 'c' THEN T1.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T1.atom_id) FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.bond_type = '='",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_218",
+  "db_id": "toxicology",
+  "question": "What percentage of carcinogenic-type molecules does not contain fluorine?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element <> 'f' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_219",
+  "db_id": "toxicology",
+  "question": "What is the percentage of carcinogenic molecules in triple type bonds?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T2.label = '+' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '#'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_226",
+  "db_id": "toxicology",
+  "question": "What is the percentage of double bonds in the molecule TR008? Please provide your answer as a percentage with five decimal places.",
+  "evidence": "",
+  "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T.bond_type = '=' THEN T.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T.bond_id),5) FROM bond AS T WHERE T.molecule_id = 'TR008'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_227",
+  "db_id": "toxicology",
+  "question": "What is the percentage of molecules that are carcinogenic? Please provide your answer as a percentage with three decimal places.",
+  "evidence": "",
+  "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T.label = '+' THEN T.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(T.molecule_id),3) FROM molecule t",
+  "difficulty": "simple",
+  "source": "bird"
+ },
+ {
+  "id": "bird_228",
+  "db_id": "toxicology",
+  "question": "How much of the hydrogen in molecule TR206 is accounted for? Please provide your answer as a percentage with four decimal places.",
+  "evidence": "",
+  "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T.element = 'h' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id),4) FROM atom AS T WHERE T.molecule_id = 'TR206'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_245",
+  "db_id": "toxicology",
+  "question": "What is the average number of bonds the atoms with the element iodine have?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(T2.bond_id) AS REAL) / COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T1.element = 'i'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_255",
+  "db_id": "toxicology",
+  "question": "What proportion of single bonds are carcinogenic? Please provide your answer as a percentage with five decimal places.",
+  "evidence": "",
+  "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T2.label = '+' THEN T1.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T1.bond_id),5) FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '-'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_263",
+  "db_id": "toxicology",
+  "question": "What is the composition of element chlorine in percentage among the single bond molecules?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T.element = 'cl' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id) FROM ( SELECT T1.atom_id, T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '-' ) AS T",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_273",
+  "db_id": "toxicology",
+  "question": "What is the percentage of element chlorine in carcinogenic molecules?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT( CASE WHEN T1.element = 'cl' THEN T1.element ELSE NULL END) AS REAL) * 100 / COUNT(T1.element) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_282",
+  "db_id": "toxicology",
+  "question": "What is the ratio of Hydrogen elements in molecule ID TR006? List the ratio with its label.",
+  "evidence": "",
+  "gold_sql": "WITH SubQuery AS (SELECT DISTINCT T1.atom_id, T1.element, T1.molecule_id, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR006') SELECT CAST(COUNT(CASE WHEN element = 'h' THEN atom_id ELSE NULL END) AS REAL) / (CASE WHEN COUNT(atom_id) = 0 THEN NULL ELSE COUNT(atom_id) END) AS ratio, label FROM SubQuery GROUP BY label",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_12",
+  "db_id": "california_schools",
+  "question": "Among the schools with an SAT excellence rate of over 0.3, what is the highest eligible free rate for students aged 5-17?",
+  "evidence": "",
+  "gold_sql": "SELECT MAX(CAST(T1.`Free Meal Count (Ages 5-17)` AS REAL) / T1.`Enrollment (Ages 5-17)`) FROM frpm AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE CAST(T2.NumGE1500 AS REAL) / T2.NumTstTakr > 0.3",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_25",
+  "db_id": "california_schools",
+  "question": "Name schools in Riverside which the average of average math score for SAT is grater than 400, what is the funding type of these schools?",
+  "evidence": "",
+  "gold_sql": "SELECT T1.sname, T2.`Charter Funding Type` FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.CDSCode WHERE T2.`District Name` LIKE 'Riverside%' GROUP BY T1.sname, T2.`Charter Funding Type` HAVING CAST(SUM(T1.AvgScrMath) AS REAL) / COUNT(T1.cds) > 400",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_37",
+  "db_id": "california_schools",
+  "question": "What is the complete address of the school with the lowest excellence rate? Indicate the Street, City, Zip and State.",
+  "evidence": "",
+  "gold_sql": "SELECT T2.Street, T2.City, T2.State, T2.Zip FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY CAST(T1.NumGE1500 AS REAL) / T1.NumTstTakr ASC LIMIT 1",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_47",
+  "db_id": "california_schools",
+  "question": "What is the monthly average number of schools that opened in Alameda County under the jurisdiction of the Elementary School District in 1980?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(COUNT(School) AS REAL) / 12 FROM schools WHERE DOC = 52 AND County = 'Alameda' AND strftime('%Y', OpenDate) = '1980'",
+  "difficulty": "moderate",
+  "source": "bird"
+ },
+ {
+  "id": "bird_115",
+  "db_id": "financial",
+  "question": "For the branch which located in the south Bohemia with biggest number of inhabitants, what is the percentage of the male clients?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST(SUM(T1.gender = 'M') AS REAL) * 100 / COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A3 = 'south Bohemia' GROUP BY T2.A4 ORDER BY T2.A4 DESC LIMIT 1",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_125",
+  "db_id": "financial",
+  "question": "For loans contracts which are still running where client are in debt, list the district of the and the state the percentage unemployment rate increment from year 1995 to 1996.",
+  "evidence": "",
+  "gold_sql": "SELECT CAST((T3.A13 - T3.A12) AS REAL) * 100 / T3.A12 FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T2.district_id = T3.district_id WHERE T1.status = 'D'",
+  "difficulty": "challenging",
+  "source": "bird"
+ },
+ {
+  "id": "bird_169",
+  "db_id": "financial",
+  "question": "What was the growth rate of the total amount of loans across all accounts for a male client between 1996 and 1997?",
+  "evidence": "",
+  "gold_sql": "SELECT CAST((SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1997' THEN T1.amount ELSE 0 END) - SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1996' THEN T1.amount ELSE 0 END)) AS REAL) * 100 / SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1996' THEN T1.amount ELSE 0 END) FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN disp AS T3 ON T3.account_id = T2.account_id INNER JOIN client AS T4 ON T4.client_id = T3.client_id WHERE T4.gender = 'M' AND T3.type = 'OWNER'",
+  "difficulty": "challenging",
+  "source": "bird"
+ }
+]
