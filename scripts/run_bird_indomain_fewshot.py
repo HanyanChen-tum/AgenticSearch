@@ -176,7 +176,7 @@ def main():
     parser.add_argument("--sleep",          type=float, default=0)
     args = parser.parse_args()
 
-    questions = json.loads(Path(args.dataset).read_text())
+    questions = json.loads(Path(args.dataset).read_text(encoding="utf-8"))
     if args.limit:
         questions = questions[:args.limit]
 
@@ -227,7 +227,7 @@ def main():
     results = []
     done_ids = set()
     if output_path.exists():
-        results = json.loads(output_path.read_text())
+        results = json.loads(output_path.read_text(encoding="utf-8"))
         done_ids = {r["id"] for r in results}
         print(f"Resuming — {len(done_ids)} already done")
 
@@ -239,9 +239,9 @@ def main():
             results.append(run_one(ex, Path(args.database_dir), agent))
         except KeyboardInterrupt:
             print(f"\nInterrupted — {len(results)} saved")
-            output_path.write_text(json.dumps(results, indent=2))
+            output_path.write_text(json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8")
             break
-        output_path.write_text(json.dumps(results, indent=2))
+        output_path.write_text(json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8")
         if args.sleep > 0:
             time.sleep(args.sleep)
 

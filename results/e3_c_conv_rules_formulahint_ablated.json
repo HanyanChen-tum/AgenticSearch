@@ -1,0 +1,4823 @@
+[
+  {
+    "id": "bird_1471",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT 1.0 * SUM(IIF(Currency = 'EUR', 1, 0)) / NULLIF(SUM(IIF(Currency = 'CZK', 1, 0)), 0) FROM customers",
+    "predicted_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+    "gold_answer": [
+      [
+        0.06572769953051644
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.4808,
+    "llm_calls": 2,
+    "prompt_tokens": 2477,
+    "completion_tokens": 1912,
+    "reasoning_tokens": 1549,
+    "total_tokens": 4389,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1473",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What was the average monthly consumption of customers in SME for the year 2013?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(Consumption) FROM yearmonth JOIN customers ON yearmonth.CustomerID = customers.CustomerID WHERE customers.Segment = 'SME' AND yearmonth.Date BETWEEN '201301' AND '201312'",
+    "predicted_answer": [
+      [
+        5519.475171445073
+      ]
+    ],
+    "gold_sql": "SELECT AVG(T2.Consumption) / 12 FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME'",
+    "gold_answer": [
+      [
+        459.9562642870894
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 16.6056,
+    "llm_calls": 3,
+    "prompt_tokens": 3827,
+    "completion_tokens": 2599,
+    "reasoning_tokens": 2267,
+    "total_tokens": 6426,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1526",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "For the customer who paid 634.8 in 2012/8/25, what was the consumption decrease rate from Year 2012 to 2013?",
+    "difficulty": "challenging",
+    "predicted_sql": "WITH target_customer AS (SELECT CustomerID FROM transactions_1k WHERE Date = '2012-08-25' AND ROUND(Amount * Price, 1) = 634.8 LIMIT 1) SELECT (SUM(CASE WHEN substr(Date,1,4) = '2012' THEN Consumption ELSE 0 END) - SUM(CASE WHEN substr(Date,1,4) = '2013' THEN Consumption ELSE 0 END)) * 100.0 / NULLIF(SUM(CASE WHEN substr(Date,1,4) = '2012' THEN Consumption ELSE 0 END), 0) FROM yearmonth WHERE CustomerID = (SELECT CustomerID FROM target_customer)",
+    "predicted_answer": [
+      [
+        null
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) - SUM(IIF(SUBSTRING(Date, 1, 4) = '2013', Consumption, 0)) AS FLOAT) / SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) FROM yearmonth WHERE CustomerID = ( SELECT T1.CustomerID FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-25' AND T1.Price  = 1513.12 )",
+    "gold_answer": [
+      [
+        null
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 46.0671,
+    "llm_calls": 3,
+    "prompt_tokens": 5034,
+    "completion_tokens": 9464,
+    "reasoning_tokens": 8680,
+    "total_tokens": 14498,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1340",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "Calculate the difference of the total amount spent in all events by the Student_Club in year 2019 and 2020.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COALESCE(SUM(CASE WHEN substr(e.event_date, 1, 4) = '2019' THEN b.spent ELSE 0 END), 0) - COALESCE(SUM(CASE WHEN substr(e.event_date, 1, 4) = '2020' THEN b.spent ELSE 0 END), 0) FROM budget AS b JOIN event AS e ON b.link_to_event = e.event_id;",
+    "predicted_answer": [
+      [
+        2086.05
+      ]
+    ],
+    "gold_sql": "SELECT SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2019' THEN T2.spent ELSE 0 END) - SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2020' THEN T2.spent ELSE 0 END) AS num FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event",
+    "gold_answer": [
+      [
+        2086.05
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 28.2484,
+    "llm_calls": 2,
+    "prompt_tokens": 4414,
+    "completion_tokens": 5716,
+    "reasoning_tokens": 5327,
+    "total_tokens": 10130,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1390",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "Based on the total cost for all event, what is the percentage of cost for Yearly Kickoff event?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT 100.0 * SUM(b.spent) / (SELECT SUM(spent) FROM budget) FROM budget b JOIN event e ON b.link_to_event = e.event_id WHERE e.event_name = 'Yearly Kickoff'",
+    "predicted_answer": [
+      [
+        21.530164665276477
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.event_name = 'Yearly Kickoff' THEN T3.cost ELSE 0 END) AS REAL) * 100 / SUM(T3.cost) FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget",
+    "gold_answer": [
+      [
+        21.530164665276477
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 32.9243,
+    "llm_calls": 2,
+    "prompt_tokens": 3656,
+    "completion_tokens": 6853,
+    "reasoning_tokens": 6518,
+    "total_tokens": 10509,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1432",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "student_club",
+    "question": "Among the members with t-shirt size of medium, what is the percentage of the amount 50 received by the Student_Club?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN I.amount = 50 THEN I.amount ELSE 0 END) / NULLIF(SUM(I.amount), 0) FROM income AS I INNER JOIN member AS M ON I.link_to_member = M.member_id WHERE M.t_shirt_size = 'Medium';",
+    "predicted_answer": [
+      [
+        100.0
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.amount = 50 THEN 1.0 ELSE 0 END) AS REAL) * 100 / COUNT(T2.income_id) FROM member AS T1 INNER JOIN income AS T2 ON T1.member_id = T2.link_to_member WHERE T1.position = 'Member' AND T1.t_shirt_size = 'Medium'",
+    "gold_answer": [
+      [
+        100.0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 80.1532,
+    "llm_calls": 4,
+    "prompt_tokens": 9193,
+    "completion_tokens": 16042,
+    "reasoning_tokens": 15263,
+    "total_tokens": 25235,
+    "cached_prompt_tokens": 5376,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1149",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "Are there more in-patient or outpatient who were male? What is the deviation in percentage?",
+    "difficulty": "moderate",
+    "predicted_sql": "WITH stats AS ( SELECT SUM(CASE WHEN Admission = '+' THEN 1 ELSE 0 END) AS inpatient, SUM(CASE WHEN Admission = '-' THEN 1 ELSE 0 END) AS outpatient FROM Patient WHERE SEX = 'M' AND Admission IN ('+','-') ) SELECT CASE WHEN inpatient > outpatient THEN 'in-patient' WHEN outpatient > inpatient THEN 'outpatient' ELSE 'same' END AS more_group, ABS(inpatient - outpatient) * 100.0 / (inpatient + outpatient) AS deviation_percentage FROM stats;",
+    "predicted_answer": [
+      [
+        "outpatient",
+        9.183673469387756
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN Admission = '+' THEN 1 ELSE 0 END) AS REAL) * 100 / SUM(CASE WHEN Admission = '-' THEN 1 ELSE 0 END) FROM Patient WHERE SEX = 'M'",
+    "gold_answer": [
+      [
+        83.17757009345794
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 114.8556,
+    "llm_calls": 3,
+    "prompt_tokens": 5807,
+    "completion_tokens": 23570,
+    "reasoning_tokens": 22863,
+    "total_tokens": 29377,
+    "cached_prompt_tokens": 3072,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1150",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What is the percentage of female patient were born after 1930?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(ID) FROM Patient WHERE CAST(STRFTIME('%Y', Birthday) AS INTEGER) > 1930",
+    "predicted_answer": [
+      [
+        83.65217391304348
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN STRFTIME('%Y', Birthday) > '1930' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(*) FROM Patient WHERE SEX = 'F'",
+    "gold_answer": [
+      [
+        94.03714565004887
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 15.8168,
+    "llm_calls": 2,
+    "prompt_tokens": 3871,
+    "completion_tokens": 2805,
+    "reasoning_tokens": 2500,
+    "total_tokens": 6676,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1152",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What is the ratio of outpatient to inpatient followed up treatment among all the 'SLE' diagnosed patient?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN Admission = '-' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN Admission = '+' THEN 1 ELSE 0 END) FROM Patient WHERE Diagnosis = 'SLE'",
+    "predicted_answer": [
+      [
+        0.7636363636363637
+      ]
+    ],
+    "gold_sql": "SELECT SUM(CASE WHEN Admission = '+' THEN 1.0 ELSE 0 END) / SUM(CASE WHEN Admission = '-' THEN 1 ELSE 0 END) FROM Patient WHERE Diagnosis = 'SLE'",
+    "gold_answer": [
+      [
+        1.3095238095238095
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 23.7736,
+    "llm_calls": 2,
+    "prompt_tokens": 3571,
+    "completion_tokens": 4527,
+    "reasoning_tokens": 4242,
+    "total_tokens": 8098,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1169",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What is the ratio of male to female patients among all those with abnormal uric acid counts?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN SEX = 'M' THEN 1 ELSE 0 END) AS REAL) / NULLIF(SUM(CASE WHEN SEX = 'F' THEN 1 ELSE 0 END), 0) FROM (SELECT DISTINCT p.ID, p.SEX FROM Laboratory l JOIN Patient p ON l.ID = p.ID WHERE (p.SEX = 'M' AND l.UA <= 8.0) OR (p.SEX = 'F' AND l.UA <= 6.5)) abnormal",
+    "predicted_answer": [
+      [
+        0.184
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.UA <= 8.0 AND T1.SEX = 'M' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN T2.UA <= 6.5 AND T1.SEX = 'F' THEN 1 ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID",
+    "gold_answer": [
+      [
+        0.20566810835419985
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 79.5148,
+    "llm_calls": 3,
+    "prompt_tokens": 7188,
+    "completion_tokens": 16236,
+    "reasoning_tokens": 15319,
+    "total_tokens": 23424,
+    "cached_prompt_tokens": 3584,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1185",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For the patient who was born on 1959/2/18, what is the decrease rate for his/her total cholesterol from November to December in 1981?",
+    "difficulty": "challenging",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST((SUM(CASE WHEN T2.Date LIKE '1981-11-%' THEN T2.`T-CHO` ELSE 0 END) - SUM(CASE WHEN T2.Date LIKE '1981-12-%' THEN T2.`T-CHO` ELSE 0 END)) AS REAL) / SUM(CASE WHEN T2.Date LIKE '1981-12-%' THEN T2.`T-CHO` ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.Birthday = '1959-02-18'",
+    "gold_answer": [
+      [
+        0.06030150753768844
+      ]
+    ],
+    "correct": false,
+    "error": "'gbk' codec can't encode character '\\u0920' in position 268: illegal multibyte sequence",
+    "latency_seconds": 119.0324,
+    "llm_calls": 2,
+    "prompt_tokens": 1766,
+    "completion_tokens": 12180,
+    "reasoning_tokens": 11577,
+    "total_tokens": 13946,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 1,
+    "reasoning_usage_missing_calls": 1,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "UnicodeEncodeError"
+  },
+  {
+    "id": "bird_1189",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What number of patients with a degree of thrombosis level 2 and ANA pattern of only S, have a level of anti-Cardiolip in antibody (IgM) 20% higher than average?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT COUNT(*) FROM Examination WHERE Thrombosis = 2 AND `ANA Pattern` = 'S' AND `aCL IgM` > 1.2 * (SELECT AVG(`aCL IgM`) FROM Examination)",
+    "predicted_answer": [
+      [
+        1
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(*) FROM Examination WHERE Thrombosis = 2 AND `ANA Pattern` = 'S' AND `aCL IgM` > (SELECT AVG(`aCL IgM`) * 1.2 FROM Examination WHERE Thrombosis = 2 AND `ANA Pattern` = 'S')",
+    "gold_answer": [
+      [
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 42.5471,
+    "llm_calls": 2,
+    "prompt_tokens": 4213,
+    "completion_tokens": 8631,
+    "reasoning_tokens": 8257,
+    "total_tokens": 12844,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1201",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What percentage of patients who were born in 1980 and were diagnosed with RA are women?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) FROM Patient WHERE STRFTIME('%Y', Birthday) = '1980' AND Diagnosis = 'RA'",
+    "predicted_answer": [
+      [
+        100.0
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(ID) FROM Patient WHERE Diagnosis = 'RA' AND STRFTIME('%Y', Birthday) = '1980'",
+    "gold_answer": [
+      [
+        100.0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 13.791,
+    "llm_calls": 3,
+    "prompt_tokens": 5943,
+    "completion_tokens": 2338,
+    "reasoning_tokens": 1895,
+    "total_tokens": 8281,
+    "cached_prompt_tokens": 3072,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1227",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What is the average age of the male patient with high cholesterol?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(CAST(STRFTIME('%Y', CURRENT_TIMESTAMP) AS INTEGER) - CAST(STRFTIME('%Y', T1.Birthday) AS INTEGER)) FROM (SELECT DISTINCT P.ID, P.Birthday FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE P.SEX = 'M' AND L.\"T-CHO\" >= 250) AS T1",
+    "predicted_answer": [
+      [
+        71.95
+      ]
+    ],
+    "gold_sql": "SELECT AVG(STRFTIME('%Y', date('NOW')) - STRFTIME('%Y', T1.Birthday)) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.`T-CHO` >= 250 AND T1.SEX = 'M'",
+    "gold_answer": [
+      [
+        74.68535825545172
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 23.2888,
+    "llm_calls": 3,
+    "prompt_tokens": 5952,
+    "completion_tokens": 4457,
+    "reasoning_tokens": 4031,
+    "total_tokens": 10409,
+    "cached_prompt_tokens": 3072,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1229",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For all patients with triglyceride (TG) level beyond the normal range, how many are age more than 50 years?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(P.ID) FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE L.TG >= 200 AND DATE('now') > DATE(P.Birthday, '+50 years')",
+    "predicted_answer": [
+      [
+        783
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(DISTINCT T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.TG >= 200 AND STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) > 50",
+    "gold_answer": [
+      [
+        106
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 24.1028,
+    "llm_calls": 2,
+    "prompt_tokens": 4104,
+    "completion_tokens": 4565,
+    "reasoning_tokens": 4242,
+    "total_tokens": 8669,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1232",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "Provide ID, sex and age of patient who has blood glucose (GLU) not within normal range but with total cholesterol(T-CHO) within normal range.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT DISTINCT P.ID, P.SEX, STRFTIME('%Y', DATE('NOW')) - STRFTIME('%Y', P.Birthday) AS age FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE L.`GLU` >= 180 AND L.`T-CHO` < 250",
+    "predicted_answer": [
+      [
+        57266,
+        "M",
+        103
+      ],
+      [
+        2371753,
+        "F",
+        94
+      ],
+      [
+        3354706,
+        "F",
+        90
+      ],
+      [
+        4432946,
+        "M",
+        66
+      ],
+      [
+        4466420,
+        "F",
+        96
+      ],
+      [
+        4466840,
+        "F",
+        73
+      ],
+      [
+        4791049,
+        "F",
+        87
+      ],
+      [
+        4792459,
+        "M",
+        95
+      ],
+      [
+        5065022,
+        "F",
+        55
+      ],
+      [
+        5093771,
+        "F",
+        62
+      ],
+      [
+        5126587,
+        "F",
+        62
+      ],
+      [
+        5405581,
+        "F",
+        70
+      ],
+      [
+        5446559,
+        "F",
+        95
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T1.ID, T1.SEX , STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.GLU >= 180 AND T2.`T-CHO` < 250",
+    "gold_answer": [
+      [
+        57266,
+        "M",
+        103
+      ],
+      [
+        2371753,
+        "F",
+        94
+      ],
+      [
+        3354706,
+        "F",
+        90
+      ],
+      [
+        4432946,
+        "M",
+        66
+      ],
+      [
+        4466420,
+        "F",
+        96
+      ],
+      [
+        4466840,
+        "F",
+        73
+      ],
+      [
+        4791049,
+        "F",
+        87
+      ],
+      [
+        4792459,
+        "M",
+        95
+      ],
+      [
+        5065022,
+        "F",
+        55
+      ],
+      [
+        5093771,
+        "F",
+        62
+      ],
+      [
+        5126587,
+        "F",
+        62
+      ],
+      [
+        5405581,
+        "F",
+        70
+      ],
+      [
+        5446559,
+        "F",
+        95
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 12.1805,
+    "llm_calls": 2,
+    "prompt_tokens": 4086,
+    "completion_tokens": 2388,
+    "reasoning_tokens": 2151,
+    "total_tokens": 6474,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1235",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What are the patient's diagnosis for those who has lower red blood blood cell? State their ID and age.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT T1.ID, CAST((julianday(T1.`First Date`) - julianday(T1.Birthday)) / 365.25 AS INT) AS Age, T1.Diagnosis FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.RBC < 3.5 ORDER BY T1.ID",
+    "predicted_answer": [
+      [
+        27654,
+        55,
+        "RA, SLE susp"
+      ],
+      [
+        30609,
+        null,
+        "SLE, MCTD"
+      ],
+      [
+        58139,
+        null,
+        "SJS"
+      ],
+      [
+        71417,
+        65,
+        "RA"
+      ],
+      [
+        130370,
+        null,
+        "RA"
+      ],
+      [
+        444499,
+        27,
+        "MRA"
+      ],
+      [
+        528900,
+        null,
+        "vasculitis, TA susp"
+      ],
+      [
+        619178,
+        44,
+        "SJS"
+      ],
+      [
+        912147,
+        16,
+        "MCTD, SJS"
+      ],
+      [
+        940737,
+        null,
+        "SJS, MCTD, AORTITIS"
+      ],
+      [
+        944797,
+        18,
+        "RA,SJS"
+      ],
+      [
+        1043570,
+        null,
+        "SLE"
+      ],
+      [
+        1124385,
+        51,
+        "SJS"
+      ],
+      [
+        1130007,
+        44,
+        "SLE"
+      ],
+      [
+        1138737,
+        25,
+        "RA"
+      ],
+      [
+        1180510,
+        21,
+        "Raynaud"
+      ],
+      [
+        1557464,
+        44,
+        "SJS"
+      ],
+      [
+        1567380,
+        null,
+        "SLE"
+      ],
+      [
+        1617548,
+        null,
+        "DM"
+      ],
+      [
+        1622238,
+        43,
+        "PSS, PM, SJS, RA\u001dSJS\u001dPM"
+      ],
+      [
+        1711181,
+        4,
+        "SLE, SJS, Adie"
+      ],
+      [
+        1755350,
+        36,
+        "SLE"
+      ],
+      [
+        1967597,
+        null,
+        "SLE"
+      ],
+      [
+        2083458,
+        37,
+        "Vasculitis"
+      ],
+      [
+        2256652,
+        null,
+        "RA"
+      ],
+      [
+        2265184,
+        66,
+        "PMR"
+      ],
+      [
+        2307640,
+        27,
+        "SLE"
+      ],
+      [
+        2315140,
+        57,
+        "SLE"
+      ],
+      [
+        2343945,
+        28,
+        "SLE"
+      ],
+      [
+        2370675,
+        6,
+        "SLE, SJS"
+      ],
+      [
+        2927464,
+        null,
+        "RA"
+      ],
+      [
+        2931207,
+        34,
+        "SLE, APS"
+      ],
+      [
+        2933261,
+        15,
+        "SLE"
+      ],
+      [
+        3174630,
+        10,
+        "SLE, SJS"
+      ],
+      [
+        3182521,
+        44,
+        "DM"
+      ],
+      [
+        3215988,
+        null,
+        "MRA, SJS"
+      ],
+      [
+        3310582,
+        30,
+        "SLE"
+      ],
+      [
+        3362815,
+        24,
+        "SLE"
+      ],
+      [
+        3413715,
+        31,
+        "SLE, SJS"
+      ],
+      [
+        3545964,
+        null,
+        "SJS, PN susp"
+      ],
+      [
+        3562042,
+        31,
+        "BEHCET"
+      ],
+      [
+        4007151,
+        22,
+        "PN, AGA"
+      ],
+      [
+        4416959,
+        40,
+        "RA (seronegative)"
+      ],
+      [
+        4417978,
+        48,
+        "PM"
+      ],
+      [
+        4425292,
+        null,
+        "SJS"
+      ],
+      [
+        4432946,
+        null,
+        "PNc"
+      ],
+      [
+        4466840,
+        37,
+        "ITP"
+      ],
+      [
+        4471732,
+        21,
+        "SJS, MCTD"
+      ],
+      [
+        4618443,
+        69,
+        "MRA"
+      ],
+      [
+        4632519,
+        66,
+        "RA"
+      ],
+      [
+        4632548,
+        64,
+        "SLE"
+      ],
+      [
+        4652830,
+        null,
+        "DM"
+      ],
+      [
+        4790235,
+        48,
+        "SLE"
+      ],
+      [
+        4840422,
+        30,
+        "SLE, APS\u001dAPS"
+      ],
+      [
+        4843434,
+        20,
+        "SLE"
+      ],
+      [
+        4862013,
+        null,
+        "AORTITIS susp"
+      ],
+      [
+        4865142,
+        30,
+        "RA"
+      ],
+      [
+        4885128,
+        24,
+        "SLE, neonatal LE"
+      ],
+      [
+        4894243,
+        35,
+        "SLE"
+      ],
+      [
+        4934716,
+        31,
+        "PN, AORTITIS susp"
+      ],
+      [
+        5060913,
+        25,
+        "SLE"
+      ],
+      [
+        5063068,
+        28,
+        "RA"
+      ],
+      [
+        5105683,
+        17,
+        "SLE, SJS"
+      ],
+      [
+        5117606,
+        48,
+        "DM"
+      ],
+      [
+        5119703,
+        23,
+        "PM"
+      ],
+      [
+        5122312,
+        24,
+        "SLE, APS"
+      ],
+      [
+        5164396,
+        56,
+        "SLE"
+      ],
+      [
+        5181621,
+        52,
+        "RA"
+      ],
+      [
+        5186147,
+        45,
+        "PM/DM"
+      ],
+      [
+        5295122,
+        46,
+        "FUO"
+      ],
+      [
+        5302954,
+        17,
+        "SLE"
+      ],
+      [
+        5303768,
+        43,
+        "SLE"
+      ],
+      [
+        5397059,
+        19,
+        "SLE"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T1.Diagnosis, T1.ID , STRFTIME('%Y', CURRENT_TIMESTAMP) -STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.RBC < 3.5",
+    "gold_answer": [
+      [
+        "RA, SLE susp",
+        27654,
+        90
+      ],
+      [
+        "SLE, MCTD",
+        30609,
+        82
+      ],
+      [
+        "SJS",
+        58139,
+        54
+      ],
+      [
+        "RA",
+        71417,
+        97
+      ],
+      [
+        "RA",
+        130370,
+        74
+      ],
+      [
+        "MRA",
+        444499,
+        72
+      ],
+      [
+        "vasculitis, TA susp",
+        528900,
+        107
+      ],
+      [
+        "SJS",
+        619178,
+        80
+      ],
+      [
+        "MCTD, SJS",
+        912147,
+        51
+      ],
+      [
+        "SJS, MCTD, AORTITIS",
+        940737,
+        83
+      ],
+      [
+        "RA,SJS",
+        944797,
+        51
+      ],
+      [
+        "SLE",
+        1043570,
+        65
+      ],
+      [
+        "SJS",
+        1124385,
+        82
+      ],
+      [
+        "SLE",
+        1130007,
+        74
+      ],
+      [
+        "RA",
+        1138737,
+        61
+      ],
+      [
+        "Raynaud",
+        1180510,
+        52
+      ],
+      [
+        "SJS",
+        1557464,
+        76
+      ],
+      [
+        "SLE",
+        1567380,
+        67
+      ],
+      [
+        "DM",
+        1617548,
+        58
+      ],
+      [
+        "PSS, PM, SJS, RA\u001dSJS\u001dPM",
+        1622238,
+        89
+      ],
+      [
+        "SLE, SJS, Adie",
+        1711181,
+        52
+      ],
+      [
+        "SLE",
+        1755350,
+        82
+      ],
+      [
+        "SLE",
+        1967597,
+        47
+      ],
+      [
+        "Vasculitis",
+        2083458,
+        82
+      ],
+      [
+        "RA",
+        2256652,
+        88
+      ],
+      [
+        "PMR",
+        2265184,
+        100
+      ],
+      [
+        "SLE",
+        2307640,
+        73
+      ],
+      [
+        "SLE",
+        2315140,
+        91
+      ],
+      [
+        "SLE",
+        2343945,
+        74
+      ],
+      [
+        "SLE, SJS",
+        2370675,
+        52
+      ],
+      [
+        "RA",
+        2927464,
+        95
+      ],
+      [
+        "SLE, APS",
+        2931207,
+        67
+      ],
+      [
+        "SLE",
+        2933261,
+        59
+      ],
+      [
+        "SLE, SJS",
+        3174630,
+        52
+      ],
+      [
+        "DM",
+        3182521,
+        74
+      ],
+      [
+        "MRA, SJS",
+        3215988,
+        87
+      ],
+      [
+        "SLE",
+        3310582,
+        61
+      ],
+      [
+        "SLE",
+        3362815,
+        57
+      ],
+      [
+        "SLE, SJS",
+        3413715,
+        72
+      ],
+      [
+        "SJS, PN susp",
+        3545964,
+        100
+      ],
+      [
+        "BEHCET",
+        3562042,
+        65
+      ],
+      [
+        "PN, AGA",
+        4007151,
+        58
+      ],
+      [
+        "RA (seronegative)",
+        4416959,
+        77
+      ],
+      [
+        "PM",
+        4417978,
+        85
+      ],
+      [
+        "SJS",
+        4425292,
+        72
+      ],
+      [
+        "PNc",
+        4432946,
+        66
+      ],
+      [
+        "ITP",
+        4466840,
+        73
+      ],
+      [
+        "SJS, MCTD",
+        4471732,
+        57
+      ],
+      [
+        "MRA",
+        4618443,
+        104
+      ],
+      [
+        "RA",
+        4632519,
+        101
+      ],
+      [
+        "SLE",
+        4632548,
+        99
+      ],
+      [
+        "DM",
+        4652830,
+        80
+      ],
+      [
+        "SLE",
+        4790235,
+        83
+      ],
+      [
+        "SLE, APS\u001dAPS",
+        4840422,
+        64
+      ],
+      [
+        "SLE",
+        4843434,
+        55
+      ],
+      [
+        "AORTITIS susp",
+        4862013,
+        62
+      ],
+      [
+        "RA",
+        4865142,
+        65
+      ],
+      [
+        "SLE, neonatal LE",
+        4885128,
+        58
+      ],
+      [
+        "SLE",
+        4894243,
+        70
+      ],
+      [
+        "PN, AORTITIS susp",
+        4934716,
+        60
+      ],
+      [
+        "SLE",
+        5060913,
+        58
+      ],
+      [
+        "RA",
+        5063068,
+        61
+      ],
+      [
+        "SLE, SJS",
+        5105683,
+        50
+      ],
+      [
+        "DM",
+        5117606,
+        80
+      ],
+      [
+        "PM",
+        5119703,
+        58
+      ],
+      [
+        "SLE, APS",
+        5122312,
+        57
+      ],
+      [
+        "SLE",
+        5164396,
+        88
+      ],
+      [
+        "RA",
+        5181621,
+        84
+      ],
+      [
+        "PM/DM",
+        5186147,
+        77
+      ],
+      [
+        "FUO",
+        5295122,
+        76
+      ],
+      [
+        "SLE",
+        5302954,
+        48
+      ],
+      [
+        "SLE",
+        5303768,
+        75
+      ],
+      [
+        "SLE",
+        5397059,
+        50
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 70.6162,
+    "llm_calls": 2,
+    "prompt_tokens": 4279,
+    "completion_tokens": 13762,
+    "reasoning_tokens": 13243,
+    "total_tokens": 18041,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1239",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "Name the ID and age of patient with two or more laboratory examinations which show their hematoclit level exceeded the normal range.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT P.ID, CAST((julianday(COALESCE(P.[First Date], P.Description)) - julianday(P.Birthday)) / 365.25 AS INTEGER) AS age FROM Patient AS P WHERE P.ID IN (SELECT ID FROM Laboratory WHERE HCT > 52 GROUP BY ID HAVING COUNT(*) >= 2)",
+    "predicted_answer": [
+      [
+        2307640,
+        27
+      ],
+      [
+        3182521,
+        44
+      ],
+      [
+        4007151,
+        22
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T1.ID, STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.ID IN ( SELECT ID FROM Laboratory WHERE HCT >= 52 GROUP BY ID HAVING COUNT(ID) >= 2 )",
+    "gold_answer": [
+      [
+        2307640,
+        73
+      ],
+      [
+        3182521,
+        74
+      ],
+      [
+        4007151,
+        58
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 68.8525,
+    "llm_calls": 2,
+    "prompt_tokens": 4306,
+    "completion_tokens": 14209,
+    "reasoning_tokens": 13784,
+    "total_tokens": 18515,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1241",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For patients with abnormal platelet level, state the number of patients with lower than normal range. How is it compare to the number of patients with higher than normal range?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT (SELECT COUNT(DISTINCT ID) FROM Laboratory WHERE PLT < 100) AS lower_than_normal, (SELECT COUNT(DISTINCT ID) FROM Laboratory WHERE PLT > 400) AS higher_than_normal;",
+    "predicted_answer": [
+      [
+        36,
+        82
+      ]
+    ],
+    "gold_sql": "SELECT SUM(CASE WHEN T2.PLT <= 100 THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.PLT >= 400 THEN 1 ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID",
+    "gold_answer": [
+      [
+        -562
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 34.8152,
+    "llm_calls": 2,
+    "prompt_tokens": 4226,
+    "completion_tokens": 6855,
+    "reasoning_tokens": 6461,
+    "total_tokens": 11081,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1242",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For laboratory examinations take in 1984, list all patients below 50 years old with normal platelet level.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT DISTINCT P.ID FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID WHERE L.Date BETWEEN '1984-01-01' AND '1984-12-31' AND L.PLT > 100 AND L.PLT < 400 AND STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', P.Birthday) < 50",
+    "predicted_answer": [
+      [
+        102490
+      ],
+      [
+        460574
+      ],
+      [
+        1086485
+      ],
+      [
+        2047892
+      ],
+      [
+        3173679
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T1.ID FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.PLT BETWEEN 100 AND 400 AND STRFTIME('%Y', T2.Date) - STRFTIME('%Y', T1.Birthday) < 50 AND STRFTIME('%Y', T2.Date) = '1984'",
+    "gold_answer": [
+      [
+        30609
+      ],
+      [
+        48473
+      ],
+      [
+        52199
+      ],
+      [
+        58139
+      ],
+      [
+        81043
+      ],
+      [
+        102490
+      ],
+      [
+        108788
+      ],
+      [
+        115272
+      ],
+      [
+        128012
+      ],
+      [
+        130312
+      ],
+      [
+        250391
+      ],
+      [
+        283032
+      ],
+      [
+        287122
+      ],
+      [
+        299839
+      ],
+      [
+        444499
+      ],
+      [
+        460574
+      ],
+      [
+        525998
+      ],
+      [
+        549080
+      ],
+      [
+        585659
+      ],
+      [
+        933793
+      ],
+      [
+        940737
+      ],
+      [
+        1043570
+      ],
+      [
+        1061042
+      ],
+      [
+        1066089
+      ],
+      [
+        1086485
+      ],
+      [
+        1491832
+      ],
+      [
+        1531448
+      ],
+      [
+        1567380
+      ],
+      [
+        1571569
+      ],
+      [
+        1610433
+      ],
+      [
+        1614305
+      ],
+      [
+        1617548
+      ],
+      [
+        1618929
+      ],
+      [
+        1622238
+      ],
+      [
+        1665879
+      ],
+      [
+        1711181
+      ],
+      [
+        1755350
+      ],
+      [
+        1757532
+      ],
+      [
+        1787610
+      ],
+      [
+        1792502
+      ],
+      [
+        1797754
+      ],
+      [
+        1923445
+      ],
+      [
+        1942213
+      ],
+      [
+        1944121
+      ],
+      [
+        2047892
+      ],
+      [
+        2052784
+      ],
+      [
+        2073196
+      ],
+      [
+        2083458
+      ],
+      [
+        2239659
+      ],
+      [
+        2256652
+      ],
+      [
+        2256779
+      ],
+      [
+        2276582
+      ],
+      [
+        2280686
+      ],
+      [
+        2289306
+      ],
+      [
+        2294836
+      ],
+      [
+        2307640
+      ],
+      [
+        2315140
+      ],
+      [
+        2343945
+      ],
+      [
+        2355809
+      ],
+      [
+        2357140
+      ],
+      [
+        2362973
+      ],
+      [
+        2370675
+      ],
+      [
+        2395148
+      ],
+      [
+        2429726
+      ],
+      [
+        2931207
+      ],
+      [
+        2933261
+      ],
+      [
+        2941804
+      ],
+      [
+        2945819
+      ],
+      [
+        2956679
+      ],
+      [
+        3150681
+      ],
+      [
+        3171569
+      ],
+      [
+        3173679
+      ],
+      [
+        3174630
+      ],
+      [
+        3175008
+      ],
+      [
+        3182521
+      ],
+      [
+        3215988
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 84.8242,
+    "llm_calls": 2,
+    "prompt_tokens": 4731,
+    "completion_tokens": 17429,
+    "reasoning_tokens": 16799,
+    "total_tokens": 22160,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1243",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For all patients who are older than 55 years old, what is the percentage of female who has abnormal prothrombin time (PT)?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN T.SEX = 'F' AND T.abnormal_pt = 1 THEN 1 ELSE 0 END) / COUNT(*) FROM (SELECT P.ID, P.SEX, MAX(CASE WHEN L.PT >= 14 THEN 1 ELSE 0 END) AS abnormal_pt FROM Patient AS P LEFT JOIN Laboratory AS L ON P.ID = L.ID WHERE P.Birthday < DATE(P.[First Date], '-55 years') GROUP BY P.ID, P.SEX) AS T",
+    "predicted_answer": [
+      [
+        0.0
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.PT >= 14 AND T1.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(CASE WHEN T2.PT >= 14 THEN 1 ELSE 0 END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T1.Birthday) > 55",
+    "gold_answer": [
+      [
+        1.2030885257676422
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 168.6429,
+    "llm_calls": 3,
+    "prompt_tokens": 3849,
+    "completion_tokens": 21685,
+    "reasoning_tokens": 21152,
+    "total_tokens": 25534,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 1,
+    "reasoning_usage_missing_calls": 1,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1031",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "At present, calculate for the player's age who have a sprint speed of no less than 97 between 2013 to 2015.",
+    "difficulty": "challenging",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT DISTINCT DATETIME() - T2.birthday age FROM Player_Attributes AS t1 INNER JOIN Player AS t2 ON t1.player_api_id = t2.player_api_id WHERE STRFTIME('%Y',t1.`date`) >= '2013' AND STRFTIME('%Y',t1.`date`) <= '2015' AND t1.sprint_speed >= 97",
+    "gold_answer": [
+      [
+        36
+      ]
+    ],
+    "correct": false,
+    "error": "'gbk' codec can't encode character '\\u0578' in position 52: illegal multibyte sequence",
+    "latency_seconds": 38.56,
+    "llm_calls": 1,
+    "prompt_tokens": 3576,
+    "completion_tokens": 8331,
+    "reasoning_tokens": 7997,
+    "total_tokens": 11907,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "UnicodeEncodeError"
+  },
+  {
+    "id": "bird_1037",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "Calculate the percentage of players who prefer left foot, who were born between 1987 and 1992.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT 100.0 * COUNT(CASE WHEN pa.preferred_foot = 'left' THEN p.player_api_id END) / COUNT(p.player_api_id) FROM Player AS p JOIN Player_Attributes AS pa ON p.player_api_id = pa.player_api_id WHERE p.birthday >= '1987-01-01 00:00:00' AND p.birthday < '1993-01-01 00:00:00'",
+    "predicted_answer": [
+      [
+        24.56690504416995
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN t2.preferred_foot = 'left' THEN t1.id ELSE NULL END) AS REAL) * 100 / COUNT(t1.id) percent FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE SUBSTR(t1.birthday, 1, 4) BETWEEN '1987' AND '1992'",
+    "gold_answer": [
+      [
+        24.56690504416995
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 32.6747,
+    "llm_calls": 2,
+    "prompt_tokens": 7350,
+    "completion_tokens": 6341,
+    "reasoning_tokens": 5964,
+    "total_tokens": 13691,
+    "cached_prompt_tokens": 3328,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1039",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "Find the average number of long-shot done by Ahmed Samir Farag.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT CAST(SUM(t2.long_shots) AS REAL) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.player_name = 'Ahmed Samir Farag'",
+    "predicted_answer": [
+      [
+        61.57142857142857
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(t2.long_shots) AS REAL) / COUNT(t2.`date`) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.player_name = 'Ahmed Samir Farag'",
+    "gold_answer": [
+      [
+        61.57142857142857
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 9.1745,
+    "llm_calls": 2,
+    "prompt_tokens": 6516,
+    "completion_tokens": 1490,
+    "reasoning_tokens": 1222,
+    "total_tokens": 8006,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1040",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "List the top 10 players' names whose heights are above 180 in descending order of average heading accuracy.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT p.player_name FROM Player AS p JOIN Player_Attributes AS pa ON p.player_api_id = pa.player_api_id WHERE p.height > 180 GROUP BY p.player_api_id, p.player_name ORDER BY AVG(pa.heading_accuracy) DESC LIMIT 10;",
+    "predicted_answer": [
+      [
+        "Michael Ballack"
+      ],
+      [
+        "Fernando Llorente"
+      ],
+      [
+        "John Terry"
+      ],
+      [
+        "Naldo"
+      ],
+      [
+        "Luca Toni"
+      ],
+      [
+        "Per Mertesacker"
+      ],
+      [
+        "Didier Drogba"
+      ],
+      [
+        "Miroslav Klose"
+      ],
+      [
+        "Daniel van Buyten"
+      ],
+      [
+        "Fernando Morientes"
+      ]
+    ],
+    "gold_sql": "SELECT t1.player_name FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.height > 180 GROUP BY t1.id ORDER BY CAST(SUM(t2.heading_accuracy) AS REAL) / COUNT(t2.`player_fifa_api_id`) DESC LIMIT 10",
+    "gold_answer": [
+      [
+        "Michael Ballack"
+      ],
+      [
+        "Fernando Llorente"
+      ],
+      [
+        "John Terry"
+      ],
+      [
+        "Naldo"
+      ],
+      [
+        "Per Mertesacker"
+      ],
+      [
+        "Luca Toni"
+      ],
+      [
+        "Didier Drogba"
+      ],
+      [
+        "Miroslav Klose"
+      ],
+      [
+        "Daniel van Buyten"
+      ],
+      [
+        "Fernando Morientes"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.7575,
+    "llm_calls": 2,
+    "prompt_tokens": 6399,
+    "completion_tokens": 2068,
+    "reasoning_tokens": 1780,
+    "total_tokens": 8467,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1042",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "List the name of leagues in which the average goals by the home team is higher than the away team in the 2009/2010 season.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT l.name FROM League AS l JOIN Match AS m ON l.id = m.league_id WHERE m.season = '2009/2010' GROUP BY l.id, l.name HAVING AVG(m.home_team_goal) > AVG(m.away_team_goal) ORDER BY l.name",
+    "predicted_answer": [
+      [
+        "Belgium Jupiler League"
+      ],
+      [
+        "England Premier League"
+      ],
+      [
+        "France Ligue 1"
+      ],
+      [
+        "Germany 1. Bundesliga"
+      ],
+      [
+        "Italy Serie A"
+      ],
+      [
+        "Netherlands Eredivisie"
+      ],
+      [
+        "Poland Ekstraklasa"
+      ],
+      [
+        "Portugal Liga ZON Sagres"
+      ],
+      [
+        "Scotland Premier League"
+      ],
+      [
+        "Spain LIGA BBVA"
+      ],
+      [
+        "Switzerland Super League"
+      ]
+    ],
+    "gold_sql": "SELECT t1.name FROM League AS t1 INNER JOIN Match AS t2 ON t1.id = t2.league_id WHERE t2.season = '2009/2010' GROUP BY t1.name HAVING (CAST(SUM(t2.home_team_goal) AS REAL) / COUNT(DISTINCT t2.id)) - (CAST(SUM(t2.away_team_goal) AS REAL) / COUNT(DISTINCT t2.id)) > 0",
+    "gold_answer": [
+      [
+        "Belgium Jupiler League"
+      ],
+      [
+        "England Premier League"
+      ],
+      [
+        "France Ligue 1"
+      ],
+      [
+        "Germany 1. Bundesliga"
+      ],
+      [
+        "Italy Serie A"
+      ],
+      [
+        "Netherlands Eredivisie"
+      ],
+      [
+        "Poland Ekstraklasa"
+      ],
+      [
+        "Portugal Liga ZON Sagres"
+      ],
+      [
+        "Scotland Premier League"
+      ],
+      [
+        "Spain LIGA BBVA"
+      ],
+      [
+        "Switzerland Super League"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.6852,
+    "llm_calls": 2,
+    "prompt_tokens": 6471,
+    "completion_tokens": 1947,
+    "reasoning_tokens": 1668,
+    "total_tokens": 8418,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1057",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "Calculate the average home team goal in the 2010/2011 season in the country of Poland.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(m.home_team_goal) FROM Match AS m INNER JOIN Country AS c ON m.country_id = c.id WHERE m.season = '2010/2011' AND c.name = 'Poland';",
+    "predicted_answer": [
+      [
+        1.5041666666666667
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(t2.home_team_goal) AS REAL) / COUNT(t2.id) FROM Country AS t1 INNER JOIN Match AS t2 ON t1.id = t2.country_id WHERE t1.name = 'Poland' AND t2.season = '2010/2011'",
+    "gold_answer": [
+      [
+        1.5041666666666667
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 7.9361,
+    "llm_calls": 2,
+    "prompt_tokens": 7347,
+    "completion_tokens": 1189,
+    "reasoning_tokens": 839,
+    "total_tokens": 8536,
+    "cached_prompt_tokens": 3328,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1058",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "Who has the highest average finishing rate between the highest and shortest football player?",
+    "difficulty": "challenging",
+    "predicted_sql": "WITH tallest AS (SELECT player_api_id, player_name FROM Player ORDER BY height DESC LIMIT 1), shortest AS (SELECT player_api_id, player_name FROM Player ORDER BY height ASC LIMIT 1) SELECT p.player_name FROM (SELECT * FROM tallest UNION ALL SELECT * FROM shortest) AS p JOIN Player_Attributes pa ON p.player_api_id = pa.player_api_id GROUP BY p.player_api_id, p.player_name ORDER BY AVG(pa.finishing) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "Juan Quero"
+      ]
+    ],
+    "gold_sql": "SELECT A FROM ( SELECT AVG(finishing) result, 'Max' A FROM Player AS T1 INNER JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.height = ( SELECT MAX(height) FROM Player ) UNION SELECT AVG(finishing) result, 'Min' A FROM Player AS T1 INNER JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.height = ( SELECT MIN(height) FROM Player ) ) ORDER BY result DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "Min"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 18.1781,
+    "llm_calls": 2,
+    "prompt_tokens": 7403,
+    "completion_tokens": 3492,
+    "reasoning_tokens": 2960,
+    "total_tokens": 10895,
+    "cached_prompt_tokens": 3328,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1068",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "From 2010 to 2015, what was the average overall rating of players who are higher than 170?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(pa.overall_rating) AS avg_overall_rating FROM Player AS p INNER JOIN Player_Attributes AS pa ON p.player_api_id = pa.player_api_id WHERE p.height > 170 AND pa.date >= '2010-01-01' AND pa.date < '2016-01-01';",
+    "predicted_answer": [
+      [
+        68.90135724487692
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(t2.overall_rating) AS REAL) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.height > 170 AND STRFTIME('%Y',t2.`date`) >= '2010' AND STRFTIME('%Y',t2.`date`) <= '2015'",
+    "gold_answer": [
+      [
+        68.85402657670379
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 12.4639,
+    "llm_calls": 2,
+    "prompt_tokens": 7585,
+    "completion_tokens": 2015,
+    "reasoning_tokens": 1686,
+    "total_tokens": 9600,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1076",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "What is the difference of the average ball control score between Abdou Diallo and Aaron Appindangoye\n?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT (SELECT AVG(t2.ball_control) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.player_name = 'Abdou Diallo') - (SELECT AVG(t2.ball_control) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.player_name = 'Aaron Appindangoye');",
+    "predicted_answer": [
+      [
+        0.7999999999999972
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN t1.player_name = 'Abdou Diallo' THEN t2.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN t1.player_name = 'Abdou Diallo' THEN t2.id ELSE NULL END) - CAST(SUM(CASE WHEN t1.player_name = 'Aaron Appindangoye' THEN t2.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN t1.player_name = 'Aaron Appindangoye' THEN t2.id ELSE NULL END) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id",
+    "gold_answer": [
+      [
+        0.7999999999999972
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 19.9296,
+    "llm_calls": 3,
+    "prompt_tokens": 10462,
+    "completion_tokens": 3643,
+    "reasoning_tokens": 3147,
+    "total_tokens": 14105,
+    "cached_prompt_tokens": 6144,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1094",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "How much higher in percentage is Ariel Borysiuk's overall rating than that of Paulin Puel?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT ((a.overall_rating - b.overall_rating) * 100.0) / b.overall_rating FROM (SELECT pa.overall_rating FROM Player p INNER JOIN Player_Attributes pa ON p.player_fifa_api_id = pa.player_fifa_api_id WHERE p.player_name = 'Ariel Borysiuk' ORDER BY pa.date DESC LIMIT 1) AS a, (SELECT pa.overall_rating FROM Player p INNER JOIN Player_Attributes pa ON p.player_fifa_api_id = pa.player_fifa_api_id WHERE p.player_name = 'Paulin Puel' ORDER BY pa.date DESC LIMIT 1) AS b;",
+    "predicted_answer": [
+      [
+        15.254237288135593
+      ]
+    ],
+    "gold_sql": "SELECT (SUM(CASE WHEN t1.player_name = 'Ariel Borysiuk' THEN t2.overall_rating ELSE 0 END) * 1.0 - SUM(CASE WHEN t1.player_name = 'Paulin Puel' THEN t2.overall_rating ELSE 0 END)) * 100 / SUM(CASE WHEN t1.player_name = 'Paulin Puel' THEN t2.overall_rating ELSE 0 END) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id",
+    "gold_answer": [
+      [
+        133.7260677466863
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 29.5538,
+    "llm_calls": 2,
+    "prompt_tokens": 7803,
+    "completion_tokens": 5864,
+    "reasoning_tokens": 5001,
+    "total_tokens": 13667,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_880",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Paul di Resta was in the No. 853 race, what percent faster did he finish in the 853rd race than the next race for the fastest lap speed?",
+    "difficulty": "challenging",
+    "predicted_sql": "WITH s853 AS (SELECT CAST(fastestLapSpeed AS REAL) AS speed FROM results WHERE raceId = 853 AND driverId = 814), s854 AS (SELECT CAST(fastestLapSpeed AS REAL) AS speed FROM results WHERE raceId = 854 AND driverId = 814) SELECT ROUND(((s853.speed - s854.speed) / s854.speed) * 100.0, 2) AS percent_faster FROM s853, s854;",
+    "predicted_answer": [
+      [
+        48.15
+      ]
+    ],
+    "gold_sql": "SELECT (SUM(IIF(T2.raceId = 853, T2.fastestLapSpeed, 0)) - SUM(IIF(T2.raceId = 854, T2.fastestLapSpeed, 0))) * 100 / SUM(IIF(T2.raceId = 853, T2.fastestLapSpeed, 0)) FROM drivers AS T1 INNER JOIN results AS T2 ON T2.driverId = T1.driverId WHERE T1.forename = 'Paul' AND T1.surname = 'di Resta'",
+    "gold_answer": [
+      [
+        32.50155167390781
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 56.9041,
+    "llm_calls": 2,
+    "prompt_tokens": 5838,
+    "completion_tokens": 12822,
+    "reasoning_tokens": 12180,
+    "total_tokens": 18660,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_895",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What is the average lap time for Lewis Hamilton in the 2009 Malaysian Grand Prix?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(T1.milliseconds) FROM lapTimes AS T1 INNER JOIN races AS T2 ON T1.raceId = T2.raceId INNER JOIN drivers AS T3 ON T1.driverId = T3.driverId WHERE T2.year = 2009 AND T2.name = 'Malaysian Grand Prix' AND T3.forename = 'Lewis' AND T3.surname = 'Hamilton'",
+    "predicted_answer": [
+      [
+        109398.54838709677
+      ]
+    ],
+    "gold_sql": "SELECT AVG(T2.milliseconds) FROM races AS T1 INNER JOIN lapTimes AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.forename = 'Lewis' AND T3.surname = 'Hamilton' AND T1.year = 2009 AND T1.name = 'Malaysian Grand Prix'",
+    "gold_answer": [
+      [
+        109398.54838709677
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 17.7687,
+    "llm_calls": 3,
+    "prompt_tokens": 9326,
+    "completion_tokens": 3186,
+    "reasoning_tokens": 2547,
+    "total_tokens": 12512,
+    "cached_prompt_tokens": 5120,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_896",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Calculate the percentage whereby Hamilton was not at the 1st track of the the f1 circuit since 2010.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT ROUND(100.0 * SUM(CASE WHEN r.positionOrder <> 1 THEN 1 ELSE 0 END) / COUNT(*), 2) AS percentage FROM results AS r INNER JOIN races AS ra ON ra.raceId = r.raceId INNER JOIN drivers AS d ON d.driverId = r.driverId WHERE d.forename = 'Lewis' AND d.surname = 'Hamilton' AND ra.year >= 2010;",
+    "predicted_answer": [
+      [
+        66.2
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.position <> 1 THEN T2.position END) AS REAL) * 100 / COUNT(T2.driverStandingsId) FROM races AS T1 INNER JOIN driverStandings AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.surname = 'Hamilton' AND T1.year >= 2010",
+    "gold_answer": [
+      [
+        73.2394366197183
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 13.2989,
+    "llm_calls": 1,
+    "prompt_tokens": 2565,
+    "completion_tokens": 2719,
+    "reasoning_tokens": 2560,
+    "total_tokens": 5284,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_909",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Among all European Grand Prix races, what is the percentage of the races were hosted in Germany?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN c.country = 'Germany' THEN 1 ELSE 0 END) / COUNT(*) AS percentage FROM races AS r JOIN circuits AS c ON r.circuitId = c.circuitId WHERE r.name = 'European Grand Prix'",
+    "predicted_answer": [
+      [
+        52.17391304347826
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T1.country = 'Germany' THEN T2.circuitID END) AS REAL) * 100 / COUNT(T2.circuitId) FROM circuits AS T1 INNER JOIN races AS T2 ON T2.circuitID = T1.circuitId WHERE T2.name = 'European Grand Prix'",
+    "gold_answer": [
+      [
+        52.17391304347826
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 22.8683,
+    "llm_calls": 3,
+    "prompt_tokens": 8295,
+    "completion_tokens": 3959,
+    "reasoning_tokens": 3513,
+    "total_tokens": 12254,
+    "cached_prompt_tokens": 4608,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_944",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "How much faster in percentage is the champion than the driver who finished the race last in the 2008 Australian Grand Prix?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT ((last.milliseconds - winner.milliseconds) * 100.0) / last.milliseconds FROM (SELECT milliseconds FROM results WHERE raceId = (SELECT raceId FROM races WHERE year = 2008 AND round = 1) AND milliseconds IS NOT NULL ORDER BY positionOrder ASC LIMIT 1) AS winner CROSS JOIN (SELECT milliseconds FROM results WHERE raceId = (SELECT raceId FROM races WHERE year = 2008 AND round = 1) AND milliseconds IS NOT NULL ORDER BY positionOrder DESC LIMIT 1) AS last",
+    "predicted_answer": [],
+    "gold_sql": "WITH time_in_seconds AS ( SELECT T1.positionOrder, CASE WHEN T1.positionOrder = 1 THEN (CAST(SUBSTR(T1.time, 1, 1) AS REAL) * 3600) + (CAST(SUBSTR(T1.time, 3, 2) AS REAL) * 60) + CAST(SUBSTR(T1.time, 6) AS REAL) ELSE CAST(SUBSTR(T1.time, 2) AS REAL) END AS time_seconds FROM results AS T1 INNER JOIN races AS T2 ON T1.raceId = T2.raceId WHERE T2.name = 'Australian Grand Prix' AND T1.time IS NOT NULL AND T2.year = 2008 ), champion_time AS ( SELECT time_seconds FROM time_in_seconds WHERE positionOrder = 1), last_driver_incremental AS ( SELECT time_seconds FROM time_in_seconds WHERE positionOrder = (SELECT MAX(positionOrder) FROM time_in_seconds) ) SELECT (CAST((SELECT time_seconds FROM last_driver_incremental) AS REAL) * 100) / (SELECT time_seconds + (SELECT time_seconds FROM last_driver_incremental) FROM champion_time)",
+    "gold_answer": [
+      [
+        null
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 121.0018,
+    "llm_calls": 4,
+    "prompt_tokens": 13735,
+    "completion_tokens": 25528,
+    "reasoning_tokens": 24196,
+    "total_tokens": 39263,
+    "cached_prompt_tokens": 5120,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_948",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What are the maximum points of British constructors?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT T1.points FROM constructorStandings AS T1 INNER JOIN constructors AS T2 ON T1.constructorId = T2.constructorId WHERE T2.nationality = 'British' ORDER BY T1.points DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        497.0
+      ]
+    ],
+    "gold_sql": "SELECT MAX(T1.points) FROM constructorStandings AS T1 INNER JOIN constructors AS T2 on T1.constructorId = T2.constructorId WHERE T2.nationality = 'British'",
+    "gold_answer": [
+      [
+        497.0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 13.7529,
+    "llm_calls": 1,
+    "prompt_tokens": 2462,
+    "completion_tokens": 2499,
+    "reasoning_tokens": 2410,
+    "total_tokens": 4961,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_954",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Please calculate the race completion percentage of Japanese drivers from 2007 to 2009.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT ROUND(100.0 * SUM(CASE WHEN res.time IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*), 2) AS completion_percentage FROM results AS res JOIN races AS ra ON res.raceId = ra.raceId JOIN drivers AS d ON res.driverId = d.driverId WHERE d.nationality = 'Japanese' AND ra.year BETWEEN 2007 AND 2009",
+    "predicted_answer": [
+      [
+        29.03
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(T1.time IS NOT NULL, 1, 0)) AS REAL) * 100 / COUNT(T1.raceId) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN drivers AS T3 on T1.driverId = T3.driverId WHERE T3.nationality = 'Japanese' AND T2.year BETWEEN 2007 AND 2009",
+    "gold_answer": [
+      [
+        29.032258064516128
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 17.6699,
+    "llm_calls": 3,
+    "prompt_tokens": 7577,
+    "completion_tokens": 3535,
+    "reasoning_tokens": 3058,
+    "total_tokens": 11112,
+    "cached_prompt_tokens": 4096,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_962",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "From 2000 to 2005, what percentage of drivers who were born before 1985 and the lap numbers were over 50?",
+    "difficulty": "challenging",
+    "predicted_sql": "WITH driver_flags AS (SELECT d.driverId, MAX(CASE WHEN d.dob < '1985-01-01' AND lt.lap > 50 THEN 1 ELSE 0 END) AS qualified FROM lapTimes lt JOIN races r ON lt.raceId = r.raceId JOIN drivers d ON lt.driverId = d.driverId WHERE r.year BETWEEN 2000 AND 2005 GROUP BY d.driverId) SELECT ROUND(100.0 * SUM(qualified) / NULLIF(COUNT(*), 0), 2) AS percentage FROM driver_flags",
+    "predicted_answer": [
+      [
+        100.0
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(STRFTIME('%Y', T3.dob) < '1985' AND T1.laps > 50, 1, 0)) AS REAL) * 100 / COUNT(*) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN drivers AS T3 on T1.driverId = T3.driverId WHERE T2.year BETWEEN 2000 AND 2005",
+    "gold_answer": [
+      [
+        64.88474742520843
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 26.4184,
+    "llm_calls": 1,
+    "prompt_tokens": 2783,
+    "completion_tokens": 6153,
+    "reasoning_tokens": 5932,
+    "total_tokens": 8936,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_1002",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "As of the present, what is the full name of the youngest racer? Indicate her nationality and the name of the race to which he/she first joined.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT T2.forename, T2.surname, T2.nationality, T3.name FROM qualifying AS T1 INNER JOIN drivers AS T2 ON T1.driverId = T2.driverId INNER JOIN races AS T3 ON T1.raceId = T3.raceId WHERE T1.driverId = (SELECT driverId FROM drivers ORDER BY dob DESC LIMIT 1) ORDER BY T3.date ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        "Lance",
+        "Stroll",
+        "Canadian",
+        "Chinese Grand Prix"
+      ]
+    ],
+    "gold_sql": "SELECT T1.forename, T1.surname, T1.nationality, T3.name FROM drivers AS T1 INNER JOIN driverStandings AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 on T2.raceId = T3.raceId ORDER BY JULIANDAY(T1.dob) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "Lance",
+        "Stroll",
+        "Canadian",
+        "Chinese Grand Prix"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 25.6638,
+    "llm_calls": 2,
+    "prompt_tokens": 5800,
+    "completion_tokens": 5088,
+    "reasoning_tokens": 4514,
+    "total_tokens": 10888,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_743",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "What is the percentage of superheroes who act in their own self-interest or make decisions based on their own moral code? Indicate how many of the said superheroes were published by Marvel Comics.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT ROUND(100.0 * SUM(CASE WHEN a.alignment = 'Neutral' THEN 1 ELSE 0 END) / COUNT(*), 2) AS percentage_neutral_superheroes, SUM(CASE WHEN a.alignment = 'Neutral' AND p.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END) AS marvel_neutral_superheroes FROM superhero AS s LEFT JOIN alignment AS a ON s.alignment_id = a.id LEFT JOIN publisher AS p ON s.publisher_id = p.id;",
+    "predicted_answer": [
+      [
+        3.73,
+        10
+      ]
+    ],
+    "gold_sql": "SELECT (CAST(COUNT(*) AS REAL) * 100 / (SELECT COUNT(*) FROM superhero)), CAST(SUM(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END) AS REAL) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN alignment AS T3 ON T3.id = T1.alignment_id WHERE T3.alignment = 'Bad'",
+    "gold_answer": [
+      [
+        28.266666666666666,
+        118.0
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 19.2676,
+    "llm_calls": 2,
+    "prompt_tokens": 3638,
+    "completion_tokens": 3913,
+    "reasoning_tokens": 3426,
+    "total_tokens": 7551,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_744",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "Between DC and Marvel Comics, which publisher has published more superheroes? Find the difference in the number of superheroes they have published.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT SUM(CASE WHEN p.publisher_name = 'DC Comics' THEN 1 ELSE 0 END) - SUM(CASE WHEN p.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END) FROM superhero AS s INNER JOIN publisher AS p ON s.publisher_id = p.id",
+    "predicted_answer": [
+      [
+        -163
+      ]
+    ],
+    "gold_sql": "SELECT SUM(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.publisher_name = 'DC Comics' THEN 1 ELSE 0 END) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id",
+    "gold_answer": [
+      [
+        163
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 12.3928,
+    "llm_calls": 2,
+    "prompt_tokens": 3540,
+    "completion_tokens": 2374,
+    "reasoning_tokens": 1947,
+    "total_tokens": 5914,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_760",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "In superheroes with height between 150 to 180, what is the percentage of heroes published by Marvel Comics?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT ROUND(100.0 * SUM(CASE WHEN p.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END) / COUNT(*), 2) AS percentage FROM superhero s LEFT JOIN publisher p ON s.publisher_id = p.id WHERE s.height_cm BETWEEN 150 AND 180;",
+    "predicted_answer": [
+      [
+        60.87
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id WHERE T1.height_cm BETWEEN 150 AND 180",
+    "gold_answer": [
+      [
+        60.869565217391305
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 18.2992,
+    "llm_calls": 3,
+    "prompt_tokens": 5547,
+    "completion_tokens": 3290,
+    "reasoning_tokens": 2876,
+    "total_tokens": 8837,
+    "cached_prompt_tokens": 3072,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_761",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "Among the male superheroes, list the super hero names of superheroes with weight greater than the 79% average weight of all superheroes.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT s.superhero_name FROM superhero AS s INNER JOIN gender AS g ON s.gender_id = g.id WHERE g.gender = 'Male' AND s.weight_kg > 0.79 * (SELECT AVG(weight_kg) FROM superhero WHERE weight_kg > 0)",
+    "predicted_answer": [
+      [
+        "King Kong"
+      ]
+    ],
+    "gold_sql": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Male' AND T1.weight_kg * 100 > ( SELECT AVG(weight_kg) FROM superhero ) * 79",
+    "gold_answer": [
+      [
+        "King Kong"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 36.3997,
+    "llm_calls": 2,
+    "prompt_tokens": 3353,
+    "completion_tokens": 6923,
+    "reasoning_tokens": 6643,
+    "total_tokens": 10276,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_775",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "What is the percentage of blue female superheroes among all female superheroes?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST(COUNT(CASE WHEN T3.colour = 'Blue' THEN 1 ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id INNER JOIN colour AS T3 ON T1.eye_colour_id = T3.id WHERE T2.gender = 'Female'",
+    "predicted_answer": [
+      [
+        37.93103448275862
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.colour = 'Blue' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id INNER JOIN colour AS T3 ON T1.skin_colour_id = T3.id WHERE T2.gender = 'Female'",
+    "gold_answer": [
+      [
+        2.4630541871921183
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 29.9011,
+    "llm_calls": 2,
+    "prompt_tokens": 3316,
+    "completion_tokens": 5400,
+    "reasoning_tokens": 5066,
+    "total_tokens": 8716,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_788",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "How many percent of female heroes were published by Marvel Comics?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST(COUNT(CASE WHEN p.publisher_name = 'Marvel Comics' THEN s.id ELSE NULL END) AS REAL) * 100 / COUNT(s.id) FROM superhero AS s INNER JOIN gender AS g ON s.gender_id = g.id LEFT JOIN publisher AS p ON s.publisher_id = p.id WHERE g.gender = 'Female'",
+    "predicted_answer": [
+      [
+        54.679802955665025
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.gender = 'Female' AND T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) AS REAL) / COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) * 100 FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN gender AS T3 ON T1.gender_id = T3.id",
+    "gold_answer": [
+      [
+        28.68217054263566
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 10.7687,
+    "llm_calls": 2,
+    "prompt_tokens": 3177,
+    "completion_tokens": 2042,
+    "reasoning_tokens": 1658,
+    "total_tokens": 5219,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_790",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "Calculate the difference between Emil Blonsky's weight and Charles Chandler's weight.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT (SELECT weight_kg FROM superhero WHERE full_name = 'Emil Blonsky' LIMIT 1) - (SELECT weight_kg FROM superhero WHERE full_name = 'Charles Chandler' LIMIT 1)",
+    "predicted_answer": [
+      [
+        351
+      ]
+    ],
+    "gold_sql": "SELECT ( SELECT weight_kg FROM superhero WHERE full_name LIKE 'Emil Blonsky' ) - ( SELECT weight_kg FROM superhero WHERE full_name LIKE 'Charles Chandler' ) AS CALCULATE",
+    "gold_answer": [
+      [
+        351
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 30.4994,
+    "llm_calls": 2,
+    "prompt_tokens": 3359,
+    "completion_tokens": 5815,
+    "reasoning_tokens": 5305,
+    "total_tokens": 9174,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_791",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "Calculate the average height for all superhero.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT AVG(NULLIF(height_cm, 0)) FROM superhero",
+    "predicted_answer": [
+      [
+        345.03538175046555
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(height_cm) AS REAL) / COUNT(id) FROM superhero",
+    "gold_answer": [
+      [
+        247.04533333333333
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 14.339,
+    "llm_calls": 2,
+    "prompt_tokens": 3585,
+    "completion_tokens": 2496,
+    "reasoning_tokens": 2311,
+    "total_tokens": 6081,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_800",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "Calculate the percentage of superheroes with blue eyes.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CAST(COUNT(CASE WHEN c.colour = 'Blue' THEN s.id END) AS REAL) * 100.0 / COUNT(s.id) FROM superhero AS s JOIN colour AS c ON s.eye_colour_id = c.id",
+    "predicted_answer": [
+      [
+        31.2
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.colour = 'Blue' THEN 1 ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.eye_colour_id = T2.id",
+    "gold_answer": [
+      [
+        31.2
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 10.4681,
+    "llm_calls": 2,
+    "prompt_tokens": 3519,
+    "completion_tokens": 1807,
+    "reasoning_tokens": 1512,
+    "total_tokens": 5326,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_801",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "Find the ratio between male superheroes and female superheroes.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CAST(COUNT(CASE WHEN T2.gender = 'Male' THEN T1.id ELSE NULL END) AS REAL) / COUNT(CASE WHEN T2.gender = 'Female' THEN T1.id ELSE NULL END) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id",
+    "predicted_answer": [
+      [
+        2.5566502463054186
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.gender = 'Male' THEN T1.id ELSE NULL END) AS REAL) / COUNT(CASE WHEN T2.gender = 'Female' THEN T1.id ELSE NULL END) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id",
+    "gold_answer": [
+      [
+        2.5566502463054186
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 14.6718,
+    "llm_calls": 2,
+    "prompt_tokens": 3551,
+    "completion_tokens": 2787,
+    "reasoning_tokens": 2421,
+    "total_tokens": 6338,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_819",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "In superheroes with missing weight data, calculate the difference between the number of superheroes with blue eyes and no eye color.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT SUM(CASE WHEN c.colour = 'Blue' THEN 1 WHEN c.colour = 'No Colour' THEN -1 ELSE 0 END) FROM superhero AS s INNER JOIN colour AS c ON s.eye_colour_id = c.id WHERE s.weight_kg IS NULL OR s.weight_kg = 0",
+    "predicted_answer": [
+      [
+        -122
+      ]
+    ],
+    "gold_sql": "SELECT SUM(CASE WHEN T2.id = 7 THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.id = 1 THEN 1 ELSE 0 END) FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.eye_colour_id = T2.id WHERE T1.weight_kg = 0 OR T1.weight_kg is NULL",
+    "gold_answer": [
+      [
+        -122
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 25.4929,
+    "llm_calls": 3,
+    "prompt_tokens": 5798,
+    "completion_tokens": 4932,
+    "reasoning_tokens": 4476,
+    "total_tokens": 10730,
+    "cached_prompt_tokens": 3072,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_829",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "Which publisher created more superheroes: DC or Marvel Comics? Find the difference in the number of superheroes.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT SUM(CASE WHEN p.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END) - SUM(CASE WHEN p.publisher_name = 'DC Comics' THEN 1 ELSE 0 END) AS difference FROM superhero AS s INNER JOIN publisher AS p ON s.publisher_id = p.id",
+    "predicted_answer": [
+      [
+        163
+      ]
+    ],
+    "gold_sql": "SELECT SUM(CASE WHEN T2.publisher_name = 'DC Comics' THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id",
+    "gold_answer": [
+      [
+        -163
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 12.6409,
+    "llm_calls": 3,
+    "prompt_tokens": 5485,
+    "completion_tokens": 2055,
+    "reasoning_tokens": 1594,
+    "total_tokens": 7540,
+    "cached_prompt_tokens": 2560,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_557",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "Among the posts with a score of over 5, what is the percentage of them being owned by an elder user?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN u.Age > 65 THEN 1 ELSE 0 END) / COUNT(*) AS percentage FROM posts AS p LEFT JOIN users AS u ON p.OwnerUserId = u.Id WHERE p.Score > 5;",
+    "predicted_answer": [
+      [
+        0.16572176188399476
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(T2.Age > 65, 1, 0)) AS REAL) * 100 / COUNT(T1.Id) FROM posts AS T1 INNER JOIN users AS T2 ON T1.OwnerUserId = T2.Id WHERE T1.Score > 5",
+    "gold_answer": [
+      [
+        0.16899404073645824
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 11.3924,
+    "llm_calls": 2,
+    "prompt_tokens": 6536,
+    "completion_tokens": 1681,
+    "reasoning_tokens": 1246,
+    "total_tokens": 8217,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_571",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "For the user No.24, how many times is the number of his/her posts compared to his/her votes?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CAST((SELECT COUNT(*) FROM posts WHERE OwnerUserId = 24) AS REAL) / NULLIF((SELECT COUNT(*) FROM votes WHERE UserId = 24), 0) AS ratio;",
+    "predicted_answer": [
+      [
+        0.375
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(DISTINCT T2.Id) AS REAL) / COUNT(DISTINCT T1.Id) FROM votes AS T1 INNER JOIN posts AS T2 ON T1.UserId = T2.OwnerUserId WHERE T1.UserId = 24",
+    "gold_answer": [
+      [
+        0.375
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 26.5102,
+    "llm_calls": 2,
+    "prompt_tokens": 6477,
+    "completion_tokens": 4977,
+    "reasoning_tokens": 4671,
+    "total_tokens": 11454,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_587",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "Calculate the average view count of each post tagged as 'humor' and list the title and the comment of each post.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS AverageViewCount, p.Title, c.Text AS Comment FROM posts AS p LEFT JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+    "predicted_answer": [
+      [
+        33236.25,
+        "So how many staticians *does* it take to screw in a lightbulb?",
+        "@Jason Punyon in particular gets a humorless downvote for removing my \"verboten\" tag! ;-)"
+      ],
+      [
+        33236.25,
+        "So how many staticians *does* it take to screw in a lightbulb?",
+        "Probably better asked on meta.  People feel like they have to downvote it because it is an off-topic question.  But then the downvotes make it look like staticians have no sense of humor :("
+      ],
+      [
+        33236.25,
+        "What is your favorite \"data analysis\" cartoon?",
+        "@Sharpie, feel free to close or reopen according to your feelings! I agree with Shane, a bit is ok, but not too much. For example, this question already included a funny cartoon. The jokes question not really a funny joke...."
+      ],
+      [
+        33236.25,
+        "What is your favorite \"data analysis\" cartoon?",
+        "@sharpie: are jokes out?  We obviously don't want the entire site to be humor, but everyone benefits from a little educational humor in small doses."
+      ],
+      [
+        33236.25,
+        "What is your favorite \"data analysis\" cartoon?",
+        "Also my question on the source of a statistical quote was closed too. See here.http://stats.stackexchange.com/questions/15739/who-said-tell-a-story-with-the-data"
+      ],
+      [
+        33236.25,
+        "What is your favorite \"data analysis\" cartoon?",
+        "Could we clarify the problem with hotlinking referenced in the P.S.? Might need to fix some of these answers, if it's worth worrying about."
+      ],
+      [
+        33236.25,
+        "What is your favorite \"data analysis\" cartoon?",
+        "I do have to ask though- how come cartoons are in and jokes are out?"
+      ],
+      [
+        33236.25,
+        "What is your favorite \"data analysis\" cartoon?",
+        "These cartoons are useful too; they can be included in a lecture on a particular topic where you are trying to explain a concept (e.g. correlation/causation above).  A little humor can help to keep an audience engaged."
+      ],
+      [
+        33236.25,
+        "What is your favorite \"data analysis\" cartoon?",
+        "This question is awesome! it's basically a best of list of xckd and dilbert"
+      ],
+      [
+        33236.25,
+        "Statistics Jokes",
+        "I made this community wiki as there is no correct answer."
+      ],
+      [
+        33236.25,
+        "Statistics Jokes",
+        "It probably makes sense to leave cartoons in this question: http://stats.stackexchange.com/questions/423/what-is-your-favorite-data-analysis-cartoon"
+      ],
+      [
+        33236.25,
+        "Statistics Jokes",
+        "This is a popular and much-loved thread, even though it does not (on the face of it) seem to conform to SE standards for content.  (Just what practical question is being asked here? :-)  Some rules benefit from being ... bent ... once in a while.  However, please don't use the existence of this thread to justify creating new ones that fall outside our guidelines unless you think there is a very good reason to do so!  Questions about site policy are always appropriate in [Meta](http://meta.stats.stackexchange.com/) and debate is warmly welcomed in [chat](http://chat.stackexchange.com/)."
+      ],
+      [
+        33236.25,
+        "Funny statistics exam answers",
+        "@John, welcome to the democratic process. These things do happen sometimes :)"
+      ],
+      [
+        33236.25,
+        "Funny statistics exam answers",
+        "@Macro   Every...single....exam I had multiple students give probabilities less than 0 or greater than 1. It made me want to scream. This was not restricted to Intro Stats... even in Intro to MCMC I saw it."
+      ],
+      [
+        33236.25,
+        "Funny statistics exam answers",
+        "I had a post that was off-topic so removed it. As far as true students' mistakes go: I am a grad student and have been teaching into to Econometrics for two semesters. I have seen: complete inability of students to work with fractions, things like: 1/2 + 1/3 = 2/5, answers with negative probability, negative variance. Students constantly mess up their orders of operations. I got blank stare when I asked a student \"What is the probability of getting heads in a coin toss\"."
+      ],
+      [
+        33236.25,
+        "Funny statistics exam answers",
+        "I think everyone here who has taught statistics has had a student give an answer where a probability is not restricted to the interval $[0,1]$ but that's really more disconcerting than funny."
+      ],
+      [
+        33236.25,
+        "Funny statistics exam answers",
+        "It's interesting how the off topic answers are getting voted up as well."
+      ],
+      [
+        33236.25,
+        "Funny statistics exam answers",
+        "Should be a community wiki?"
+      ],
+      [
+        33236.25,
+        "Funny statistics exam answers",
+        "The early answers to this thread are *so* off-topic I think this should be closed.  SE is not the place for lists of jokes, etc. (even though we all enjoy them.) See guideline #3 at http://blog.stackoverflow.com/2010/01/stack-overflow-where-we-hate-fun/, for example.  I anticipate complaints, though, so I'm holding back. But if the quality doesn't go up quickly, I won't hesitate to put in a close vote!"
+      ]
+    ],
+    "gold_sql": "SELECT AVG(T2.ViewCount), T2.Title, T1.Text FROM comments AS T1 INNER JOIN posts AS T2 ON T2.Id = T1.PostId  WHERE T2.Tags = '<humor>' GROUP BY T2.Title, T1.Text ",
+    "gold_answer": [
+      [
+        288.0,
+        "So how many staticians *does* it take to screw in a lightbulb?",
+        "@Jason Punyon in particular gets a humorless downvote for removing my \"verboten\" tag! ;-)"
+      ],
+      [
+        288.0,
+        "So how many staticians *does* it take to screw in a lightbulb?",
+        "Probably better asked on meta.  People feel like they have to downvote it because it is an off-topic question.  But then the downvotes make it look like staticians have no sense of humor :("
+      ],
+      [
+        64481.0,
+        "What is your favorite \"data analysis\" cartoon?",
+        "@Sharpie, feel free to close or reopen according to your feelings! I agree with Shane, a bit is ok, but not too much. For example, this question already included a funny cartoon. The jokes question not really a funny joke...."
+      ],
+      [
+        64481.0,
+        "What is your favorite \"data analysis\" cartoon?",
+        "@sharpie: are jokes out?  We obviously don't want the entire site to be humor, but everyone benefits from a little educational humor in small doses."
+      ],
+      [
+        64481.0,
+        "What is your favorite \"data analysis\" cartoon?",
+        "Also my question on the source of a statistical quote was closed too. See here.http://stats.stackexchange.com/questions/15739/who-said-tell-a-story-with-the-data"
+      ],
+      [
+        64481.0,
+        "What is your favorite \"data analysis\" cartoon?",
+        "Could we clarify the problem with hotlinking referenced in the P.S.? Might need to fix some of these answers, if it's worth worrying about."
+      ],
+      [
+        64481.0,
+        "What is your favorite \"data analysis\" cartoon?",
+        "I do have to ask though- how come cartoons are in and jokes are out?"
+      ],
+      [
+        64481.0,
+        "What is your favorite \"data analysis\" cartoon?",
+        "These cartoons are useful too; they can be included in a lecture on a particular topic where you are trying to explain a concept (e.g. correlation/causation above).  A little humor can help to keep an audience engaged."
+      ],
+      [
+        64481.0,
+        "What is your favorite \"data analysis\" cartoon?",
+        "This question is awesome! it's basically a best of list of xckd and dilbert"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 79.0063,
+    "llm_calls": 2,
+    "prompt_tokens": 5978,
+    "completion_tokens": 15613,
+    "reasoning_tokens": 15054,
+    "total_tokens": 21591,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_598",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "What is the percentage difference of student badges given during 2010 and 2011?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT 100.0 * (SUM(CASE WHEN strftime('%Y', Date) = '2011' THEN 1 ELSE 0 END) - SUM(CASE WHEN strftime('%Y', Date) = '2010' THEN 1 ELSE 0 END)) / NULLIF(SUM(CASE WHEN strftime('%Y', Date) = '2010' THEN 1 ELSE 0 END), 0) AS percentage_difference FROM badges WHERE Name = 'Student' AND strftime('%Y', Date) IN ('2010', '2011');",
+    "predicted_answer": [
+      [
+        261.4391143911439
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(STRFTIME('%Y', Date) = '2010', 1, 0)) AS REAL) * 100 / COUNT(Id) - CAST(SUM(IIF(STRFTIME('%Y', Date) = '2011', 1, 0)) AS REAL) * 100 / COUNT(Id) FROM badges WHERE Name = 'Student'",
+    "gold_answer": [
+      [
+        -9.544015626052403
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 38.4448,
+    "llm_calls": 2,
+    "prompt_tokens": 4489,
+    "completion_tokens": 7372,
+    "reasoning_tokens": 6766,
+    "total_tokens": 11861,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_604",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "What is the average of the up votes and the average user age for users creating more than 10 posts?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(T1.UpVotes), AVG(T1.Age) FROM users AS T1 INNER JOIN (SELECT OwnerUserId FROM posts GROUP BY OwnerUserId HAVING COUNT(*) > 10) AS T2 ON T1.Id = T2.OwnerUserId",
+    "predicted_answer": [
+      [
+        182.2832618025751,
+        34.083333333333336
+      ]
+    ],
+    "gold_sql": "SELECT AVG(T1.UpVotes), AVG(T1.Age) FROM users AS T1 INNER JOIN ( SELECT OwnerUserId, COUNT(*) AS post_count FROM posts GROUP BY OwnerUserId HAVING post_count > 10) AS T2 ON T1.Id = T2.OwnerUserId",
+    "gold_answer": [
+      [
+        182.2832618025751,
+        34.083333333333336
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 12.042,
+    "llm_calls": 2,
+    "prompt_tokens": 6422,
+    "completion_tokens": 2164,
+    "reasoning_tokens": 1949,
+    "total_tokens": 8586,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_634",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "Among posts by Harvey Motulsky and Noah Snyder, which one has higher popularity?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT u.DisplayName FROM users AS u INNER JOIN posts AS p ON u.Id = p.OwnerUserId WHERE u.DisplayName IN ('Harvey Motulsky', 'Noah Snyder') ORDER BY p.ViewCount DESC, p.Id ASC LIMIT 1;",
+    "predicted_answer": [
+      [
+        "Harvey Motulsky"
+      ]
+    ],
+    "gold_sql": "SELECT T1.DisplayName FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T2.PostId = T3.Id WHERE T1.DisplayName = 'Harvey Motulsky' OR T1.DisplayName = 'Noah Snyder' GROUP BY T1.DisplayName ORDER BY SUM(T3.ViewCount) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "Harvey Motulsky"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 27.6925,
+    "llm_calls": 3,
+    "prompt_tokens": 9813,
+    "completion_tokens": 4999,
+    "reasoning_tokens": 4528,
+    "total_tokens": 14812,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_640",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "Calculate the difference in view count from post posted by Mornington and view count from posts posted by Amos.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT SUM(CASE WHEN LOWER(u.DisplayName) = 'mornington' OR LOWER(p.OwnerDisplayName) = 'mornington' THEN p.ViewCount ELSE 0 END) - SUM(CASE WHEN LOWER(u.DisplayName) = 'amos' OR LOWER(p.OwnerDisplayName) = 'amos' THEN p.ViewCount ELSE 0 END) AS difference FROM posts AS p LEFT JOIN users AS u ON p.OwnerUserId = u.Id",
+    "predicted_answer": [
+      [
+        -497
+      ]
+    ],
+    "gold_sql": "SELECT SUM(IIF(T1.DisplayName = 'Mornington', T3.ViewCount, 0)) - SUM(IIF(T1.DisplayName = 'Amos', T3.ViewCount, 0)) AS diff FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T3.Id = T2.PostId",
+    "gold_answer": [
+      [
+        -1491
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 77.7824,
+    "llm_calls": 4,
+    "prompt_tokens": 12998,
+    "completion_tokens": 14303,
+    "reasoning_tokens": 13426,
+    "total_tokens": 27301,
+    "cached_prompt_tokens": 7936,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_665",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "What is the average monthly number of links created in 2010 for posts that have no more than 2 answers?",
+    "difficulty": "moderate",
+    "predicted_sql": "WITH RECURSIVE months(m) AS (SELECT 1 UNION ALL SELECT m + 1 FROM months WHERE m < 12), counts AS (SELECT CAST(strftime('%m', pl.CreationDate) AS INTEGER) AS m, COUNT(*) AS cnt FROM postLinks AS pl INNER JOIN posts AS p ON p.Id = pl.PostId WHERE strftime('%Y', pl.CreationDate) = '2010' AND p.AnswerCount <= 2 GROUP BY 1) SELECT AVG(COALESCE(counts.cnt, 0)) FROM months LEFT JOIN counts ON counts.m = months.m",
+    "predicted_answer": [
+      [
+        8.666666666666666
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(T1.Id) AS REAL) / 12 FROM postLinks AS T1 INNER JOIN posts AS T2 ON T1.PostId = T2.Id WHERE T2.AnswerCount <= 2 AND STRFTIME('%Y', T1.CreationDate) = '2010'",
+    "gold_answer": [
+      [
+        8.666666666666666
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 29.2389,
+    "llm_calls": 2,
+    "prompt_tokens": 6382,
+    "completion_tokens": 5374,
+    "reasoning_tokens": 4727,
+    "total_tokens": 11756,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_683",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "What is the percentage of posts whose owners had a reputation of over 1000 in 2011?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN u.Reputation > 1000 THEN 1 ELSE 0 END) / COUNT(*) AS pct FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE strftime('%Y', p.CreaionDate) = '2011'",
+    "predicted_answer": [
+      [
+        51.16623761603869
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(STRFTIME('%Y', T2.CreaionDate) = '2011' AND T1.Reputation > 1000, 1, 0)) AS REAL) * 100 / COUNT(T1.Id) FROM users AS T1 INNER JOIN posts AS T2 ON T1.Id = T2.OwnerUserId",
+    "gold_answer": [
+      [
+        7.24159250999183
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 17.594,
+    "llm_calls": 2,
+    "prompt_tokens": 5806,
+    "completion_tokens": 3156,
+    "reasoning_tokens": 2869,
+    "total_tokens": 8962,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_701",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "Among all the posts posted by the most influential user, identify the percentage with a score above 50.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST(SUM(IIF(P.Score > 50, 1, 0)) AS REAL) * 100.0 / COUNT(*) FROM posts AS P WHERE P.OwnerUserId = (SELECT Id FROM users ORDER BY Reputation DESC LIMIT 1);",
+    "predicted_answer": [
+      [
+        0.6644518272425249
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.Score > 50 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.Id) FROM users T1 INNER JOIN posts T2 ON T1.Id = T2.OwnerUserId INNER JOIN ( SELECT MAX(Reputation) AS max_reputation FROM users ) T3 ON T1.Reputation = T3.max_reputation",
+    "gold_answer": null,
+    "correct": false,
+    "error": "SQL execution timed out after 30 seconds",
+    "latency_seconds": 44.2263,
+    "llm_calls": 2,
+    "prompt_tokens": 6429,
+    "completion_tokens": 2375,
+    "reasoning_tokens": 2054,
+    "total_tokens": 8804,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_716",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "Among the comments with scores between 5 to 10, what is the percentage of the users with 0 up votes?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN u.UpVotes = 0 THEN 1 ELSE 0 END) / COUNT(*) AS percentage FROM comments AS c INNER JOIN users AS u ON c.UserId = u.Id WHERE c.Score BETWEEN 5 AND 10;",
+    "predicted_answer": [
+      [
+        1.3254786450662739
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(IIF(T1.UpVotes = 0, 1, 0)) AS REAL) * 100/ COUNT(T1.Id) AS per FROM users AS T1 INNER JOIN comments AS T2 ON T1.Id = T2.UserId WHERE T2.Score BETWEEN 5 AND 10",
+    "gold_answer": [
+      [
+        1.3254786450662739
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 28.6251,
+    "llm_calls": 2,
+    "prompt_tokens": 5817,
+    "completion_tokens": 5454,
+    "reasoning_tokens": 5095,
+    "total_tokens": 11271,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_352",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "card_games",
+    "question": "Calculate the percentage of the cards availabe in Chinese Simplified.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN EXISTS (SELECT 1 FROM foreign_data fd WHERE fd.uuid = cards.uuid AND fd.language = 'Chinese Simplified') THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM cards",
+    "predicted_answer": null,
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid",
+    "gold_answer": [
+      [
+        8.773399659641314
+      ]
+    ],
+    "correct": false,
+    "error": "SQL execution timed out after 30 seconds",
+    "latency_seconds": 50.899,
+    "llm_calls": 2,
+    "prompt_tokens": 6261,
+    "completion_tokens": 3910,
+    "reasoning_tokens": 3656,
+    "total_tokens": 10171,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_368",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "card_games",
+    "question": "What is the percentage of borderless cards?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN borderColor = 'borderless' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM cards",
+    "predicted_answer": [
+      [
+        0.42413149836331
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN borderColor = 'borderless' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM cards",
+    "gold_answer": [
+      [
+        0.42413149836331
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 8.078,
+    "llm_calls": 2,
+    "prompt_tokens": 6635,
+    "completion_tokens": 948,
+    "reasoning_tokens": 597,
+    "total_tokens": 7583,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_371",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "card_games",
+    "question": "What is the percentage of cards whose language is French among the Story Spotlight cards?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN T2.language = 'French' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.isStorySpotlight = 1",
+    "predicted_answer": [
+      [
+        10.0
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.language = 'French' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.isStorySpotlight = 1",
+    "gold_answer": [
+      [
+        10.0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 21.9465,
+    "llm_calls": 2,
+    "prompt_tokens": 6366,
+    "completion_tokens": 4122,
+    "reasoning_tokens": 3790,
+    "total_tokens": 10488,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_402",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "card_games",
+    "question": "What is the percentage of Story Spotlight cards that do not have a text box? List them by their ID.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT id, (SELECT CAST(SUM(CASE WHEN isTextless = 1 THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) FROM cards WHERE isStorySpotlight = 1) AS percentage FROM cards WHERE isStorySpotlight = 1 AND isTextless = 1 ORDER BY id;",
+    "predicted_answer": [],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN isTextless = 0 AND  isStorySpotlight = 1 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM cards",
+    "gold_answer": [
+      [
+        0.18302770053852382
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 70.9618,
+    "llm_calls": 3,
+    "prompt_tokens": 10561,
+    "completion_tokens": 14420,
+    "reasoning_tokens": 13653,
+    "total_tokens": 24981,
+    "cached_prompt_tokens": 6144,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_416",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "card_games",
+    "question": "What percentage of cards without power are in French?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT 100.0 * COUNT(CASE WHEN fd.language = 'French' THEN c.id END) / COUNT(c.id) FROM cards AS c LEFT JOIN foreign_data AS fd ON fd.uuid = c.uuid WHERE c.power IS NULL OR c.power = '*'",
+    "predicted_answer": [
+      [
+        11.58288545450303
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.language = 'French' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.power IS NULL OR T1.power = '*'",
+    "gold_answer": [
+      [
+        12.975290140452374
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 99.9691,
+    "llm_calls": 3,
+    "prompt_tokens": 10214,
+    "completion_tokens": 13070,
+    "reasoning_tokens": 12372,
+    "total_tokens": 23284,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_486",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "card_games",
+    "question": "What is the percentage of the cards with a converted mana cost of 7 in the set Coldsnap?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN c.convertedManaCost = 7 THEN 1 ELSE 0 END) / COUNT(*) AS percentage FROM cards AS c INNER JOIN sets AS s ON s.code = c.setCode WHERE s.name = 'Coldsnap'",
+    "predicted_answer": [
+      [
+        7.741935483870968
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.convertedManaCost = 7 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T2.name = 'Coldsnap'",
+    "gold_answer": [
+      [
+        7.741935483870968
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 18.7133,
+    "llm_calls": 2,
+    "prompt_tokens": 6877,
+    "completion_tokens": 3362,
+    "reasoning_tokens": 2870,
+    "total_tokens": 10239,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_197",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "Calculate the average number of oxygen atoms in single-bonded molecules.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(oxygen_count) FROM (SELECT B.molecule_id, COUNT(A.atom_id) AS oxygen_count FROM (SELECT DISTINCT molecule_id FROM bond WHERE bond_type = '-') AS B LEFT JOIN atom AS A ON B.molecule_id = A.molecule_id AND A.element = 'o' GROUP BY B.molecule_id) AS T",
+    "predicted_answer": [
+      [
+        2.161290322580645
+      ]
+    ],
+    "gold_sql": "SELECT AVG(oxygen_count) FROM (SELECT T1.molecule_id, COUNT(T1.element) AS oxygen_count FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id  WHERE T2.bond_type = '-' AND T1.element = 'o'  GROUP BY T1.molecule_id) AS oxygen_counts",
+    "gold_answer": [
+      [
+        99.68354430379746
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 19.3739,
+    "llm_calls": 3,
+    "prompt_tokens": 3903,
+    "completion_tokens": 3444,
+    "reasoning_tokens": 3113,
+    "total_tokens": 7347,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_198",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "On average how many carcinogenic molecules are single bonded?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT AVG(single_bond_count) FROM (SELECT m.molecule_id, COUNT(b.bond_id) AS single_bond_count FROM molecule AS m LEFT JOIN bond AS b ON m.molecule_id = b.molecule_id AND b.bond_type = '-' WHERE m.label = '+' GROUP BY m.molecule_id) AS t",
+    "predicted_answer": [
+      [
+        20.25
+      ]
+    ],
+    "gold_sql": "SELECT AVG(single_bond_count) FROM (SELECT T3.molecule_id, COUNT(T1.bond_type) AS single_bond_count FROM bond AS T1  INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN molecule AS T3 ON T3.molecule_id = T2.molecule_id WHERE T1.bond_type = '-' AND T3.label = '+' GROUP BY T3.molecule_id) AS subquery",
+    "gold_answer": [
+      [
+        732.125
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 10.9662,
+    "llm_calls": 2,
+    "prompt_tokens": 2687,
+    "completion_tokens": 1852,
+    "reasoning_tokens": 1423,
+    "total_tokens": 4539,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_201",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What is the percentage of carbon in double-bond molecules?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN A.element = 'c' THEN A.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(A.atom_id), 5) FROM atom AS A WHERE A.molecule_id IN (SELECT DISTINCT B.molecule_id FROM bond AS B WHERE B.bond_type = '=')",
+    "predicted_answer": [
+      [
+        38.80961
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element = 'c' THEN T1.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T1.atom_id) FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.bond_type = '='",
+    "gold_answer": [
+      [
+        38.80961092816197
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 19.7412,
+    "llm_calls": 2,
+    "prompt_tokens": 2664,
+    "completion_tokens": 3756,
+    "reasoning_tokens": 3437,
+    "total_tokens": 6420,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_218",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What percentage of carcinogenic-type molecules does not contain fluorine?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN m.label = '+' AND NOT EXISTS (SELECT 1 FROM atom a WHERE a.molecule_id = m.molecule_id AND a.element = 'f') THEN m.molecule_id END) AS REAL) * 100 / COUNT(CASE WHEN m.label = '+' THEN m.molecule_id END), 3) FROM molecule m",
+    "predicted_answer": [
+      [
+        99.342
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element <> 'f' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+    "gold_answer": [
+      [
+        100.0
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 13.8966,
+    "llm_calls": 2,
+    "prompt_tokens": 2676,
+    "completion_tokens": 2298,
+    "reasoning_tokens": 1967,
+    "total_tokens": 4974,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_219",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What is the percentage of carcinogenic molecules in triple type bonds?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT 100.0 * COUNT(CASE WHEN M.label = '+' THEN M.molecule_id END) / COUNT(M.molecule_id) AS percentage FROM molecule AS M INNER JOIN bond AS B ON M.molecule_id = B.molecule_id WHERE B.bond_type = '#'",
+    "predicted_answer": [
+      [
+        60.0
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T2.label = '+' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '#'",
+    "gold_answer": [
+      [
+        66.66666666666667
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 18.5574,
+    "llm_calls": 2,
+    "prompt_tokens": 2684,
+    "completion_tokens": 3629,
+    "reasoning_tokens": 3279,
+    "total_tokens": 6313,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_226",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What is the percentage of double bonds in the molecule TR008? Please provide your answer as a percentage with five decimal places.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT printf('%.5f', CAST(COUNT(CASE WHEN bond_type = '=' THEN 1 END) AS REAL) * 100.0 / COUNT(*)) FROM bond WHERE molecule_id = 'TR008';",
+    "predicted_answer": [
+      [
+        "3.84615"
+      ]
+    ],
+    "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T.bond_type = '=' THEN T.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T.bond_id),5) FROM bond AS T WHERE T.molecule_id = 'TR008'",
+    "gold_answer": [
+      [
+        3.84615
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 13.3825,
+    "llm_calls": 2,
+    "prompt_tokens": 2652,
+    "completion_tokens": 2620,
+    "reasoning_tokens": 2339,
+    "total_tokens": 5272,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_227",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What is the percentage of molecules that are carcinogenic? Please provide your answer as a percentage with three decimal places.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT printf('%.3f', 100.0 * SUM(CASE WHEN label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM molecule;",
+    "predicted_answer": [
+      [
+        "44.315"
+      ]
+    ],
+    "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T.label = '+' THEN T.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(T.molecule_id),3) FROM molecule t",
+    "gold_answer": [
+      [
+        44.315
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 8.0583,
+    "llm_calls": 2,
+    "prompt_tokens": 2545,
+    "completion_tokens": 1259,
+    "reasoning_tokens": 1003,
+    "total_tokens": 3804,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_228",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "How much of the hydrogen in molecule TR206 is accounted for? Please provide your answer as a percentage with four decimal places.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN element = 'h' THEN atom_id ELSE NULL END) AS REAL) * 100 / COUNT(atom_id), 4) FROM atom WHERE molecule_id = 'TR206'",
+    "predicted_answer": [
+      [
+        45.4545
+      ]
+    ],
+    "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T.element = 'h' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id),4) FROM atom AS T WHERE T.molecule_id = 'TR206'",
+    "gold_answer": [
+      [
+        45.4545
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 6.8207,
+    "llm_calls": 2,
+    "prompt_tokens": 2602,
+    "completion_tokens": 1212,
+    "reasoning_tokens": 952,
+    "total_tokens": 3814,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_245",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What is the average number of bonds the atoms with the element iodine have?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(bond_count) FROM (SELECT a.atom_id, COUNT(c.bond_id) AS bond_count FROM atom AS a LEFT JOIN connected AS c ON a.atom_id = c.atom_id WHERE a.element = 'i' GROUP BY a.atom_id) AS x",
+    "predicted_answer": [
+      [
+        1.0
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(T2.bond_id) AS REAL) / COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T1.element = 'i'",
+    "gold_answer": [
+      [
+        1.0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 40.4837,
+    "llm_calls": 3,
+    "prompt_tokens": 4272,
+    "completion_tokens": 7756,
+    "reasoning_tokens": 7347,
+    "total_tokens": 12028,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_255",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What proportion of single bonds are carcinogenic? Please provide your answer as a percentage with five decimal places.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN m.label = '+' THEN b.bond_id ELSE NULL END) AS REAL) * 100.0 / COUNT(b.bond_id), 5) FROM bond b JOIN molecule m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+    "predicted_answer": [
+      [
+        39.75203
+      ]
+    ],
+    "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T2.label = '+' THEN T1.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T1.bond_id),5) FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '-'",
+    "gold_answer": [
+      [
+        39.75203
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 10.159,
+    "llm_calls": 2,
+    "prompt_tokens": 2677,
+    "completion_tokens": 1729,
+    "reasoning_tokens": 1298,
+    "total_tokens": 4406,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_263",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What is the composition of element chlorine in percentage among the single bond molecules?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST(COUNT(CASE WHEN T1.element = 'cl' THEN T1.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.bond_type = '-'",
+    "predicted_answer": [
+      [
+        2.6840451814272206
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T.element = 'cl' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id) FROM ( SELECT T1.atom_id, T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '-' ) AS T",
+    "gold_answer": [
+      [
+        2.6840451814272206
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 8.6953,
+    "llm_calls": 2,
+    "prompt_tokens": 2779,
+    "completion_tokens": 1506,
+    "reasoning_tokens": 1175,
+    "total_tokens": 4285,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_273",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What is the percentage of element chlorine in carcinogenic molecules?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CAST(COUNT(CASE WHEN T.element = 'cl' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id) FROM ( SELECT T1.atom_id, T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+' ) AS T",
+    "predicted_answer": [
+      [
+        3.1419284940411703
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT( CASE WHEN T1.element = 'cl' THEN T1.element ELSE NULL END) AS REAL) * 100 / COUNT(T1.element) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+    "gold_answer": [
+      [
+        3.1419284940411703
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 9.0015,
+    "llm_calls": 2,
+    "prompt_tokens": 3051,
+    "completion_tokens": 1709,
+    "reasoning_tokens": 1131,
+    "total_tokens": 4760,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_282",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What is the ratio of Hydrogen elements in molecule ID TR006? List the ratio with its label.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT m.label, ROUND(CAST(COUNT(CASE WHEN a.element = 'h' THEN a.atom_id ELSE NULL END) AS REAL) / COUNT(a.atom_id), 4) AS ratio FROM atom AS a JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE a.molecule_id = 'TR006' GROUP BY m.label",
+    "predicted_answer": [
+      [
+        "+",
+        0.3617
+      ]
+    ],
+    "gold_sql": "WITH SubQuery AS (SELECT DISTINCT T1.atom_id, T1.element, T1.molecule_id, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR006') SELECT CAST(COUNT(CASE WHEN element = 'h' THEN atom_id ELSE NULL END) AS REAL) / (CASE WHEN COUNT(atom_id) = 0 THEN NULL ELSE COUNT(atom_id) END) AS ratio, label FROM SubQuery GROUP BY label",
+    "gold_answer": [
+      [
+        0.3617021276595745,
+        "+"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 16.736,
+    "llm_calls": 2,
+    "prompt_tokens": 3086,
+    "completion_tokens": 3296,
+    "reasoning_tokens": 2592,
+    "total_tokens": 6382,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_12",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "california_schools",
+    "question": "Among the schools with an SAT excellence rate of over 0.3, what is the highest eligible free rate for students aged 5-17?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT frpm.`Percent (%) Eligible Free (Ages 5-17)` FROM frpm JOIN satscores ON frpm.CDSCode = satscores.cds WHERE CAST(satscores.NumGE1500 AS REAL) / NULLIF(satscores.NumTstTakr, 0) > 0.3 ORDER BY frpm.`Percent (%) Eligible Free (Ages 5-17)` DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        0.904907975460123
+      ]
+    ],
+    "gold_sql": "SELECT MAX(CAST(T1.`Free Meal Count (Ages 5-17)` AS REAL) / T1.`Enrollment (Ages 5-17)`) FROM frpm AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE CAST(T2.NumGE1500 AS REAL) / T2.NumTstTakr > 0.3",
+    "gold_answer": [
+      [
+        0.9049079754601227
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 27.9958,
+    "llm_calls": 3,
+    "prompt_tokens": 8943,
+    "completion_tokens": 5885,
+    "reasoning_tokens": 5328,
+    "total_tokens": 14828,
+    "cached_prompt_tokens": 5120,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_25",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "california_schools",
+    "question": "Name schools in Riverside which the average of average math score for SAT is grater than 400, what is the funding type of these schools?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT T2.School, T2.FundingType FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.County = 'Riverside' AND T1.AvgScrMath > 400",
+    "predicted_answer": [
+      [
+        null,
+        null
+      ],
+      [
+        "River Springs Charter",
+        "Directly funded"
+      ],
+      [
+        "La Sierra High",
+        null
+      ],
+      [
+        "Norte Vista High",
+        null
+      ],
+      [
+        "Banning High",
+        null
+      ],
+      [
+        "Beaumont Senior High",
+        null
+      ],
+      [
+        "Eleanor Roosevelt High",
+        null
+      ],
+      [
+        "John F. Kennedy High",
+        null
+      ],
+      [
+        "Centennial High",
+        null
+      ],
+      [
+        "Santiago High",
+        null
+      ],
+      [
+        "Corona High",
+        null
+      ],
+      [
+        "Norco High",
+        null
+      ],
+      [
+        "Shadow Hills High",
+        null
+      ],
+      [
+        "Palm Desert High",
+        null
+      ],
+      [
+        "La Quinta High",
+        null
+      ],
+      [
+        "Indio High",
+        null
+      ],
+      [
+        "Hamilton High",
+        null
+      ],
+      [
+        "Tahquitz High",
+        null
+      ],
+      [
+        "College Prep High",
+        "Locally funded"
+      ],
+      [
+        "West Valley High",
+        null
+      ],
+      [
+        "Hemet High",
+        null
+      ],
+      [
+        "Patriot High",
+        null
+      ],
+      [
+        "Jurupa Valley High",
+        null
+      ],
+      [
+        "Rubidoux High",
+        null
+      ],
+      [
+        "Santa Rosa Academy",
+        "Directly funded"
+      ],
+      [
+        "Canyon Springs High",
+        null
+      ],
+      [
+        "Valley View High",
+        null
+      ],
+      [
+        "Vista del Lago High",
+        null
+      ],
+      [
+        "Moreno Valley High",
+        null
+      ],
+      [
+        "Nuview Bridge Early College High",
+        "Locally funded"
+      ],
+      [
+        "Cathedral City High",
+        null
+      ],
+      [
+        "Desert Hot Springs High",
+        null
+      ],
+      [
+        "Palm Springs High",
+        null
+      ],
+      [
+        "Palo Verde High",
+        null
+      ],
+      [
+        "California Military Institute",
+        "Locally funded"
+      ],
+      [
+        "Heritage High",
+        null
+      ],
+      [
+        "Paloma Valley High",
+        null
+      ],
+      [
+        "Perris High",
+        null
+      ],
+      [
+        "Arlington High",
+        null
+      ],
+      [
+        "Martin Luther King Jr. High",
+        null
+      ],
+      [
+        "John W. North High",
+        null
+      ],
+      [
+        "Polytechnic High",
+        null
+      ],
+      [
+        "Ramona High",
+        null
+      ],
+      [
+        "San Jacinto High",
+        null
+      ],
+      [
+        "San Jacinto Valley Academy",
+        "Directly funded"
+      ],
+      [
+        "Desert Mirage High",
+        null
+      ],
+      [
+        "NOVA Academy - Coachella",
+        "Directly funded"
+      ],
+      [
+        "Coachella Valley High",
+        null
+      ],
+      [
+        "Lakeside High",
+        null
+      ],
+      [
+        "Temescal Canyon High",
+        null
+      ],
+      [
+        "Elsinore High",
+        null
+      ],
+      [
+        "Great Oak High",
+        null
+      ],
+      [
+        "Temecula Valley High",
+        null
+      ],
+      [
+        "Chaparral High",
+        null
+      ],
+      [
+        "Temecula Preparatory",
+        "Directly funded"
+      ],
+      [
+        "Vista Murrieta High",
+        null
+      ],
+      [
+        "Murrieta Mesa High",
+        null
+      ],
+      [
+        "Murrieta Valley High",
+        null
+      ],
+      [
+        "Citrus Hill High",
+        null
+      ],
+      [
+        "Rancho Verde High",
+        null
+      ]
+    ],
+    "gold_sql": "SELECT T1.sname, T2.`Charter Funding Type` FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.CDSCode WHERE T2.`District Name` LIKE 'Riverside%' GROUP BY T1.sname, T2.`Charter Funding Type` HAVING CAST(SUM(T1.AvgScrMath) AS REAL) / COUNT(T1.cds) > 400",
+    "gold_answer": [
+      [
+        "Arlington High",
+        null
+      ],
+      [
+        "John W. North High",
+        null
+      ],
+      [
+        "Martin Luther King Jr. High",
+        null
+      ],
+      [
+        "Polytechnic High",
+        null
+      ],
+      [
+        "Ramona High",
+        null
+      ],
+      [
+        "River Springs Charter",
+        "Directly funded"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 25.8529,
+    "llm_calls": 3,
+    "prompt_tokens": 8976,
+    "completion_tokens": 4565,
+    "reasoning_tokens": 4166,
+    "total_tokens": 13541,
+    "cached_prompt_tokens": 5120,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_37",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "california_schools",
+    "question": "What is the complete address of the school with the lowest excellence rate? Indicate the Street, City, Zip and State.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT T2.Street, T2.City, T2.Zip, T2.State FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T1.NumGE1500 IS NOT NULL AND T1.NumTstTakr > 0 ORDER BY CAST(T1.NumGE1500 AS REAL) / T1.NumTstTakr ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        "2607 Myrtle Street",
+        "Oakland",
+        "94607-3415",
+        "CA"
+      ]
+    ],
+    "gold_sql": "SELECT T2.Street, T2.City, T2.State, T2.Zip FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY CAST(T1.NumGE1500 AS REAL) / T1.NumTstTakr ASC LIMIT 1",
+    "gold_answer": [
+      [
+        "2125 Jefferson Avenue",
+        "Berkeley",
+        "CA",
+        "94703-1414"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 92.6194,
+    "llm_calls": 3,
+    "prompt_tokens": 10931,
+    "completion_tokens": 19096,
+    "reasoning_tokens": 18312,
+    "total_tokens": 30027,
+    "cached_prompt_tokens": 5632,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_47",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "california_schools",
+    "question": "What is the monthly average number of schools that opened in Alameda County under the jurisdiction of the Elementary School District in 1980?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(*) / 12.0 AS monthly_avg_schools_opened FROM schools WHERE County = 'Alameda' AND DOCType = 'Elementary School District' AND substr(OpenDate, 1, 4) = '1980'",
+    "predicted_answer": [
+      [
+        1.4166666666666667
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(School) AS REAL) / 12 FROM schools WHERE DOC = 52 AND County = 'Alameda' AND strftime('%Y', OpenDate) = '1980'",
+    "gold_answer": [
+      [
+        1.4166666666666667
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 41.9027,
+    "llm_calls": 3,
+    "prompt_tokens": 8811,
+    "completion_tokens": 8611,
+    "reasoning_tokens": 8073,
+    "total_tokens": 17422,
+    "cached_prompt_tokens": 5120,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_115",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "For the branch which located in the south Bohemia with biggest number of inhabitants, what is the percentage of the male clients?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT AVG(CASE WHEN gender = 'M' THEN 1.0 ELSE 0 END) * 100 FROM client WHERE district_id = (SELECT district_id FROM district WHERE A3 = 'south Bohemia' ORDER BY CAST(A4 AS INTEGER) DESC LIMIT 1);",
+    "predicted_answer": [
+      [
+        40.0
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(T1.gender = 'M') AS REAL) * 100 / COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A3 = 'south Bohemia' GROUP BY T2.A4 ORDER BY T2.A4 DESC LIMIT 1",
+    "gold_answer": [
+      [
+        44.26229508196721
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 24.783,
+    "llm_calls": 3,
+    "prompt_tokens": 6623,
+    "completion_tokens": 5068,
+    "reasoning_tokens": 4594,
+    "total_tokens": 11691,
+    "cached_prompt_tokens": 3584,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_125",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "For loans contracts which are still running where client are in debt, list the district of the and the state the percentage unemployment rate increment from year 1995 to 1996.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT DISTINCT d.A2 AS district, d.A3 AS state, ((d.A13 - d.A12) * 100.0 / d.A12) AS unemployment_rate_increment FROM loan AS l INNER JOIN account AS a ON l.account_id = a.account_id INNER JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D' ORDER BY district;",
+    "predicted_answer": [
+      [
+        "Beroun",
+        "central Bohemia",
+        16.315789473684216
+      ],
+      [
+        "Blansko",
+        "south Moravia",
+        42.4
+      ],
+      [
+        "Brno - mesto",
+        "south Moravia",
+        22.49999999999999
+      ],
+      [
+        "Brno - venkov",
+        "south Moravia",
+        35.00000000000001
+      ],
+      [
+        "Bruntal",
+        "north Moravia",
+        14.91228070175438
+      ],
+      [
+        "Ceske Budejovice",
+        "south Bohemia",
+        22.14285714285715
+      ],
+      [
+        "Chrudim",
+        "east Bohemia",
+        39.25925925925924
+      ],
+      [
+        "Domazlice",
+        "west Bohemia",
+        13.636363636363628
+      ],
+      [
+        "Havlickuv Brod",
+        "east Bohemia",
+        22.5
+      ],
+      [
+        "Hl.m. Praha",
+        "Prague",
+        115.0
+      ],
+      [
+        "Hradec Kralove",
+        "east Bohemia",
+        47.05882352941177
+      ],
+      [
+        "Jesenik",
+        "north Moravia",
+        null
+      ],
+      [
+        "Karvina",
+        "north Moravia",
+        17.42424242424243
+      ],
+      [
+        "Kladno",
+        "central Bohemia",
+        9.782608695652177
+      ],
+      [
+        "Klatovy",
+        "west Bohemia",
+        11.666666666666677
+      ],
+      [
+        "Kromeriz",
+        "south Moravia",
+        8.4375
+      ],
+      [
+        "Kutna Hora",
+        "central Bohemia",
+        38.620689655172406
+      ],
+      [
+        "Mlada Boleslav",
+        "central Bohemia",
+        20.0
+      ],
+      [
+        "Novy Jicin",
+        "north Moravia",
+        -5.593220338983052
+      ],
+      [
+        "Olomouc",
+        "north Moravia",
+        26.052631578947377
+      ],
+      [
+        "Opava",
+        "north Moravia",
+        13.333333333333346
+      ],
+      [
+        "Ostrava - mesto",
+        "north Moravia",
+        15.744680851063835
+      ],
+      [
+        "Plzen - mesto",
+        "west Bohemia",
+        18.846153846153836
+      ],
+      [
+        "Prachatice",
+        "south Bohemia",
+        28.387096774193544
+      ],
+      [
+        "Rokycany",
+        "west Bohemia",
+        28.571428571428584
+      ],
+      [
+        "Rychnov nad Kneznou",
+        "east Bohemia",
+        43.529411764705884
+      ],
+      [
+        "Strakonice",
+        "south Bohemia",
+        40.0
+      ],
+      [
+        "Svitavy",
+        "east Bohemia",
+        13.541666666666673
+      ],
+      [
+        "Usti nad Orlici",
+        "east Bohemia",
+        39.60000000000001
+      ],
+      [
+        "Zlin",
+        "south Moravia",
+        44.375
+      ]
+    ],
+    "gold_sql": "SELECT CAST((T3.A13 - T3.A12) AS REAL) * 100 / T3.A12 FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T2.district_id = T3.district_id WHERE T1.status = 'D'",
+    "gold_answer": [
+      [
+        40.0
+      ],
+      [
+        39.25925925925924
+      ],
+      [
+        115.0
+      ],
+      [
+        22.49999999999999
+      ],
+      [
+        20.0
+      ],
+      [
+        null
+      ],
+      [
+        11.666666666666677
+      ],
+      [
+        null
+      ],
+      [
+        44.375
+      ],
+      [
+        13.333333333333346
+      ],
+      [
+        17.42424242424243
+      ],
+      [
+        39.25925925925924
+      ],
+      [
+        8.4375
+      ],
+      [
+        -5.593220338983052
+      ],
+      [
+        28.571428571428584
+      ],
+      [
+        115.0
+      ],
+      [
+        16.315789473684216
+      ],
+      [
+        42.4
+      ],
+      [
+        22.49999999999999
+      ],
+      [
+        13.541666666666673
+      ],
+      [
+        16.315789473684216
+      ],
+      [
+        26.052631578947377
+      ],
+      [
+        14.91228070175438
+      ],
+      [
+        40.0
+      ],
+      [
+        115.0
+      ],
+      [
+        9.782608695652177
+      ],
+      [
+        22.5
+      ],
+      [
+        39.60000000000001
+      ],
+      [
+        28.387096774193544
+      ],
+      [
+        38.620689655172406
+      ],
+      [
+        14.91228070175438
+      ],
+      [
+        43.529411764705884
+      ],
+      [
+        35.00000000000001
+      ],
+      [
+        22.49999999999999
+      ],
+      [
+        13.333333333333346
+      ],
+      [
+        13.541666666666673
+      ],
+      [
+        22.14285714285715
+      ],
+      [
+        17.42424242424243
+      ],
+      [
+        47.05882352941177
+      ],
+      [
+        18.846153846153836
+      ],
+      [
+        17.42424242424243
+      ],
+      [
+        15.744680851063835
+      ],
+      [
+        13.636363636363628
+      ],
+      [
+        115.0
+      ],
+      [
+        13.541666666666673
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 51.0753,
+    "llm_calls": 3,
+    "prompt_tokens": 7234,
+    "completion_tokens": 10353,
+    "reasoning_tokens": 9767,
+    "total_tokens": 17587,
+    "cached_prompt_tokens": 3584,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  },
+  {
+    "id": "bird_169",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "What was the growth rate of the total amount of loans across all accounts for a male client between 1996 and 1997?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT (SUM(CASE WHEN strftime('%Y', l.date)='1997' THEN l.amount ELSE 0 END) - SUM(CASE WHEN strftime('%Y', l.date)='1996' THEN l.amount ELSE 0 END)) * 1.0 / NULLIF(SUM(CASE WHEN strftime('%Y', l.date)='1996' THEN l.amount ELSE 0 END), 0) AS growth_rate FROM loan AS l WHERE l.date BETWEEN '1996-01-01' AND '1997-12-31' AND EXISTS (SELECT 1 FROM disp AS d JOIN client AS c ON d.client_id = c.client_id WHERE d.account_id = l.account_id AND c.gender = 'M')",
+    "predicted_answer": [
+      [
+        0.2536203967738821
+      ]
+    ],
+    "gold_sql": "SELECT CAST((SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1997' THEN T1.amount ELSE 0 END) - SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1996' THEN T1.amount ELSE 0 END)) AS REAL) * 100 / SUM(CASE WHEN STRFTIME('%Y', T1.date) = '1996' THEN T1.amount ELSE 0 END) FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN disp AS T3 ON T3.account_id = T2.account_id INNER JOIN client AS T4 ON T4.client_id = T3.client_id WHERE T4.gender = 'M' AND T3.type = 'OWNER'",
+    "gold_answer": [
+      [
+        25.300191222790616
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 78.4665,
+    "llm_calls": 2,
+    "prompt_tokens": 4239,
+    "completion_tokens": 16284,
+    "reasoning_tokens": 15370,
+    "total_tokens": 20523,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final"
+  }
+]
