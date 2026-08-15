@@ -1,0 +1,65 @@
+[
+ {
+  "id": "bird_1275",
+  "db_id": "thrombosis_prediction",
+  "correct": false,
+  "unmatched": [
+   {
+    "table": "Laboratory",
+    "column": "SSB",
+    "literal": "-"
+   },
+   {
+    "table": "Laboratory",
+    "column": "SSB",
+    "literal": "+-"
+   },
+   {
+    "table": "Laboratory",
+    "column": "CENTROMEA",
+    "literal": "-"
+   },
+   {
+    "table": "Laboratory",
+    "column": "CENTROMEA",
+    "literal": "+-"
+   }
+  ]
+ },
+ {
+  "id": "bird_967",
+  "db_id": "formula_1",
+  "correct": false,
+  "unmatched": [
+   {
+    "table": "drivers",
+    "column": "nationality",
+    "literal": "Netherlandic"
+   }
+  ]
+ },
+ {
+  "id": "bird_640",
+  "db_id": "codebase_community",
+  "correct": false,
+  "unmatched": [
+   {
+    "table": "users",
+    "column": "DisplayName",
+    "literal": "Mornington"
+   }
+  ]
+ },
+ {
+  "id": "bird_93",
+  "db_id": "financial",
+  "correct": false,
+  "unmatched": [
+   {
+    "table": "district",
+    "column": "A3",
+    "literal": "north bohemia"
+   }
+  ]
+ }
+]
