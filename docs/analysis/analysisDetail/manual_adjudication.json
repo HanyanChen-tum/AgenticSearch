@@ -1,0 +1,134 @@
+{
+ "bird_197": {
+  "cause": "模型误读hint的AVG(element='o')，算成氧原子占全部原子比例",
+  "verdict": "模型"
+ },
+ "bird_1144": {
+  "cause": "取值相同，gold多返回id列",
+  "verdict": "gold"
+ },
+ "bird_218": {
+  "cause": "gold的COUNT(DISTINCT CASE WHEN element<>'f')统计的是含非氟原子的分子，逻辑错",
+  "verdict": "gold"
+ },
+ "bird_115": {
+  "cause": "gold先GROUP BY再取，与模型取人口最多区在并列时不同",
+  "verdict": "待定"
+ },
+ "bird_152": {
+  "cause": "gold用INNER JOIN导致每区按账户数重复计入AVG，均值被放大",
+  "verdict": "gold"
+ },
+ "bird_1031": {
+  "cause": "gold用DATETIME()-birthday字符串相减算年龄，不合理",
+  "verdict": "gold"
+ },
+ "bird_1179": {
+  "cause": "题面问单一浓度，gold返回IgA/IgG/IgM三列",
+  "verdict": "gold"
+ },
+ "bird_247": {
+  "cause": "gold只查atom_id单向，漏了atom_id2方向",
+  "verdict": "gold"
+ },
+ "bird_1490": {
+  "cause": "模型SQL未产出结果",
+  "verdict": "基础设施"
+ },
+ "bird_701": {
+  "cause": "gold自身执行失败，不可评分",
+  "verdict": "不可评分"
+ },
+ "bird_383": {
+  "cause": "模型SQL未产出结果",
+  "verdict": "基础设施"
+ },
+ "bird_518": {
+  "cause": "gold自身执行失败，不可评分",
+  "verdict": "不可评分"
+ },
+ "bird_36": {
+  "cause": "取值相同，gold多返回4个全NULL的管理员列",
+  "verdict": "gold"
+ },
+ "bird_1481": {
+  "cause": "gold分母用全体客户数而非分段客户数，首列恒为0",
+  "verdict": "gold"
+ },
+ "bird_930": {
+  "cause": "题面'rank the highest'单数，gold返回全部rank=1的37场",
+  "verdict": "题面歧义"
+ },
+ "bird_412": {
+  "cause": "题面'the foreign name'单数，gold返回全部50个",
+  "verdict": "题面歧义"
+ },
+ "bird_1482": {
+  "cause": "题面问哪个segment，模型返回名字(正确答型)，gold返回百分比数字",
+  "verdict": "gold"
+ },
+ "bird_1498": {
+  "cause": "monthly consumption应按月汇总，模型取单条记录最大值",
+  "verdict": "模型"
+ },
+ "bird_1524": {
+  "cause": "customers表无国籍列，gold返回加油站所在国，题面问了库中不存在的属性",
+  "verdict": "题面/schema缺失"
+ },
+ "bird_1529": {
+  "cause": "amount spent应汇总Price，模型汇总了Amount(数量)",
+  "verdict": "模型"
+ },
+ "bird_1531": {
+  "cause": "gold违背自己hint(Total(price)/Total(amount)写成SUM(Price/Amount))，模型另选错top spender",
+  "verdict": "双方"
+ },
+ "bird_1322": {
+  "cause": "题面问多少个是meeting，gold用EXCEPT返回非meeting的名字列表，方向相反",
+  "verdict": "gold"
+ },
+ "bird_1381": {
+  "cause": "full name拼接约定：模型||一列，gold两列",
+  "verdict": "评测口径"
+ },
+ "bird_1404": {
+  "cause": "问expenses类型，模型返budget.category，gold返event.type(答成活动类型)",
+  "verdict": "gold"
+ },
+ "bird_1422": {
+  "cause": "问events的category，模型用event.type，gold用budget.category——与bird_1404完全相反，gold前后不一致",
+  "verdict": "gold"
+ },
+ "bird_1166": {
+  "cause": "症状相同，诊断取Examination.Diagnosis vs Patient.Diagnosis，题面未指明",
+  "verdict": "题面歧义"
+ },
+ "bird_1175": {
+  "cause": "hint写SUBTRACT(year(Examination Date),year(Birthday))，模型照做，gold用Laboratory.Date",
+  "verdict": "gold"
+ },
+ "bird_1189": {
+  "cause": "模型算(AVG+AVG)*0.2=0.4倍均值，应为1.2倍，数学写错",
+  "verdict": "模型"
+ },
+ "bird_1205": {
+  "cause": "是非题，模型返单个Yes，gold返67行逐条布尔；hint把within normal range定义成UA>8.0语义反了",
+  "verdict": "gold"
+ },
+ "bird_1225": {
+  "cause": "hint写List refers to GROUP_CONCAT(DISTINCT ID)，模型照做，gold返逐行",
+  "verdict": "gold"
+ },
+ "bird_1227": {
+  "cause": "问平均年龄，模型按患者去重，gold按化验记录加权重复计入",
+  "verdict": "gold"
+ },
+ "bird_1229": {
+  "cause": "781 vs 106，写法接近但差7倍，需查数据",
+  "verdict": "待定"
+ },
+ "bird_1231": {
+  "cause": "32 vs 2，substr与strftime提取年份应等价，差异原因不明",
+  "verdict": "待定"
+ }
+}
