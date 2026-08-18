@@ -1,0 +1,1076 @@
+{
+ "bird_1479": {
+  "verdict": "评测口径",
+  "cause": "取值完全相同，仅类型/行序不同",
+  "src": "机械(答案级比对)",
+  "db_id": "debit_card_specializing"
+ },
+ "bird_1481": {
+  "verdict": "双方",
+  "cause": "gold按全体客户数而非分段客户数做分母确为缺陷；但题面'customers with the least amount of consumption'指全局最小值还是各段最小值本身不明，写不出唯一正确的修正gold",
+  "src": "人工",
+  "db_id": "debit_card_specializing"
+ },
+ "bird_1482": {
+  "verdict": "gold",
+  "cause": "题面问哪个segment，模型返回名字(正确答型)，gold返回百分比数字",
+  "src": "人工",
+  "db_id": "debit_card_specializing",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1490": {
+  "verdict": "模型",
+  "cause": "(已计时修正)模型SQL语义正确、对修正版gold判对，仅因相关EXISTS子查询耗时48.1秒超过harness的30秒预算而被记为无结果。不属于'与语义无关'的基础设施故障；超时调到60秒即可拿回",
+  "src": "人工",
+  "db_id": "debit_card_specializing"
+ },
+ "bird_1498": {
+  "verdict": "模型",
+  "cause": "monthly consumption应按月汇总，模型取单条记录最大值",
+  "src": "人工",
+  "db_id": "debit_card_specializing"
+ },
+ "bird_1524": {
+  "verdict": "题面/schema缺失",
+  "cause": "customers表无国籍列，gold返回加油站所在国，题面问了库中不存在的属性",
+  "src": "人工",
+  "db_id": "debit_card_specializing"
+ },
+ "bird_1526": {
+  "verdict": "不可评分",
+  "cause": "(已核实)gold返回NULL不可评分；且gold子查询用Price=1513.12定位客户，与题面'paid 634.8'对不上",
+  "src": "人工",
+  "db_id": "debit_card_specializing"
+ },
+ "bird_1529": {
+  "verdict": "模型",
+  "cause": "amount spent应汇总Price，模型汇总了Amount(数量)",
+  "src": "人工",
+  "db_id": "debit_card_specializing"
+ },
+ "bird_1531": {
+  "verdict": "双方",
+  "cause": "gold违背自己hint(Total(price)/Total(amount)写成SUM(Price/Amount))，模型另选错top spender",
+  "src": "人工",
+  "db_id": "debit_card_specializing"
+ },
+ "bird_1322": {
+  "verdict": "gold",
+  "cause": "题面问多少个是meeting，gold用EXCEPT返回非meeting的名字列表，方向相反",
+  "src": "人工",
+  "db_id": "student_club",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1381": {
+  "verdict": "评测口径",
+  "cause": "full name拼接约定：模型||一列，gold两列",
+  "src": "人工",
+  "db_id": "student_club"
+ },
+ "bird_1399": {
+  "verdict": "双方",
+  "cause": "gold按14条出勤逐行输出、13行NULL确为缺陷；但修正为单行后模型的'Yes'与'YES'大小写仍不匹配，只修gold拿不回分",
+  "src": "人工",
+  "db_id": "student_club"
+ },
+ "bird_1404": {
+  "verdict": "gold",
+  "cause": "问expenses类型，模型返budget.category，gold返event.type(答成活动类型)",
+  "src": "人工",
+  "db_id": "student_club",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1422": {
+  "verdict": "gold",
+  "cause": "问events的category，模型用event.type，gold用budget.category——与bird_1404完全相反，gold前后不一致",
+  "src": "人工",
+  "db_id": "student_club",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1427": {
+  "verdict": "gold",
+  "cause": "取值一致，gold 返回题面未要求的额外列",
+  "src": "机械(答案级比对)",
+  "db_id": "student_club",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1166": {
+  "verdict": "题面歧义",
+  "cause": "症状相同，诊断取Examination.Diagnosis vs Patient.Diagnosis，题面未指明",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "ambiguity_subtype": "A_同名列跨表选择"
+ },
+ "bird_1168": {
+  "verdict": "gold",
+  "cause": "取值一致，gold 返回题面未要求的额外列",
+  "src": "机械(答案级比对)",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1175": {
+  "verdict": "双方",
+  "cause": "gold用Laboratory.Date而hint写Examination Date确为缺陷；但按hint修正后残差是Patient.Diagnosis('SJS')与Examination.Diagnosis('SjS')之争(歧义A类)，只修gold拿不回分",
+  "src": "人工",
+  "db_id": "thrombosis_prediction"
+ },
+ "bird_1179": {
+  "verdict": "gold",
+  "cause": "题面问单一浓度，gold返回IgA/IgG/IgM三列",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1189": {
+  "verdict": "模型",
+  "cause": "模型算(AVG+AVG)*0.2=0.4倍均值，应为1.2倍，数学写错",
+  "src": "人工",
+  "db_id": "thrombosis_prediction"
+ },
+ "bird_1205": {
+  "verdict": "gold",
+  "cause": "是非题，模型返单个Yes，gold返67行逐条布尔；hint把within normal range定义成UA>8.0语义反了",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1225": {
+  "verdict": "gold",
+  "cause": "hint写List refers to GROUP_CONCAT(DISTINCT ID)，模型照做，gold返逐行",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1227": {
+  "verdict": "gold",
+  "cause": "问平均年龄，模型按患者去重，gold按化验记录加权重复计入",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1229": {
+  "verdict": "harness改写",
+  "cause": "(原待定已解)模型原SQL即判对，harness去DISTINCT改写致781 vs 106",
+  "src": "人工",
+  "db_id": "thrombosis_prediction"
+ },
+ "bird_1231": {
+  "verdict": "harness改写",
+  "cause": "(原待定已解)模型原SQL即判对，harness去DISTINCT改写致32 vs 2",
+  "src": "人工",
+  "db_id": "thrombosis_prediction"
+ },
+ "bird_1239": {
+  "verdict": "模型",
+  "cause": "[hint缺陷](机械判定为'单复数歧义'，实为hint与题面矛盾)题面'two or more'即>=2，hint却写COUNT(ID) > 2；模型照hint得2人，gold按题面得3人",
+  "src": "人工",
+  "db_id": "thrombosis_prediction"
+ },
+ "bird_1241": {
+  "verdict": "gold",
+  "cause": "hint定义lower=PLT<100/higher=PLT>400，gold用<=100/>=400，违背自己hint(-562 vs -555)",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1242": {
+  "verdict": "题面歧义",
+  "cause": "年龄基准未定：hint写current_timestamp(模型,5人)，gold用化验当年1984算受检时年龄(76人)；题面在1984语境下两读法均通",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "ambiguity_subtype": "E_时间或数值基准未定"
+ },
+ "bird_1243": {
+  "verdict": "gold",
+  "cause": "gold分母用COUNT(CASE WHEN..ELSE 0)即全部行数，hint写的是SUM；模型照hint得78.4，gold得1.2",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1247": {
+  "verdict": "gold",
+  "cause": "gold缺括号，OR/AND优先级使其退化为FG<=150单条件(75)；正解6，模型原SQL即6",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1251": {
+  "verdict": "gold",
+  "cause": "gold多join Examination，把答案限制到有体检记录的患者(136->9)，题面未提体检",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1254": {
+  "verdict": "gold",
+  "cause": "题面问patients，gold COUNT化验行(1590)；且BETWEEN 80 AND 500与>'1990'双双违背自己hint",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1255": {
+  "verdict": "gold",
+  "cause": "gold按化验记录加权计Diagnosis而非按患者去重，且NOT BETWEEN与hint边界不符",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1257": {
+  "verdict": "harness改写",
+  "cause": "模型原SQL COUNT(DISTINCT ID)=4=gold；harness去DISTINCT规则改写后变30致错",
+  "src": "人工",
+  "db_id": "thrombosis_prediction"
+ },
+ "bird_1265": {
+  "verdict": "gold",
+  "cause": "gold缺括号，RNP='negative' OR (RNP='0' AND Admission='+')；正解35，gold给47",
+  "src": "人工",
+  "db_id": "thrombosis_prediction",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1275": {
+  "verdict": "模型",
+  "cause": "[hint缺陷]hint字面写IN('-','+-')但库中实际值为'negative'/'0'，模型照字面写返回空结果0未核实",
+  "src": "人工",
+  "db_id": "thrombosis_prediction"
+ },
+ "bird_1029": {
+  "verdict": "gold",
+  "cause": "题面与hint均要highest，gold用ORDER BY ASC返回最低的4个(20,20,20,23)",
+  "src": "人工",
+  "db_id": "european_football_2",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1031": {
+  "verdict": "gold",
+  "cause": "gold用DATETIME()-birthday字符串相减算年龄，不合理",
+  "src": "人工",
+  "db_id": "european_football_2",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1037": {
+  "verdict": "题面歧义",
+  "cause": "唯一差异是join键：模型用player_fifa_api_id、gold用player_api_id，两列在schema中均为FK，两表数据不一致致24.5613 vs 24.5669",
+  "src": "人工",
+  "db_id": "european_football_2",
+  "ambiguity_subtype": "A_同名列跨表选择"
+ },
+ "bird_1058": {
+  "verdict": "双方",
+  "cause": "模型WHERE height BETWEEN MIN AND MAX是空操作(误读between为区间)；gold答'Min'字符串标签而非题面问的Who",
+  "src": "人工",
+  "db_id": "european_football_2"
+ },
+ "bird_1084": {
+  "verdict": "harness改写",
+  "cause": "模型原SQL COUNT(DISTINCT player_api_id)=892=gold；harness去DISTINCT改写后变11758",
+  "src": "人工",
+  "db_id": "european_football_2"
+ },
+ "bird_1092": {
+  "verdict": "题面歧义",
+  "cause": "2008/2009赛季场次最多的联赛有4个并列，题面用单数'the league'，取一个(模型)还是全部并列(gold)未定",
+  "src": "人工",
+  "db_id": "european_football_2",
+  "ambiguity_subtype": "C_单数问句遇并列或多实体"
+ },
+ "bird_1094": {
+  "verdict": "gold",
+  "cause": "gold对两人全部历史属性行SUM(24行vs12行)，比值被行数支配得133.7%；模型取最新评分得15.25%",
+  "src": "人工",
+  "db_id": "european_football_2",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1107": {
+  "verdict": "gold",
+  "cause": "gold外层ORDER BY date DESC冲掉了内层crossing排序，返回最晚日期且题面要的是first time",
+  "src": "人工",
+  "db_id": "european_football_2",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1135": {
+  "verdict": "双方",
+  "cause": "模型把lowest potential解成=MIN只返1行，未满足'top four'；gold返回Player_Attributes.id行id且只覆盖2名球员",
+  "src": "人工",
+  "db_id": "european_football_2"
+ },
+ "bird_1136": {
+  "verdict": "gold",
+  "cause": "题面问how many players，模型原SQL按球员去重=2，gold COUNT行=3；另harness把子查询改写成ORDER BY LIMIT致3202",
+  "src": "人工",
+  "db_id": "european_football_2",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1144": {
+  "verdict": "gold",
+  "cause": "取值相同，gold多返回id列",
+  "src": "人工",
+  "db_id": "european_football_2",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_847": {
+  "verdict": "gold",
+  "cause": "gold未排除q2为NULL，SQLite中NULL在ASC排最前，取到无成绩的车手；模型正确过滤",
+  "src": "人工",
+  "db_id": "formula_1",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_861": {
+  "verdict": "题面歧义",
+  "cause": "qualifying.number(车号)与drivers.number(车手号)同名两列，题面'his number'未指明取哪张表",
+  "src": "人工",
+  "db_id": "formula_1",
+  "ambiguity_subtype": "A_同名列跨表选择"
+ },
+ "bird_866": {
+  "verdict": "模型",
+  "cause": "(修正gold验证判反)题面'Who was the player...? Show his website'姓名是题面明确要的，gold的forename+surname+url正确，模型只给url属漏答",
+  "src": "人工",
+  "db_id": "formula_1"
+ },
+ "bird_879": {
+  "verdict": "gold",
+  "cause": "fastestLapSpeed为TEXT，gold按文本降序取到'91.610'，真实最大值257.32；模型CAST为REAL正确",
+  "src": "人工",
+  "db_id": "formula_1",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_881": {
+  "verdict": "题面歧义",
+  "cause": "题面问completion rate，hint公式DIVIDE无*100却标注'as percentage'自相矛盾；模型给比值0.172，gold给17.24",
+  "src": "人工",
+  "db_id": "formula_1",
+  "ambiguity_subtype": "E_时间或数值基准未定"
+ },
+ "bird_896": {
+  "verdict": "题面歧义",
+  "cause": "position同时存在于results(名次)与driverStandings(积分榜位次)，题面文字残缺、hint未指明取哪张表",
+  "src": "人工",
+  "db_id": "formula_1",
+  "ambiguity_subtype": "A_同名列跨表选择"
+ },
+ "bird_902": {
+  "verdict": "题面歧义",
+  "cause": "results.position vs driverStandings.position未指明；且hint自相矛盾('less than 10 refers to position < 20')",
+  "src": "人工",
+  "db_id": "formula_1",
+  "ambiguity_subtype": "A_同名列跨表选择"
+ },
+ "bird_906": {
+  "verdict": "gold",
+  "cause": "题面问首场比赛所得points，gold取driverStandings累计积分14(=8+6两场)，模型取该场results.points=8",
+  "src": "人工",
+  "db_id": "formula_1",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_928": {
+  "verdict": "双方",
+  "cause": "gold多返回forename+surname且用rank而非position确为缺陷；但模型ORDER BY position ASC同样未排除NULL，取到了position为NULL的退赛车手trulli——与bird_847/bird_37同一个错",
+  "src": "人工",
+  "db_id": "formula_1"
+ },
+ "bird_930": {
+  "verdict": "题面歧义",
+  "cause": "题面'rank the highest'单数，gold返回全部rank=1的37场",
+  "src": "人工",
+  "db_id": "formula_1",
+  "ambiguity_subtype": "C_单数问句遇并列或多实体"
+ },
+ "bird_937": {
+  "verdict": "题面歧义",
+  "cause": "'ranked second'对应results.position=2还是results.rank=2两列均可，题面未指明(题面文字亦有损坏)",
+  "src": "人工",
+  "db_id": "formula_1",
+  "ambiguity_subtype": "A_同名列跨表选择"
+ },
+ "bird_944": {
+  "verdict": "不可评分",
+  "cause": "(已核实)gold返回NULL不可评分，模型返回空结果，两边皆废",
+  "src": "人工",
+  "db_id": "formula_1"
+ },
+ "bird_951": {
+  "verdict": "gold",
+  "cause": "题面问how many constructors，gold的SELECT COUNT(raceId)+GROUP BY返回的是场次数2而非车队个数",
+  "src": "人工",
+  "db_id": "formula_1",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_955": {
+  "verdict": "gold",
+  "cause": "gold手工切片解析time，小数位未补零('2:13:23.6'的.6被算成0.006)，逐年均值系统性偏低；模型用milliseconds列正确",
+  "src": "人工",
+  "db_id": "formula_1",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_959": {
+  "verdict": "模型",
+  "cause": "hint明示champion由time格式'_:%:__.___'判定(每场胜者)，模型改用driverStandings取赛季冠军，未遵hint",
+  "src": "人工",
+  "db_id": "formula_1"
+ },
+ "bird_963": {
+  "verdict": "gold",
+  "cause": "题面问how many French drivers，正解9名；gold COUNT(driverId)计的是圈速记录行数23295",
+  "src": "人工",
+  "db_id": "formula_1",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_967": {
+  "verdict": "gold",
+  "cause": "题面两问(code numbers + 荷兰籍人数)，gold只答后一问，漏答明确要求的code列表",
+  "src": "人工",
+  "db_id": "formula_1",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_978": {
+  "verdict": "gold",
+  "cause": "题面问'how many times'并要location与坐标，gold只SELECT DISTINCT location,lat,lng，完全没给次数",
+  "src": "人工",
+  "db_id": "formula_1",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_1011": {
+  "verdict": "harness改写",
+  "cause": "(原机械标基础设施，已核实)harness的no_select_concat规则把子查询里的forename||' '||surname AS full_name拆成两列，外层SELECT full_name随之失效报'no such column'；sql_conventions.py:89的_alias_is_referenced只查同层ORDER BY/GROUP BY，未查外层对子查询别名的引用",
+  "src": "人工",
+  "db_id": "formula_1"
+ },
+ "bird_1014": {
+  "verdict": "gold",
+  "cause": "(机械判定为'模型多返回行'，实为反向)题面'lap records for the circuits'复数，意大利有2个赛道，模型每赛道一条；gold只LIMIT 1取全局最快",
+  "src": "人工",
+  "db_id": "formula_1",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_726": {
+  "verdict": "gold",
+  "cause": "取值一致，gold 返回题面未要求的额外列",
+  "src": "机械(答案级比对)",
+  "db_id": "superhero",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_728": {
+  "verdict": "gold",
+  "cause": "取值一致，gold 返回题面未要求的额外列",
+  "src": "机械(答案级比对)",
+  "db_id": "superhero",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_743": {
+  "verdict": "评测口径",
+  "cause": "取值相同，模型ROUND(...,2)得28.27，gold未取整得28.2666；118 vs 118.0",
+  "src": "人工",
+  "db_id": "superhero"
+ },
+ "bird_751": {
+  "verdict": "题面歧义",
+  "cause": "'at least five'未指定取哪五个也未指定排序，gold取任意前5行，模型按名称排序取前5",
+  "src": "人工",
+  "db_id": "superhero",
+  "ambiguity_subtype": "C_单数问句遇并列或多实体"
+ },
+ "bird_760": {
+  "verdict": "模型",
+  "cause": "(原机械标基础设施，已核实)模型SQL引用了FROM中不存在的publisher.id，是模型自己写出的无效SQL，未经harness改写",
+  "src": "人工",
+  "db_id": "superhero"
+ },
+ "bird_772": {
+  "verdict": "题面歧义",
+  "cause": "题面要colour，hint却把三项定义为*_colour_id；gold返回整数id，模型join colour表返回颜色名，两读法各自自洽",
+  "src": "人工",
+  "db_id": "superhero",
+  "ambiguity_subtype": "B_输出标识列name还是id"
+ },
+ "bird_533": {
+  "verdict": "gold",
+  "cause": "hint原文即LastAccessDate > '2014-09-01'，模型照抄；gold自行加date()包裹排除掉9月1日当天的205行",
+  "src": "人工",
+  "db_id": "codebase_community",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_557": {
+  "verdict": "题面歧义",
+  "cause": "(修订)分母是否包含222条无主帖题面未指明，与bird_683同型：模型LEFT JOIN含、gold INNER JOIN不含",
+  "src": "人工",
+  "db_id": "codebase_community",
+  "ambiguity_subtype": "D_集合范围LEFT还是INNER"
+ },
+ "bird_565": {
+  "verdict": "评测口径",
+  "cause": "是非题答案措辞约定：模型'Yes'，gold'well-finished'，语义一致",
+  "src": "人工",
+  "db_id": "codebase_community"
+ },
+ "bird_584": {
+  "verdict": "题面歧义",
+  "cause": "'comments'指comments.Text还是postHistory.Comment未定；gold取postHistory修订说明且忽略'left by users'限定",
+  "src": "人工",
+  "db_id": "codebase_community",
+  "ambiguity_subtype": "A_同名列跨表选择"
+ },
+ "bird_586": {
+  "verdict": "gold",
+  "cause": "取值一致，gold 返回题面未要求的额外列",
+  "src": "机械(答案级比对)",
+  "db_id": "codebase_community",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_587": {
+  "verdict": "模型",
+  "cause": "题面'average view count of each post'应按帖分组，模型算了全局单一均值33236.25；且hint写Tags='<humor>'模型用LIKE多取10行",
+  "src": "人工",
+  "db_id": "codebase_community"
+ },
+ "bird_595": {
+  "verdict": "gold",
+  "cause": "hint写Views(users列)模型照用，gold改用posts.ViewCount；且题面'only one post history per post'被gold解成COUNT(DISTINCT PostHistoryTypeId)=1",
+  "src": "人工",
+  "db_id": "codebase_community",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_604": {
+  "verdict": "模型",
+  "cause": "[hint缺陷]hint公式SUM(Age)/COUNT(UserId)在Age有NULL时退化，模型照抄得平均年龄9.1的荒谬值未察觉；gold的AVG(Age)=34.08才答对题面",
+  "src": "人工",
+  "db_id": "codebase_community"
+ },
+ "bird_637": {
+  "verdict": "双方",
+  "cause": "gold经postHistory重复5行且含NULL确为缺陷；但修正后gold给'<books>'、模型给拆分后的'books'，标签格式残差仍在",
+  "src": "人工",
+  "db_id": "codebase_community"
+ },
+ "bird_639": {
+  "verdict": "gold",
+  "cause": "Community的211帖确实0个带<r>标签，模型0.0正确；gold用tags.ExcerptPostId(标签的wiki摘要帖)连接postHistory，与'使用该标签的帖子'无关",
+  "src": "人工",
+  "db_id": "codebase_community",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_640": {
+  "verdict": "gold",
+  "cause": "题面'posted by'应走posts.OwnerUserId，gold经postHistory连接使同一帖按修订次数重复计入ViewCount",
+  "src": "人工",
+  "db_id": "codebase_community",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_682": {
+  "verdict": "gold",
+  "cause": "题面要post的id，gold SELECT的是OwnerUserId；且WHERE用users.CreationDate(用户注册年)而非帖子发表年",
+  "src": "人工",
+  "db_id": "codebase_community",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_683": {
+  "verdict": "题面歧义",
+  "cause": "分母是否包含222条无主帖(OwnerUserId无匹配)题面未指明：模型LEFT JOIN含、gold INNER JOIN不含",
+  "src": "人工",
+  "db_id": "codebase_community",
+  "ambiguity_subtype": "D_集合范围LEFT还是INNER"
+ },
+ "bird_685": {
+  "verdict": "模型",
+  "cause": "模型WHERE ph.Text=标题已把postHistory钉死在设标题那一行(Menno)，其ORDER BY DESC成空操作；真正最后操作者是mbq，gold对",
+  "src": "人工",
+  "db_id": "codebase_community"
+ },
+ "bird_694": {
+  "verdict": "gold",
+  "cause": "gold按users.CreationDate(帖主注册时间)排序而非评论时间，且返回帖主DisplayName而非题面要的评论者",
+  "src": "人工",
+  "db_id": "codebase_community",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_701": {
+  "verdict": "不可评分",
+  "cause": "(已核实)gold自身执行30秒超时、gold_answer为None，模型正常返回0.150；任何预测都不可能被判对",
+  "src": "人工",
+  "db_id": "codebase_community"
+ },
+ "bird_710": {
+  "verdict": "gold",
+  "cause": "题面问'comments have 0 score'，gold用的是posts.Score(帖子分)而非comments.Score",
+  "src": "人工",
+  "db_id": "codebase_community",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_340": {
+  "verdict": "题面歧义",
+  "cause": "行集完全相同(25061行)，仅输出标识列不同：题面'which are the cards'未指明用name还是id",
+  "src": "人工",
+  "db_id": "card_games",
+  "ambiguity_subtype": "B_输出标识列name还是id"
+ },
+ "bird_341": {
+  "verdict": "双方",
+  "cause": "gold条件复制粘贴出错(67行应为72行)确为缺陷；但修正后残差是输出id还是name(歧义B类)，只修gold拿不回分",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_344": {
+  "verdict": "题面歧义",
+  "cause": "均为5行同一批印刷，仅输出name还是id不同，题面未指明",
+  "src": "人工",
+  "db_id": "card_games",
+  "ambiguity_subtype": "B_输出标识列name还是id"
+ },
+ "bird_347": {
+  "verdict": "题面歧义",
+  "cause": "(机械判定为'模型多返回行'，实为歧义)'Find all cards'含无ruling的卡(模型LEFT JOIN 76)还是仅有ruling的卡(gold INNER JOIN 23)，题面两句自相牵制",
+  "src": "人工",
+  "db_id": "card_games",
+  "ambiguity_subtype": "D_集合范围LEFT还是INNER"
+ },
+ "bird_349": {
+  "verdict": "gold",
+  "cause": "题面问ruling最多的卡，gold改成先限定isPromo=1再找'promo卡最多的艺术家'，与ruling数量无关且擅自加了isPromo过滤",
+  "src": "人工",
+  "db_id": "card_games",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_352": {
+  "verdict": "模型",
+  "cause": "[hint缺陷]模型照hint字面写SUM(id)把id值求和，得6010%的不可能百分比未察觉；且用了set_translations而非foreign_data",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_383": {
+  "verdict": "模型",
+  "cause": "(已计时修正)模型SQL语义正确、对修正版gold判对，但耗时357.5秒(近6分钟)，任何合理执行预算都够不着——模型写出了语义对而计算上不可行的查询",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_402": {
+  "verdict": "双方",
+  "cause": "模型分母用Story Spotlight卡(得100%)而非hint规定的全部卡；gold则完全没答题面明确要求的'List them by their ID'",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_407": {
+  "verdict": "题面歧义",
+  "cause": "题面'types of cards in German'指德文类型行，hint却把types定义为subtypes/supertypes(英文列)，两读法冲突且均自洽",
+  "src": "人工",
+  "db_id": "card_games",
+  "ambiguity_subtype": "F_hint与题面互相矛盾"
+ },
+ "bird_408": {
+  "verdict": "题面歧义",
+  "cause": "hint只说'text contains'未指明是cards.text(模型,35)还是rulings.text(gold,1382)，两表同名列",
+  "src": "人工",
+  "db_id": "card_games",
+  "ambiguity_subtype": "A_同名列跨表选择"
+ },
+ "bird_412": {
+  "verdict": "题面歧义",
+  "cause": "题面'the foreign name'单数，gold返回全部50个",
+  "src": "人工",
+  "db_id": "card_games",
+  "ambiguity_subtype": "C_单数问句遇并列或多实体"
+ },
+ "bird_424": {
+  "verdict": "模型",
+  "cause": "题面'proportion of cards'分母应为全部卡，模型分母取isTextless=1得100%的显然可疑值未察觉",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_465": {
+  "verdict": "模型",
+  "cause": "题面问'the set of cards ... in it'是问该卡所属套牌有无韩文版(set_translations)，模型理解成该卡本身有无韩文翻译(foreign_data)",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_469": {
+  "verdict": "双方",
+  "cause": "gold按15个印次逐行输出YES/NO确为缺陷；但修正为单行后模型的'Yes'与'YES'大小写残差仍在",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_473": {
+  "verdict": "评测口径",
+  "cause": "是非题编码不同：模型返回原始isForeignOnly=0，gold返回5行重复的'NO'，语义一致",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_474": {
+  "verdict": "模型",
+  "cause": "[hint缺陷]hint文字'under 100'与其公式'baseSetSize < 10'自相矛盾；模型选了公式得0，题面明写100，gold的30对",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_483": {
+  "verdict": "基础设施",
+  "cause": "Azure BadRequestError内容过滤，未产出任何SQL，与模型能力和题目语义均无关——5道中唯一的真基础设施",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_484": {
+  "verdict": "gold",
+  "cause": "gold两处错：返回英文cards.name而非题面要的Italian names；且只ORDER BY cmc不取MAX，返回全部155行",
+  "src": "人工",
+  "db_id": "card_games",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_486": {
+  "verdict": "模型",
+  "cause": "[hint缺陷]hint分母写SUM(convertedManaCost)(把法术力值求和)，模型照抄得2.43；题面问的是卡片占比，gold的COUNT分母7.74对",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_518": {
+  "verdict": "不可评分",
+  "cause": "(已核实)gold自身执行30秒超时、gold_answer为None，模型正常返回546行",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_529": {
+  "verdict": "gold",
+  "cause": "gold的'language=Korean AND language NOT LIKE %Japanese%'在单行内恒真，无法表达'没有日文版'；实际121个有韩文的set全部也有日文，正解为空=模型答案",
+  "src": "人工",
+  "db_id": "card_games",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_530": {
+  "verdict": "模型",
+  "cause": "题面是'列出全部作品并标出其中被禁的(if there are any)'，模型把Banned当成过滤条件导致返回空结果",
+  "src": "人工",
+  "db_id": "card_games"
+ },
+ "bird_197": {
+  "verdict": "模型",
+  "cause": "模型误读hint的AVG(element='o')，算成氧原子占全部原子比例",
+  "src": "人工",
+  "db_id": "toxicology"
+ },
+ "bird_198": {
+  "verdict": "gold",
+  "cause": "gold把bond与atom按molecule_id连接造成笛卡尔放大，均值732.125(去掉atom连接应为20.25)；模型照hint公式计算",
+  "src": "人工",
+  "db_id": "toxicology",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_201": {
+  "verdict": "模型",
+  "cause": "题面问碳原子占比，模型atom JOIN bond后未去重，每个原子按其分子的键数重复计入(41.20 vs 38.81)",
+  "src": "人工",
+  "db_id": "toxicology"
+ },
+ "bird_207": {
+  "verdict": "gold",
+  "cause": "(机械判定为'单复数歧义'，实为gold坏)题面问'in a double type bond'即参与双键的原子(模型经connected.bond_id得5种)；gold只按molecule_id连接，返回含双键分子里的全部元素13种",
+  "src": "人工",
+  "db_id": "toxicology",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_215": {
+  "verdict": "题面歧义",
+  "cause": "输出是合计一个数还是碘/硫分列两个数未定；且'in single bond molecules'按分子(模型97)还是按connected实际参与单键(gold 3+77)亦未定",
+  "src": "人工",
+  "db_id": "toxicology",
+  "ambiguity_subtype": "G_输出字段集或句法两可"
+ },
+ "bird_218": {
+  "verdict": "gold",
+  "cause": "gold的COUNT(DISTINCT CASE WHEN element<>'f')统计的是含非氟原子的分子，逻辑错",
+  "src": "人工",
+  "db_id": "toxicology",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_219": {
+  "verdict": "模型",
+  "cause": "[hint缺陷]hint公式算的是致癌分子的键里三键占比(模型0.08%)，题面问的是三键分子中致癌的占比；3个三键分子中2个致癌=66.67%，gold对",
+  "src": "人工",
+  "db_id": "toxicology"
+ },
+ "bird_226": {
+  "verdict": "评测口径",
+  "cause": "取值完全相同，仅类型/行序不同",
+  "src": "机械(答案级比对)",
+  "db_id": "toxicology"
+ },
+ "bird_231": {
+  "verdict": "gold",
+  "cause": "题面两问(哪种键型 + 该分子是否致癌)，gold只返回bond_type，漏答后一问",
+  "src": "人工",
+  "db_id": "toxicology",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_234": {
+  "verdict": "gold",
+  "cause": "gold两处坏：缺括号致AND/OR优先级错，且原子编号写成molecule_id||'_1'/'_2'而非题面的_12，得1041；hint规定的写法即模型的3",
+  "src": "人工",
+  "db_id": "toxicology",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_245": {
+  "verdict": "模型",
+  "cause": "connected表完全双向对称(18312行全部成对)，模型用atom_id OR atom_id2把每条键计了两次，均值2.0应为1.0",
+  "src": "人工",
+  "db_id": "toxicology"
+ },
+ "bird_247": {
+  "verdict": "模型",
+  "cause": "(修正gold验证判反)connected表完全对称，gold单向查询与双向查询结果相同(na/zn/k)，gold无误；模型按'某原子恰好无成键记录'判定，多出cl和h两个显然能成键的元素",
+  "src": "人工",
+  "db_id": "toxicology"
+ },
+ "bird_248": {
+  "verdict": "gold",
+  "cause": "取值一致，gold 返回题面未要求的额外列",
+  "src": "机械(答案级比对)",
+  "db_id": "toxicology",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_255": {
+  "verdict": "评测口径",
+  "cause": "取值完全相同，仅类型/行序不同",
+  "src": "机械(答案级比对)",
+  "db_id": "toxicology"
+ },
+ "bird_260": {
+  "verdict": "题面歧义",
+  "cause": "'atoms with triple-bond molecules containing the element p or br'中containing修饰molecules(模型,全部原子4)还是atoms(gold,仅p/br原子1)，句法两可",
+  "src": "人工",
+  "db_id": "toxicology",
+  "ambiguity_subtype": "G_输出字段集或句法两可"
+ },
+ "bird_263": {
+  "verdict": "双方",
+  "cause": "模型漏乘100(题面明写in percentage)；gold把atom与bond按molecule_id连接使每个原子按分子内单键数重复加权",
+  "src": "人工",
+  "db_id": "toxicology"
+ },
+ "bird_273": {
+  "verdict": "模型",
+  "cause": "[hint缺陷]hint公式无*100(且元素写成'pb'的笔误)，模型照抄得0.0314；题面明写percentage，gold的3.14对",
+  "src": "人工",
+  "db_id": "toxicology"
+ },
+ "bird_281": {
+  "verdict": "双方",
+  "cause": "模型按hint的substr(atom_id,7,1)='4'连第40-49号原子一并计入(多出na)；gold加了LENGTH=7才对，但gold只SELECT DISTINCT element，没做题面要求的tally计数",
+  "src": "人工",
+  "db_id": "toxicology"
+ },
+ "bird_11": {
+  "verdict": "题面歧义",
+  "cause": "题面'codes of the schools'未指明是frpm.`School Code`(模型,7位)还是CDSCode(gold,14位)",
+  "src": "人工",
+  "db_id": "california_schools",
+  "ambiguity_subtype": "B_输出标识列name还是id"
+ },
+ "bird_17": {
+  "verdict": "gold",
+  "cause": "取值一致，gold 返回题面未要求的额外列",
+  "src": "机械(答案级比对)",
+  "db_id": "california_schools",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_23": {
+  "verdict": "题面歧义",
+  "cause": "'full street adress'包含哪些字段未定：模型给Street+City+Zip，gold只给Street；行集(1239)完全一致",
+  "src": "人工",
+  "db_id": "california_schools",
+  "ambiguity_subtype": "G_输出字段集或句法两可"
+ },
+ "bird_25": {
+  "verdict": "双方",
+  "cause": "模型选了schools.School/FundingType两列(在Riverside范围内分别有21/97行为NULL)返回大片(null,null)未察觉；gold把'schools in Riverside'解成District Name LIKE 'Riverside%'而非County='Riverside'",
+  "src": "人工",
+  "db_id": "california_schools"
+ },
+ "bird_26": {
+  "verdict": "双方",
+  "cause": "gold用Free Meal Count而非题面的FRPM确为缺陷(漏North Monterey County High)；但修正后模型把地址拼成一列的格式残差仍在",
+  "src": "人工",
+  "db_id": "california_schools"
+ },
+ "bird_27": {
+  "verdict": "题面歧义",
+  "cause": "无SAT成绩的学校是否列出未指明：模型INNER JOIN只留有成绩的813行，gold LEFT JOIN列出全部8574行(绝大多数成绩为NULL)",
+  "src": "人工",
+  "db_id": "california_schools",
+  "ambiguity_subtype": "D_集合范围LEFT还是INNER"
+ },
+ "bird_28": {
+  "verdict": "双方",
+  "cause": "gold返回DOC码而题面说'DOC type'确为缺陷；但残差是schools.School与frpm.`School Name`之争(两列252行不同，歧义A类)，两处同时修正模型才判对",
+  "src": "人工",
+  "db_id": "california_schools"
+ },
+ "bird_32": {
+  "verdict": "模型",
+  "cause": "模型把hint的'grades 1-12 means K-12'当成GSserved='K-12'过滤条件，只剩3行，未满足题面明确的top 5",
+  "src": "人工",
+  "db_id": "california_schools"
+ },
+ "bird_37": {
+  "verdict": "gold",
+  "cause": "gold未排除NumTstTakr=0，excellence rate为NULL的行在ASC排最前被取到(Berkeley 2125 Jefferson，NumTstTakr=0)；模型正确过滤",
+  "src": "人工",
+  "db_id": "california_schools",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_36": {
+  "verdict": "gold",
+  "cause": "取值相同，gold多返回4个全NULL的管理员列",
+  "src": "人工",
+  "db_id": "california_schools",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_41": {
+  "verdict": "题面歧义",
+  "cause": "'virtual schools that are among the top 5 in their respective counties'是先在全县排名再筛虚拟校(模型,1所)还是只在虚拟校间排名(gold,34所)，题面两可",
+  "src": "人工",
+  "db_id": "california_schools",
+  "ambiguity_subtype": "G_输出字段集或句法两可"
+ },
+ "bird_48": {
+  "verdict": "模型",
+  "cause": "题面两次出现merged，模型完全漏掉StatusType='Merged'条件(2.39 vs 0.57)",
+  "src": "人工",
+  "db_id": "california_schools"
+ },
+ "bird_50": {
+  "verdict": "模型",
+  "cause": "模型多join了frpm，把无frpm记录的第7名(数学671，校名为NULL)挤掉从而取到第8名Oxford Academy；列序也与题面'地址…再校名'相反",
+  "src": "人工",
+  "db_id": "california_schools"
+ },
+ "bird_72": {
+  "verdict": "题面歧义",
+  "cause": "Fremont实有两所SSS学校，题面用单数'the...school'问'how many students'，求和(模型375)还是分列(gold 40/335)未定",
+  "src": "人工",
+  "db_id": "california_schools",
+  "ambiguity_subtype": "C_单数问句遇并列或多实体"
+ },
+ "bird_83": {
+  "verdict": "题面歧义",
+  "cause": "题面三问且范围界定不清(第二三问是否也限定Multiple Provision)；另GSserved(模型)与GSoffered(gold)同义两列未指明",
+  "src": "人工",
+  "db_id": "california_schools",
+  "ambiguity_subtype": "A_同名列跨表选择"
+ },
+ "bird_85": {
+  "verdict": "评测口径",
+  "cause": "取值完全相同，仅类型/行序不同",
+  "src": "机械(答案级比对)",
+  "db_id": "california_schools"
+ },
+ "bird_87": {
+  "verdict": "评测口径",
+  "cause": "同样两个邮箱地址，模型展开成2行1列，gold为1行2列",
+  "src": "人工",
+  "db_id": "california_schools"
+ },
+ "bird_92": {
+  "verdict": "harness改写",
+  "cause": "模型原SQL COUNT(DISTINCT district_id)即判对，harness去DISTINCT改写后变2009",
+  "src": "人工",
+  "db_id": "financial"
+ },
+ "bird_93": {
+  "verdict": "模型",
+  "cause": "模型写A3='north bohemia'，库中实际为'north Bohemia'，SQLite大小写敏感致0结果，模型未核实字面量",
+  "src": "人工",
+  "db_id": "financial"
+ },
+ "bird_94": {
+  "verdict": "题面歧义",
+  "cause": "题面'this lowest average salary'指所选客户的工资(模型:最高-该客户=4000)，hint却定义gap=全局最高-最低(gold:4431)；且'最年长且工资最低'两个并列极值本身互相矛盾",
+  "src": "人工",
+  "db_id": "financial",
+  "ambiguity_subtype": "F_hint与题面互相矛盾"
+ },
+ "bird_95": {
+  "verdict": "题面歧义",
+  "cause": "题面'youngest AND highest average salary'两极值同时满足者不存在，模型照字面取交集得空集，gold径直丢掉工资条件只取最年轻者",
+  "src": "人工",
+  "db_id": "financial",
+  "ambiguity_subtype": "F_hint与题面互相矛盾"
+ },
+ "bird_115": {
+  "verdict": "gold",
+  "cause": "(原待定已解)A4为TEXT列，gold按文本序ORDER BY A4 DESC取到'93931'(Jindrichuv Hradec)，真正人口最多的是177686的Ceske Budejovice=模型所取；与bird_879同一缺陷族",
+  "src": "人工",
+  "db_id": "financial",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_118": {
+  "verdict": "模型",
+  "cause": "[hint缺陷]hint把percentage定义成金额加权total(amount)，模型照做得47.55；题面问的是'percentage of accounts'，gold按笔数得46.89对",
+  "src": "人工",
+  "db_id": "financial"
+ },
+ "bird_125": {
+  "verdict": "gold",
+  "cause": "题面明确要求列出district与state，gold只返回失业率增幅一列，且逐贷款重复45行未去重",
+  "src": "人工",
+  "db_id": "financial",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_128": {
+  "verdict": "gold",
+  "cause": "取值一致，gold 返回题面未要求的额外列",
+  "src": "机械(答案级比对)",
+  "db_id": "financial",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_129": {
+  "verdict": "gold",
+  "cause": "题面'top ten'要求按取款排名，gold只做DISTINCT A2 ORDER BY A2 ASC取字母序前十，完全没有排名",
+  "src": "人工",
+  "db_id": "financial",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_145": {
+  "verdict": "题面歧义",
+  "cause": "'account holder identification numbers'指client_id(模型)还是account_id(gold)未定；均值范围是全部交易(gold)还是仅信用卡取现(模型)亦未指明",
+  "src": "人工",
+  "db_id": "financial",
+  "ambiguity_subtype": "B_输出标识列name还是id"
+ },
+ "bird_152": {
+  "verdict": "gold",
+  "cause": "gold用INNER JOIN导致每区按账户数重复计入AVG，均值被放大",
+  "src": "人工",
+  "db_id": "financial",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_159": {
+  "verdict": "题面歧义",
+  "cause": "'list all the withdrawals'输出金额(模型)还是trans_id(gold)未指明，两边同为140行",
+  "src": "人工",
+  "db_id": "financial",
+  "ambiguity_subtype": "B_输出标识列name还是id"
+ },
+ "bird_168": {
+  "verdict": "gold",
+  "cause": "题面说'opened their accounts in the district'指账户所在区(模型经account.district_id)，gold用的是client.district_id客户居住区",
+  "src": "人工",
+  "db_id": "financial",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_169": {
+  "verdict": "题面歧义",
+  "cause": "男性客户经disp连接贷款无重复(410行=410笔)，唯一差异是gold加了disp.type='OWNER'；题面'loans for a male client'是否含仅为附属人的账户未指明",
+  "src": "人工",
+  "db_id": "financial",
+  "ambiguity_subtype": "D_集合范围LEFT还是INNER"
+ },
+ "bird_186": {
+  "verdict": "gold",
+  "cause": "gold多加了account.district_id=client.district_id的连接约束，剔除282对中35对客户与账户不同区的记录，题面无此要求",
+  "src": "人工",
+  "db_id": "financial",
+  "goldfix_verified": "PASS(修正gold后模型判对)"
+ },
+ "bird_194": {
+  "verdict": "题面歧义",
+  "cause": "88个client_id完全一致，仅年龄基准年不同：模型用数据集末年1998，gold用CURRENT_TIMESTAMP(得91岁且答案随执行日期漂移)，题面与hint均未指定基准",
+  "src": "人工",
+  "db_id": "financial",
+  "ambiguity_subtype": "E_时间或数值基准未定"
+ }
+}

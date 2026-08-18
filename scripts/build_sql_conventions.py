@@ -40,6 +40,24 @@ MIN_SUPPORT = 0.80
 MIN_APPLICABLE = 100
 MIN_DATABASE_COUNT = 8
 
+# Support measured against gold cannot tell a house style from an annotation
+# defect: it only says how often the annotators wrote something, not whether
+# writing it was right.  So support alone must never enable a rewrite that
+# changes *what the query computes* -- only ones that change how the same values
+# are shaped for comparison.
+#
+# `count_no_distinct` is why this exists.  It measured 0.891 support over 2377
+# train queries, which looked decisive; re-scoring dev against an independently
+# corrected gold (VLDB 2026 Arcwise-Plat-SQL, arXiv:2601.08778) showed the rule
+# is worth -16 questions there.  The corrected gold uses DISTINCT in 130 of 498
+# questions where the original used it in 83 -- the 0.891 was measuring the
+# annotators' habit of omitting DISTINCT, and the rule had encoded that defect.
+# `superlative_order_limit` is worth -2 and can silently drop WHERE conditions.
+SEMANTICS_CHANGING = {
+    "count_no_distinct": "changes what COUNT counts (entities -> rows)",
+    "superlative_order_limit": "changes the computation and can drop WHERE conditions",
+}
+
 SUPERLATIVE = re.compile(
     r"\b(highest|lowest|most|least|maximum|minimum|max|min|largest|smallest"
     r"|oldest|newest|longest|shortest|top|best|worst)\b",
@@ -184,11 +202,12 @@ def build(pool_path: Path, output_path: Path) -> dict[str, Any]:
             c["conforming"] / c["applicable"] for c in per_db.values() if c["applicable"] >= 5
         ]
         db_majority = sum(1 for s in db_supports if s >= 0.5)
-        enabled = (
+        gate_passed = (
             support >= MIN_SUPPORT
             and applicable >= MIN_APPLICABLE
             and len(per_db) >= MIN_DATABASE_COUNT
         )
+        enabled = gate_passed and name not in SEMANTICS_CHANGING
         conventions[name] = {
             "enabled": enabled,
             "choice": spec["choice"],
@@ -204,8 +223,9 @@ def build(pool_path: Path, output_path: Path) -> dict[str, Any]:
                 "min_support": MIN_SUPPORT,
                 "min_applicable": MIN_APPLICABLE,
                 "min_database_count": MIN_DATABASE_COUNT,
-                "passed": enabled,
+                "passed": gate_passed,
             },
+            "disabled_reason": SEMANTICS_CHANGING.get(name),
         }
 
     payload = {

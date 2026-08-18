@@ -86,12 +86,25 @@ def _is_separator(node: exp.Expression) -> bool:
     return isinstance(node, exp.Literal) and node.args.get("is_string")
 
 
-def _alias_is_referenced(select: exp.Select, alias: str) -> bool:
-    """Is this projection alias used by ORDER BY / GROUP BY / HAVING?
+def _alias_is_referenced(
+    select: exp.Select, alias: str, root: exp.Expression | None = None
+) -> bool:
+    """Is this projection alias consumed anywhere the split would break?
 
-    Splitting `a || ' ' || b AS full_name` removes the name `full_name`, so an
-    `ORDER BY full_name` elsewhere in the query stops resolving.  Observed on
-    bird_1011, where the split turned a wrong answer into a hard SQL error.
+    Splitting `a || ' ' || b AS full_name` removes the name `full_name`, so any
+    surviving reference to it stops resolving.  Two places can hold one:
+
+    1. this SELECT's own ORDER BY / GROUP BY / HAVING;
+    2. an *enclosing* query reading it off a subquery, as in
+       `SELECT full_name FROM (SELECT a || ' ' || b AS full_name ...) AS t`.
+
+    Only (1) was checked originally, so bird_1011 -- which is exactly shape (2)
+    -- got split anyway and failed with `no such column: full_name`, despite
+    being named here as the case this guard existed for.
+
+    With `root`, any column of that name outside this SELECT's own projections
+    counts, qualified or not.  A false positive costs one unapplied rewrite; a
+    false negative costs a hard SQL error, so the check errs wide.
     """
     folded = alias.casefold()
     for key in ("order", "group", "having", "qualify", "distinct"):
@@ -100,6 +113,11 @@ def _alias_is_referenced(select: exp.Select, alias: str) -> bool:
             continue
         for column in node.find_all(exp.Column):
             if not column.table and column.name.casefold() == folded:
+                return True
+    if root is not None and root is not select:
+        own = {id(c) for proj in select.expressions for c in proj.find_all(exp.Column)}
+        for column in root.find_all(exp.Column):
+            if id(column) not in own and column.name.casefold() == folded:
                 return True
     return False
 
@@ -116,7 +134,7 @@ def _rule_no_select_concat(tree: exp.Expression) -> bool:
                 rebuilt.append(projection)
                 continue
             if isinstance(projection, exp.Alias) and _alias_is_referenced(
-                select, projection.alias
+                select, projection.alias, root=tree
             ):
                 rebuilt.append(projection)
                 continue

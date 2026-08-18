@@ -1,0 +1,256 @@
+[
+ {
+  "id": "bird_1028",
+  "db_id": "european_football_2",
+  "gold_rows": 2,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 2
+   }
+  }
+ },
+ {
+  "id": "bird_1032",
+  "db_id": "european_football_2",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_1068",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1169",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1381",
+  "db_id": "student_club",
+  "gold_rows": 29,
+  "model_rows": 29,
+  "tests": {}
+ },
+ {
+  "id": "bird_1472",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1479",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1498",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1526",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_173",
+  "db_id": "financial",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_212",
+  "db_id": "toxicology",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_24",
+  "db_id": "california_schools",
+  "gold_rows": 1142,
+  "model_rows": 1084,
+  "tests": {}
+ },
+ {
+  "id": "bird_352",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_36",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_383",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_407",
+  "db_id": "card_games",
+  "gold_rows": 1693,
+  "model_rows": 491,
+  "tests": {}
+ },
+ {
+  "id": "bird_416",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_462",
+  "db_id": "card_games",
+  "gold_rows": 2,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 2
+   }
+  }
+ },
+ {
+  "id": "bird_50",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_604",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_640",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_671",
+  "db_id": "codebase_community",
+  "gold_rows": 12,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 12
+   }
+  }
+ },
+ {
+  "id": "bird_736",
+  "db_id": "superhero",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_743",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_744",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {
+   "under_projection": {
+    "gold_columns": 2,
+    "model_columns": 1,
+    "kept": [
+     1
+    ]
+   }
+  }
+ },
+ {
+  "id": "bird_750",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_791",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_794",
+  "db_id": "superhero",
+  "gold_rows": 40,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 40
+   }
+  }
+ },
+ {
+  "id": "bird_829",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {
+   "under_projection": {
+    "gold_columns": 2,
+    "model_columns": 1,
+    "kept": [
+     1
+    ]
+   }
+  }
+ },
+ {
+  "id": "bird_948",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ }
+]

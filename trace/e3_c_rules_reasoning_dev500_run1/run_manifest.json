@@ -559,23 +559,23 @@
     }
   },
   "token_usage": {
-    "prompt_tokens": 2957089,
-    "completion_tokens": 2173043,
-    "reasoning_tokens": 2013903,
-    "total_tokens": 5130132,
-    "cached_prompt_tokens": 1250304,
-    "llm_calls": 1164,
-    "usage_missing_calls": 28,
-    "reasoning_usage_missing_calls": 28,
+    "prompt_tokens": 3028945,
+    "completion_tokens": 2194468,
+    "reasoning_tokens": 2033564,
+    "total_tokens": 5223413,
+    "cached_prompt_tokens": 1303808,
+    "llm_calls": 1186,
+    "usage_missing_calls": 30,
+    "reasoning_usage_missing_calls": 30,
     "questions": 500,
-    "questions_with_complete_usage": 484,
+    "questions_with_complete_usage": 483,
     "average_per_question": {
-      "prompt_tokens": 5914.18,
-      "completion_tokens": 4346.09,
-      "reasoning_tokens": 4027.81,
-      "total_tokens": 10260.26,
-      "cached_prompt_tokens": 2500.61
+      "prompt_tokens": 6057.89,
+      "completion_tokens": 4388.94,
+      "reasoning_tokens": 4067.13,
+      "total_tokens": 10446.83,
+      "cached_prompt_tokens": 2607.62
     }
   },
-  "finished_at": "2026-08-15T00:52:20.823173+00:00"
+  "finished_at": "2026-08-18T04:31:50.398501+00:00"
 }

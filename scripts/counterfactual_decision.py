@@ -46,6 +46,7 @@ from ours.train_few_shot_retriever import get_train_retriever
 from shared.evaluator import is_correct
 from shared.llm_config import resolve_llm_config
 from shared.sql_executor import execute_sql
+from shared.console import force_utf8_console
 from scripts.run_bird_indomain_fewshot import BIRD_DB_DIR, InDomainFewShotDBRLM
 
 # Forcing the branch, not suggesting it: vague wording measured no behavioural
@@ -81,6 +82,9 @@ def build_agent():
 
 
 if __name__ == "__main__":
+    # Before anything prints: a database row the console codepage
+    # cannot encode would otherwise abort that question mid-run.
+    force_utf8_console()
     parser = argparse.ArgumentParser()
     parser.add_argument("--arm", choices=["A", "B"], required=True)
     parser.add_argument("--results", default="results/e3_c_conv_rules_dev500_run1.json")

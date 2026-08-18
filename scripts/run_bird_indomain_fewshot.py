@@ -30,6 +30,7 @@ from ours.agent.config import agent_profile_names, get_agent_config
 from shared.evaluator import is_correct
 from shared.llm_config import resolve_llm_config
 from shared.sql_executor import execute_sql
+from shared.console import force_utf8_console
 
 BIRD_DB_DIR  = PROJECT_ROOT / "data/raw/bird/minidev/MINIDEV/dev_databases"
 BIRD_DATASET = PROJECT_ROOT / "data/processed/bird_dev_500.json"
@@ -150,6 +151,9 @@ def run_one(
 
 
 def main():
+    # Before anything prints: a database row the console codepage
+    # cannot encode would otherwise abort that question mid-run.
+    force_utf8_console()
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset",        default=str(BIRD_DATASET))
     parser.add_argument("--database-dir",   default=str(BIRD_DB_DIR))

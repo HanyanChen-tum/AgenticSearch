@@ -41,6 +41,7 @@ from shared.token_usage import summarize_result_usage
 from shared.llm_config import resolve_llm_config
 from shared.sampling_params import effective_sampling_params
 from shared.sql_executor import DEFAULT_QUERY_TIMEOUT_SECONDS
+from shared.console import force_utf8_console
 
 BIRD_DB_DIR  = PROJECT_ROOT / "data/raw/bird/minidev/MINIDEV/dev_databases"
 BIRD_DATASET = PROJECT_ROOT / "data/processed/bird_dev_500.json"
@@ -274,6 +275,9 @@ def _run_trace_analysis(
 
 
 def main():
+    # Before anything prints: a database row the console codepage
+    # cannot encode would otherwise abort that question mid-run.
+    force_utf8_console()
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset",        default=str(BIRD_DATASET))
     parser.add_argument("--database-dir",   default=str(BIRD_DB_DIR))

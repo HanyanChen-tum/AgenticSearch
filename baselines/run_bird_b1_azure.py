@@ -26,6 +26,7 @@ if str(PROJECT_ROOT) not in sys.path:
 load_dotenv(PROJECT_ROOT / ".env")
 
 from shared.evaluator import is_correct
+from shared.llm_config import resolve_llm_config
 from shared.sql_executor import execute_sql
 
 BIRD_DB_DIR  = PROJECT_ROOT / "data/raw/bird/minidev/MINIDEV/dev_databases"
@@ -128,10 +129,10 @@ def main():
     parser.add_argument("--limit",    type=int, default=None)
     args = parser.parse_args()
 
-    api_key  = os.environ.get("LLM_API_KEY")
-    api_base = args.api_base or os.environ.get("LLM_BASE_URL")
+    llm = resolve_llm_config(args.model, args.api_base)
+    api_key, api_base = llm.api_key, llm.api_base
 
-    questions = json.loads(Path(args.dataset).read_text())
+    questions = json.loads(Path(args.dataset).read_text(encoding="utf-8"))
     if args.limit:
         questions = questions[:args.limit]
 
@@ -140,7 +141,7 @@ def main():
 
     results, done_ids = [], set()
     if output_path.exists():
-        results = json.loads(output_path.read_text())
+        results = json.loads(output_path.read_text(encoding="utf-8"))
         done_ids = {r["id"] for r in results}
         print(f"Resuming — {len(done_ids)} done")
 
@@ -151,9 +152,9 @@ def main():
         try:
             results.append(run_one(ex, args.model, api_key, api_base))
         except KeyboardInterrupt:
-            output_path.write_text(json.dumps(results, indent=2))
+            output_path.write_text(json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8")
             break
-        output_path.write_text(json.dumps(results, indent=2))
+        output_path.write_text(json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8")
 
     total, correct = len(results), sum(1 for r in results if r["correct"])
     print(f"\nAccuracy: {correct}/{total} = {correct/total:.2%}")

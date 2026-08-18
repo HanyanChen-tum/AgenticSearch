@@ -334,8 +334,38 @@ PROTOCOL:
   5. Do not use capabilities that are not explicitly listed.
 """
 
+# basic-conventions-v1 with one sentence added: that the tool call is really run and
+# its output comes back. Nothing else changes.
+#
+# Reading the captured reasoning for all 496 dev questions, the model states it
+# cannot execute tools or cannot see results in 113 of them (22.8%), and those
+# questions score 57.5% against 70.0% for the rest. bird_93 reasons its way to
+# "I should check if the 'North Bohemia' region value actually exists ... Let's be
+# thorough!" and then does not check, because it has decided the tools are not
+# live; bird_48 sees "merged" in the question and drops the condition after
+# concluding the schema has no flag for it, without looking. The old wording lists
+# the tools and then tells the model to "inspect its result" without ever saying
+# the result arrives -- the profile at line 193 does say so. This tests whether
+# saying it is what closes that gap.
+_SYSTEM_PROMPT_BASIC_CONVENTIONS_TOOLCONFIRM = _SYSTEM_PROMPT_BASIC_CONVENTIONS.replace(
+    """AVAILABLE TOOLS (inside ```python blocks):
+  db.execute("SQL")
+  db.sample_values("table", "column")
+""",
+    """AVAILABLE TOOLS (inside ```python blocks):
+  db.execute("SQL")                        — runs the SQL and returns the rows
+  db.sample_values("table", "column")      — returns real values from that column
+
+These calls are really executed against the live database. Emit the Python block
+and the output is returned to you in the next message, so verify anything you are
+unsure of -- a literal's exact spelling and case, whether a column exists, how many
+rows a filter matches -- instead of guessing at it.
+""",
+)
+
 _PROMPTS = {
     "basic": _SYSTEM_PROMPT_BASIC,
+    "basic-conventions-toolconfirm-v1": _SYSTEM_PROMPT_BASIC_CONVENTIONS_TOOLCONFIRM,
     "basic-semantic-v1": _SYSTEM_PROMPT_BASIC_SEMANTIC,
     "conventions-recursive-v1": _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE,
     "basic-join-minimal": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL,
@@ -382,6 +412,16 @@ _PROVENANCE = {
         "prompt_id": "train-conventions-protocol-v1",
         # Unlike the legacy prompt this restates, every rule here was measured on
         # the train pool and carries its support rate; nothing was read off eval.
+        "source": "train-mined-conventions",
+        "source_split": "train",
+        "contains_task_specific_sql_rules": True,
+        "contains_examples": False,
+    },
+    "basic-conventions-toolconfirm-v1": {
+        "prompt_id": "train-conventions-protocol-v1-toolconfirm",
+        # Same mined conventions as basic-conventions-v1; the added sentence only
+        # states that the REPL really runs the call and hands back the output, which
+        # is a fact about this harness, not anything read off eval.
         "source": "train-mined-conventions",
         "source_split": "train",
         "contains_task_specific_sql_rules": True,

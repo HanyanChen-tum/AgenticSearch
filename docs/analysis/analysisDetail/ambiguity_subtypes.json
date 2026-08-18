@@ -1,0 +1,38 @@
+{
+ "_note": "35 道『题面歧义』的子类型划分。分组依据是『要消解它需要给模型什么』，而不是题面表述本身。actionable 字段标记该子类是否能靠提示/约定消解。",
+ "A_同名列跨表选择": {
+  "actionable": "是——schema 消歧提示可覆盖",
+  "消解方式": "在 schema 上下文里标注同名列的归属与语义差别（哪张表的 position/number/text/Diagnosis）",
+  "ids": ["bird_1166", "bird_1037", "bird_861", "bird_896", "bird_902", "bird_937", "bird_408", "bird_584", "bird_83"]
+ },
+ "B_输出标识列name还是id": {
+  "actionable": "是——输出约定可覆盖",
+  "消解方式": "固定约定：题面问『which/what are the X』时输出人可读名称还是主键，二选一写进 prompt",
+  "ids": ["bird_340", "bird_344", "bird_11", "bird_159", "bird_145", "bird_772"]
+ },
+ "C_单数问句遇并列或多实体": {
+  "actionable": "部分——约定可覆盖，但会在另一批题上反向失分",
+  "消解方式": "约定『单数问句遇并列时返回全部并列项』；风险是 bird_1092 类要全部、bird_930 类 gold 也要全部，但 bird_412 类 gold 要全部而题面是单数，方向一致；真正的风险在 C 与 B 交叉处",
+  "ids": ["bird_930", "bird_412", "bird_1092", "bird_72", "bird_751"]
+ },
+ "D_集合范围LEFT还是INNER": {
+  "actionable": "部分——需按题面主语判断，不是固定约定",
+  "消解方式": "题面主语是『posts』『cards』『schools』时用 LEFT 保全集；主语已被后置定语限定时用 INNER。无法一刀切",
+  "ids": ["bird_557", "bird_683", "bird_27", "bird_347", "bird_169"]
+ },
+ "E_时间或数值基准未定": {
+  "actionable": "否",
+  "消解方式": "年龄基准年、rate 是否乘 100，题面与 hint 均无信息；gold 自身还用 CURRENT_TIMESTAMP 使答案随执行日期漂移",
+  "ids": ["bird_194", "bird_1242", "bird_881"]
+ },
+ "F_hint与题面互相矛盾": {
+  "actionable": "否",
+  "消解方式": "题面与 hint 给出不同定义（gap 的算法、types 指哪些列），或题面自身条件不可同时满足（bird_95 两个极值无交集）",
+  "ids": ["bird_94", "bird_95", "bird_407"]
+ },
+ "G_输出字段集或句法两可": {
+  "actionable": "否",
+  "消解方式": "『full street address』含哪些字段、合计一列还是分列、containing 修饰哪个名词、top5 在哪个范围内排——都需要题面本身改写",
+  "ids": ["bird_23", "bird_215", "bird_260", "bird_41"]
+ }
+}

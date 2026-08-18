@@ -1,0 +1,182 @@
+[
+ {
+  "run": "e3_c_conv_rules_dev500_run1",
+  "clean_n": 277,
+  "clean_old": 239,
+  "clean_new": 241,
+  "pure_n": 74,
+  "pure_old": 45,
+  "pure_new": 47
+ },
+ {
+  "run": "bird_nofs_rhigh_500",
+  "clean_n": 277,
+  "clean_old": 236,
+  "clean_new": 253,
+  "pure_n": 74,
+  "pure_old": 39,
+  "pure_new": 56
+ },
+ {
+  "run": "bird_reasoning_high_500",
+  "clean_n": 277,
+  "clean_old": 236,
+  "clean_new": 247,
+  "pure_n": 74,
+  "pure_old": 42,
+  "pure_new": 53
+ },
+ {
+  "run": "e3_c_conv_rules_dev500_iter15",
+  "clean_n": 255,
+  "clean_old": 214,
+  "clean_new": 219,
+  "pure_n": 66,
+  "pure_old": 36,
+  "pure_new": 41
+ },
+ {
+  "run": "bird_trainfs_rhigh_500",
+  "clean_n": 277,
+  "clean_old": 232,
+  "clean_new": 248,
+  "pure_n": 74,
+  "pure_old": 38,
+  "pure_new": 54
+ },
+ {
+  "run": "e3_c_rules_reasoning_dev500_run1",
+  "clean_n": 277,
+  "clean_old": 232,
+  "clean_new": 236,
+  "pure_n": 74,
+  "pure_old": 40,
+  "pure_new": 44
+ },
+ {
+  "run": "bird_rhigh_v2_500",
+  "clean_n": 277,
+  "clean_old": 230,
+  "clean_new": 240,
+  "pure_n": 74,
+  "pure_old": 38,
+  "pure_new": 48
+ },
+ {
+  "run": "legacy_e0_dev500_run1",
+  "clean_n": 277,
+  "clean_old": 230,
+  "clean_new": 247,
+  "pure_n": 74,
+  "pure_old": 35,
+  "pure_new": 52
+ },
+ {
+  "run": "e3_c_rc_trt_dev500_run1",
+  "clean_n": 277,
+  "clean_old": 229,
+  "clean_new": 243,
+  "pure_n": 74,
+  "pure_old": 38,
+  "pure_new": 52
+ },
+ {
+  "run": "e3_c_rc_ctl_dev500_run1",
+  "clean_n": 277,
+  "clean_old": 228,
+  "clean_new": 241,
+  "pure_n": 74,
+  "pure_old": 37,
+  "pure_new": 50
+ },
+ {
+  "run": "e3_c_conv_dev500_run1",
+  "clean_n": 277,
+  "clean_old": 227,
+  "clean_new": 233,
+  "pure_n": 74,
+  "pure_old": 39,
+  "pure_new": 45
+ },
+ {
+  "run": "e3_c_conv_rules_v2_dev500_run1",
+  "clean_n": 277,
+  "clean_old": 227,
+  "clean_new": 243,
+  "pure_n": 74,
+  "pure_old": 37,
+  "pure_new": 53
+ },
+ {
+  "run": "e3_c_recursive_dev500_run1",
+  "clean_n": 277,
+  "clean_old": 226,
+  "clean_new": 250,
+  "pure_n": 74,
+  "pure_old": 34,
+  "pure_new": 58
+ },
+ {
+  "run": "e3_c_semantic_dev500_run1",
+  "clean_n": 277,
+  "clean_old": 226,
+  "clean_new": 240,
+  "pure_n": 74,
+  "pure_old": 38,
+  "pure_new": 53
+ },
+ {
+  "run": "clean_e0_dev500_run1",
+  "clean_n": 277,
+  "clean_old": 222,
+  "clean_new": 241,
+  "pure_n": 74,
+  "pure_old": 34,
+  "pure_new": 53
+ },
+ {
+  "run": "bird_lean_distill_500",
+  "clean_n": 277,
+  "clean_old": 217,
+  "clean_new": 217,
+  "pure_n": 74,
+  "pure_old": 39,
+  "pure_new": 39
+ },
+ {
+  "run": "bird_noleak_mini_500",
+  "clean_n": 277,
+  "clean_old": 211,
+  "clean_new": 217,
+  "pure_n": 74,
+  "pure_old": 36,
+  "pure_new": 42
+ },
+ {
+  "run": "bird_ours_v4_500",
+  "clean_n": 277,
+  "clean_old": 207,
+  "clean_new": 225,
+  "pure_n": 74,
+  "pure_old": 40,
+  "pure_new": 47
+ },
+ {
+  "run": "bird_b1_azure_500",
+  "clean_n": 277,
+  "clean_old": 192,
+  "clean_new": 213,
+  "pure_n": 74,
+  "pure_old": 34,
+  "pure_new": 46
+ },
+ {
+  "run": "bird_b2_azure_500",
+  "clean_n": 277,
+  "clean_old": 179,
+  "clean_new": 189,
+  "pure_n": 74,
+  "pure_old": 33,
+  "pure_new": 38
+ }
+]

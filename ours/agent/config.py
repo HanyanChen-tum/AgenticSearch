@@ -240,6 +240,23 @@ _PROFILES = {
         schema_context_mode="offline-retrieval",
         sql_convention_mode=SQL_CONVENTION_VERSION,
     ),
+    # Single variable against e3-c-conv-rules: the prompt says the tool calls are
+    # really executed and their output comes back. Reading the captured reasoning for
+    # all 496 dev questions, the model decides it cannot execute or cannot see results
+    # in 113 of them (22.8%), and that group scores 57.5% against 70.0% for the rest;
+    # 9 of the 21 failures that are the model's own fault carry the belief. Whether it
+    # causes them is what this profile measures -- the correlation alone cannot say.
+    "e3-c-conv-rules-toolconfirm": AgentConfig(
+        profile="e3-c-conv-rules-toolconfirm",
+        experiment_variant="e3-c-conv-rules-toolconfirm",
+        prompt_profile="basic-conventions-toolconfirm-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+    ),
     # e3-c-conv-rules with the conventions restated as semantic criteria, and the
     # deterministic rewriting switched off: the model decides per question whether
     # a convention applies. The rewriter cannot -- it stripped DISTINCT from four
@@ -269,6 +286,54 @@ _PROFILES = {
         schema_context_mode="offline-retrieval",
         sql_convention_mode=SQL_CONVENTION_VERSION,
         reasoning_capture=REASONING_CAPTURE_MODE,
+    ),
+    # Treatment arm for the tool-confirmation experiment, paired with
+    # e3-c-rules-reasoning as its control: same prompt difference as
+    # e3-c-conv-rules-toolconfirm, but capturing reasoning at generation time.
+    #
+    # Capturing during the run rather than replaying afterwards is the whole point
+    # here. A replay is not sampling-pinned, so it returns *a* reasoning chain for
+    # the prompt, not the one behind the recorded answer -- on bird_93 the replay
+    # queried the database while the original run never did, which is exactly the
+    # behaviour this experiment is about. Both arms pay the Responses API path, so
+    # they stay comparable to each other; neither is comparable to the Chat
+    # Completions baselines.
+    "e3-c-toolconfirm-reasoning": AgentConfig(
+        profile="e3-c-toolconfirm-reasoning",
+        experiment_variant="e3-c-toolconfirm-reasoning",
+        prompt_profile="basic-conventions-toolconfirm-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        reasoning_capture=REASONING_CAPTURE_MODE,
+    ),
+    # e3-c-conv-rules with the convention rewriting switched off, and nothing else
+    # changed. It exists to split a confound in e3-c-recursive, which turned
+    # recursion on and the rewriting off in the same profile: on the externally
+    # corrected gold that profile gains +24 questions, the largest move measured,
+    # and there is no way to tell from it whether recursion did that or whether
+    # dropping the rewriting did.
+    #
+    # The suspicion is the latter. Scored against the corrected gold, the two rules
+    # since disabled were worth -13 and -1 (see harness_convention_rules_2026-08-16),
+    # because they had been mined from gold that omits DISTINCT.
+    #
+    # This arm isolates that half cleanly. The other half does not isolate as
+    # cleanly: e3-c-recursive also carries `basic-recursive-v1`, which has to name
+    # the recursion tool for it to be reachable at all, so recursion-vs-not still
+    # rides on a prompt difference.
+    "e3-c-noconv": AgentConfig(
+        profile="e3-c-noconv",
+        experiment_variant="e3-c-noconv",
+        prompt_profile="basic-conventions-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
     ),
     # Recursion v2: the leaf shares the parent's gated database handle. v1's
     # text-only leaf was handed the parent's ambiguity questions and, knowing
