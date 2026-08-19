@@ -1,0 +1,577 @@
+[
+ {
+  "id": "bird_1011",
+  "db_id": "formula_1",
+  "gold_rows": 20,
+  "model_rows": 20,
+  "tests": {}
+ },
+ {
+  "id": "bird_1028",
+  "db_id": "european_football_2",
+  "gold_rows": 2,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 2
+   }
+  }
+ },
+ {
+  "id": "bird_1031",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "SQL execution timed out after 30 seconds"
+   }
+  }
+ },
+ {
+  "id": "bird_1032",
+  "db_id": "european_football_2",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_1037",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1068",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_11",
+  "db_id": "california_schools",
+  "gold_rows": 7804,
+  "model_rows": 7806,
+  "tests": {
+   "row_superset": {
+    "extra": 2
+   }
+  }
+ },
+ {
+  "id": "bird_1149",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1169",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1179",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_1241",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1243",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_125",
+  "db_id": "financial",
+  "gold_rows": 43,
+  "model_rows": 29,
+  "tests": {}
+ },
+ {
+  "id": "bird_1339",
+  "db_id": "student_club",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1376",
+  "db_id": "student_club",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_1387",
+  "db_id": "student_club",
+  "gold_rows": 4,
+  "model_rows": 2,
+  "tests": {}
+ },
+ {
+  "id": "bird_1472",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1482",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 3,
+  "tests": {}
+ },
+ {
+  "id": "bird_1486",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1498",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1505",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "SQL execution timed out after 30 seconds"
+   }
+  }
+ },
+ {
+  "id": "bird_1507",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 2,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "'NoneType' object has no attribute 'strip'"
+   }
+  }
+ },
+ {
+  "id": "bird_1526",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1528",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "'NoneType' object has no attribute 'strip'"
+   }
+  }
+ },
+ {
+  "id": "bird_1529",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_168",
+  "db_id": "financial",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_173",
+  "db_id": "financial",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_212",
+  "db_id": "toxicology",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_228",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_23",
+  "db_id": "california_schools",
+  "gold_rows": 1236,
+  "model_rows": 1239,
+  "tests": {
+   "row_superset": {
+    "extra": 3
+   }
+  }
+ },
+ {
+  "id": "bird_24",
+  "db_id": "california_schools",
+  "gold_rows": 1142,
+  "model_rows": 1084,
+  "tests": {}
+ },
+ {
+  "id": "bird_255",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_26",
+  "db_id": "california_schools",
+  "gold_rows": 6,
+  "model_rows": 6,
+  "tests": {}
+ },
+ {
+  "id": "bird_273",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_32",
+  "db_id": "california_schools",
+  "gold_rows": 5,
+  "model_rows": 3,
+  "tests": {}
+ },
+ {
+  "id": "bird_349",
+  "db_id": "card_games",
+  "gold_rows": 2,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 2
+   }
+  }
+ },
+ {
+  "id": "bird_352",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_36",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_37",
+  "db_id": "california_schools",
+  "gold_rows": 17,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 17
+   }
+  }
+ },
+ {
+  "id": "bird_407",
+  "db_id": "card_games",
+  "gold_rows": 1693,
+  "model_rows": 492,
+  "tests": {}
+ },
+ {
+  "id": "bird_408",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "SQL execution timed out after 30 seconds"
+   }
+  }
+ },
+ {
+  "id": "bird_41",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 4,
+  "tests": {
+   "row_superset": {
+    "extra": 3
+   }
+  }
+ },
+ {
+  "id": "bird_416",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_465",
+  "db_id": "card_games",
+  "gold_rows": 2,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_48",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_50",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_518",
+  "db_id": "card_games",
+  "gold_rows": null,
+  "model_rows": 546,
+  "tests": {}
+ },
+ {
+  "id": "bird_529",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "SQL execution timed out after 30 seconds"
+   }
+  }
+ },
+ {
+  "id": "bird_584",
+  "db_id": "codebase_community",
+  "gold_rows": 8,
+  "model_rows": 5,
+  "tests": {
+   "row_subset": {
+    "missing": 1
+   }
+  }
+ },
+ {
+  "id": "bird_587",
+  "db_id": "codebase_community",
+  "gold_rows": 9,
+  "model_rows": 19,
+  "tests": {}
+ },
+ {
+  "id": "bird_598",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_604",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_637",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_640",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_671",
+  "db_id": "codebase_community",
+  "gold_rows": 12,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 12
+   }
+  }
+ },
+ {
+  "id": "bird_701",
+  "db_id": "codebase_community",
+  "gold_rows": null,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_736",
+  "db_id": "superhero",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_744",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {
+   "under_projection": {
+    "gold_columns": 2,
+    "model_columns": 1,
+    "kept": [
+     1
+    ]
+   }
+  }
+ },
+ {
+  "id": "bird_750",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_769",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_791",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_794",
+  "db_id": "superhero",
+  "gold_rows": 40,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 40
+   }
+  }
+ },
+ {
+  "id": "bird_829",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {
+   "under_projection": {
+    "gold_columns": 2,
+    "model_columns": 1,
+    "kept": [
+     1
+    ]
+   }
+  }
+ },
+ {
+  "id": "bird_85",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_892",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_894",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_931",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_944",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_955",
+  "db_id": "formula_1",
+  "gold_rows": 25,
+  "model_rows": 25,
+  "tests": {}
+ }
+]

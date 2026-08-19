@@ -1,0 +1,1174 @@
+[
+ {
+  "id": "bird_1001",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1011",
+  "db_id": "formula_1",
+  "gold_rows": 20,
+  "model_rows": 20,
+  "tests": {}
+ },
+ {
+  "id": "bird_1028",
+  "db_id": "european_football_2",
+  "gold_rows": 2,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 2
+   }
+  }
+ },
+ {
+  "id": "bird_1029",
+  "db_id": "european_football_2",
+  "gold_rows": 4,
+  "model_rows": 4,
+  "tests": {}
+ },
+ {
+  "id": "bird_1032",
+  "db_id": "european_football_2",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_1037",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1058",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "Max iterations (8) exceeded without FINAL()"
+   }
+  }
+ },
+ {
+  "id": "bird_1068",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1080",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1092",
+  "db_id": "european_football_2",
+  "gold_rows": 4,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 4
+   }
+  }
+ },
+ {
+  "id": "bird_1098",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {
+   "under_projection": {
+    "gold_columns": 2,
+    "model_columns": 1,
+    "kept": [
+     1
+    ]
+   }
+  }
+ },
+ {
+  "id": "bird_11",
+  "db_id": "california_schools",
+  "gold_rows": 7804,
+  "model_rows": 7806,
+  "tests": {
+   "row_superset": {
+    "extra": 2
+   }
+  }
+ },
+ {
+  "id": "bird_1136",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1148",
+  "db_id": "european_football_2",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1149",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_115",
+  "db_id": "financial",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1156",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 7,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 7
+   }
+  }
+ },
+ {
+  "id": "bird_1164",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "Max iterations (8) exceeded without FINAL()"
+   }
+  }
+ },
+ {
+  "id": "bird_1168",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1169",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1179",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_1185",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "Max iterations (8) exceeded without FINAL()"
+   }
+  }
+ },
+ {
+  "id": "bird_1187",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 63,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_1227",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1235",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 73,
+  "model_rows": 759,
+  "tests": {}
+ },
+ {
+  "id": "bird_1238",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1241",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1243",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_125",
+  "db_id": "financial",
+  "gold_rows": 43,
+  "model_rows": 45,
+  "tests": {}
+ },
+ {
+  "id": "bird_1252",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1255",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1256",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1257",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1265",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1267",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1302",
+  "db_id": "thrombosis_prediction",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1339",
+  "db_id": "student_club",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1340",
+  "db_id": "student_club",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1350",
+  "db_id": "student_club",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "no such column: event.event_status"
+   }
+  }
+ },
+ {
+  "id": "bird_1376",
+  "db_id": "student_club",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_1387",
+  "db_id": "student_club",
+  "gold_rows": 4,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 4
+   }
+  }
+ },
+ {
+  "id": "bird_1399",
+  "db_id": "student_club",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "near \"s\": syntax error"
+   }
+  }
+ },
+ {
+  "id": "bird_145",
+  "db_id": "financial",
+  "gold_rows": 799,
+  "model_rows": 930,
+  "tests": {
+   "row_superset": {
+    "extra": 131
+   }
+  }
+ },
+ {
+  "id": "bird_1472",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1480",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1481",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1482",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 3,
+  "tests": {}
+ },
+ {
+  "id": "bird_1484",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1498",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1507",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 2,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "'NoneType' object has no attribute 'strip'"
+   }
+  }
+ },
+ {
+  "id": "bird_152",
+  "db_id": "financial",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1524",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1526",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1528",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "'NoneType' object has no attribute 'strip'"
+   }
+  }
+ },
+ {
+  "id": "bird_1529",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1531",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_1533",
+  "db_id": "debit_card_specializing",
+  "gold_rows": 10,
+  "model_rows": 10,
+  "tests": {}
+ },
+ {
+  "id": "bird_17",
+  "db_id": "california_schools",
+  "gold_rows": 58,
+  "model_rows": 58,
+  "tests": {}
+ },
+ {
+  "id": "bird_173",
+  "db_id": "financial",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_189",
+  "db_id": "financial",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "no such column: c.account_id"
+   }
+  }
+ },
+ {
+  "id": "bird_197",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_212",
+  "db_id": "toxicology",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_219",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_226",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_227",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_228",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_23",
+  "db_id": "california_schools",
+  "gold_rows": 1236,
+  "model_rows": 1239,
+  "tests": {}
+ },
+ {
+  "id": "bird_239",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {
+   "distinct_repair": {
+    "sql": "SELECT COUNT(DISTINCT bond_id) FROM connected WHERE atom_id LIKE 'TR%_19' OR atom_id2 LIKE 'TR%_19'"
+   }
+  }
+ },
+ {
+  "id": "bird_24",
+  "db_id": "california_schools",
+  "gold_rows": 1142,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_249",
+  "db_id": "toxicology",
+  "gold_rows": 2,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_255",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_26",
+  "db_id": "california_schools",
+  "gold_rows": 6,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "Max iterations (8) exceeded without FINAL()"
+   }
+  }
+ },
+ {
+  "id": "bird_260",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_263",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_273",
+  "db_id": "toxicology",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_32",
+  "db_id": "california_schools",
+  "gold_rows": 5,
+  "model_rows": 5,
+  "tests": {}
+ },
+ {
+  "id": "bird_327",
+  "db_id": "toxicology",
+  "gold_rows": 186,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_347",
+  "db_id": "card_games",
+  "gold_rows": 76,
+  "model_rows": 23,
+  "tests": {
+   "row_subset": {
+    "missing": 53
+   }
+  }
+ },
+ {
+  "id": "bird_349",
+  "db_id": "card_games",
+  "gold_rows": 2,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 2
+   }
+  }
+ },
+ {
+  "id": "bird_352",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_36",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_37",
+  "db_id": "california_schools",
+  "gold_rows": 17,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_383",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "Max iterations (8) exceeded without FINAL()"
+   }
+  }
+ },
+ {
+  "id": "bird_391",
+  "db_id": "card_games",
+  "gold_rows": 8,
+  "model_rows": 5,
+  "tests": {
+   "row_subset": {
+    "missing": 3
+   }
+  }
+ },
+ {
+  "id": "bird_40",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_407",
+  "db_id": "card_games",
+  "gold_rows": 1693,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "no such column: supertypes"
+   }
+  }
+ },
+ {
+  "id": "bird_408",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "Max iterations (8) exceeded without FINAL()"
+   }
+  }
+ },
+ {
+  "id": "bird_41",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 31,
+  "tests": {
+   "row_superset": {
+    "extra": 30
+   }
+  }
+ },
+ {
+  "id": "bird_412",
+  "db_id": "card_games",
+  "gold_rows": 50,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 50
+   }
+  }
+ },
+ {
+  "id": "bird_415",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "ambiguous column name: id"
+   }
+  }
+ },
+ {
+  "id": "bird_416",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_46",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_462",
+  "db_id": "card_games",
+  "gold_rows": 2,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_465",
+  "db_id": "card_games",
+  "gold_rows": 2,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_469",
+  "db_id": "card_games",
+  "gold_rows": 6,
+  "model_rows": 6,
+  "tests": {}
+ },
+ {
+  "id": "bird_48",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_486",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "ambiguous column name: id"
+   }
+  }
+ },
+ {
+  "id": "bird_50",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_518",
+  "db_id": "card_games",
+  "gold_rows": null,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_529",
+  "db_id": "card_games",
+  "gold_rows": 1,
+  "model_rows": 8424,
+  "tests": {
+   "row_superset": {
+    "extra": 8423
+   }
+  }
+ },
+ {
+  "id": "bird_571",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {
+   "distinct_repair": {
+    "sql": "SELECT (COUNT(DISTINCT posts.Id) * 1.0) / COUNT(DISTINCT votes.Id) AS ratio FROM posts LEFT JOIN votes ON votes.UserId = 24 WHERE posts.OwnerUserId = 24;"
+   }
+  }
+ },
+ {
+  "id": "bird_584",
+  "db_id": "codebase_community",
+  "gold_rows": 8,
+  "model_rows": 11,
+  "tests": {}
+ },
+ {
+  "id": "bird_586",
+  "db_id": "codebase_community",
+  "gold_rows": 2,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 2
+   }
+  }
+ },
+ {
+  "id": "bird_587",
+  "db_id": "codebase_community",
+  "gold_rows": 9,
+  "model_rows": 19,
+  "tests": {}
+ },
+ {
+  "id": "bird_604",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_637",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_640",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_665",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_671",
+  "db_id": "codebase_community",
+  "gold_rows": 12,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 12
+   }
+  }
+ },
+ {
+  "id": "bird_683",
+  "db_id": "codebase_community",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_701",
+  "db_id": "codebase_community",
+  "gold_rows": null,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_72",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_736",
+  "db_id": "superhero",
+  "gold_rows": 3,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 3
+   }
+  }
+ },
+ {
+  "id": "bird_743",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_744",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {
+   "under_projection": {
+    "gold_columns": 2,
+    "model_columns": 1,
+    "kept": [
+     1
+    ]
+   }
+  }
+ },
+ {
+  "id": "bird_750",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_758",
+  "db_id": "superhero",
+  "gold_rows": 5,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 5
+   }
+  }
+ },
+ {
+  "id": "bird_769",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 0,
+  "tests": {}
+ },
+ {
+  "id": "bird_773",
+  "db_id": "superhero",
+  "gold_rows": 157,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 157
+   }
+  }
+ },
+ {
+  "id": "bird_775",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_788",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_791",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_794",
+  "db_id": "superhero",
+  "gold_rows": 40,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 40
+   }
+  }
+ },
+ {
+  "id": "bird_829",
+  "db_id": "superhero",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {
+   "under_projection": {
+    "gold_columns": 2,
+    "model_columns": 1,
+    "kept": [
+     1
+    ]
+   }
+  }
+ },
+ {
+  "id": "bird_83",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "Max iterations (8) exceeded without FINAL()"
+   }
+  }
+ },
+ {
+  "id": "bird_85",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_87",
+  "db_id": "california_schools",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_880",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_89",
+  "db_id": "financial",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_892",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_894",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_902",
+  "db_id": "formula_1",
+  "gold_rows": 15,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 15
+   }
+  }
+ },
+ {
+  "id": "bird_928",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_930",
+  "db_id": "formula_1",
+  "gold_rows": 58,
+  "model_rows": 1,
+  "tests": {
+   "ties": {
+    "gold_rows": 58
+   }
+  }
+ },
+ {
+  "id": "bird_937",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_948",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "no such column: points"
+   }
+  }
+ },
+ {
+  "id": "bird_955",
+  "db_id": "formula_1",
+  "gold_rows": 25,
+  "model_rows": 25,
+  "tests": {}
+ },
+ {
+  "id": "bird_967",
+  "db_id": "formula_1",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ },
+ {
+  "id": "bird_988",
+  "db_id": "formula_1",
+  "gold_rows": 3,
+  "model_rows": null,
+  "tests": {
+   "no_answer": {
+    "error": "Max iterations (8) exceeded without FINAL()"
+   }
+  }
+ },
+ {
+  "id": "bird_99",
+  "db_id": "financial",
+  "gold_rows": 1,
+  "model_rows": 1,
+  "tests": {}
+ }
+]
