@@ -85,7 +85,7 @@
 **"当前最优"与基线在修正尺子上持平。** 它此前的领先有相当部分来自更好地拟合了坏 gold。
 外部论文报告修正后各 agent 名次变动 −9～+9，本项目内部复现为 −11～+9，同一量级。
 
-### 2.3 harness 规则在拟合标注缺陷（本轮最关键的机制发现）
+### 2.3 输出后处理规则在拟合标注缺陷（本轮最关键的机制发现）
 
 `count_no_distinct` 在 JOIN 查询里删掉 `COUNT` 的 `DISTINCT`，
 依据是 train gold 上 2377 样本、69 库、**0.891 支持度**——看起来无可辩驳。
@@ -97,7 +97,7 @@
 
 ```
 模型写的（对）     COUNT(DISTINCT T1.CustomerID)
-harness 改成（错） COUNT(T1.CustomerID)
+后处理改成（错） COUNT(T1.CustomerID)
 原始 gold（也错）  COUNT(*)
 ```
 
@@ -116,7 +116,7 @@ harness 改成（错） COUNT(T1.CustomerID)
 | `count_no_distinct` | **计算语义**——COUNT 的对象从实体变成行 | 不合法 |
 | `superlative_order_limit` | 计算语义，且会丢掉 WHERE 条件 | 不合法 |
 
-> harness 后处理可以规整输出格式，不可以改变查询算的是什么。
+> 输出后处理可以规整输出格式，不可以改变查询算的是什么。
 > **支持度只说明标注者多常这样写，不说明这样写是对的。**
 
 已关闭两条改语义的，判据写进 `build_sql_conventions.py` 的 `SEMANTICS_CHANGING`——
@@ -313,7 +313,7 @@ rescore_all_runs_corrected,arms_ctl_vs_trt_turn1,sentence_labels_{ctl,trt}_turn1
 reasoning_inline_{ctl,trt}_turn1}.json`、`data/processed/bird_dev_500_corrected_full.json`
 
 文档：`harness_defects_2026-08-18.md`、`config_inventory_2026-08-17.md`、
-`failure_adjudication_final_2026-08-16.md`、`harness_convention_rules_2026-08-16.md`、
+`failure_adjudication_final_2026-08-16.md`、`sql_postprocessing_rules_2026-08-16.md`、
 `adjudication_protocol.md`、`fault_ledger_163.html`
 
 ⚠️ `reasoning_sentence_labels_163.json` 是**回放数据**（见 §三），已作废，勿用。

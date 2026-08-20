@@ -318,7 +318,7 @@ _PROFILES = {
     # dropping the rewriting did.
     #
     # The suspicion is the latter. Scored against the corrected gold, the two rules
-    # since disabled were worth -13 and -1 (see harness_convention_rules_2026-08-16),
+    # since disabled were worth -13 and -1 (see sql_postprocessing_rules_2026-08-16),
     # because they had been mined from gold that omits DISTINCT.
     #
     # This arm isolates that half cleanly. The other half does not isolate as

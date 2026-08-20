@@ -55,7 +55,7 @@
 **`e3-c-conv-rules` 的领先没有了。** 原始 gold 上它 86.3% 排第一；修正 gold 上 87.0%，
 而 `clean-e0` 基线同为 87.0%、`legacy-e0` 89.2%、`e3-c-recursive` 90.3%。
 它只涨 +2，别人涨 +17~+24——**此前的领先有相当部分来自更好地拟合了坏 gold**，
-与 `count_no_distinct` 规则烂掉的机制相同（见 `harness_convention_rules_2026-08-16.md`）。
+与 `count_no_distinct` 规则烂掉的机制相同（见 `sql_postprocessing_rules_2026-08-16.md`）。
 
 **`e3-c-recursive` 涨 +24，是全场最大。** 该配置此前被判定为"递归没用"，
 那个结论建立在原始 gold 上。+24 远超 1~2pp 的噪声带，**需要重跑确认**。
@@ -125,7 +125,7 @@ B2 = B1 + 关键词表预筛，findings.md 记为 −3.6pp；修正 gold 上差�
 （`sql_convention_mode=none`）。所以它 +24 的来源分不清。
 
 而本轮已测得：被关掉的两条规则在修正 gold 上分别值 **−13** 和 **−1**
-（`harness_convention_rules_2026-08-16.md`）。**+24 里有多少只是"没开那两条坏规则"，必须拆开。**
+（`sql_postprocessing_rules_2026-08-16.md`）。**+24 里有多少只是"没开那两条坏规则"，必须拆开。**
 
 新臂与两侧的关系：
 
@@ -139,7 +139,7 @@ B2 = B1 + 关键词表预筛，findings.md 记为 −3.6pp；修正 gold 上差�
 
 ### 第二优先（有余力再做）
 
-`e3-c-semantic`、`e3-c-conv` —— 用于确认"约定写进 prompt vs 写进 harness"这条线在修正基准上是否还成立。
+`e3-c-semantic`、`e3-c-conv` —— 用于确认"约定写进 prompt vs 写进输出后处理"这条线在修正基准上是否还成立。
 
 ### 不重跑
 
@@ -175,7 +175,7 @@ B2 = B1 + 关键词表预筛，findings.md 记为 −3.6pp；修正 gold 上差�
 | 0 | **B1** | —— 零方法：单次生成，无探索、无自我纠正、无重试 |
 | 1 | `clean-e0` | agent 工具循环 —— **RLM 机制 ② 可执行环境 + ③ 自我改进** |
 | 2 | `e3-c-noconv` | 离线 schema 检索 + 元数据（`capability_gate`、`e3-f-schema-v4`）—— **机制 ① 的弱化版**（离线检索，非模型自主检索） |
-| 3 | `e3-c-conv-rules` | convention 后处理 —— **不属于 RLM**，是 harness 侧的答案规范化 |
+| 3 | `e3-c-conv-rules` | convention 后处理 —— **不属于 RLM**，是 输出后处理，属被测对象 |
 | 4 | **`e3-c-recursive-db`** | **机制 ③ 后半：分而治之**（`leaf-db-v1`，叶子共享父的受控数据库句柄） |
 
 `e3-c-noconv` 是为第 4 层能干净对比而新建的——原来的 `e3-c-recursive`（leaf-v1）

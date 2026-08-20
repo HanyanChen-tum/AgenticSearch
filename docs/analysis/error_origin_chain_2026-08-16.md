@@ -25,7 +25,7 @@
 
 ## 二、第一版为什么错：成因分解
 
-`classify_first_draft_causes.py` + WHERE 谓词级归一化。**关键方法论修正**：使用 harness 改写
+`classify_first_draft_causes.py` + WHERE 谓词级归一化。**关键方法论修正**：使用 后处理改写
 **之前**的模型原始 SQL（`sql_convention_rewrite.original_sql`，涉及 40 题）。用改写后的
 `predicted_sql` 会把 harness 去 DISTINCT 的选择记成模型的选择——首次运行即因此把计数口径的
 方向判反（3→6 / 14→5）。
@@ -99,7 +99,7 @@
 ## 四、对提升准确率的含义
 
 已测干预及结果：并列检测 −4、是非题布尔规则（train 否决）、表消歧（覆盖 2 题）、
-harness 门控复核 −8、hint 消融 −12、去 DISTINCT 规则（现状已最优，改动 −2）、
+强制复核门控复核 −8、hint 消融 −12、去 DISTINCT 规则（现状已最优，改动 −2）、
 字面量核实 +4（精确率 100%）、纯类型格式 +4。
 
 **共同点：全部试图从单一候选中榨取更好的结果。** 而第一节证明错误在第一次落笔即固化，

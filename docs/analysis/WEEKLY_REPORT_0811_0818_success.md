@@ -37,7 +37,7 @@
 
 ```
 模型写的（对）     COUNT(DISTINCT T1.CustomerID)
-harness 改成（错） COUNT(T1.CustomerID)
+后处理改成（错） COUNT(T1.CustomerID)
 原始 gold（也错）  COUNT(*)
 ```
 
@@ -49,7 +49,7 @@ harness 改成（错） COUNT(T1.CustomerID)
 | `count_no_distinct` | **计算语义**——COUNT 的对象从实体变成行 | 关闭 |
 | `superlative_order_limit` | 计算语义，且会丢掉 WHERE 条件 | 关闭 |
 
-> harness 后处理可以规整输出格式，不可以改变查询算的是什么。
+> 输出后处理可以规整输出格式，不可以改变查询算的是什么。
 
 判据写进 `build_sql_conventions.py` 的 `SEMANTICS_CHANGING`——
 该脚本按支持度重算 `enabled`，只改产物会被下次重跑复活。

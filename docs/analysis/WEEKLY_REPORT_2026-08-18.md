@@ -88,7 +88,7 @@ B1 两次只差 1 道（噪声 0.2pp），是可靠的地板。
 而且由错变对的 26 道里，**19 道正是第 1 步独立判为 `gold` 的题**——
 读题面 + 执行反证、另一团队独立重标、模型答案不变而判分翻正，三条证据线汇合。
 
-### 第 3 步：发现 harness 规则在拟合坏 gold
+### 第 3 步：发现 输出后处理规则在拟合坏 gold
 
 `count_no_distinct` 规则在 JOIN 查询里从 `COUNT` 删除 `DISTINCT`，
 依据是 train gold 上 2377 样本、69 库、**0.891 支持度**，看起来无可辩驳。
@@ -100,7 +100,7 @@ B1 两次只差 1 道（噪声 0.2pp），是可靠的地板。
 
 ```sql
 模型写的（对）    SELECT COUNT(DISTINCT T1.CustomerID) ...
-harness 改成（错） SELECT COUNT(T1.CustomerID) ...
+后处理改成（错） SELECT COUNT(T1.CustomerID) ...
 原始 gold（也错）  SELECT COUNT(*) ...
 ```
 
@@ -112,7 +112,7 @@ harness 改成（错） SELECT COUNT(T1.CustomerID) ...
 判据写进生成脚本的 `SEMANTICS_CHANGING`，支持度再高也不再启用——
 因为该脚本按支持度重算 `enabled`，只改产物会被下次重跑覆盖。
 
-> harness 后处理可以规整输出格式，**不可以改变查询算的是什么**。
+> 输出后处理可以规整输出格式，**不可以改变查询算的是什么**。
 > 支持度只说明标注者多常这样写，不说明这样写是对的。
 
 ### 第 4 步：发现 harness 缺陷把自己的崩溃记成「模型答错」

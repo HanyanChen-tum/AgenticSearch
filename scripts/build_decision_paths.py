@@ -148,7 +148,7 @@ def build(results_path: Path, trace_path: Path) -> dict:
                 events_by_id[record["id"]] = trace.get("events") or []
                 messages_by_id[record["id"]] = trace.get("messages") or []
                 # `predicted_sql` is post-rewrite. Charting it would show the
-                # harness's choices as if they were the model's -- with the
+                # post-processing's choices as if they were the model's -- with the
                 # DISTINCT rule on, no query ends up counting distinct at all.
                 rewrite = trace.get("sql_convention_rewrite") or {}
                 if rewrite.get("changed") and rewrite.get("original_sql"):

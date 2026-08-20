@@ -13,8 +13,8 @@ than reusing the first pass. Comparing raw SQL text counts `T1.Currency` against
 `Currency`, and `SUBSTR(d,1,4)` against `STRFTIME('%Y',d)`, as differences; 19 of
 45 supposed WHERE divergences evaporated once those were normalised. Every
 comparison here therefore runs on canonical forms, and the SQL read for the model
-is `sql_convention_rewrite.original_sql` where the harness rewrote it, so the
-harness's own DISTINCT stripping is not attributed to the model.
+is `sql_convention_rewrite.original_sql` where post-processing rewrote it, so
+its own DISTINCT stripping is not attributed to the model.
 
 Each layer, once it is identified as the first to diverge, is then described
 concretely -- which table was swapped, whether the model added or dropped a

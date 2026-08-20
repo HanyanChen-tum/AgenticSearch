@@ -1,4 +1,11 @@
-# harness 改写规则的处置：改形状可以，改语义不行（2026-08-16）
+# 后处理改写规则的处置：改形状可以，改语义不行（2026-08-16）
+
+> **2026-08-20 更名。** 原名 `harness_convention_rules_2026-08-16.md`，文中称这套改写为
+> "harness 改写"。那是个用词错误：**evaluation harness 的定义性约束是只观测、不改变预测**
+> （`lm-evaluation-harness` 一类工具即此义）。这套 SQL 改写**会改变预测**，
+> 因此它属于**被测系统**，标准叫法是**输出后处理（output post-processing）**。
+> 全仓已统一更名，判读标签 `harness改写` 同步改为 `后处理改写`。
+> 术语表见 [`week_2026-08-18/INDEX.md`](week_2026-08-18/INDEX.md)。
 
 > ## ⚠️ 本文 §3.6 及一切基于「外部修正版 gold」的数字暂停使用（2026-08-17）
 >
@@ -87,7 +94,7 @@
 | `count_no_distinct` | **计算语义**——COUNT 的对象从实体变成行 | 不合法 |
 | `superlative_order_limit` | **计算语义**，且会丢掉 WHERE 条件 | 不合法 |
 
-**harness 后处理可以规整输出格式，不可以改变查询算的是什么。**
+**输出后处理可以规整输出格式，不可以改变查询算的是什么。**
 
 这条判据不需要做实验就能预判上表的结果，而且它解释了为什么"用 gold 支持度做门槛"会失灵：
 **支持度只能说明标注者多常这样写，不能说明这样写是对的。**
@@ -105,7 +112,7 @@
 ```sql
 -- 模型写的（对，正是修正版 gold 要求的）
 SELECT COUNT(DISTINCT T1.CustomerID) FROM customers T1 JOIN yearmonth T2 ON …
--- harness 改成（错）
+-- 后处理改成（错）
 SELECT COUNT(T1.CustomerID)          FROM customers T1 JOIN yearmonth T2 ON …
 -- 原始 gold（也错，同一个错）
 SELECT COUNT(*)                      FROM yearmonth T1 JOIN customers T2 ON …

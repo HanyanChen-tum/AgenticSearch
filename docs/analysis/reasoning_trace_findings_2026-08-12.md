@@ -158,7 +158,7 @@ dev 的"9/9"是小样本巧合，规则本身是错的，**不能上线**。
 card_games 库里涉及 `foreign_data`/`set_translations` 的 21 道题，模型选对表的有 19 道（90.5%），
 选反的只有最早发现的那 2 道。**天花板是 500 题里的 2 题，且是单库单表对的特例，不构成可推广机制。**
 
-### 6.4 harness 门控式复核（新架构，仍然失败）
+### 6.4 强制复核门控（新架构，仍然失败）
 
 不满足于硬编码，设计了一个不同性质的机制：不直接改写 SQL，而是检测到 `LIMIT 1` 且实际存在多个不同取值时，
 把这个**具体执行结果**作为新的 observation 喂回模型（和真实工具调用返回的格式一样），让模型自己判断这次的多值要不要紧，
@@ -252,7 +252,7 @@ train 审计规则 +2.8pp）——这批推理轨迹分析目前没有找到新�
 数据：`docs/analysis/analysisDetail/reasoning_capture_{probe,genuine_errors,core197,dev500}.json`、
 `reasoning_timeline_{core197,dev500}.{json,md}`、`resample_*.json`、
 `trajectory_pattern_ranking_dev500.json`、`decision_point_ranking{,_combined}.json`、
-`verify_before_limit_results.json`（83 题的 harness 门控式复核实验结果）
+`verify_before_limit_results.json`（83 题的 强制复核门控实验结果）
 
 脚本：`scripts/{capture_reasoning,build_reasoning_timeline,resample_turn,resample_full_trajectory,mine_trajectory_patterns,rank_decision_points,counterfactual_decision,build_decision_paths,render_decision_paths_html,verify_before_limit}.py`
 

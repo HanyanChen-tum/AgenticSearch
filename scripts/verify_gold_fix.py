@@ -46,7 +46,7 @@ def verify(fixes: dict) -> list:
         if err:
             out.append((qid, "ERR", err[:70], ""))
             continue
-        # 模型侧：改写前原始SQL优先（harness改写不该算模型的账）
+        # 模型侧：改写前原始SQL优先（后处理改写不该算模型的账）
         msql = orig.get(qid, r.get("predicted_sql"))
         mans, merr = run(r["db_id"], msql)
         if merr:

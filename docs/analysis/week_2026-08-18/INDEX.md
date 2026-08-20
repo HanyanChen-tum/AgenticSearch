@@ -45,6 +45,26 @@
   [`../WEEKLY_REPORT_2026-08-18.md`](../WEEKLY_REPORT_2026-08-18.md) 及
   `../WEEKLY_REPORT_0811_0818*.md` —— 另一批本周文档，留在原处未移动
 
+## 术语（2026-08-20 厘清）
+
+此前 "harness" 一词同时指两个边界完全不同的东西，第 3 层"算不算方法的一部分"说不清即源于此。
+分界线不是谁写的代码，而是**能不能改变预测**：
+
+| 中文 | English | 指什么 | 能改变预测吗 |
+|---|---|---|---|
+| **评测框架** | evaluation harness | runner、`run_manifest`、`transcripts.jsonl`、判分 | **不能——能就是缺陷** |
+| **被测系统 / 脚手架** | system under test / agent scaffold | 工具循环、离线检索、递归 | 能，必须可消融 |
+| **输出后处理** | output post-processing | SQL 约定改写（第 3 层） | 能，必须可消融 |
+
+由此，异常误分类那个缺陷可以说得更准：**评测框架改变了它本该只观测的结果——
+测量仪器污染了测量。** 这不是"有个 bug"，是违反了 harness 的定义性约束，
+也解释了它为何难被发现：它伪装成被测对象的属性。
+
+已执行的更名：`harness_convention_rules_2026-08-16.md` →
+[`../sql_postprocessing_rules_2026-08-16.md`](../sql_postprocessing_rules_2026-08-16.md)；
+文档与判读数据里的 `harness 改写` / `harness改写` → `后处理改写`；
+代码注释同步。`harness_defects_2026-08-18.md` **未改名**——那三个缺陷确实都在评测框架里。
+
 ## 本周新增的脚本
 
 | 脚本 | 用途 |

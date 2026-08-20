@@ -9,7 +9,7 @@ Those choices are not SQL knowledge -- the model's preferred spelling is usually
 the semantically defensible one -- so telling the model about them does not work
 (measured: e3-ac carries the DISTINCT instruction in its prompt and violates the
 convention exactly as often as e3-c, which does not).  They are applied by the
-harness as deterministic rewrites of the final SQL instead.
+post-processing as deterministic rewrites of the final SQL instead.
 
 Each convention records how often train gold conforms, over how many databases,
 so the artifact carries its own evidence.  Only conventions above the gate are

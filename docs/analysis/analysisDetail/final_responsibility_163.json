@@ -149,13 +149,13 @@
   "goldfix_verified": "PASS(修正gold后模型判对)"
  },
  "bird_1229": {
-  "verdict": "harness改写",
+  "verdict": "后处理改写",
   "cause": "(原待定已解)模型原SQL即判对，harness去DISTINCT改写致781 vs 106",
   "src": "人工",
   "db_id": "thrombosis_prediction"
  },
  "bird_1231": {
-  "verdict": "harness改写",
+  "verdict": "后处理改写",
   "cause": "(原待定已解)模型原SQL即判对，harness去DISTINCT改写致32 vs 2",
   "src": "人工",
   "db_id": "thrombosis_prediction"
@@ -216,7 +216,7 @@
   "goldfix_verified": "PASS(修正gold后模型判对)"
  },
  "bird_1257": {
-  "verdict": "harness改写",
+  "verdict": "后处理改写",
   "cause": "模型原SQL COUNT(DISTINCT ID)=4=gold；harness去DISTINCT规则改写后变30致错",
   "src": "人工",
   "db_id": "thrombosis_prediction"
@@ -262,7 +262,7 @@
   "db_id": "european_football_2"
  },
  "bird_1084": {
-  "verdict": "harness改写",
+  "verdict": "后处理改写",
   "cause": "模型原SQL COUNT(DISTINCT player_api_id)=892=gold；harness去DISTINCT改写后变11758",
   "src": "人工",
   "db_id": "european_football_2"
@@ -431,7 +431,7 @@
   "goldfix_verified": "PASS(修正gold后模型判对)"
  },
  "bird_1011": {
-  "verdict": "harness改写",
+  "verdict": "后处理改写",
   "cause": "(原机械标基础设施，已核实)harness的no_select_concat规则把子查询里的forename||' '||surname AS full_name拆成两列，外层SELECT full_name随之失效报'no such column'；sql_conventions.py:89的_alias_is_referenced只查同层ORDER BY/GROUP BY，未查外层对子查询别名的引用",
   "src": "人工",
   "db_id": "formula_1"
@@ -965,7 +965,7 @@
   "db_id": "california_schools"
  },
  "bird_92": {
-  "verdict": "harness改写",
+  "verdict": "后处理改写",
   "cause": "模型原SQL COUNT(DISTINCT district_id)即判对，harness去DISTINCT改写后变2009",
   "src": "人工",
   "db_id": "financial"

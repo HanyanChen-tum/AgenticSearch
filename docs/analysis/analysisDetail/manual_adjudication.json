@@ -125,11 +125,11 @@
  },
  "bird_1229": {
   "cause": "(原待定已解)模型原SQL即判对，harness去DISTINCT改写致781 vs 106",
-  "verdict": "harness改写"
+  "verdict": "后处理改写"
  },
  "bird_1231": {
   "cause": "(原待定已解)模型原SQL即判对，harness去DISTINCT改写致32 vs 2",
-  "verdict": "harness改写"
+  "verdict": "后处理改写"
  },
  "bird_1241": {
   "cause": "hint定义lower=PLT<100/higher=PLT>400，gold用<=100/>=400，违背自己hint(-562 vs -555)",
@@ -157,7 +157,7 @@
  },
  "bird_1257": {
   "cause": "模型原SQL COUNT(DISTINCT ID)=4=gold；harness去DISTINCT规则改写后变30致错",
-  "verdict": "harness改写"
+  "verdict": "后处理改写"
  },
  "bird_1265": {
   "cause": "gold缺括号，RNP='negative' OR (RNP='0' AND Admission='+')；正解35，gold给47",
@@ -181,7 +181,7 @@
  },
  "bird_1084": {
   "cause": "模型原SQL COUNT(DISTINCT player_api_id)=892=gold；harness去DISTINCT改写后变11758",
-  "verdict": "harness改写"
+  "verdict": "后处理改写"
  },
  "bird_1094": {
   "cause": "gold对两人全部历史属性行SUM(24行vs12行)，比值被行数支配得133.7%；模型取最新评分得15.25%",
@@ -485,7 +485,7 @@
  },
  "bird_92": {
   "cause": "模型原SQL COUNT(DISTINCT district_id)即判对，harness去DISTINCT改写后变2009",
-  "verdict": "harness改写"
+  "verdict": "后处理改写"
  },
  "bird_93": {
   "cause": "模型写A3='north bohemia'，库中实际为'north Bohemia'，SQLite大小写敏感致0结果，模型未核实字面量",
@@ -581,7 +581,7 @@
  },
  "bird_1011": {
   "cause": "(原机械标基础设施，已核实)harness的no_select_concat规则把子查询里的forename||' '||surname AS full_name拆成两列，外层SELECT full_name随之失效报'no such column'；sql_conventions.py:89的_alias_is_referenced只查同层ORDER BY/GROUP BY，未查外层对子查询别名的引用",
-  "verdict": "harness改写"
+  "verdict": "后处理改写"
  },
  "bird_760": {
   "cause": "(原机械标基础设施，已核实)模型SQL引用了FROM中不存在的publisher.id，是模型自己写出的无效SQL，未经harness改写",

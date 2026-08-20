@@ -1,13 +1,15 @@
 """Deterministic post-processing of final SQL toward BIRD's writing conventions.
 
-This is a harness component, not a model instruction.  Measured on the 197-question
+This is a post-processing stage of the system under test, not a model
+instruction -- it changes the prediction, so it must be ablatable. (It is not
+part of the evaluation harness, which only observes and scores.)  Measured on the 197-question
 core set, e3-ac carries "consider whether DISTINCT is required" and "verify the
 ORDER BY direction" in its prompt and violates those conventions as often as e3-c,
 which carries neither (24 vs 25 violations).  Applying the same conventions here
 instead moves questions.
 
 Every rewrite is recorded with the rule that fired and the before/after SQL, so a
-run's accuracy can always be decomposed into model output and harness rewriting.
+run's accuracy can always be decomposed into model output and post-processing.
 """
 
 from __future__ import annotations
@@ -252,7 +254,7 @@ class SqlConventionRewriter:
             tree = sqlglot.parse_one(original, read=DIALECT)
         except Exception:
             # An unparseable prediction is left exactly as the model wrote it;
-            # the harness must never turn a bad SQL into a different bad SQL.
+            # post-processing must never turn a bad SQL into a different bad SQL.
             return ConventionRewrite(
                 sql=original, original_sql=original, parse_failed=True,
                 notes=("sqlglot parse failed; left unmodified",),

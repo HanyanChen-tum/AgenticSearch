@@ -67,7 +67,7 @@ DISTINCT 违反数与完全没这句话的 e3-c 一模一样（14 vs 14）。
 
 改写全部留痕：trace 中 `sql_convention_manifest` 记录 artifact 哈希与合规声明
 （`uses_dev_data=false`、`uses_gold_sql=false`），`sql_convention_rewrite` 逐题记录命中规则与改写前后 SQL。
-因此任何一次运行的准确率都可以拆成"模型产出"与"harness 改写"两部分。
+因此任何一次运行的准确率都可以拆成"模型产出"与"后处理改写"两部分。
 
 Prompt 哈希未变：`e3-c-conv` 与 `e3-c` 同为 `1ea7ea4d3306`，从哈希层面证明该组件不碰 Prompt。
 （`agent_config_sha256` 因 dataclass 新增字段而变化，与此前加 `literal_verification_nudge`、`context_mode` 时同理，

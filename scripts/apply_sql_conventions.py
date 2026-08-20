@@ -4,7 +4,7 @@ The rewrites are deterministic functions of the recorded `predicted_sql`, so
 applying them offline gives exactly the accuracy an inline run would have
 produced.  That keeps every historical run re-scorable without paying for it
 again, and keeps the decomposition explicit: the report always states how many
-questions the model got right on its own and how many the harness moved.
+questions the model got right on its own and how many post-processing moved.
 """
 
 from __future__ import annotations

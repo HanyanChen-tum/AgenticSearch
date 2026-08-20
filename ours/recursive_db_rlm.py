@@ -253,7 +253,7 @@ class DBRLM(RLM):
         Deliberately outside the model loop: the conventions are dataset writing
         habits rather than SQL knowledge, and stating them in the prompt was
         measured to change nothing. Recording the rewrite keeps a run's accuracy
-        decomposable into model output and harness rewriting.
+        decomposable into model output and post-processing.
         """
         if self._sql_conventions is None:
             return sql

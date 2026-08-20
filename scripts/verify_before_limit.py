@@ -1,4 +1,4 @@
-"""Test a harness-gated re-verification loop, as an alternative to both rejected
+"""Test a gated re-verification loop, as an alternative to both rejected
 fixes for the "assumes uniqueness" bug (bird_959, bird_1092, bird_930, bird_412).
 
 Both prior attempts failed because they let a mechanical SQL-shape check decide
@@ -9,8 +9,8 @@ matters for *this* question -- a mechanical check can't know that "who is older,
 A or B" has 1000 rows in the underlying table but only 2 relevant ones.
 
 This instead reuses the REACT observation loop that already works in this
-harness: detect the LIMIT-1 pattern, silently execute the de-limited query
-(harness-side, deterministic, free), and if it returns more than one distinct
+post-processing: detect the LIMIT-1 pattern, silently execute the de-limited query
+(deterministic, free, outside the model), and if it returns more than one distinct
 value, hand that concrete fact back to the model as a new observation -- the
 same shape as a real `db.execute` result -- and let the model decide with
 evidence in hand, exactly as it already does for every other tool call. The

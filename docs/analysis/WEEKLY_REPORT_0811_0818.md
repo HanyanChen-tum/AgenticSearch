@@ -205,7 +205,7 @@
 **74 道纯 gold 题上，模型答案一个字节没变，判分从 50.0% 升到 71.6%。**
 由错变对的 26 道里 **19 道正是 §3.2 独立判为 `gold` 的题**——三条证据线汇合。
 
-### 4.2 harness 规则在拟合坏 gold
+### 4.2 输出后处理规则在拟合坏 gold
 
 `count_no_distinct` 在 JOIN 查询里删掉 `COUNT` 的 `DISTINCT`，
 依据是 train gold 上 2377 样本、**0.891 支持度**。
@@ -217,7 +217,7 @@
 
 ```
 模型写的（对）     COUNT(DISTINCT T1.CustomerID)
-harness 改成（错） COUNT(T1.CustomerID)
+后处理改成（错） COUNT(T1.CustomerID)
 原始 gold（也错）  COUNT(*)
 ```
 
@@ -226,7 +226,7 @@ harness 改成（错） COUNT(T1.CustomerID)
 **处置：** 关闭两条改**计算语义**的规则，保留一条只改**输出形状**的。
 判据写进生成脚本的 `SEMANTICS_CHANGING`——该脚本按支持度重算 `enabled`，只改产物会被下次重跑复活。
 
-> harness 后处理可以规整输出格式，不可以改变查询算的是什么。
+> 输出后处理可以规整输出格式，不可以改变查询算的是什么。
 > 支持度只说明标注者多常这样写，不说明这样写是对的。
 
 ### 4.3 harness 把自己的崩溃记成「模型答错」
