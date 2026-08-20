@@ -63,7 +63,7 @@ accordingly.
 
 ## 2. Reasoning-step statistics
 
-Script: [`scripts/reasoning_step_stats.py`](../../scripts/reasoning_step_stats.py).
+Script: [`scripts/reasoning_step_stats.py`](../../../scripts/reasoning_step_stats.py).
 Four measures:
 
 | Measure | Meaning | `e3-c-conv-rules` run1 |
@@ -109,7 +109,7 @@ strongest failure signal", which turned out to be a difficulty proxy.
 
 ## 3. Error class by reasoning volume: two failure modes point opposite ways
 
-Triaged with [`scripts/triage_failure_causes.py`](../../scripts/triage_failure_causes.py),
+Triaged with [`scripts/triage_failure_causes.py`](../../../scripts/triage_failure_causes.py),
 which emits only facts that re-execute and never a verdict, then pooled over the eight arms:
 
 | Class | n | Median reasoning tokens | vs correct |
@@ -242,7 +242,7 @@ weight loss.
 ### Conclusion 1.5: which RLM mechanisms these layers correspond to
 
 This has to be stated precisely or the result is easy to misread.
-[`README.md` §2.3](README.md) splits RLM into **three** measurable capabilities, not one:
+[`README.md` §2.3](../README.md) splits RLM into **three** measurable capabilities, not one:
 
 | RLM mechanism | What it means | Which layer carries it | Measured |
 |---|---|---|---:|
@@ -259,7 +259,7 @@ in "executable environment plus self-improvement".**
 
 The other two each have independent evidence for why they do not pay. Mechanism 1 in its
 full form (the context store) was already measured in
-[`e5_a_context_store_smoke1.md`](analysisDetail/e5_a_context_store_smoke1.md): this task runs
+[`e5_a_context_store_smoke1.md`](../analysisDetail/e5_a_context_store_smoke1.md): this task runs
 at **4% context utilisation**, so the premise "externalise because it does not fit" does not
 hold and only the cost of extra read turns remains. Layer 2 here is its weakened form
 (offline retrieval rather than model-driven search) and returns +2.5pp. Mechanism 3's second
@@ -347,7 +347,7 @@ internal reasoning in a different form.
 
 `config_inventory_2026-08-17.md` §6 stated the thesis as "argue the contribution of **RLM
 recursion** over the baseline". **That phrasing narrows RLM** — per
-[`README.md` §2.3](README.md) RLM is three mechanisms and recursion is only the second half
+[`README.md` §2.3](../README.md) RLM is three mechanisms and recursion is only the second half
 of mechanism 3. Read through the narrow phrasing, these results would be misreported as
 "RLM contributes nothing", which is wrong.
 
@@ -430,4 +430,4 @@ batch of non-comparable figures — exactly the trap of the 84.5% to 86.7% corre
 - `results/chain_*_corrected_run{1,2}.json` - the eight arms of the chain
 - `results/effort_{minimal,low,medium}_conv_rules_run1.json` - the effort sweep
 - `analysisDetail/step_stats_high.json`, `analysisDetail/triage_chain_*.json`, `analysisDetail/triage_effort_*.json`
-- [`scripts/reasoning_step_stats.py`](../../scripts/reasoning_step_stats.py), [`scripts/triage_failure_causes.py`](../../scripts/triage_failure_causes.py), [`scripts/audit_run_configs.py`](../../scripts/audit_run_configs.py)
+- [`scripts/reasoning_step_stats.py`](../../../scripts/reasoning_step_stats.py), [`scripts/triage_failure_causes.py`](../../../scripts/triage_failure_causes.py), [`scripts/audit_run_configs.py`](../../../scripts/audit_run_configs.py)

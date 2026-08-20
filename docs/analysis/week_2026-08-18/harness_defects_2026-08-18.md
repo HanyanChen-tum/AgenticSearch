@@ -10,8 +10,8 @@
 
 **机制。** 本机 `sys.stdout.encoding` 是 `gbk`（ANSI 代码页 cp936），仓库里没有
 `PYTHONUTF8` / `PYTHONIOENCODING` / `reconfigure()`。而
-[`ours/recursive_db_rlm.py:504`](../../ours/recursive_db_rlm.py) 打印模型回复、
-[`:610`](../../ours/recursive_db_rlm.py) 打印 REPL 输出（含数据库行），**两处都无 verbose 开关**。
+[`ours/recursive_db_rlm.py:504`](../../../ours/recursive_db_rlm.py) 打印模型回复、
+[`:610`](../../../ours/recursive_db_rlm.py) 打印 REPL 输出（含数据库行），**两处都无 verbose 开关**。
 数据库行里只要有一个 cp936 编不出的字符，`print()` 就抛 `UnicodeEncodeError`。
 
 **为什么会变成答错。** 见下面第二条——异常穿出 `complete_sql` 后被当作模型的真实失败，
@@ -34,18 +34,18 @@
 `Élu de l'Ancêtre`、`갈등`、`Autoprísluš.`。
 因此它同时扭曲总分**和**任何按数据库、按难度的分层分析。
 
-**修复。** 新增 [`shared/console.py`](../../shared/console.py) 的 `force_utf8_console()`，
+**修复。** 新增 [`shared/console.py`](../../../shared/console.py) 的 `force_utf8_console()`，
 在流层面把 stdout/stderr 重配为 `utf-8` + `errors="replace"`，
 已接入全部 5 个驱动 agent 的入口脚本。**任何新入口都必须调用它。**
 
 已写入的记录不会自动重跑（resume 会跳过），需用
-[`scripts/purge_harness_crash_records.py`](../../scripts/purge_harness_crash_records.py) 先删再跑。
+[`scripts/purge_harness_crash_records.py`](../../../scripts/purge_harness_crash_records.py) 先删再跑。
 
 ---
 
 ## 二、异常误分类（**未修**）
 
-[`scripts/run_bird_indomain_fewshot.py:66-74`](../../scripts/run_bird_indomain_fewshot.py)：
+[`scripts/run_bird_indomain_fewshot.py:66-74`](../../../scripts/run_bird_indomain_fewshot.py)：
 
 ```python
 except Exception as e:
@@ -84,13 +84,13 @@ except Exception as e:
 
 链条三处：
 
-1. [`scripts/build_corrected_dev500.py:66`](../../scripts/build_corrected_dev500.py)
+1. [`scripts/build_corrected_dev500.py:66`](../../../scripts/build_corrected_dev500.py)
    写 `"evidence": rec.get("evidence")`，**保留了 `None`**
-2. [`scripts/run_bird_indomain_fewshot.py:64`](../../scripts/run_bird_indomain_fewshot.py)
+2. [`scripts/run_bird_indomain_fewshot.py:64`](../../../scripts/run_bird_indomain_fewshot.py)
    传 `evidence=example.get("evidence", "")` —— `.get(k, default)` 只在**键不存在**时给默认值，
    键存在而值为 `None` 时照样返回 `None`
-3. [`ours/recursive_db_rlm.py:102`](../../ours/recursive_db_rlm.py) 与
-   [`:123`](../../ours/recursive_db_rlm.py) 调 `evidence.strip()` → `AttributeError`
+3. [`ours/recursive_db_rlm.py:102`](../../../ours/recursive_db_rlm.py) 与
+   [`:123`](../../../ours/recursive_db_rlm.py) 调 `evidence.strip()` → `AttributeError`
 
 | 数据集 | `evidence is None` | `evidence == ""` |
 |---|---:|---:|
@@ -174,7 +174,7 @@ except Exception as e:
 
 ## 涉及文件
 
-- [`shared/console.py`](../../shared/console.py) —— 编码修复
-- [`scripts/purge_harness_crash_records.py`](../../scripts/purge_harness_crash_records.py) —— 删崩溃记录以便 resume 重跑
-- [`scripts/rescore_against_corrected_gold.py`](../../scripts/rescore_against_corrected_gold.py) —— 按修正 gold 重评
-- [`scripts/triage_failure_causes.py`](../../scripts/triage_failure_causes.py) —— 失败分诊（只出可复算的事实，不出结论）
+- [`shared/console.py`](../../../shared/console.py) —— 编码修复
+- [`scripts/purge_harness_crash_records.py`](../../../scripts/purge_harness_crash_records.py) —— 删崩溃记录以便 resume 重跑
+- [`scripts/rescore_against_corrected_gold.py`](../../../scripts/rescore_against_corrected_gold.py) —— 按修正 gold 重评
+- [`scripts/triage_failure_causes.py`](../../../scripts/triage_failure_causes.py) —— 失败分诊（只出可复算的事实，不出结论）

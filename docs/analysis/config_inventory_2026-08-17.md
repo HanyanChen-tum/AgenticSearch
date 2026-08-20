@@ -7,7 +7,7 @@
 
 > **2026-08-18 更正。** 本节的噪声带估计已被推翻，`e3-c-rc-ctl` / `e3-c-rc-trt` /
 > `e3_c_arcwise_full` 的数字已更新，另有三个运行仍被 harness 缺陷压低。
-> 详见 [`harness_defects_2026-08-18.md`](harness_defects_2026-08-18.md)。
+> 详见 [`harness_defects_2026-08-18.md`](week_2026-08-18/harness_defects_2026-08-18.md)。
 
 ## 一、噪声带：先量它，否则读不出任何差异
 
@@ -165,7 +165,7 @@ B2 = B1 + 关键词表预筛，findings.md 记为 −3.6pp；修正 gold 上差�
 > ③ 自我改进与分而治之。递归只是 ③ 的后半。
 > 按窄表述读，实测结果会被误读成"RLM 没有贡献"——而真实结论是收益**极不均衡**：
 > ② + ③ 前半贡献 +13.4pp，① 的弱化版 +2.5pp，③ 后半 +0.3pp（误差内）。
-> 见 [`five_layer_chain_results_2026-08-19.md`](five_layer_chain_results_2026-08-19.md) §六。
+> 见 [`five_layer_chain_results_2026-08-19.md`](week_2026-08-18/five_layer_chain_results_2026-08-19.md) §六。
 
 论文要论证的是 RLM **三个机制各自**相对基线的贡献，所以对照链每层只加一件事
 （右侧标注该层对应哪个机制）：
@@ -229,7 +229,7 @@ v1 那个 profile 又把 convention 混了进来，混淆无法消除。
 
 ## 八、2026-08-18 更正汇总
 
-详见 [`harness_defects_2026-08-18.md`](harness_defects_2026-08-18.md)。要点：
+详见 [`harness_defects_2026-08-18.md`](week_2026-08-18/harness_defects_2026-08-18.md)。要点：
 
 **已修复并重跑，数字更新：**
 

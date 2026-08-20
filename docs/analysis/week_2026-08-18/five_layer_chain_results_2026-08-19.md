@@ -56,7 +56,7 @@
 
 ## 二、推理步骤统计
 
-脚本：[`scripts/reasoning_step_stats.py`](../../scripts/reasoning_step_stats.py)。四个口径：
+脚本：[`scripts/reasoning_step_stats.py`](../../../scripts/reasoning_step_stats.py)。四个口径：
 
 | 口径                 | 含义                                    | `e3-c-conv-rules` run1                  |
 | -------------------- | --------------------------------------- | ----------------------------------------- |
@@ -97,7 +97,7 @@ simple/moderate 上效应在控制难度后仍在，但 challenging 层在一个
 
 ## 三、错误类别 × 推理量：两类失败方向相反
 
-用 [`scripts/triage_failure_causes.py`](../../scripts/triage_failure_causes.py) 的
+用 [`scripts/triage_failure_causes.py`](../../../scripts/triage_failure_causes.py) 的
 可复算口径（只出能重执行验证的事实，不出结论）对八臂分诊后合并：
 
 | 类别                                                                      |    n |     推理量中位 |                 相对答对 |
@@ -211,7 +211,7 @@ low → medium 再花 632 个换 +2.2pp；medium → high 再花 1400 个换 +1.
 
 ### 结论一点五：这五层对应 RLM 的哪几个机制
 
-先把话说准，否则容易读错。[`README.md` §2.3](README.md) 把 RLM 拆成**三个**可测量的能力，
+先把话说准，否则容易读错。[`README.md` §2.3](../README.md) 把 RLM 拆成**三个**可测量的能力，
 不是一个：
 
 | RLM 机制 | 说的是什么 | 本链里由哪层承载 | 实测 |
@@ -226,7 +226,7 @@ low → medium 再花 632 个换 +2.2pp；medium → high 再花 1400 个换 +1.
 **RLM 的三个机制在这个任务上收益极不均衡，几乎全部集中在「可执行环境 + 自我改进」这一支。**
 
 另外两支各自有独立证据说明为什么不划算：机制 ① 的完整形态（context store）在
-[`e5_a_context_store_smoke1.md`](analysisDetail/e5_a_context_store_smoke1.md) 里已测过——
+[`e5_a_context_store_smoke1.md`](../analysisDetail/e5_a_context_store_smoke1.md) 里已测过——
 本任务的上下文利用率只有 4%，"装不下才需要外部化"的前提不成立，所以只剩多轮读取的开销；
 本链第 2 层是它的弱化版（离线检索而非模型自主检索），拿到 +2.5pp。
 机制 ③ 的后半（分而治之）见下。
@@ -303,7 +303,7 @@ low → medium 再花 632 个换 +2.2pp；medium → high 再花 1400 个换 +1.
 ### 首先要定一件事：论文的主线要不要换
 
 `config_inventory_2026-08-17.md` §六 把主线写成"论证 **RLM 递归**相对基线的贡献"。
-**这个表述本身就把 RLM 窄化了**——按 [`README.md` §2.3](README.md)，RLM 是三个机制，
+**这个表述本身就把 RLM 窄化了**——按 [`README.md` §2.3](../README.md)，RLM 是三个机制，
 递归只是机制 ③ 的后半。照那个窄表述读，结论会变成"RLM 没有贡献"，而这是错的。
 
 按三个机制分开看，结论是**收益极不均衡，而不是没有收益**：
@@ -380,4 +380,4 @@ low → medium 再花 632 个换 +2.2pp；medium → high 再花 1400 个换 +1.
 - `results/chain_*_corrected_run{1,2}.json` —— 五层链八个臂
 - `results/effort_{minimal,low,medium}_conv_rules_run1.json` —— 推理强度扫描
 - `analysisDetail/step_stats_high.json`、`analysisDetail/triage_chain_*.json`、`analysisDetail/triage_effort_*.json`
-- [`scripts/reasoning_step_stats.py`](../../scripts/reasoning_step_stats.py)、[`scripts/triage_failure_causes.py`](../../scripts/triage_failure_causes.py)、[`scripts/audit_run_configs.py`](../../scripts/audit_run_configs.py)
+- [`scripts/reasoning_step_stats.py`](../../../scripts/reasoning_step_stats.py)、[`scripts/triage_failure_causes.py`](../../../scripts/triage_failure_causes.py)、[`scripts/audit_run_configs.py`](../../../scripts/audit_run_configs.py)
