@@ -159,15 +159,24 @@ B2 = B1 + 关键词表预筛，findings.md 记为 −3.6pp；修正 gold 上差�
 
 ## 六、论文用的五层对照链（RLM 相对基线的作用）
 
-论文要论证的是 RLM 递归相对基线的贡献，所以对照链每层只加一件事：
+> **2026-08-20 更正。** 原文写的是"论文要论证的是 **RLM 递归**相对基线的贡献"，
+> 这把 RLM 窄化成了它的一个机制。按 [`README.md` §2.3](README.md)，RLM 是**三个**能力：
+> ① 程序化推理/探索（context store 外部化）② 可执行环境（REPL + DB observation）
+> ③ 自我改进与分而治之。递归只是 ③ 的后半。
+> 按窄表述读，实测结果会被误读成"RLM 没有贡献"——而真实结论是收益**极不均衡**：
+> ② + ③ 前半贡献 +13.4pp，① 的弱化版 +2.5pp，③ 后半 +0.3pp（误差内）。
+> 见 [`five_layer_chain_results_2026-08-19.md`](five_layer_chain_results_2026-08-19.md) §六。
+
+论文要论证的是 RLM **三个机制各自**相对基线的贡献，所以对照链每层只加一件事
+（右侧标注该层对应哪个机制）：
 
 | 层 | 配置 | 相对上一层新增 |
 |---|---|---|
 | 0 | **B1** | —— 零方法：单次生成，无探索、无自我纠正、无重试 |
-| 1 | `clean-e0` | agent 工具循环 |
-| 2 | `e3-c-noconv` | 离线 schema 检索 + 元数据（`capability_gate`、`e3-f-schema-v4`） |
-| 3 | `e3-c-conv-rules` | convention 后处理 |
-| 4 | **`e3-c-recursive-db`** | **RLM 递归**（`leaf-db-v1`，叶子共享父的受控数据库句柄） |
+| 1 | `clean-e0` | agent 工具循环 —— **RLM 机制 ② 可执行环境 + ③ 自我改进** |
+| 2 | `e3-c-noconv` | 离线 schema 检索 + 元数据（`capability_gate`、`e3-f-schema-v4`）—— **机制 ① 的弱化版**（离线检索，非模型自主检索） |
+| 3 | `e3-c-conv-rules` | convention 后处理 —— **不属于 RLM**，是 harness 侧的答案规范化 |
+| 4 | **`e3-c-recursive-db`** | **机制 ③ 后半：分而治之**（`leaf-db-v1`，叶子共享父的受控数据库句柄） |
 
 `e3-c-noconv` 是为第 4 层能干净对比而新建的——原来的 `e3-c-recursive`（leaf-v1）
 同时关掉了 convention 后处理，两个变量绑在一起。
