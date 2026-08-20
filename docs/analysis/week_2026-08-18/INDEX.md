@@ -9,6 +9,8 @@
 | 2 | [`WEEK_PLAN_2026-08-20.md`](WEEK_PLAN_2026-08-20.md) | 下周计划、优先级与理由 |
 | 3 | [`harness_defects_2026-08-18.md`](harness_defects_2026-08-18.md) | 三个 harness 缺陷，及由此产生的数字更正 |
 | 4 | [`run_config_audit_2026-08-18.md`](run_config_audit_2026-08-18.md) | 66 个运行的配置逐字段核对结果 |
+| 5 | [`reruns_2026-08-20.md`](reruns_2026-08-20.md) | 四项历史消融在修正数据集上重跑：Hint 消融、指代歧义、E6 递归、prompt 教约定 |
+| 6 | [`disambiguation_recheck_2026-08-20.md`](disambiguation_recheck_2026-08-20.md) | 指代歧义 7 道题的题面/gold 变动诊断 |
 
 只想看一个的话，看 1；只想知道下一步做什么，看 2。
 

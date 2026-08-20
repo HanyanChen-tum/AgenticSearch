@@ -62,16 +62,16 @@ except Exception as e:
 方向是反的：它枚举了要重试的故障，然后默认「其余都是模型的真实失败」；
 而实际上未预料的异常绝大多数是我们自己的代码崩了。全仓审计：
 
-| termination | 条数 | 重试 | 记为模型答错 |
-|---|---:|---|---|
-| `NotFoundError` | 200 | 否 | **是**（197 条集中在 `e3_c_schema_v4_core197_run2`，该跑整体失效） |
-| `UnicodeEncodeError` | 66 | 否 | **是** |
-| `BadRequestError` | 33 | 否 | **是** |
-| `APIError` | 33 | 是 | 否 |
-| `MaxIterationsError` | 19 | 否 | 是（**分类正确**，模型确实未收敛） |
-| `TimeoutError` | 13 | 是 | 否 |
-| `AttributeError` | 6 | 否 | **是** |
-| `ContentPolicyViolationError` | 1 | 否 | **是** |
+| termination                     | 条数 | 重试 | 记为模型答错                                                               |
+| ------------------------------- | ---: | ---- | -------------------------------------------------------------------------- |
+| `NotFoundError`               |  200 | 否   | **是**（197 条集中在 `e3_c_schema_v4_core197_run2`，该跑整体失效） |
+| `UnicodeEncodeError`          |   66 | 否   | **是**                                                               |
+| `BadRequestError`             |   33 | 否   | **是**                                                               |
+| `APIError`                    |   33 | 是   | 否                                                                         |
+| `MaxIterationsError`          |   19 | 否   | 是（**分类正确**，模型确实未收敛）                                   |
+| `TimeoutError`                |   13 | 是   | 否                                                                         |
+| `AttributeError`              |    6 | 否   | **是**                                                               |
+| `ContentPolicyViolationError` |    1 | 否   | **是**                                                               |
 
 **编码崩溃只是撞上这个漏洞的第一个实例。** 建议改为：显式列出**算作模型结果**的异常
 （实际上只有 `MaxIterationsError` 一类），其余记 `scored: false` 并排除出计分，
@@ -80,7 +80,7 @@ except Exception as e:
 
 ---
 
-## 三、`evidence` 为 `None` 导致的崩溃（**未修**，修正数据集引入的回归）
+## 三、`evidence` 为 `None` 导致的崩溃（**已修，2026-08-20**，修正数据集引入的回归）
 
 链条三处：
 
@@ -92,12 +92,14 @@ except Exception as e:
 3. [`ours/recursive_db_rlm.py:102`](../../../ours/recursive_db_rlm.py) 与
    [`:123`](../../../ours/recursive_db_rlm.py) 调 `evidence.strip()` → `AttributeError`
 
-| 数据集 | `evidence is None` | `evidence == ""` |
-|---|---:|---:|
-| 原始 `bird_dev_500.json` | 0 | 2 |
-| 修正版 498 | **2**（`bird_1507`、`bird_1528`） | 0 |
+| 数据集                    |                        `evidence is None` | `evidence == ""` |
+| ------------------------- | ------------------------------------------: | -----------------: |
+| 原始`bird_dev_500.json` |                                           0 |                  2 |
+| 修正版 498                | **2**（`bird_1507`、`bird_1528`） |                  0 |
 
 原始数据集这两题的 evidence 是空字符串，`.strip()` 正常；修正版把它变成 `None`。
+
+**修复（2026-08-20）**：`run_bird_indomain_fewshot.py` 的 `.get("evidence", "")` 改为 `.get("evidence") or ""`；`recursive_db_rlm.py` 两处 `evidence.strip()` 改为 `(evidence or "").strip()`。冒烟测试 `bird_1507`、`bird_1528` 均 `final`，2/2 答对。详见 [`reruns_2026-08-20.md`](reruns_2026-08-20.md)。
 所以该缺陷**只在修正数据集的运行上出现**——观测到的 6 条 `AttributeError` 全部来自
 三个修正数据集运行（noconv、conv-rules、arcwise），原始数据集运行一条都没有。
 
@@ -113,13 +115,13 @@ except Exception as e:
 
 ### 4.1 已修复并重跑的
 
-| 运行 | 口径 | 原记录 | **更正后** |
-|---|---|---:|---:|
-| `e3_c_arcwise_full_dev500_run1` | 修正全集 498 | 84.5% | **86.7%** |
-| `e3_c_rc_ctl_dev500_run1` | 干净 277，原 gold | 82.3% | **84.1%** |
-| `e3_c_rc_ctl_dev500_run1` | 干净 277，修正 gold | 87.0% | **89.2%** |
-| `e3_c_rc_trt_dev500_run1` | 干净 277，原 gold | 82.7% | **84.5%** |
-| `e3_c_rc_trt_dev500_run1` | 干净 277，修正 gold | 87.7% | **89.9%** |
+| 运行                              | 口径                | 原记录 | **更正后** |
+| --------------------------------- | ------------------- | -----: | ---------------: |
+| `e3_c_arcwise_full_dev500_run1` | 修正全集 498        |  84.5% |  **86.7%** |
+| `e3_c_rc_ctl_dev500_run1`       | 干净 277，原 gold   |  82.3% |  **84.1%** |
+| `e3_c_rc_ctl_dev500_run1`       | 干净 277，修正 gold |  87.0% |  **89.2%** |
+| `e3_c_rc_trt_dev500_run1`       | 干净 277，原 gold   |  82.7% |  **84.5%** |
+| `e3_c_rc_trt_dev500_run1`       | 干净 277，修正 gold |  87.7% |  **89.9%** |
 
 两个推理捕获臂各涨 **+2.2pp**，全部来自崩溃题被真实作答。
 
@@ -128,11 +130,11 @@ except Exception as e:
 以下运行仍含编码崩溃记录，其在 `config_inventory_2026-08-17.md` 中的数字**偏低**，
 偏低幅度未量化，引用时必须注明：
 
-| 运行 | 崩溃数 |
-|---|---:|
-| `e3_c_rules_reasoning_dev500_run1` | 16 |
-| `e3_c_conv_rules_v2_dev500_run1` | 14 |
-| `e3_c_semantic_dev500_run1` | 8 |
+| 运行                                 | 崩溃数 |
+| ------------------------------------ | -----: |
+| `e3_c_rules_reasoning_dev500_run1` |     16 |
+| `e3_c_conv_rules_v2_dev500_run1`   |     14 |
+| `e3_c_semantic_dev500_run1`        |      8 |
 
 已确认**无**崩溃、数字可直接引用的：`legacy_e0_dev500_run1`、`e3_c_recursive_dev500_run1`、
 `clean_e0_dev500_run1`、`e3_c_conv_dev500_run1`、`e3_c_conv_rules_dev500_run1`、
@@ -142,19 +144,19 @@ except Exception as e:
 
 `config_inventory_2026-08-17.md` §一 用两组重复给出「同配置噪声约 1~2pp」。两组都有问题：
 
-| 组 | 原估计 | 问题 |
-|---|---:|---|
-| `03c10637` run1 vs iter15 | 1.1pp | **不是同配置**：`max_iterations` 为 8 vs 15。该字段不进 `agent_config_sha256`，所以 sha 相同但配置不同 |
-| `e5435e07` rc_ctl vs rules_reasoning | 1.8pp | 两个文件崩溃数不等（现分别为 0 与 16），差值含编码 bug |
+| 组                                     | 原估计 | 问题                                                                                                             |
+| -------------------------------------- | -----: | ---------------------------------------------------------------------------------------------------------------- |
+| `03c10637` run1 vs iter15            |  1.1pp | **不是同配置**：`max_iterations` 为 8 vs 15。该字段不进 `agent_config_sha256`，所以 sha 相同但配置不同 |
+| `e5435e07` rc_ctl vs rules_reasoning |  1.8pp | 两个文件崩溃数不等（现分别为 0 与 16），差值含编码 bug                                                           |
 
 **唯一干净的同配置重复**是本轮新得到的：`e3-c-conv-rules`（sha `671e8010`）
 在修正数据集上两次独立完整运行，均已修复且 `max_iterations` 同为 8：
 
-| | 全集 498 | 剔除 harness 崩溃的 480 |
-|---|---:|---:|
-| `chain_e3_c_conv_rules_corrected_run1` | 86.7% | 87.7% |
-| `e3_c_arcwise_full_dev500_run1` | 86.7% | 87.7% |
-| **聚合差距** | **0.0pp** | **0.0pp** |
+|                                          |        全集 498 | 剔除 harness 崩溃的 480 |
+| ---------------------------------------- | --------------: | ----------------------: |
+| `chain_e3_c_conv_rules_corrected_run1` |           86.7% |                   87.7% |
+| `e3_c_arcwise_full_dev500_run1`        |           86.7% |                   87.7% |
+| **聚合差距**                       | **0.0pp** |         **0.0pp** |
 
 **但逐题翻转 20/480。** 聚合完全重合是正负抵消，不是单题稳定。
 两条都要报：配置级比较可以用很紧的尺子，**逐题因果分析不能拿这个 0.0pp 当保证**。
@@ -167,10 +169,10 @@ except Exception as e:
 
 ## 五、尚未完成
 
-1. 第二条（异常误分类）与第三条（`evidence` 为 `None`）**都未修**，二者都在计分路径上，
-   五层对照链正在运行，中途修改会让前后两半的臂不可比
-2. 链跑完后：修这两处 → 在各臂补跑 `bird_1507`、`bird_1528` → 重跑 §4.2 那三个仍被压低的运行
-3. `BadRequestError`（33 条）尚未诊断
+1. 第二条（异常误分类）**仍未修**，在计分路径上——五层链已跑完，链本身不再是阻塞理由，
+   但改动会让所有已发布数字的分母同步变化，需要一次性处理、同步更正引用
+2. `BadRequestError`（33 条）尚未诊断——37 道题各出现一次、无重复，形状像零散基础设施抖动而非
+   确定性故障，暂按事后审计 `termination` 分布处理，不建议在未查清前动代码
 
 ## 涉及文件
 

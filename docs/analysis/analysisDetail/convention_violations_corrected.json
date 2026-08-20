@@ -1,0 +1,122 @@
+{
+ "e3_ac_corrected_run1": {
+  "n": 498,
+  "unparsed": [],
+  "violations": {
+   "count_no_distinct": 30,
+   "no_select_concat": 6,
+   "superlative_order_limit": 3
+  },
+  "violation_ids": {
+   "count_no_distinct": [
+    "bird_100",
+    "bird_1164",
+    "bird_1171",
+    "bird_1229",
+    "bird_1231",
+    "bird_1247",
+    "bird_1254",
+    "bird_1256",
+    "bird_1265",
+    "bird_1275",
+    "bird_1302",
+    "bird_1317",
+    "bird_137",
+    "bird_234",
+    "bird_245",
+    "bird_371",
+    "bird_405",
+    "bird_474",
+    "bird_595",
+    "bird_62",
+    "bird_716",
+    "bird_719",
+    "bird_723",
+    "bird_740",
+    "bird_765",
+    "bird_786",
+    "bird_862",
+    "bird_92",
+    "bird_940",
+    "bird_963"
+   ],
+   "no_select_concat": [
+    "bird_1001",
+    "bird_1002",
+    "bird_1011",
+    "bird_1387",
+    "bird_877",
+    "bird_897"
+   ],
+   "superlative_order_limit": [
+    "bird_1144",
+    "bird_687",
+    "bird_82"
+   ]
+  }
+ },
+ "e3_c_corrected_run1": {
+  "n": 498,
+  "unparsed": [
+   "bird_1317"
+  ],
+  "violations": {
+   "count_no_distinct": 33,
+   "no_select_concat": 7,
+   "superlative_order_limit": 5
+  },
+  "violation_ids": {
+   "count_no_distinct": [
+    "bird_1042",
+    "bird_1084",
+    "bird_1164",
+    "bird_1229",
+    "bird_1231",
+    "bird_1247",
+    "bird_1252",
+    "bird_1254",
+    "bird_1256",
+    "bird_1257",
+    "bird_1265",
+    "bird_1267",
+    "bird_1270",
+    "bird_1275",
+    "bird_1505",
+    "bird_1525",
+    "bird_234",
+    "bird_371",
+    "bird_383",
+    "bird_405",
+    "bird_472",
+    "bird_474",
+    "bird_5",
+    "bird_595",
+    "bird_716",
+    "bird_719",
+    "bird_723",
+    "bird_740",
+    "bird_765",
+    "bird_779",
+    "bird_786",
+    "bird_92",
+    "bird_963"
+   ],
+   "no_select_concat": [
+    "bird_1002",
+    "bird_1011",
+    "bird_26",
+    "bird_877",
+    "bird_892",
+    "bird_894",
+    "bird_898"
+   ],
+   "superlative_order_limit": [
+    "bird_1136",
+    "bird_1144",
+    "bird_36",
+    "bird_701",
+    "bird_82"
+   ]
+  }
+ }
+}

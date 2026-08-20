@@ -99,7 +99,7 @@ class DBRLM(RLM):
         self._trace_context = {
             "question": question,
             "db_path": str(Path(db_path).resolve()),
-            "evidence": evidence.strip(),
+            "evidence": (evidence or "").strip(),
             "agent_config": self.agent_config.to_manifest(),
             "agent_config_sha256": self.agent_config.sha256,
             "knowledge_manifest": self._knowledge.manifest(),
@@ -120,7 +120,7 @@ class DBRLM(RLM):
             ),
         }
         self._db = DBEnvironment(db_path, event_sink=self._record_tool_event)
-        self._evidence = evidence.strip()
+        self._evidence = (evidence or "").strip()
 
     def _record_tool_event(
         self,

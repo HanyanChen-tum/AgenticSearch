@@ -1,0 +1,305 @@
+[
+  {
+    "id": "bird_1166",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What are the symptoms observed by the youngest patient to ever did a medical examination? Identify the patient diagnosis.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT E.Symptoms, P.Diagnosis FROM Examination AS E INNER JOIN Patient AS P ON E.ID = P.ID ORDER BY P.Birthday DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        null,
+        "SJS"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT e.Symptoms, p.Diagnosis FROM Patient AS p INNER JOIN Examination AS e ON p.ID = e.ID WHERE p.Birthday = ( SELECT MAX(p2.Birthday) FROM Patient AS p2 INNER JOIN Examination AS e2 ON p2.ID = e2.ID ) AND NOT e.Symptoms IS NULL UNION SELECT NULL AS Symptoms, p.Diagnosis FROM Patient AS p WHERE p.ID = (SELECT p2.ID FROM Patient AS p2 INNER JOIN Examination AS e2 ON p2.ID = e2.ID WHERE p2.Birthday = (SELECT MAX(p3.Birthday) FROM Patient AS p3 INNER JOIN Examination AS e3 ON p3.ID = e3.ID ) ) AND NOT EXISTS( SELECT 1 FROM Examination AS e WHERE e.ID = p.ID AND NOT e.Symptoms IS NULL )",
+    "gold_answer": [
+      [
+        null,
+        "SJS"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 40.4122,
+    "llm_calls": 2,
+    "prompt_tokens": 3915,
+    "completion_tokens": 6079,
+    "reasoning_tokens": 5848,
+    "total_tokens": 9994,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final",
+    "run_id": "20260820T044514Z-2527e918",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1529",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "debit_card_specializing",
+    "question": "What is the amount spent by customer \"38508\" at the gas stations? How much had the customer spent in August 2012?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT SUM(t.Amount) FROM transactions_1k AS t WHERE t.CustomerID = '38508' AND t.Date LIKE '2012-08%'",
+    "predicted_answer": [
+      [
+        148
+      ]
+    ],
+    "gold_sql": "SELECT SUM(Amount * Price) AS total_spent, SUM(CASE WHEN Date LIKE '2012-08%' THEN Amount * Price ELSE 0 END) AS august_2012_spent FROM transactions_1k WHERE CustomerID = 38508",
+    "gold_answer": [
+      [
+        88612.38,
+        88612.38
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 38.4203,
+    "llm_calls": 1,
+    "prompt_tokens": 1157,
+    "completion_tokens": 6370,
+    "reasoning_tokens": 6207,
+    "total_tokens": 7527,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final",
+    "run_id": "20260820T044514Z-2527e918",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_465",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "card_games",
+    "question": "Which sets of cards with \"Ancestor's Chosen\" in it have a Korean version?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT sets.name FROM cards INNER JOIN sets ON cards.setCode = sets.code INNER JOIN foreign_data ON foreign_data.uuid = cards.uuid WHERE cards.name = 'Ancestor''s Chosen' AND foreign_data.language = 'Korean' ORDER BY sets.name",
+    "predicted_answer": [],
+    "gold_sql": "SELECT DISTINCT T3.name FROM cards AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.setCode INNER JOIN sets AS T3 ON T3.code = T1.setCode WHERE T1.name = 'Ancestor''s Chosen' AND T2.language = 'Korean'",
+    "gold_answer": [
+      [
+        "Tenth Edition"
+      ],
+      [
+        "Judgment"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 19.9121,
+    "llm_calls": 2,
+    "prompt_tokens": 6653,
+    "completion_tokens": 2639,
+    "reasoning_tokens": 2466,
+    "total_tokens": 9292,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final",
+    "run_id": "20260820T044514Z-2527e918",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_584",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "codebase_community",
+    "question": "Write all the edit comments left by users who edited the post titled 'Why square the difference instead of taking the absolute value in standard deviation?'",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT ph.Comment FROM posts AS p INNER JOIN postHistory AS ph ON p.Id = ph.PostId WHERE p.Title = 'Why square the difference instead of taking the absolute value in standard deviation?'",
+    "predicted_answer": [
+      [
+        ""
+      ],
+      [
+        ""
+      ],
+      [
+        ""
+      ],
+      [
+        "edited title"
+      ],
+      [
+        "TeXified the formulas."
+      ],
+      [
+        "deleted 5 characters in body; edited title"
+      ],
+      [
+        "deleted 5 characters in body; edited title"
+      ],
+      [
+        "edited title"
+      ]
+    ],
+    "gold_sql": "SELECT T2.Comment FROM posts AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.PostId WHERE T1.Title = 'Why square the difference instead of taking the absolute value in standard deviation?'",
+    "gold_answer": [
+      [
+        ""
+      ],
+      [
+        ""
+      ],
+      [
+        ""
+      ],
+      [
+        "edited title"
+      ],
+      [
+        "TeXified the formulas."
+      ],
+      [
+        "deleted 5 characters in body; edited title"
+      ],
+      [
+        "deleted 5 characters in body; edited title"
+      ],
+      [
+        "edited title"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 47.6719,
+    "llm_calls": 1,
+    "prompt_tokens": 3176,
+    "completion_tokens": 7289,
+    "reasoning_tokens": 7093,
+    "total_tokens": 10465,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final",
+    "run_id": "20260820T044514Z-2527e918",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_902",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Which race was Alex Yoong in when he was in track number less than 20?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT T3.name FROM driverStandings AS T1 INNER JOIN drivers AS T2 ON T1.driverId = T2.driverId INNER JOIN races AS T3 ON T1.raceId = T3.raceId WHERE T2.forename = 'Alex' AND T2.surname = 'Yoong' AND T1.position < 20",
+    "predicted_answer": [
+      [
+        "Malaysian Grand Prix"
+      ],
+      [
+        "Brazilian Grand Prix"
+      ],
+      [
+        "San Marino Grand Prix"
+      ],
+      [
+        "Spanish Grand Prix"
+      ],
+      [
+        "Austrian Grand Prix"
+      ],
+      [
+        "Monaco Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "European Grand Prix"
+      ],
+      [
+        "British Grand Prix"
+      ],
+      [
+        "French Grand Prix"
+      ],
+      [
+        "German Grand Prix"
+      ],
+      [
+        "Hungarian Grand Prix"
+      ],
+      [
+        "Belgian Grand Prix"
+      ],
+      [
+        "Italian Grand Prix"
+      ],
+      [
+        "United States Grand Prix"
+      ]
+    ],
+    "gold_sql": "SELECT T1.name FROM races AS T1 INNER JOIN driverStandings AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.forename = 'Alex' AND T3.surname = 'Yoong' AND T2.position < 20",
+    "gold_answer": [
+      [
+        "Malaysian Grand Prix"
+      ],
+      [
+        "Brazilian Grand Prix"
+      ],
+      [
+        "San Marino Grand Prix"
+      ],
+      [
+        "Spanish Grand Prix"
+      ],
+      [
+        "Austrian Grand Prix"
+      ],
+      [
+        "Monaco Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "European Grand Prix"
+      ],
+      [
+        "British Grand Prix"
+      ],
+      [
+        "French Grand Prix"
+      ],
+      [
+        "German Grand Prix"
+      ],
+      [
+        "Hungarian Grand Prix"
+      ],
+      [
+        "Belgian Grand Prix"
+      ],
+      [
+        "Italian Grand Prix"
+      ],
+      [
+        "United States Grand Prix"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 36.3317,
+    "llm_calls": 1,
+    "prompt_tokens": 2690,
+    "completion_tokens": 5336,
+    "reasoning_tokens": 5139,
+    "total_tokens": 8026,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-conv-rules",
+    "agent_config_sha256": "671e8010a65c77dde6094d3c453eb1ab1708b7b4b84d3dd3f75cb46f6b76794c",
+    "termination": "final",
+    "run_id": "20260820T044514Z-2527e918",
+    "trace_schema_version": 3
+  }
+]
