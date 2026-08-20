@@ -762166,5 +762166,3891 @@
     "termination": "final",
     "run_id": "20260818T064859Z-970970f5",
     "trace_schema_version": 3
+  },
+  {
+    "id": "bird_862",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "For the Bahrain Grand Prix in 2007, how many drivers not finished all laps of the game?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT COUNT(*) FROM results r JOIN races ra ON r.raceId = ra.raceId JOIN status s ON r.statusId = s.statusId WHERE ra.name = 'Bahrain Grand Prix' AND ra.year = 2007 AND s.status NOT LIKE 'Finished%'",
+    "predicted_answer": [
+      [
+        12
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(*)\nFROM `races`   r\nJOIN `results` res ON res.`raceId` = r.`raceId`\nJOIN `status`  s   ON s.`statusId` = res.`statusId`\nWHERE r.`year` = 2007\n  AND r.`name` = 'Bahrain Grand Prix'\n  AND s.`status` NOT LIKE 'Finished%';",
+    "gold_answer": [
+      [
+        12
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 22.8807,
+    "llm_calls": 2,
+    "prompt_tokens": 6223,
+    "completion_tokens": 4522,
+    "reasoning_tokens": 4173,
+    "total_tokens": 10745,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_865",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "For all the drivers who finished the game in race No. 592, who is the oldest? Select the forename and surname.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT d.forename, d.surname FROM results AS r JOIN drivers AS d ON r.driverId = d.driverId WHERE r.raceId = 592 AND r.time IS NOT NULL ORDER BY d.dob ASC LIMIT 1;",
+    "predicted_answer": [
+      [
+        "Jean-Pierre",
+        "Beltoise"
+      ]
+    ],
+    "gold_sql": "SELECT T1.forename, T1.surname FROM drivers AS T1 INNER JOIN results AS T2 ON T2.driverId = T1.driverId WHERE T2.raceId = 592 AND T2.time IS NOT NULL AND T1.dob IS NOT NULL ORDER BY T1.dob ASC LIMIT 1",
+    "gold_answer": [
+      [
+        "Jean-Pierre",
+        "Beltoise"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 7.0733,
+    "llm_calls": 3,
+    "prompt_tokens": 8701,
+    "completion_tokens": 1070,
+    "reasoning_tokens": 703,
+    "total_tokens": 9771,
+    "cached_prompt_tokens": 5120,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_866",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Who were the players that got the lap time of 0:01:27 in the race No. 161? Show their forename, surname, and introduction website.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT d.forename, d.surname, d.url FROM lapTimes AS lt INNER JOIN drivers AS d ON lt.driverId = d.driverId WHERE lt.raceId = 161 AND lt.time LIKE '1:27%'",
+    "predicted_answer": [
+      [
+        "David",
+        "Coulthard",
+        "http://en.wikipedia.org/wiki/David_Coulthard"
+      ],
+      [
+        "Jarno",
+        "Trulli",
+        "http://en.wikipedia.org/wiki/Jarno_Trulli"
+      ],
+      [
+        "Jenson",
+        "Button",
+        "http://en.wikipedia.org/wiki/Jenson_Button"
+      ],
+      [
+        "Rubens",
+        "Barrichello",
+        "http://en.wikipedia.org/wiki/Rubens_Barrichello"
+      ],
+      [
+        "Ralf",
+        "Schumacher",
+        "http://en.wikipedia.org/wiki/Ralf_Schumacher"
+      ],
+      [
+        "Michael",
+        "Schumacher",
+        "http://en.wikipedia.org/wiki/Michael_Schumacher"
+      ],
+      [
+        "Ricardo",
+        "Zonta",
+        "http://en.wikipedia.org/wiki/Ricardo_Zonta"
+      ],
+      [
+        "Heinz-Harald",
+        "Frentzen",
+        "http://en.wikipedia.org/wiki/Heinz-Harald_Frentzen"
+      ],
+      [
+        "Mika",
+        "Häkkinen",
+        "http://en.wikipedia.org/wiki/Mika_H%C3%A4kkinen"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T2.forename, T2.surname, T2.url FROM lapTimes AS T1 INNER JOIN drivers AS T2 ON T2.driverId = T1.driverId WHERE T1.raceId = 161 AND T1.time LIKE '1:27%'",
+    "gold_answer": [
+      [
+        "David",
+        "Coulthard",
+        "http://en.wikipedia.org/wiki/David_Coulthard"
+      ],
+      [
+        "Jarno",
+        "Trulli",
+        "http://en.wikipedia.org/wiki/Jarno_Trulli"
+      ],
+      [
+        "Jenson",
+        "Button",
+        "http://en.wikipedia.org/wiki/Jenson_Button"
+      ],
+      [
+        "Rubens",
+        "Barrichello",
+        "http://en.wikipedia.org/wiki/Rubens_Barrichello"
+      ],
+      [
+        "Ralf",
+        "Schumacher",
+        "http://en.wikipedia.org/wiki/Ralf_Schumacher"
+      ],
+      [
+        "Michael",
+        "Schumacher",
+        "http://en.wikipedia.org/wiki/Michael_Schumacher"
+      ],
+      [
+        "Ricardo",
+        "Zonta",
+        "http://en.wikipedia.org/wiki/Ricardo_Zonta"
+      ],
+      [
+        "Heinz-Harald",
+        "Frentzen",
+        "http://en.wikipedia.org/wiki/Heinz-Harald_Frentzen"
+      ],
+      [
+        "Mika",
+        "Häkkinen",
+        "http://en.wikipedia.org/wiki/Mika_H%C3%A4kkinen"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 10.1129,
+    "llm_calls": 2,
+    "prompt_tokens": 6755,
+    "completion_tokens": 1756,
+    "reasoning_tokens": 1433,
+    "total_tokens": 8511,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_868",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Where is Malaysian Grand Prix held? Give the location coordinates.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT DISTINCT T2.lat, T2.lng FROM races AS T1 INNER JOIN circuits AS T2 ON T1.circuitId = T2.circuitId WHERE T1.name = 'Malaysian Grand Prix'",
+    "predicted_answer": [
+      [
+        2.76083,
+        101.738
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T1.lat, T1.lng FROM circuits AS T1 INNER JOIN races AS T2 ON T2.circuitID = T1.circuitId WHERE T2.name = 'Malaysian Grand Prix'",
+    "gold_answer": [
+      [
+        2.76083,
+        101.738
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.272,
+    "llm_calls": 2,
+    "prompt_tokens": 6022,
+    "completion_tokens": 2052,
+    "reasoning_tokens": 1823,
+    "total_tokens": 8074,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_869",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "For the constructor which got the highest point in the race No. 9 , what is its introduction website?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT T1.url FROM constructors AS T1 INNER JOIN constructorResults AS T2 ON T1.constructorId = T2.constructorId WHERE T2.raceId = 9 ORDER BY T2.points DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "http://en.wikipedia.org/wiki/Red_Bull_Racing"
+      ]
+    ],
+    "gold_sql": "SELECT T2.url FROM constructorResults AS T1 INNER JOIN constructors AS T2 ON T2.constructorId = T1.constructorId WHERE T1.raceId = 9 ORDER BY T1.points DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "http://en.wikipedia.org/wiki/Red_Bull_Racing"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 8.8669,
+    "llm_calls": 3,
+    "prompt_tokens": 8999,
+    "completion_tokens": 1301,
+    "reasoning_tokens": 1018,
+    "total_tokens": 10300,
+    "cached_prompt_tokens": 5120,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_87",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "california_schools",
+    "question": "What are the valid e-mail addresses of the administrator of the school located in the San Bernardino county, San Bernardino city that opened between 1/1/2009 to 12/31/2010 which is also both an Intermediate/Middle School and Unified School? List the valid emails in two columns.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT AdmEmail1, AdmEmail2 FROM schools WHERE County = 'San Bernardino' AND City = 'San Bernardino' AND SOC = '62' AND DOC = '54' AND OpenDate BETWEEN '2009-01-01' AND '2010-12-31';",
+    "predicted_answer": [
+      [
+        "a.lucero@realjourney.org",
+        "j.hernandez@realjourney.org"
+      ]
+    ],
+    "gold_sql": "SELECT T2.AdmEmail1, T2.AdmEmail2 FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.County = 'San Bernardino' AND T2.City = 'San Bernardino' AND T2.DOC = 54 AND strftime('%Y', T2.OpenDate) BETWEEN '2009' AND '2010' AND T2.SOC = 62",
+    "gold_answer": [
+      [
+        "a.lucero@realjourney.org",
+        "j.hernandez@realjourney.org"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 168.5828,
+    "llm_calls": 6,
+    "prompt_tokens": 27232,
+    "completion_tokens": 37373,
+    "reasoning_tokens": 35167,
+    "total_tokens": 64605,
+    "cached_prompt_tokens": 19200,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_872",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "In the race No. 45, for the driver who had the Q3 time as 0:01:33, what is his abbreviated code?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT d.code FROM qualifying q JOIN drivers d ON q.driverId = d.driverId WHERE q.raceId = 45 AND q.q3 LIKE '1:33%'",
+    "predicted_answer": [
+      [
+        "HAM"
+      ]
+    ],
+    "gold_sql": "SELECT T2.code FROM qualifying AS T1 INNER JOIN drivers AS T2 ON T2.driverId = T1.driverId WHERE T1.raceId = 45 AND T1.q3 LIKE '1:33%'",
+    "gold_answer": [
+      [
+        "HAM"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 24.0811,
+    "llm_calls": 2,
+    "prompt_tokens": 6014,
+    "completion_tokens": 4635,
+    "reasoning_tokens": 4427,
+    "total_tokens": 10649,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_875",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Show me the season page of year when the race No. 901 took place.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT s.url FROM seasons AS s INNER JOIN races AS r ON r.year = s.year WHERE r.raceId = 901",
+    "predicted_answer": [
+      [
+        "http://en.wikipedia.org/wiki/2014_Formula_One_season"
+      ]
+    ],
+    "gold_sql": "SELECT T2.url FROM races AS T1 INNER JOIN seasons AS T2 ON T2.year = T1.year WHERE T1.raceId = 901",
+    "gold_answer": [
+      [
+        "http://en.wikipedia.org/wiki/2014_Formula_One_season"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 6.7528,
+    "llm_calls": 2,
+    "prompt_tokens": 5095,
+    "completion_tokens": 1081,
+    "reasoning_tokens": 815,
+    "total_tokens": 6176,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_877",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "For all the drivers who finished all laps of the game in race No. 872, who is the youngest?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT d.forename || ' ' || d.surname FROM results AS r JOIN drivers AS d ON r.driverId = d.driverId JOIN status AS s ON r.statusId = s.statusId WHERE r.raceId = 872 AND s.status LIKE 'Finished%' ORDER BY d.dob DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "Sergio Pérez"
+      ]
+    ],
+    "gold_sql": "SELECT d.forename,\n       d.surname\nFROM `drivers`  d\nJOIN `results`  r ON r.driverId = d.driverId\nJOIN `status`   s ON s.statusId = r.statusId\nWHERE r.raceId = 872\n  AND s.status = 'Finished' \nORDER BY d.dob DESC\nLIMIT 1;",
+    "gold_answer": [
+      [
+        "Sergio",
+        "Pérez"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 19.145,
+    "llm_calls": 3,
+    "prompt_tokens": 9768,
+    "completion_tokens": 3599,
+    "reasoning_tokens": 3045,
+    "total_tokens": 13367,
+    "cached_prompt_tokens": 5632,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_879",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "For the driver who set the fastest lap speed, what is his nationality?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT d.nationality FROM results AS r INNER JOIN drivers AS d ON r.driverId = d.driverId WHERE r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "Brazilian"
+      ]
+    ],
+    "gold_sql": "SELECT T1.nationality FROM drivers AS T1 INNER JOIN results AS T2 ON T2.driverId = T1.driverId ORDER BY CAST(T2.fastestLapSpeed AS REAL) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "Brazilian"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 9.2421,
+    "llm_calls": 2,
+    "prompt_tokens": 5860,
+    "completion_tokens": 1374,
+    "reasoning_tokens": 1092,
+    "total_tokens": 7234,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_880",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Paul di Resta was in the No. 853 race, what percent faster did he finish in the 853rd race than the next race for the fastest lap speed?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT ((CAST(r853.fastestLapSpeed AS REAL) - CAST(r854.fastestLapSpeed AS REAL)) * 100.0) / CAST(r854.fastestLapSpeed AS REAL) FROM results r853 JOIN results r854 ON r853.driverId = r854.driverId JOIN drivers d ON d.driverId = r853.driverId WHERE d.forename = 'Paul' AND d.surname = 'di Resta' AND r853.raceId = 853 AND r854.raceId = 854;",
+    "predicted_answer": [
+      [
+        48.15155382074764
+      ]
+    ],
+    "gold_sql": "SELECT ((MAX(CASE WHEN r.`raceId` = 853 THEN CAST(r.`fastestLapSpeed` AS REAL) END) -\n         MAX(CASE WHEN r.`raceId` = 854 THEN CAST(r.`fastestLapSpeed` AS REAL) END)) * 100.0) /\n       MAX(CASE WHEN r.`raceId` = 854 THEN CAST(r.`fastestLapSpeed` AS REAL) END) AS percent_faster\nFROM `drivers` d\nJOIN `results`  r ON d.`driverId` = r.`driverId`\nWHERE d.`forename` = 'Paul'\n  AND d.`surname`  = 'di Resta';\n  ",
+    "gold_answer": [
+      [
+        48.15155382074764
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 28.6643,
+    "llm_calls": 3,
+    "prompt_tokens": 9721,
+    "completion_tokens": 6173,
+    "reasoning_tokens": 5503,
+    "total_tokens": 15894,
+    "cached_prompt_tokens": 5632,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_881",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "For the drivers who took part in the race in 1983/7/16, what's their race completion rate?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(CASE WHEN s.status = 'Finished' OR s.status LIKE '+% Lap%' THEN r.driverId END) * 100.0 / COUNT(r.driverId) AS percentage FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId JOIN status AS s ON r.statusId = s.statusId WHERE ra.date = '1983-07-16'",
+    "predicted_answer": [
+      [
+        58.62068965517241
+      ]
+    ],
+    "gold_sql": "SELECT 100.0 * SUM(CASE\n                     WHEN s.`status` = 'Finished'\n                          OR s.`status` LIKE '+% Lap%'\n                   THEN 1 ELSE 0 END) / COUNT(*) AS completion_rate\nFROM `races` r\nJOIN `results` res ON res.`raceId` = r.`raceId`\nJOIN `status`  s   ON s.`statusId` = res.`statusId`\nWHERE r.`date` = '1983-07-16';",
+    "gold_answer": [
+      [
+        58.62068965517241
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.7604,
+    "llm_calls": 2,
+    "prompt_tokens": 6323,
+    "completion_tokens": 2263,
+    "reasoning_tokens": 1845,
+    "total_tokens": 8586,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_884",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "List the names of all races that occurred in the earliest recorded year and month.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT name FROM races WHERE strftime('%Y', date) = strftime('%Y', (SELECT MIN(date) FROM races)) AND strftime('%m', date) = strftime('%m', (SELECT MIN(date) FROM races)) ORDER BY name",
+    "predicted_answer": [
+      [
+        "British Grand Prix"
+      ],
+      [
+        "Indianapolis 500"
+      ],
+      [
+        "Monaco Grand Prix"
+      ]
+    ],
+    "gold_sql": "SELECT name FROM races WHERE STRFTIME('%Y', date) = ( SELECT STRFTIME('%Y', date) FROM races ORDER BY date ASC LIMIT 1 ) AND STRFTIME('%m', date) = ( SELECT STRFTIME('%m', date) FROM races ORDER BY date ASC LIMIT 1 )",
+    "gold_answer": [
+      [
+        "British Grand Prix"
+      ],
+      [
+        "Monaco Grand Prix"
+      ],
+      [
+        "Indianapolis 500"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 15.657,
+    "llm_calls": 2,
+    "prompt_tokens": 4901,
+    "completion_tokens": 2924,
+    "reasoning_tokens": 2560,
+    "total_tokens": 7825,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_89",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "How many accounts who choose issuance after transaction are staying in East Bohemia region?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.frequency = 'POPLATEK PO OBRATU' AND T2.A3 = 'east Bohemia'",
+    "predicted_answer": [
+      [
+        13
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(T2.account_id) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id WHERE T1.A3 = 'east Bohemia' AND T2.frequency = 'POPLATEK PO OBRATU'",
+    "gold_answer": [
+      [
+        13
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.007,
+    "llm_calls": 3,
+    "prompt_tokens": 6987,
+    "completion_tokens": 1799,
+    "reasoning_tokens": 1503,
+    "total_tokens": 8786,
+    "cached_prompt_tokens": 3584,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_892",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "State the driver with the most points scored. Find his full name and the number of points.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT T2.forename || ' ' || T2.surname AS full_name, SUM(T1.points) AS points FROM results AS T1 INNER JOIN drivers AS T2 ON T1.driverId = T2.driverId GROUP BY T2.driverId, T2.forename, T2.surname ORDER BY SUM(T1.points) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "Lewis Hamilton",
+        2382.0
+      ]
+    ],
+    "gold_sql": "SELECT d.`forename`, d.`surname`, SUM(r.`points`) AS total_points\nFROM `results` r\nJOIN `drivers` d ON d.`driverId` = r.`driverId`\nGROUP BY r.`driverId`\nORDER BY total_points DESC\nLIMIT 1;",
+    "gold_answer": [
+      [
+        "Lewis",
+        "Hamilton",
+        2382.0
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 34.4299,
+    "llm_calls": 3,
+    "prompt_tokens": 10101,
+    "completion_tokens": 7543,
+    "reasoning_tokens": 6926,
+    "total_tokens": 17644,
+    "cached_prompt_tokens": 6144,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_894",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What is the best lap time recorded? List the recorded lap time, driver, and race.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT lapTimes.time, drivers.forename || ' ' || drivers.surname AS driver, races.name AS race FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        "1:07.411",
+        "Lewis Hamilton",
+        "Austrian Grand Prix"
+      ]
+    ],
+    "gold_sql": "SELECT T2.milliseconds, T1.forename, T1.surname, T3.name FROM drivers AS T1 INNER JOIN lapTimes AS T2 ON T1.driverId = T2.driverId INNER JOIN races AS T3 ON T2.raceId = T3.raceId ORDER BY T2.milliseconds ASC LIMIT 1",
+    "gold_answer": [
+      [
+        67411,
+        "Lewis",
+        "Hamilton",
+        "Austrian Grand Prix"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 19.1927,
+    "llm_calls": 2,
+    "prompt_tokens": 6249,
+    "completion_tokens": 3574,
+    "reasoning_tokens": 3240,
+    "total_tokens": 9823,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_895",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What is the average lap time for Lewis Hamilton in the 2009 Malaysian Grand Prix?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(l.milliseconds) FROM lapTimes AS l JOIN drivers AS d ON d.driverId = l.driverId JOIN races AS r ON r.raceId = l.raceId WHERE d.forename = 'Lewis' AND d.surname = 'Hamilton' AND r.year = 2009 AND r.name = 'Malaysian Grand Prix'",
+    "predicted_answer": [
+      [
+        109398.54838709677
+      ]
+    ],
+    "gold_sql": "SELECT AVG(T2.milliseconds) FROM races AS T1 INNER JOIN lapTimes AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.forename = 'Lewis' AND T3.surname = 'Hamilton' AND T1.year = 2009 AND T1.name = 'Malaysian Grand Prix'",
+    "gold_answer": [
+      [
+        109398.54838709677
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 6.4864,
+    "llm_calls": 1,
+    "prompt_tokens": 3119,
+    "completion_tokens": 1186,
+    "reasoning_tokens": 1066,
+    "total_tokens": 4305,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_896",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Calculate the percentage whereby Hamilton did not finish at the 1st track of the f1 circuit since 2010.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN results.position > 1 THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(results.raceId) AS percentage FROM results JOIN drivers ON results.driverId = drivers.driverId JOIN races ON results.raceId = races.raceId WHERE drivers.surname = 'Hamilton' AND races.year >= 2010",
+    "predicted_answer": [
+      [
+        54.225352112676056
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN res.`position` <> 1 THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) AS percentage_not_first\nFROM   `results`  res\nJOIN   `races`    r ON r.`raceId` = res.`raceId`\nJOIN   `drivers`  d ON d.`driverId` = res.`driverId`\nWHERE  d.`surname` = 'Hamilton'\n  AND  r.`year` >= 2010;",
+    "gold_answer": [
+      [
+        54.225352112676056
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 7.1734,
+    "llm_calls": 2,
+    "prompt_tokens": 6010,
+    "completion_tokens": 1164,
+    "reasoning_tokens": 876,
+    "total_tokens": 7174,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_897",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Name the driver with the most winning. Mention his nationality and what is his maximum point scores.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT D.forename || ' ' || D.surname AS full_name, D.nationality, MAX(S.points) AS max_points FROM driverStandings AS S JOIN drivers AS D ON S.driverId = D.driverId GROUP BY D.driverId, D.forename, D.surname, D.nationality ORDER BY COUNT(S.wins) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "Michael Schumacher",
+        "German",
+        148.0
+      ]
+    ],
+    "gold_sql": "SELECT T1.forename, T1.surname, T1.nationality, MAX(T2.points) FROM drivers AS T1 INNER JOIN driverStandings AS T2 ON T2.driverId = T1.driverId WHERE T2.wins >= 1 GROUP BY T1.forename, T1.surname, T1.nationality ORDER BY COUNT(T2.wins) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "Michael",
+        "Schumacher",
+        "German",
+        148.0
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 25.183,
+    "llm_calls": 2,
+    "prompt_tokens": 6207,
+    "completion_tokens": 4578,
+    "reasoning_tokens": 4215,
+    "total_tokens": 10785,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_898",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "How old is the youngest Japanese driver? What is his name?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT CAST(strftime('%Y', current_timestamp) AS INTEGER) - CAST(strftime('%Y', dob) AS INTEGER) - CASE WHEN strftime('%m%d', current_timestamp) < strftime('%m%d', dob) THEN 1 ELSE 0 END AS age, forename || ' ' || surname AS name FROM drivers WHERE nationality = 'Japanese' ORDER BY dob DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        39,
+        "Kamui Kobayashi"
+      ]
+    ],
+    "gold_sql": "SELECT STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', dob) - CASE\n    WHEN strftime('%m-%d','now') < strftime('%m-%d', dob) THEN 1\n    ELSE 0\n  END AS age, forename, surname FROM drivers WHERE nationality = 'Japanese' ORDER BY dob DESC LIMIT 1",
+    "gold_answer": [
+      [
+        39,
+        "Kamui",
+        "Kobayashi"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "latency_seconds": 19.14,
+    "llm_calls": 2,
+    "prompt_tokens": 6111,
+    "completion_tokens": 3672,
+    "reasoning_tokens": 3256,
+    "total_tokens": 9783,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_901",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Name the races along with its circuit name and location for f1 races hosted in September 2005.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT r.name AS race_name, c.name AS circuit_name, c.location FROM races r JOIN circuits c ON r.circuitId = c.circuitId WHERE strftime('%m', r.date) = '09' AND strftime('%Y', r.date) = '2005' ORDER BY r.date;",
+    "predicted_answer": [
+      [
+        "Italian Grand Prix",
+        "Autodromo Nazionale di Monza",
+        "Monza"
+      ],
+      [
+        "Belgian Grand Prix",
+        "Circuit de Spa-Francorchamps",
+        "Spa"
+      ],
+      [
+        "Brazilian Grand Prix",
+        "Autódromo José Carlos Pace",
+        "São Paulo"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T2.name, T1.name, T1.location FROM circuits AS T1 INNER JOIN races AS T2 ON T2.circuitID = T1.circuitId WHERE T2.year = 2005 AND STRFTIME('%m', T2.date) = '09'",
+    "gold_answer": [
+      [
+        "Italian Grand Prix",
+        "Autodromo Nazionale di Monza",
+        "Monza"
+      ],
+      [
+        "Belgian Grand Prix",
+        "Circuit de Spa-Francorchamps",
+        "Spa"
+      ],
+      [
+        "Brazilian Grand Prix",
+        "Autódromo José Carlos Pace",
+        "São Paulo"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 14.1386,
+    "llm_calls": 2,
+    "prompt_tokens": 6438,
+    "completion_tokens": 2681,
+    "reasoning_tokens": 2218,
+    "total_tokens": 9119,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_902",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Which race was Alex Yoong in when he was in track number less than 20?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT DISTINCT r.name FROM driverStandings AS ds INNER JOIN drivers AS d ON ds.driverId = d.driverId INNER JOIN races AS r ON ds.raceId = r.raceId WHERE d.forename = 'Alex' AND d.surname = 'Yoong' AND ds.position < 20 ORDER BY r.date",
+    "predicted_answer": [
+      [
+        "Malaysian Grand Prix"
+      ],
+      [
+        "Brazilian Grand Prix"
+      ],
+      [
+        "San Marino Grand Prix"
+      ],
+      [
+        "Spanish Grand Prix"
+      ],
+      [
+        "Austrian Grand Prix"
+      ],
+      [
+        "Monaco Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "European Grand Prix"
+      ],
+      [
+        "British Grand Prix"
+      ],
+      [
+        "French Grand Prix"
+      ],
+      [
+        "German Grand Prix"
+      ],
+      [
+        "Hungarian Grand Prix"
+      ],
+      [
+        "Belgian Grand Prix"
+      ],
+      [
+        "Italian Grand Prix"
+      ],
+      [
+        "United States Grand Prix"
+      ]
+    ],
+    "gold_sql": "SELECT T1.name FROM races AS T1 INNER JOIN driverStandings AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.forename = 'Alex' AND T3.surname = 'Yoong' AND T2.position < 20",
+    "gold_answer": [
+      [
+        "Malaysian Grand Prix"
+      ],
+      [
+        "Brazilian Grand Prix"
+      ],
+      [
+        "San Marino Grand Prix"
+      ],
+      [
+        "Spanish Grand Prix"
+      ],
+      [
+        "Austrian Grand Prix"
+      ],
+      [
+        "Monaco Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "European Grand Prix"
+      ],
+      [
+        "British Grand Prix"
+      ],
+      [
+        "French Grand Prix"
+      ],
+      [
+        "German Grand Prix"
+      ],
+      [
+        "Hungarian Grand Prix"
+      ],
+      [
+        "Belgian Grand Prix"
+      ],
+      [
+        "Italian Grand Prix"
+      ],
+      [
+        "United States Grand Prix"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 20.0809,
+    "llm_calls": 2,
+    "prompt_tokens": 5950,
+    "completion_tokens": 4031,
+    "reasoning_tokens": 3444,
+    "total_tokens": 9981,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_904",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "State the race and year of race in which Michael Schumacher had his fastest lap.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT races.name, races.year FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId WHERE drivers.forename = 'Michael' AND drivers.surname = 'Schumacher' ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        "Austrian Grand Prix",
+        2003
+      ]
+    ],
+    "gold_sql": "SELECT T1.name, T1.year FROM races AS T1 INNER JOIN lapTimes AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.forename = 'Michael' AND T3.surname = 'Schumacher' ORDER BY T2.milliseconds ASC LIMIT 1",
+    "gold_answer": [
+      [
+        "Austrian Grand Prix",
+        2003
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 33.6981,
+    "llm_calls": 2,
+    "prompt_tokens": 5788,
+    "completion_tokens": 6299,
+    "reasoning_tokens": 5891,
+    "total_tokens": 12087,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_906",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What was the name of Lewis Hamilton's first race? What was his points recorded for his first race event?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT races.name, results.points FROM results JOIN races ON results.raceId = races.raceId JOIN drivers ON results.driverId = drivers.driverId WHERE drivers.forename = 'Lewis' AND drivers.surname = 'Hamilton' ORDER BY races.date ASC LIMIT 1;",
+    "predicted_answer": [
+      [
+        "Malaysian Grand Prix",
+        8.0
+      ]
+    ],
+    "gold_sql": "SELECT r.name,\n       res.points\nFROM drivers  d\nJOIN results  res ON res.driverId = d.driverId\nJOIN races    r   ON r.raceId     = res.raceId\nWHERE d.forename = 'Lewis'\n  AND d.surname  = 'Hamilton'\nORDER BY  r.date\nLIMIT 1;",
+    "gold_answer": [
+      [
+        "Malaysian Grand Prix",
+        8.0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 5.438,
+    "llm_calls": 2,
+    "prompt_tokens": 6049,
+    "completion_tokens": 727,
+    "reasoning_tokens": 494,
+    "total_tokens": 6776,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_909",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Among all European Grand Prix races, what is the percentage of the races were hosted in Germany?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN circuits.country = 'Germany' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) FROM races JOIN circuits ON races.circuitId = circuits.circuitId WHERE races.name = 'European Grand Prix';",
+    "predicted_answer": [
+      [
+        52.17391304347826
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T1.country = 'Germany' THEN T2.circuitID END) AS REAL) * 100 / COUNT(T2.circuitId) FROM circuits AS T1 INNER JOIN races AS T2 ON T2.circuitID = T1.circuitId WHERE T2.name = 'European Grand Prix'",
+    "gold_answer": [
+      [
+        52.17391304347826
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 8.8515,
+    "llm_calls": 2,
+    "prompt_tokens": 5950,
+    "completion_tokens": 1319,
+    "reasoning_tokens": 1093,
+    "total_tokens": 7269,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_910",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What's the location coordinates of Silverstone Circuit?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT lat, lng FROM circuits WHERE name = 'Silverstone Circuit'",
+    "predicted_answer": [
+      [
+        52.0786,
+        -1.01694
+      ]
+    ],
+    "gold_sql": "SELECT lat, lng FROM circuits WHERE name = 'Silverstone Circuit'",
+    "gold_answer": [
+      [
+        52.0786,
+        -1.01694
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 5.1903,
+    "llm_calls": 2,
+    "prompt_tokens": 4920,
+    "completion_tokens": 716,
+    "reasoning_tokens": 558,
+    "total_tokens": 5636,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_912",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What's the reference name of Marina Bay Street Circuit?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT circuitRef FROM circuits WHERE name = 'Marina Bay Street Circuit'",
+    "predicted_answer": [
+      [
+        "marina_bay"
+      ]
+    ],
+    "gold_sql": "SELECT circuitRef FROM circuits WHERE name = 'Marina Bay Street Circuit'",
+    "gold_answer": [
+      [
+        "marina_bay"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 4.4472,
+    "llm_calls": 2,
+    "prompt_tokens": 5196,
+    "completion_tokens": 495,
+    "reasoning_tokens": 404,
+    "total_tokens": 5691,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_915",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Which country is the oldest driver from?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT nationality FROM drivers WHERE dob IS NOT NULL ORDER BY dob ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        "French"
+      ]
+    ],
+    "gold_sql": "SELECT nationality FROM drivers WHERE dob IS NOT NULL ORDER BY dob ASC LIMIT 1",
+    "gold_answer": [
+      [
+        "French"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 7.7271,
+    "llm_calls": 2,
+    "prompt_tokens": 5325,
+    "completion_tokens": 1332,
+    "reasoning_tokens": 1161,
+    "total_tokens": 6657,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_92",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "List out the no. of districts that have female clients and an average salary greater than 6000 but less than 10000?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT COUNT(DISTINCT district.district_id) FROM district JOIN client ON district.district_id = client.district_id WHERE client.gender = 'F' AND district.A11 > 6000 AND district.A11 < 10000",
+    "predicted_answer": [
+      [
+        69
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(DISTINCT T2.district_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'F' AND T2.A11 > 6000 AND T2.A11 < 10000",
+    "gold_answer": [
+      [
+        69
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 9.0054,
+    "llm_calls": 2,
+    "prompt_tokens": 4086,
+    "completion_tokens": 1415,
+    "reasoning_tokens": 1159,
+    "total_tokens": 5501,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_928",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Which driver ranked the first in the Canadian Grand Prix in 2007? Please give his forename, surname, and reference name.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1",
+    "predicted_answer": [
+      [
+        "Lewis",
+        "Hamilton",
+        "hamilton"
+      ]
+    ],
+    "gold_sql": "SELECT d.forename, d.surname, d.driverRef FROM drivers AS d JOIN results AS r ON d.driverId = r.driverId JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1",
+    "gold_answer": [
+      [
+        "Lewis",
+        "Hamilton",
+        "hamilton"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 6.9735,
+    "llm_calls": 2,
+    "prompt_tokens": 6002,
+    "completion_tokens": 983,
+    "reasoning_tokens": 730,
+    "total_tokens": 6985,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_93",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "How many male customers live in a district in North Bohemia where the district’s average salary is greater than 8,000?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'M' AND T2.A3 = 'north Bohemia' AND T2.A11 > 8000",
+    "predicted_answer": [
+      [
+        280
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'M' AND T2.A3 = 'north Bohemia' AND T2.A11 > 8000",
+    "gold_answer": [
+      [
+        280
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.8379,
+    "llm_calls": 2,
+    "prompt_tokens": 3916,
+    "completion_tokens": 2124,
+    "reasoning_tokens": 1880,
+    "total_tokens": 6040,
+    "cached_prompt_tokens": 1280,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_930",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "In which Formula_1 races did Lewis Hamilton rank the highest?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT DISTINCT ra.name FROM results AS r INNER JOIN drivers AS d ON r.driverId = d.driverId INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE d.forename = 'Lewis' AND d.surname = 'Hamilton' AND r.positionOrder = (SELECT MIN(r2.positionOrder) FROM results AS r2 INNER JOIN drivers AS d2 ON r2.driverId = d2.driverId WHERE d2.forename = 'Lewis' AND d2.surname = 'Hamilton')",
+    "predicted_answer": [
+      [
+        "Monaco Grand Prix"
+      ],
+      [
+        "British Grand Prix"
+      ],
+      [
+        "German Grand Prix"
+      ],
+      [
+        "Chinese Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "United States Grand Prix"
+      ],
+      [
+        "Hungarian Grand Prix"
+      ],
+      [
+        "Japanese Grand Prix"
+      ],
+      [
+        "Singapore Grand Prix"
+      ],
+      [
+        "Turkish Grand Prix"
+      ],
+      [
+        "Belgian Grand Prix"
+      ],
+      [
+        "Abu Dhabi Grand Prix"
+      ],
+      [
+        "Italian Grand Prix"
+      ],
+      [
+        "Malaysian Grand Prix"
+      ],
+      [
+        "Bahrain Grand Prix"
+      ],
+      [
+        "Spanish Grand Prix"
+      ],
+      [
+        "Russian Grand Prix"
+      ],
+      [
+        "Austrian Grand Prix"
+      ],
+      [
+        "Mexican Grand Prix"
+      ],
+      [
+        "Brazilian Grand Prix"
+      ]
+    ],
+    "gold_sql": "SELECT r.`name`\nFROM `results`  AS res\nJOIN `drivers`  AS d ON d.`driverId` = res.`driverId`\nJOIN `races`    AS r ON r.`raceId`  = res.`raceId`\nWHERE d.`forename` = 'Lewis'\n  AND d.`surname`  = 'Hamilton'\n  AND res.`positionOrder` = 1;",
+    "gold_answer": [
+      [
+        "Monaco Grand Prix"
+      ],
+      [
+        "British Grand Prix"
+      ],
+      [
+        "German Grand Prix"
+      ],
+      [
+        "Chinese Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "United States Grand Prix"
+      ],
+      [
+        "Hungarian Grand Prix"
+      ],
+      [
+        "Japanese Grand Prix"
+      ],
+      [
+        "Hungarian Grand Prix"
+      ],
+      [
+        "Singapore Grand Prix"
+      ],
+      [
+        "Turkish Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "Belgian Grand Prix"
+      ],
+      [
+        "Chinese Grand Prix"
+      ],
+      [
+        "German Grand Prix"
+      ],
+      [
+        "Abu Dhabi Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "Hungarian Grand Prix"
+      ],
+      [
+        "Italian Grand Prix"
+      ],
+      [
+        "United States Grand Prix"
+      ],
+      [
+        "Hungarian Grand Prix"
+      ],
+      [
+        "Malaysian Grand Prix"
+      ],
+      [
+        "Bahrain Grand Prix"
+      ],
+      [
+        "Chinese Grand Prix"
+      ],
+      [
+        "Spanish Grand Prix"
+      ],
+      [
+        "British Grand Prix"
+      ],
+      [
+        "Italian Grand Prix"
+      ],
+      [
+        "Singapore Grand Prix"
+      ],
+      [
+        "Japanese Grand Prix"
+      ],
+      [
+        "Russian Grand Prix"
+      ],
+      [
+        "United States Grand Prix"
+      ],
+      [
+        "Abu Dhabi Grand Prix"
+      ],
+      [
+        "Chinese Grand Prix"
+      ],
+      [
+        "Bahrain Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "British Grand Prix"
+      ],
+      [
+        "Belgian Grand Prix"
+      ],
+      [
+        "Italian Grand Prix"
+      ],
+      [
+        "Japanese Grand Prix"
+      ],
+      [
+        "Russian Grand Prix"
+      ],
+      [
+        "United States Grand Prix"
+      ],
+      [
+        "Monaco Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "Austrian Grand Prix"
+      ],
+      [
+        "British Grand Prix"
+      ],
+      [
+        "Hungarian Grand Prix"
+      ],
+      [
+        "German Grand Prix"
+      ],
+      [
+        "United States Grand Prix"
+      ],
+      [
+        "Mexican Grand Prix"
+      ],
+      [
+        "Brazilian Grand Prix"
+      ],
+      [
+        "Abu Dhabi Grand Prix"
+      ],
+      [
+        "Chinese Grand Prix"
+      ],
+      [
+        "Spanish Grand Prix"
+      ],
+      [
+        "Canadian Grand Prix"
+      ],
+      [
+        "British Grand Prix"
+      ],
+      [
+        "Belgian Grand Prix"
+      ],
+      [
+        "Italian Grand Prix"
+      ],
+      [
+        "Singapore Grand Prix"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 20.7508,
+    "llm_calls": 2,
+    "prompt_tokens": 6123,
+    "completion_tokens": 4260,
+    "reasoning_tokens": 3846,
+    "total_tokens": 10383,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_931",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What was the fastest lap speed among all drivers in the 2009 Spanish Grand Prix?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "202.484"
+      ]
+    ],
+    "gold_sql": "SELECT T2.fastestLapSpeed FROM races AS T1 INNER JOIN results AS T2 ON T2.raceId = T1.raceId WHERE T1.name = 'Spanish Grand Prix' AND T1.year = 2009 AND T2.fastestLapSpeed IS NOT NULL ORDER BY T2.fastestLapSpeed DESC LIMIT 1",
+    "gold_answer": [
+      [
+        "202.484"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.0512,
+    "llm_calls": 2,
+    "prompt_tokens": 6040,
+    "completion_tokens": 1952,
+    "reasoning_tokens": 1579,
+    "total_tokens": 7992,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_933",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What was Lewis Hamilton's final rank in the 2008 Chinese Grand Prix?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT results.positionOrder FROM results INNER JOIN drivers ON results.driverId = drivers.driverId INNER JOIN races ON results.raceId = races.raceId WHERE drivers.forename = 'Lewis' AND drivers.surname = 'Hamilton' AND races.name = 'Chinese Grand Prix' AND races.year = 2008",
+    "predicted_answer": [
+      [
+        1
+      ]
+    ],
+    "gold_sql": "SELECT T2.positionOrder FROM races AS T1 INNER JOIN results AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.forename = 'Lewis' AND T3.surname = 'Hamilton' AND T1.name = 'Chinese Grand Prix' AND T1.year = 2008",
+    "gold_answer": [
+      [
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 8.2942,
+    "llm_calls": 2,
+    "prompt_tokens": 6426,
+    "completion_tokens": 1345,
+    "reasoning_tokens": 991,
+    "total_tokens": 7771,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_937",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What's the finish time for the driver who ranked second in 2008's Chinese Grand Prix?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT R.time FROM results AS R INNER JOIN races AS T1 ON R.raceId = T1.raceId WHERE T1.name = 'Chinese Grand Prix' AND T1.year = 2008 AND R.position = 2 LIMIT 1",
+    "predicted_answer": [
+      [
+        "+14.925"
+      ]
+    ],
+    "gold_sql": "SELECT r.time FROM results r JOIN races ra ON r.raceId = ra.raceId WHERE ra.year = 2008 AND ra.name = 'Chinese Grand Prix' AND r.position = 2;",
+    "gold_answer": [
+      [
+        "+14.925"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 21.6585,
+    "llm_calls": 2,
+    "prompt_tokens": 6055,
+    "completion_tokens": 3942,
+    "reasoning_tokens": 3535,
+    "total_tokens": 9997,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_94",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "What is (1) the account number of the oldest female client and (2) the gap between the highest average salary and the lowest average salary?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT T2.account_id AS account_number, (SELECT MAX(A11) - MIN(A11) FROM district) AS gap FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id WHERE T1.gender = 'F' ORDER BY T1.birth_date ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        1743,
+        4431
+      ]
+    ],
+    "gold_sql": "SELECT T1.account_id , ( SELECT MAX(A11) - MIN(A11) FROM district ) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T3 ON T1.account_id = T3.account_id INNER JOIN client AS T4 ON T3.client_id = T4.client_id WHERE T4.client_id = ( SELECT client_id FROM client WHERE gender = 'F' ORDER BY birth_date ASC LIMIT 1 ) ORDER BY T2.A11 DESC LIMIT 1",
+    "gold_answer": [
+      [
+        1743,
+        4431
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 15.2567,
+    "llm_calls": 2,
+    "prompt_tokens": 4248,
+    "completion_tokens": 2827,
+    "reasoning_tokens": 2467,
+    "total_tokens": 7075,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_940",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Among the drivers that finished all laps of the race in the 2008 Chinese Grand Prix, how many of them have participated in Formula_1 races?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(DISTINCT r.driverId) FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId JOIN status AS s ON r.statusId = s.statusId WHERE ra.year = 2008 AND ra.name = 'Chinese Grand Prix' AND s.status LIKE 'Finished%' AND r.driverId IN (SELECT driverId FROM results GROUP BY driverId HAVING COUNT(raceId) > 0)",
+    "predicted_answer": [
+      [
+        14
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(*) FROM ( \nSELECT T1.driverId FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN status T3 ON T1.statusId = T3.statusId\n WHERE T2.name = 'Chinese Grand Prix' AND T2.year = 2008 AND T3.status LIKE 'Finished%' GROUP BY T1.driverId HAVING COUNT(T2.raceId) > 0 )",
+    "gold_answer": [
+      [
+        14
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 47.8314,
+    "llm_calls": 4,
+    "prompt_tokens": 13991,
+    "completion_tokens": 9540,
+    "reasoning_tokens": 8486,
+    "total_tokens": 23531,
+    "cached_prompt_tokens": 8960,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_944",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "How much faster in percentage is the champion than the driver who finished all laps of the race last in the 1988 Australian Grand Prix?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT (last_ms - champ_ms) * 100.0 / last_ms FROM (SELECT (SELECT r.milliseconds FROM results r JOIN status s ON r.statusId = s.statusId WHERE r.raceId = 387 AND s.status LIKE 'Finished%' AND r.milliseconds IS NOT NULL ORDER BY r.milliseconds ASC LIMIT 1) AS champ_ms, (SELECT r.milliseconds FROM results r JOIN status s ON r.statusId = s.statusId WHERE r.raceId = 387 AND s.status LIKE 'Finished%' AND r.milliseconds IS NOT NULL ORDER BY r.milliseconds DESC LIMIT 1) AS last_ms) t",
+    "predicted_answer": [
+      [
+        1.1649563534108225
+      ]
+    ],
+    "gold_sql": "WITH time_in_seconds AS (\nSELECT T1.positionOrder, T1.milliseconds \nFROM results AS T1 INNER JOIN races AS T2 ON T1.raceId = T2.raceId  INNER JOIN status T3 ON T1.statusId = T3.statusId\nWHERE T2.name = 'Australian Grand Prix' AND T3.status LIKE 'Finished%' AND T2.year = 1988), \nchampion_time AS (SELECT milliseconds FROM time_in_seconds WHERE positionOrder = 1), last_driver_incremental AS (\nSELECT milliseconds FROM time_in_seconds WHERE positionOrder = (\nSELECT MAX(positionOrder) FROM time_in_seconds)) \nSELECT CAST((SELECT milliseconds FROM last_driver_incremental) - (SELECT milliseconds FROM champion_time) AS REAL) * 100 / (SELECT milliseconds FROM last_driver_incremental)",
+    "gold_answer": [
+      [
+        1.1649563534108225
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 48.8616,
+    "llm_calls": 2,
+    "prompt_tokens": 6426,
+    "completion_tokens": 10480,
+    "reasoning_tokens": 9803,
+    "total_tokens": 16906,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_945",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "How many circuits are there in Adelaide, Australia?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT COUNT(circuitId) FROM circuits WHERE location = 'Adelaide' AND country = 'Australia'",
+    "predicted_answer": [
+      [
+        1
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(circuitId) FROM circuits WHERE location = 'Adelaide' AND country = 'Australia'",
+    "gold_answer": [
+      [
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 17.0656,
+    "llm_calls": 3,
+    "prompt_tokens": 7437,
+    "completion_tokens": 2863,
+    "reasoning_tokens": 2578,
+    "total_tokens": 10300,
+    "cached_prompt_tokens": 4096,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_948",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What are the maximum points of British constructors?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT MAX(constructorStandings.points) FROM constructorStandings JOIN constructors ON constructorStandings.constructorId = constructors.constructorId WHERE constructors.nationality = 'British'",
+    "predicted_answer": [
+      [
+        497.0
+      ]
+    ],
+    "gold_sql": "SELECT MAX(T1.points) FROM constructorStandings AS T1 INNER JOIN constructors AS T2 on T1.constructorId = T2.constructorId WHERE T2.nationality = 'British'",
+    "gold_answer": [
+      [
+        497.0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 12.5367,
+    "llm_calls": 2,
+    "prompt_tokens": 5341,
+    "completion_tokens": 2076,
+    "reasoning_tokens": 1906,
+    "total_tokens": 7417,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_95",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "Find the account number of the youngest client, breaking ties by choosing the highest average salary of their district.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT account.account_id FROM client INNER JOIN disp ON client.client_id = disp.client_id INNER JOIN account ON disp.account_id = account.account_id INNER JOIN district ON client.district_id = district.district_id ORDER BY client.birth_date DESC, district.A11 DESC LIMIT 1;",
+    "predicted_answer": [
+      [
+        2836
+      ]
+    ],
+    "gold_sql": "SELECT a.`account_id`\nFROM   `account`   AS a\nJOIN   `disp`      AS d    ON d.`account_id` = a.`account_id`\nJOIN   `client`    AS c    ON c.`client_id`  = d.`client_id`\nJOIN   `district`  AS dist ON dist.`district_id` = a.`district_id`\nORDER BY c.`birth_date` DESC,\n         dist.`A11`      DESC\nLIMIT 1;",
+    "gold_answer": [
+      [
+        2836
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 10.4814,
+    "llm_calls": 2,
+    "prompt_tokens": 4448,
+    "completion_tokens": 1663,
+    "reasoning_tokens": 1411,
+    "total_tokens": 6111,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_950",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Please list the constructor names with 0 points at race 291.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT DISTINCT T2.name FROM constructorResults AS T1 INNER JOIN constructors AS T2 ON T1.constructorId = T2.constructorId WHERE T1.raceId = 291 AND T1.points = 0",
+    "predicted_answer": [
+      [
+        "Minardi"
+      ],
+      [
+        "Dallara"
+      ],
+      [
+        "Larrousse"
+      ],
+      [
+        "Team Lotus"
+      ],
+      [
+        "Fondmetal"
+      ],
+      [
+        "March"
+      ],
+      [
+        "Tyrrell"
+      ],
+      [
+        "Ligier"
+      ],
+      [
+        "Jordan"
+      ],
+      [
+        "McLaren"
+      ],
+      [
+        "Brabham"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT c.`name`\nFROM constructorResults cr\nJOIN constructors c ON c.`constructorId` = cr.`constructorId`\nWHERE cr.`raceId` = 291\n  AND cr.`points` = 0;",
+    "gold_answer": [
+      [
+        "Minardi"
+      ],
+      [
+        "Dallara"
+      ],
+      [
+        "Larrousse"
+      ],
+      [
+        "Team Lotus"
+      ],
+      [
+        "Fondmetal"
+      ],
+      [
+        "March"
+      ],
+      [
+        "Tyrrell"
+      ],
+      [
+        "Ligier"
+      ],
+      [
+        "Jordan"
+      ],
+      [
+        "McLaren"
+      ],
+      [
+        "Brabham"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 7.1845,
+    "llm_calls": 2,
+    "prompt_tokens": 5621,
+    "completion_tokens": 1085,
+    "reasoning_tokens": 871,
+    "total_tokens": 6706,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_951",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "How many Japanese constructors have 0 points in 2 races?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT COUNT(*) FROM (SELECT c.constructorId FROM constructors AS c INNER JOIN constructorResults AS cr ON c.constructorId = cr.constructorId WHERE c.nationality = 'Japanese' AND cr.points = 0 GROUP BY c.constructorId HAVING COUNT(cr.raceId) = 2) AS T1",
+    "predicted_answer": [
+      [
+        1
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(DISTINCT T1.constructorId) \nFROM constructorResults AS T1 INNER JOIN constructors AS T2 on T1.constructorId = T2.constructorId WHERE T1.points = 0 AND T2.nationality = 'Japanese' GROUP BY T1.constructorId HAVING COUNT(raceId) = 2",
+    "gold_answer": [
+      [
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 64.0929,
+    "llm_calls": 2,
+    "prompt_tokens": 6176,
+    "completion_tokens": 13594,
+    "reasoning_tokens": 13028,
+    "total_tokens": 19770,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_954",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Please calculate the race completion percentage (all laps completed) for Japanese drivers from 2007 to 2009.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST(SUM(CASE WHEN s.status LIKE 'Finished%' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) FROM results AS res JOIN races AS ra ON res.raceId = ra.raceId JOIN drivers AS d ON res.driverId = d.driverId JOIN status AS s ON res.statusId = s.statusId WHERE d.nationality = 'Japanese' AND ra.year BETWEEN 2007 AND 2009;",
+    "predicted_answer": [
+      [
+        29.032258064516128
+      ]
+    ],
+    "gold_sql": "SELECT\n  SUM(CASE WHEN s.`status` = 'Finished'  THEN 1 ELSE 0 END) * 100.0 / COUNT(*) AS completion_percentage\nFROM `results` r\nJOIN `races`   ra ON r.`raceId`   = ra.`raceId`\nJOIN `drivers` d  ON r.`driverId` = d.`driverId`\nJOIN `status`  s  ON r.`statusId` = s.`statusId`\nWHERE d.`nationality` = 'Japanese'\n  AND ra.`year` BETWEEN 2007 AND 2009;",
+    "gold_answer": [
+      [
+        29.032258064516128
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 15.1838,
+    "llm_calls": 2,
+    "prompt_tokens": 6144,
+    "completion_tokens": 3035,
+    "reasoning_tokens": 2646,
+    "total_tokens": 9179,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_955",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "For each year before year 1975, what was the average time in seconds of the champion of each race?",
+    "difficulty": "challenging",
+    "predicted_sql": "",
+    "predicted_answer": null,
+    "gold_sql": "SELECT r.year, AVG(res.milliseconds / 1000.0) AS avg_time_seconds FROM results res JOIN races r ON res.raceId = r.raceId WHERE r.year < 1975 AND res.position = 1 AND res.milliseconds IS NOT NULL GROUP BY r.year;",
+    "gold_answer": [
+      [
+        1950,
+        9712.595714285713
+      ],
+      [
+        1951,
+        10870.532222222222
+      ],
+      [
+        1952,
+        11061.585
+      ],
+      [
+        1953,
+        10828.476666666666
+      ],
+      [
+        1954,
+        11213.074444444444
+      ],
+      [
+        1955,
+        10792.332857142857
+      ],
+      [
+        1956,
+        10871.648888888889
+      ],
+      [
+        1957,
+        11323.316666666666
+      ],
+      [
+        1958,
+        8380.19090909091
+      ],
+      [
+        1959,
+        8745.945555555554
+      ],
+      [
+        1960,
+        8772.149000000001
+      ],
+      [
+        1961,
+        8258.5375
+      ],
+      [
+        1962,
+        8411.155555555555
+      ],
+      [
+        1963,
+        8281.240000000002
+      ],
+      [
+        1964,
+        8005.464999999999
+      ],
+      [
+        1965,
+        8165.67
+      ],
+      [
+        1966,
+        7834.694444444444
+      ],
+      [
+        1967,
+        7645.836363636364
+      ],
+      [
+        1968,
+        7626.578333333334
+      ],
+      [
+        1969,
+        7006.87090909091
+      ],
+      [
+        1970,
+        6520.591538461538
+      ],
+      [
+        1971,
+        6111.991
+      ],
+      [
+        1972,
+        6526.2095
+      ],
+      [
+        1973,
+        6236.2320666666665
+      ],
+      [
+        1974,
+        6047.1144
+      ]
+    ],
+    "correct": false,
+    "error": "litellm.BadRequestError: AzureException BadRequestError - Invalid prompt: your prompt was flagged as potentially violating our usage policy. Please try again with a different prompt: https://platform.openai.com/docs/guides/reasoning#advice-on-prompting",
+    "latency_seconds": 33.984,
+    "llm_calls": 3,
+    "prompt_tokens": 6181,
+    "completion_tokens": 4066,
+    "reasoning_tokens": 3611,
+    "total_tokens": 10247,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 1,
+    "reasoning_usage_missing_calls": 1,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "BadRequestError",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_959",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What were the fastest lap numbers of the champions of each race in 2009?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT r.fastestLap FROM results r JOIN races ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND r.position = 1 ORDER BY ra.round ASC",
+    "predicted_answer": [
+      [
+        18
+      ],
+      [
+        42
+      ],
+      [
+        11
+      ],
+      [
+        17
+      ],
+      [
+        49
+      ],
+      [
+        40
+      ],
+      [
+        16
+      ],
+      [
+        37
+      ],
+      [
+        16
+      ],
+      [
+        39
+      ],
+      [
+        42
+      ],
+      [
+        48
+      ],
+      [
+        36
+      ],
+      [
+        43
+      ],
+      [
+        25
+      ],
+      [
+        54
+      ]
+    ],
+    "gold_sql": "SELECT T1.fastestLap FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId WHERE T2.year = 2009 AND T1.time LIKE '_:%:__.___'",
+    "gold_answer": [
+      [
+        18
+      ],
+      [
+        42
+      ],
+      [
+        11
+      ],
+      [
+        17
+      ],
+      [
+        49
+      ],
+      [
+        40
+      ],
+      [
+        16
+      ],
+      [
+        37
+      ],
+      [
+        16
+      ],
+      [
+        39
+      ],
+      [
+        42
+      ],
+      [
+        48
+      ],
+      [
+        36
+      ],
+      [
+        43
+      ],
+      [
+        25
+      ],
+      [
+        54
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 29.7667,
+    "llm_calls": 2,
+    "prompt_tokens": 6232,
+    "completion_tokens": 6058,
+    "reasoning_tokens": 5721,
+    "total_tokens": 12290,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_960",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What is the average of fastest lap speed in the 2009 Spanish Grand Prix race?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT AVG(fastestLapSpeed) FROM results JOIN races USING (raceId) WHERE races.name = 'Spanish Grand Prix' AND races.year = 2009",
+    "predicted_answer": [
+      [
+        199.6415625
+      ]
+    ],
+    "gold_sql": "SELECT AVG(T1.fastestLapSpeed) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId WHERE T2.year = 2009 AND T2.name = 'Spanish Grand Prix'",
+    "gold_answer": [
+      [
+        199.6415625
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 8.8797,
+    "llm_calls": 2,
+    "prompt_tokens": 5573,
+    "completion_tokens": 1294,
+    "reasoning_tokens": 1078,
+    "total_tokens": 6867,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_962",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "From 2000 to 2005, what percentage of race results were by drivers born before 1985 who completed more than 50 laps?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT SUM(CASE WHEN CAST(strftime('%Y', d.dob) AS INTEGER) < 1985 AND r.laps > 50 THEN 1 ELSE 0 END) * 100.0 / COUNT(r.driverId) AS percentage FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId INNER JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.year BETWEEN 2000 AND 2005",
+    "predicted_answer": [
+      [
+        64.88474742520843
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT( IIF(STRFTIME('%Y', T3.dob) < '1985' AND T1.laps > 50, T1.driverId, NULL)) AS REAL) * 100 / COUNT( T1.driverId) \nFROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN drivers AS T3 on T1.driverId = T3.driverId WHERE T2.year BETWEEN 2000 AND 2005",
+    "gold_answer": [
+      [
+        64.88474742520843
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 9.1301,
+    "llm_calls": 2,
+    "prompt_tokens": 6235,
+    "completion_tokens": 1754,
+    "reasoning_tokens": 1310,
+    "total_tokens": 7989,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_963",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "How many French drivers who obtain the laptime less than 02:00.00?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(DISTINCT d.driverId) FROM drivers AS d INNER JOIN lapTimes AS l ON d.driverId = l.driverId WHERE d.nationality = 'French' AND l.milliseconds < 120000",
+    "predicted_answer": [
+      [
+        9
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(DISTINCT T1.driverId) FROM drivers AS T1 INNER JOIN lapTimes AS T2 on T1.driverId = T2.driverId WHERE T1.nationality = 'French' AND (CAST(SUBSTR(T2.time, 1, 1) AS INTEGER) * 60 + CAST(SUBSTR(T2.time, 3, 2) AS INTEGER) + CAST(SUBSTR(T2.time, 6, 3) AS REAL) / 1000) < 120",
+    "gold_answer": [
+      [
+        9
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 10.1012,
+    "llm_calls": 2,
+    "prompt_tokens": 6004,
+    "completion_tokens": 1775,
+    "reasoning_tokens": 1496,
+    "total_tokens": 7779,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_964",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "List out the code for drivers who have nationality in American.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT code FROM drivers WHERE nationality = 'American'",
+    "predicted_answer": [
+      [
+        "SPE"
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        "RSS"
+      ]
+    ],
+    "gold_sql": "SELECT code FROM drivers WHERE Nationality = 'American'",
+    "gold_answer": [
+      [
+        "SPE"
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        "RSS"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 4.663,
+    "llm_calls": 2,
+    "prompt_tokens": 5006,
+    "completion_tokens": 554,
+    "reasoning_tokens": 455,
+    "total_tokens": 5560,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_967",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "How many Netherlandic drivers are among the 3 youngest drivers?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT COUNT(*) FROM (SELECT nationality FROM drivers ORDER BY CAST(STRFTIME('%Y', dob) AS INTEGER) DESC LIMIT 3) AS t WHERE nationality IN ('Dutch', 'Netherlandic')",
+    "predicted_answer": [
+      [
+        1
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(*) FROM ( SELECT T1.nationality FROM drivers AS T1 ORDER BY JULIANDAY(T1.dob) DESC LIMIT 3) AS T3 WHERE T3.nationality = 'Dutch'",
+    "gold_answer": [
+      [
+        1
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 31.2169,
+    "llm_calls": 2,
+    "prompt_tokens": 5602,
+    "completion_tokens": 6424,
+    "reasoning_tokens": 6088,
+    "total_tokens": 12026,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_971",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Please state the reference name of the oldest German driver.",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT driverRef FROM drivers WHERE nationality = 'German' AND dob IS NOT NULL ORDER BY dob ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        "brudes"
+      ]
+    ],
+    "gold_sql": "SELECT driverRef FROM drivers WHERE nationality = 'German' ORDER BY JULIANDAY(dob) ASC LIMIT 1",
+    "gold_answer": [
+      [
+        "brudes"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 19.9671,
+    "llm_calls": 2,
+    "prompt_tokens": 5801,
+    "completion_tokens": 3421,
+    "reasoning_tokens": 3236,
+    "total_tokens": 9222,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_972",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Which drivers who were born in 1971 and has the fastest lap time on the race? Give id and code of these drivers.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT DISTINCT d.driverId, d.code FROM drivers AS d INNER JOIN results AS r ON d.driverId = r.driverId WHERE strftime('%Y', d.dob) = '1971' AND r.fastestLapTime IS NOT NULL ORDER BY d.driverId",
+    "predicted_answer": [
+      [
+        14,
+        "COU"
+      ],
+      [
+        35,
+        "VIL"
+      ],
+      [
+        37,
+        "DLR"
+      ],
+      [
+        69,
+        "BAD"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT T2.driverId, T2.code \nFROM results AS T1 INNER JOIN drivers AS T2 on T1.driverId = T2.driverId \nWHERE STRFTIME('%Y', T2.dob) = '1971' AND T1.fastestLapTime IS NOT NULL",
+    "gold_answer": [
+      [
+        14,
+        "COU"
+      ],
+      [
+        35,
+        "VIL"
+      ],
+      [
+        37,
+        "DLR"
+      ],
+      [
+        69,
+        "BAD"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 14.2114,
+    "llm_calls": 2,
+    "prompt_tokens": 6432,
+    "completion_tokens": 2720,
+    "reasoning_tokens": 2287,
+    "total_tokens": 9152,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_977",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "From race no. 50 to 100, how many finishers have been disqualified?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT COUNT(*) FROM results WHERE raceId > 50 AND raceId < 100 AND statusId = 2 AND time IS NOT NULL",
+    "predicted_answer": [
+      [
+        2
+      ]
+    ],
+    "gold_sql": "SELECT SUM(IIF(time IS NOT NULL, 1, 0)) FROM results WHERE statusId = 2 AND raceID < 100 AND raceId > 50",
+    "gold_answer": [
+      [
+        2
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 9.2162,
+    "llm_calls": 2,
+    "prompt_tokens": 5975,
+    "completion_tokens": 1398,
+    "reasoning_tokens": 1156,
+    "total_tokens": 7373,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_978",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What were the locations and coordinates of the circuits that were held in Austria?",
+    "difficulty": "simple",
+    "predicted_sql": "SELECT DISTINCT location, lat, lng FROM circuits WHERE country = 'Austria'",
+    "predicted_answer": [
+      [
+        "Spielburg",
+        47.2197,
+        14.7647
+      ],
+      [
+        "Styria",
+        47.2039,
+        14.7478
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT location, lat, lng FROM circuits WHERE country = 'Austria'",
+    "gold_answer": [
+      [
+        "Spielburg",
+        47.2197,
+        14.7647
+      ],
+      [
+        "Styria",
+        47.2039,
+        14.7478
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.4581,
+    "llm_calls": 2,
+    "prompt_tokens": 4733,
+    "completion_tokens": 2150,
+    "reasoning_tokens": 2044,
+    "total_tokens": 6883,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_98",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "Among the accounts who have approved loan date in 1997, list out the accounts that have the lowest approved amount and choose weekly issuance statement.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT T1.account_id FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE STRFTIME('%Y', T1.date) = '1997' AND T2.frequency = 'POPLATEK TYDNE' ORDER BY T1.amount ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        176
+      ]
+    ],
+    "gold_sql": "SELECT T2.account_id FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE STRFTIME('%Y', T1.date) = '1997' AND T2.frequency = 'POPLATEK TYDNE' ORDER BY T1.amount LIMIT 1",
+    "gold_answer": [
+      [
+        176
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.9111,
+    "llm_calls": 2,
+    "prompt_tokens": 4173,
+    "completion_tokens": 2311,
+    "reasoning_tokens": 2030,
+    "total_tokens": 6484,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_981",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "On what year did the youngest driver had his first qualifying race? Also state the name, date and time of the race.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT races.year, races.name, races.date, races.time FROM qualifying INNER JOIN drivers ON qualifying.driverId = drivers.driverId INNER JOIN races ON qualifying.raceId = races.raceId ORDER BY drivers.dob DESC, races.date ASC LIMIT 1",
+    "predicted_answer": [
+      [
+        2017,
+        "Chinese Grand Prix",
+        "2017-04-09",
+        "06:00:00"
+      ]
+    ],
+    "gold_sql": "SELECT T3.year, T3.name, T3.date, T3.time FROM qualifying AS T1 INNER JOIN drivers AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 on T1.raceId = T3.raceId WHERE T1.driverId = ( SELECT driverId FROM drivers ORDER BY dob DESC LIMIT 1 ) ORDER BY T3.date ASC LIMIT 1",
+    "gold_answer": [
+      [
+        2017,
+        "Chinese Grand Prix",
+        "2017-04-09",
+        "06:00:00"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.489,
+    "llm_calls": 2,
+    "prompt_tokens": 6470,
+    "completion_tokens": 2206,
+    "reasoning_tokens": 1841,
+    "total_tokens": 8676,
+    "cached_prompt_tokens": 2816,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_988",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "List down top 3 German drivers who has the shortest average pit stop duration and were born between 1980-1985.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT d.forename, d.surname FROM drivers d JOIN pitStops p ON d.driverId = p.driverId WHERE d.nationality = 'German' AND CAST(strftime('%Y', d.dob) AS INTEGER) BETWEEN 1980 AND 1985 GROUP BY d.driverId, d.forename, d.surname ORDER BY SUM(CAST(p.duration AS REAL)) * 1.0 / COUNT(p.duration) ASC LIMIT 3",
+    "predicted_answer": [
+      [
+        "Nico",
+        "Rosberg"
+      ],
+      [
+        "Adrian",
+        "Sutil"
+      ],
+      [
+        "Timo",
+        "Glock"
+      ]
+    ],
+    "gold_sql": "SELECT T2.forename, T2.surname FROM pitStops AS T1 INNER JOIN drivers AS T2 on T1.driverId = T2.driverId WHERE T2.nationality = 'German' AND STRFTIME('%Y', T2.dob) BETWEEN '1980' AND '1985' GROUP BY T2.forename, T2.surname ORDER BY AVG(T1.duration) LIMIT 3",
+    "gold_answer": [
+      [
+        "Nico",
+        "Rosberg"
+      ],
+      [
+        "Adrian",
+        "Sutil"
+      ],
+      [
+        "Timo",
+        "Glock"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 16.746,
+    "llm_calls": 2,
+    "prompt_tokens": 6107,
+    "completion_tokens": 3112,
+    "reasoning_tokens": 2667,
+    "total_tokens": 9219,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_989",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What was the finish time of the champion of the Canadian Grand Prix in 2008?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT results.time FROM results JOIN races ON results.raceId = races.raceId WHERE races.name = 'Canadian Grand Prix' AND races.year = 2008 AND results.position = 1",
+    "predicted_answer": [
+      [
+        "1:36:24.227"
+      ]
+    ],
+    "gold_sql": "SELECT T1.time FROM results AS T1 INNER JOIN races AS T2 ON T1.raceId = T2.raceId WHERE T2.name = 'Canadian Grand Prix' AND T2.year = 2008 AND T1.time LIKE '_:%:__.___'",
+    "gold_answer": [
+      [
+        "1:36:24.227"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 11.2113,
+    "llm_calls": 2,
+    "prompt_tokens": 5581,
+    "completion_tokens": 1724,
+    "reasoning_tokens": 1447,
+    "total_tokens": 7305,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_99",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "Among the accounts who have loan validity more than 12 months, list out the accounts that have the highest approved amount and have account opening date in 1993.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT A.account_id FROM loan AS L JOIN account AS A ON L.account_id = A.account_id WHERE L.duration > 12 AND STRFTIME('%Y', A.date) = '1993' ORDER BY L.amount DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        10451
+      ]
+    ],
+    "gold_sql": "SELECT T1.account_id FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE STRFTIME('%Y', T2.date) = '1993' AND T1.duration > 12 ORDER BY T1.amount DESC LIMIT 1",
+    "gold_answer": [
+      [
+        10451
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 34.8897,
+    "llm_calls": 3,
+    "prompt_tokens": 7218,
+    "completion_tokens": 6986,
+    "reasoning_tokens": 6563,
+    "total_tokens": 14204,
+    "cached_prompt_tokens": 4096,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_990",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "What is the constructor reference name of the champion in the 2009 Singapore Grand Prix? Please give its website.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT c.constructorRef, c.url FROM constructors AS c INNER JOIN results AS r ON c.constructorId = r.constructorId INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Singapore Grand Prix' AND r.positionOrder = 1",
+    "predicted_answer": [
+      [
+        "mclaren",
+        "http://en.wikipedia.org/wiki/McLaren"
+      ]
+    ],
+    "gold_sql": "SELECT T3.constructorRef, T3.url FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN constructors AS T3 on T1.constructorId = T3.constructorId WHERE T2.name = 'Singapore Grand Prix' AND T2.year = 2009 AND T1.time LIKE '_:%:__.___'",
+    "gold_answer": [
+      [
+        "mclaren",
+        "http://en.wikipedia.org/wiki/McLaren"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 85.7355,
+    "llm_calls": 4,
+    "prompt_tokens": 12766,
+    "completion_tokens": 17744,
+    "reasoning_tokens": 16937,
+    "total_tokens": 30510,
+    "cached_prompt_tokens": 8448,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_994",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "Which constructor scored most points from Monaco Grand Prix between 1980 and 2010? List the score, name and nationality of this team.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT SUM(cr.points) AS score, c.name, c.nationality FROM constructorResults AS cr JOIN races AS r ON cr.raceId = r.raceId JOIN constructors AS c ON cr.constructorId = c.constructorId WHERE r.name = 'Monaco Grand Prix' AND r.year BETWEEN 1980 AND 2010 GROUP BY cr.constructorId, c.name, c.nationality ORDER BY score DESC LIMIT 1;",
+    "predicted_answer": [
+      [
+        218.5,
+        "McLaren",
+        "British"
+      ]
+    ],
+    "gold_sql": "SELECT SUM(T1.points), T2.name, T2.nationality FROM constructorResults AS T1 INNER JOIN constructors AS T2 ON T1.constructorId = T2.constructorId INNER JOIN races AS T3 ON T3.raceid = T1.raceid WHERE T3.name = 'Monaco Grand Prix' AND T3.year BETWEEN 1980 AND 2010 GROUP BY T2.name ORDER BY SUM(T1.points) DESC LIMIT 1",
+    "gold_answer": [
+      [
+        218.5,
+        "McLaren",
+        "British"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "latency_seconds": 16.0719,
+    "llm_calls": 2,
+    "prompt_tokens": 5933,
+    "completion_tokens": 3096,
+    "reasoning_tokens": 2633,
+    "total_tokens": 9029,
+    "cached_prompt_tokens": 2304,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "2dbc99a65da4da75aae355870137496d6b676f67dd88213c17959c24b3e55a54",
+    "termination": "final",
+    "run_id": "20260818T064859Z-970970f5",
+    "trace_schema_version": 3
   }
 ]

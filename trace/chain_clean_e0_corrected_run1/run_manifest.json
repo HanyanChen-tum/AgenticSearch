@@ -2,8 +2,8 @@
   "trace_schema_version": 3,
   "run_id": "20260817T210342Z-386a4e72",
   "created_at": "2026-08-17T21:03:42.325995+00:00",
-  "status": "running",
-  "completed_questions": 159,
+  "status": "complete",
+  "completed_questions": 498,
   "config": {
     "dataset": "C:\\Users\\Irene\\AgenticSearch\\data\\processed\\bird_dev_500_corrected_full.json",
     "dataset_sha256": "59dba552866d92e0e4b8889fd1b00ce5703f7daefb377018370bfaf538f42cca",
@@ -99,22 +99,23 @@
     "offline_metadata": null
   },
   "token_usage": {
-    "prompt_tokens": 945409,
-    "completion_tokens": 523853,
-    "reasoning_tokens": 463257,
-    "total_tokens": 1469262,
-    "cached_prompt_tokens": 396032,
-    "llm_calls": 354,
-    "usage_missing_calls": 2,
-    "reasoning_usage_missing_calls": 2,
-    "questions": 162,
-    "questions_with_complete_usage": 160,
+    "prompt_tokens": 2389984,
+    "completion_tokens": 1579695,
+    "reasoning_tokens": 1402263,
+    "total_tokens": 3969679,
+    "cached_prompt_tokens": 881408,
+    "llm_calls": 1063,
+    "usage_missing_calls": 5,
+    "reasoning_usage_missing_calls": 5,
+    "questions": 498,
+    "questions_with_complete_usage": 491,
     "average_per_question": {
-      "prompt_tokens": 5835.86,
-      "completion_tokens": 3233.66,
-      "reasoning_tokens": 2859.61,
-      "total_tokens": 9069.52,
-      "cached_prompt_tokens": 2444.64
+      "prompt_tokens": 4799.16,
+      "completion_tokens": 3172.08,
+      "reasoning_tokens": 2815.79,
+      "total_tokens": 7971.24,
+      "cached_prompt_tokens": 1769.9
     }
-  }
+  },
+  "finished_at": "2026-08-18T18:19:12.835546+00:00"
 }
