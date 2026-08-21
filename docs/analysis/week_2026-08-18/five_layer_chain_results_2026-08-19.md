@@ -97,6 +97,13 @@ simple/moderate 上效应在控制难度后仍在，但 challenging 层在一个
 
 ## 三、错误类别 × 推理量：两类失败方向相反
 
+> **2026-08-21 范围澄清。** 本节的「约定类」指下表这三条检查
+> （`ties`/`under_projection`/`distinct_repair`）。后续新增的 `column_permutation`、
+> `concat_columns` 两条检查行为不同——推理量比答对的题还高（1.94×，见
+> [`other_failures_breakdown_2026-08-21.md`](other_failures_breakdown_2026-08-21.md)），
+> 不属于本节「模型不知道自己错了」这个结论。引用本节结论时口径限定为这三条，
+> 不要扩展到之后新增的检查。
+
 用 [`scripts/triage_failure_causes.py`](../../../scripts/triage_failure_causes.py) 的
 可复算口径（只出能重执行验证的事实，不出结论）对八臂分诊后合并：
 

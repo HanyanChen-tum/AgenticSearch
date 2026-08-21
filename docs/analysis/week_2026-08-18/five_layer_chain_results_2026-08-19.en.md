@@ -109,6 +109,14 @@ strongest failure signal", which turned out to be a difficulty proxy.
 
 ## 3. Error class by reasoning volume: two failure modes point opposite ways
 
+> **Scope note, 2026-08-21.** "Convention" in this section means the three checks
+> below (`ties` / `under_projection` / `distinct_repair`). Two checks added later,
+> `column_permutation` and `concat_columns`, behave differently -- their reasoning
+> volume is *higher* than correct answers (1.94x), not lower (see
+> [`other_failures_breakdown_2026-08-21.md`](other_failures_breakdown_2026-08-21.md)).
+> They are not part of "the model does not know it is wrong". Cite this section's
+> finding scoped to the original three checks, not extended to the later ones.
+
 Triaged with [`scripts/triage_failure_causes.py`](../../../scripts/triage_failure_causes.py),
 which emits only facts that re-execute and never a verdict, then pooled over the eight arms:
 

@@ -4,7 +4,12 @@
   "db_id": "formula_1",
   "gold_rows": 1,
   "model_rows": 1,
-  "tests": {}
+  "tests": {
+   "concat_columns": {
+    "separator": " ",
+    "gold_columns": 2
+   }
+  }
  },
  {
   "id": "bird_1002",
@@ -94,7 +99,16 @@
   "db_id": "thrombosis_prediction",
   "gold_rows": 73,
   "model_rows": 73,
-  "tests": {}
+  "tests": {
+   "column_permutation": {
+    "width": 3,
+    "perm": [
+     1,
+     0,
+     2
+    ]
+   }
+  }
  },
  {
   "id": "bird_1241",
@@ -560,7 +574,12 @@
   "db_id": "formula_1",
   "gold_rows": 1,
   "model_rows": 1,
-  "tests": {}
+  "tests": {
+   "concat_columns": {
+    "separator": " ",
+    "gold_columns": 2
+   }
+  }
  },
  {
   "id": "bird_894",

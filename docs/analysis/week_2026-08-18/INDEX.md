@@ -11,6 +11,7 @@
 | 4 | [`run_config_audit_2026-08-18.md`](run_config_audit_2026-08-18.md) | 66 个运行的配置逐字段核对结果 |
 | 5 | [`reruns_2026-08-20.md`](reruns_2026-08-20.md) | 四项历史消融在修正数据集上重跑：Hint 消融、指代歧义、E6 递归、prompt 教约定 |
 | 6 | [`disambiguation_recheck_2026-08-20.md`](disambiguation_recheck_2026-08-20.md) | 指代歧义 7 道题的题面/gold 变动诊断 |
+| 7 | [`other_failures_breakdown_2026-08-21.md`](other_failures_breakdown_2026-08-21.md) | 拆开「其它」424 道失败：新增两条可复算检查，量化但未机械化的比例公式子模式 |
 
 只想看一个的话，看 1；只想知道下一步做什么，看 2。
 

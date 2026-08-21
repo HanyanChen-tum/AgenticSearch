@@ -4,7 +4,12 @@
   "db_id": "formula_1",
   "gold_rows": 1,
   "model_rows": 1,
-  "tests": {}
+  "tests": {
+   "concat_columns": {
+    "separator": " ",
+    "gold_columns": 2
+   }
+  }
  },
  {
   "id": "bird_1002",
@@ -18,7 +23,12 @@
   "db_id": "formula_1",
   "gold_rows": 20,
   "model_rows": 20,
-  "tests": {}
+  "tests": {
+   "concat_columns": {
+    "separator": " ",
+    "gold_columns": 2
+   }
+  }
  },
  {
   "id": "bird_1028",
@@ -86,7 +96,16 @@
   "db_id": "thrombosis_prediction",
   "gold_rows": 73,
   "model_rows": 73,
-  "tests": {}
+  "tests": {
+   "column_permutation": {
+    "width": 3,
+    "perm": [
+     2,
+     0,
+     1
+    ]
+   }
+  }
  },
  {
   "id": "bird_1243",
@@ -125,7 +144,12 @@
   "db_id": "student_club",
   "gold_rows": 29,
   "model_rows": 29,
-  "tests": {}
+  "tests": {
+   "concat_columns": {
+    "separator": " ",
+    "gold_columns": 2
+   }
+  }
  },
  {
   "id": "bird_1410",
@@ -530,7 +554,12 @@
   "db_id": "formula_1",
   "gold_rows": 1,
   "model_rows": 1,
-  "tests": {}
+  "tests": {
+   "concat_columns": {
+    "separator": " ",
+    "gold_columns": 2
+   }
+  }
  },
  {
   "id": "bird_892",

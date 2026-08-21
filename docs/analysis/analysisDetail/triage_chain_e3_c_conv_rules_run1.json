@@ -515,7 +515,15 @@
   "db_id": "california_schools",
   "gold_rows": 1,
   "model_rows": 1,
-  "tests": {}
+  "tests": {
+   "column_permutation": {
+    "width": 2,
+    "perm": [
+     1,
+     0
+    ]
+   }
+  }
  },
  {
   "id": "bird_894",

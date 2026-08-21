@@ -160,7 +160,12 @@
   "db_id": "formula_1",
   "gold_rows": 20,
   "model_rows": 20,
-  "tests": {}
+  "tests": {
+   "concat_columns": {
+    "separator": " ",
+    "gold_columns": 2
+   }
+  }
  },
  {
   "id": "bird_1029",
@@ -320,7 +325,15 @@
   "db_id": "toxicology",
   "gold_rows": 1,
   "model_rows": 1,
-  "tests": {}
+  "tests": {
+   "column_permutation": {
+    "width": 2,
+    "perm": [
+     1,
+     0
+    ]
+   }
+  }
  },
  {
   "id": "bird_31",
@@ -434,7 +447,15 @@
   "db_id": "california_schools",
   "gold_rows": 1,
   "model_rows": 1,
-  "tests": {}
+  "tests": {
+   "column_permutation": {
+    "width": 2,
+    "perm": [
+     1,
+     0
+    ]
+   }
+  }
  },
  {
   "id": "bird_518",
@@ -603,7 +624,12 @@
   "db_id": "formula_1",
   "gold_rows": 1,
   "model_rows": 1,
-  "tests": {}
+  "tests": {
+   "concat_columns": {
+    "separator": " ",
+    "gold_columns": 2
+   }
+  }
  },
  {
   "id": "bird_894",

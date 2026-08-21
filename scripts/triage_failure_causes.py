@@ -16,6 +16,11 @@ Tests, all decided by re-execution or by comparing recorded answers:
 
   under_projection  gold returns more columns, and the model's rows are exactly
                     gold's rows restricted to a subset of columns
+  column_permutation same rows and columns, columns just came back in a
+                    different order (checked up to 5 columns)
+  concat_columns    gold's several columns joined into the model's one string
+                    column, e.g. gold has (forename, surname) and the model
+                    concatenated them into "forename surname"
   ties              gold returns several rows, the model returns one, and that
                     row is among gold's -- the LIMIT 1 / ties split
   distinct_repair   rewriting COUNT(x) to COUNT(DISTINCT x) makes it match
@@ -48,8 +53,15 @@ def _rows(value):
     return [tuple(r) if isinstance(r, (list, tuple)) else (r,) for r in value]
 
 
+def _sort_key(row):
+    # None and numbers can't compare against strings, so sorted() on raw rows
+    # can crash on real BIRD result sets; go through the same string-coercing
+    # key shared/evaluator.py's normalize_answer already uses.
+    return tuple("" if v is None else str(v) for v in row)
+
+
 def _as_multiset(rows):
-    return sorted(rows)
+    return sorted(rows, key=_sort_key)
 
 
 def under_projection(gold, pred):
@@ -63,6 +75,36 @@ def under_projection(gold, pred):
     for cols in combinations(range(width_g), width_p):
         if _as_multiset([tuple(r[c] for c in cols) for r in gold]) == _as_multiset(pred):
             return {"gold_columns": width_g, "model_columns": width_p, "kept": list(cols)}
+    return None
+
+
+def column_permutation(gold, pred):
+    """Same rows, same columns, different column order."""
+    if not gold or not pred or len(gold) != len(pred):
+        return None
+    width = len(gold[0])
+    if width < 2 or width > 5 or any(len(r) != width for r in pred):
+        return None
+    from itertools import permutations
+    for perm in permutations(range(width)):
+        if perm == tuple(range(width)):
+            continue
+        if _as_multiset([tuple(r[i] for i in perm) for r in pred]) == _as_multiset(gold):
+            return {"width": width, "perm": list(perm)}
+    return None
+
+
+def concat_columns(gold, pred):
+    """Gold's several columns, joined into the model's one string column --
+    e.g. gold returns (forename, surname), the model returns "forename surname"."""
+    if not gold or not pred or len(gold) != len(pred):
+        return None
+    if len(gold[0]) < 2 or len(pred[0]) != 1:
+        return None
+    for sep in (" ", ", ", "-", "_", ""):
+        cat = [(sep.join("" if v is None else str(v) for v in row),) for row in gold]
+        if _as_multiset(cat) == _as_multiset(pred):
+            return {"separator": sep, "gold_columns": len(gold[0])}
     return None
 
 
@@ -106,6 +148,8 @@ def main() -> None:
         elif gold is not None:
             for name, hit in (
                 ("under_projection", under_projection(gold, pred)),
+                ("column_permutation", column_permutation(gold, pred)),
+                ("concat_columns", concat_columns(gold, pred)),
                 ("ties", ties(gold, pred)),
                 ("distinct_repair", distinct_repair(r["db_id"], r.get("predicted_sql"), gold)),
             ):
