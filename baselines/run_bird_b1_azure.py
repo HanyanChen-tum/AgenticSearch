@@ -25,9 +25,10 @@ if str(PROJECT_ROOT) not in sys.path:
 
 load_dotenv(PROJECT_ROOT / ".env")
 
-from shared.evaluator import is_correct
+from shared.evaluator import is_correct, is_scored
 from shared.llm_config import resolve_llm_config
 from shared.sql_executor import execute_sql
+from shared.console import force_utf8_console
 
 BIRD_DB_DIR  = PROJECT_ROOT / "data/raw/bird/minidev/MINIDEV/dev_databases"
 BIRD_DATASET = PROJECT_ROOT / "data/processed/bird_dev_500.json"
@@ -76,10 +77,11 @@ def run_one(ex: dict, model: str, api_key: str, api_base: str) -> dict:
     started = time.perf_counter()
     predicted_sql = ""
     error_msg = None
+    termination = "final"
 
     try:
         schema = get_schema(db_path)
-        evidence = ex.get("evidence", "").strip()
+        evidence = (ex.get("evidence") or "").strip()
         evidence_block = f"\nHint: {evidence}\n" if evidence else ""
         prompt = _PROMPT.format(schema=schema, evidence_block=evidence_block, question=ex["question"])
         resp = litellm.completion(
@@ -93,6 +95,7 @@ def run_one(ex: dict, model: str, api_key: str, api_base: str) -> dict:
         predicted_sql = clean_sql(resp.choices[0].message.content)
     except Exception as e:
         error_msg = str(e)
+        termination = type(e).__name__
 
     predicted_exec = (
         execute_sql(db_path, predicted_sql, read_only=True)
@@ -117,10 +120,15 @@ def run_one(ex: dict, model: str, api_key: str, api_base: str) -> dict:
         ),
         "error": predicted_exec.get("error") or gold_exec.get("error") or error_msg,
         "latency_seconds": round(time.perf_counter() - started, 4),
+        "termination": termination,
+        "scored": is_scored(termination),
     }
 
 
 def main():
+    # Before anything prints: a database row the console codepage
+    # cannot encode would otherwise abort that question mid-run.
+    force_utf8_console()
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset",  default=str(BIRD_DATASET))
     parser.add_argument("--output",   default=str(PROJECT_ROOT / "results/bird_b1_azure_500.json"))

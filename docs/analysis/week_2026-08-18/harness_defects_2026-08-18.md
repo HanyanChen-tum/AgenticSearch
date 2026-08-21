@@ -43,7 +43,7 @@
 
 ---
 
-## 二、异常误分类（**未修**）
+## 二、异常误分类（**已修，2026-08-21**）
 
 [`scripts/run_bird_indomain_fewshot.py:66-74`](../../../scripts/run_bird_indomain_fewshot.py)：
 
@@ -73,10 +73,29 @@ except Exception as e:
 | `AttributeError`              |    6 | 否   | **是**                                                               |
 | `ContentPolicyViolationError` |    1 | 否   | **是**                                                               |
 
-**编码崩溃只是撞上这个漏洞的第一个实例。** 建议改为：显式列出**算作模型结果**的异常
-（实际上只有 `MaxIterationsError` 一类），其余记 `scored: false` 并排除出计分，
-而不是无声地变成 `correct: false`。这样以后任何新 bug 表现为「样本量少了几道」——看得见；
-而不是「准确率低了两个点」——看不见。
+**编码崩溃只是撞上这个漏洞的第一个实例。**
+
+**修复（2026-08-21）**：方向按建议反过来了。[`shared/evaluator.py`](../../../shared/evaluator.py)
+新增 `MODEL_TERMINATIONS = frozenset({"final", "MaxIterationsError"})` 和 `is_scored()`——
+显式列出**算作模型结果**的两种终止方式，其余一律记 `scored: false`。三个 `run_one()` 实现
+（`run_bird_indomain_fewshot.py`、`run_bird_ours.py`、`baselines/run_bird_b{1,2}_azure.py`，
+后两个此前完全没有 `termination` 概念，本次一并补上）都写入这个字段。`correct` 字段保留原样
+（崩溃记录仍是 `correct: false`，这本身没错——它确实没答对），但任何准确率计算现在必须先按
+`scored` 过滤，不能直接对 `correct` 取平均。
+
+**全仓回填**：新增 [`scripts/backfill_scored_field.py`](../../../scripts/backfill_scored_field.py)，
+给 86 个既有结果文件补上 `scored`（不重跑，纯粹是 `termination` 的确定性函数）。四个 B1/B2 文件
+没有 `termination` 字段（比这次修复更老），用唯一可靠的信号回填：`predicted_sql` 非空说明 LLM
+调用本身成功过，记 `termination="final"`；这批文件里没有一条 `predicted_sql` 为空，所以回填无歧义。
+
+**验证**：用回填后的 `scored` 字段重算五层链（491 题共同可计分集），**六个数字与更正前逐一相同**——
+说明分析时手动排除 `UnicodeEncodeError` 等已知崩溃类型的口径，从一开始就是对的；
+这次修复没有改变任何已发布数字，只是把原来靠人工记忆的排除规则固化进了数据 schema。
+
+**顺带发现**：B1/B2 修正数据集的四次运行也踩了 `evidence=None`（`bird_1507`/`bird_1528`），
+之前完全没被发现——因为这两个脚本连 `termination` 字段都没有，旧的 `HARNESS` 审计方法
+（按 `termination` 分组统计）根本看不到它们。修复后重跑：B1 70.3%/70.1% → **70.5%/70.3%**，
+B2 66.7%/67.7% → **66.9%/67.9%**（各 +0.2pp）。
 
 ---
 
@@ -125,16 +144,18 @@ except Exception as e:
 
 两个推理捕获臂各涨 **+2.2pp**，全部来自崩溃题被真实作答。
 
-### 4.2 仍被压低、尚未重跑的
+| 运行 | 原记录 | **更正后** |
+|---|---:|---:|
+| B1 修正数据集 run1 / run2 | 70.3% / 70.1% | **70.5% / 70.3%** |
+| B2 修正数据集 run1 / run2 | 66.7% / 67.7% | **66.9% / 67.9%**（2026-08-21，`evidence=None` 修复，见 §二）|
 
-以下运行仍含编码崩溃记录，其在 `config_inventory_2026-08-17.md` 中的数字**偏低**，
-偏低幅度未量化，引用时必须注明：
+### 4.2 已补跑两个，一个不可复现（2026-08-18 补跑，此处 2026-08-21 补记）
 
-| 运行                                 | 崩溃数 |
-| ------------------------------------ | -----: |
-| `e3_c_rules_reasoning_dev500_run1` |     16 |
-| `e3_c_conv_rules_v2_dev500_run1`   |     14 |
-| `e3_c_semantic_dev500_run1`        |      8 |
+| 运行 | 原记录 | 状态 |
+|---|---:|---|
+| `e3_c_rules_reasoning_dev500_run1` | 65.8%（16 崩溃） | **已补跑 → 67.2%**（0 崩溃，500/500） |
+| `e3_c_conv_rules_v2_dev500_run1` | 65.4%（14 崩溃） | **已补跑 → 67.2%**（0 崩溃，500/500） |
+| `e3_c_semantic_dev500_run1` | 64.2%（8 崩溃） | **补不了**：`agent_config_sha256` 已随 profile 定义变更漂移，当前代码无法复现该次运行的确切配置。已把 8 条崩溃记录删除，剩 492 道均为真实作答，**65.2%（492/492）可引用**，但样本数与其余 500 题运行不同，逐题并列时需取交集 |
 
 已确认**无**崩溃、数字可直接引用的：`legacy_e0_dev500_run1`、`e3_c_recursive_dev500_run1`、
 `clean_e0_dev500_run1`、`e3_c_conv_dev500_run1`、`e3_c_conv_rules_dev500_run1`、
@@ -193,10 +214,17 @@ your prompt was flagged as potentially violating our usage policy.
 
 **建议处置**：与 `TimeoutError`/`APIError` 同类对待——排除出计分，而不是retry。**不建议重试**：这是内容驱动的拒绝，同样的 prompt 重试大概率原样再被拒一次，重试消耗的是配额不是修复问题。真正的修复需要在送入 API 前对 schema/sample 内容做检测或改写，超出当前范围，留作后续。
 
-## 七、尚未完成
+## 六、尚未完成
 
-1. 第二条（异常误分类）**仍未修**，在计分路径上——五层链已跑完，链本身不再是阻塞理由，
-   但改动会让所有已发布数字的分母同步变化，需要一次性处理、同步更正引用
+第一至三条已修，第五条已诊断。剩下的：
+
+1. **回填后的 `scored` 字段还没有反向传播进各分析文档**——五层链、`config_inventory`
+   等文档目前引用的数字都是修复前手动排除口径算出来的，与回填后重算的结果逐一相同（见第二条
+   的验证），所以数值本身不用改，但文档里"如何排除 harness 崩溃"的方法论描述可以统一改成
+   "过滤 `scored=False`"，不必再重复列举异常类名
+2. 第五条诊断出的 `BadRequestError` 尚未在计分逻辑里落地为 `scored: false`——它符合
+   `is_scored()` 的判定（不在 `MODEL_TERMINATIONS` 里），新跑的运行会自动排除；
+   已有的 6 条已通过回填脚本标记，无需额外动作
 
 ## 涉及文件
 

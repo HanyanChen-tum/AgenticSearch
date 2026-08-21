@@ -1,356 +1,366 @@
 [
-  {
-    "id": "bird_1471",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "debit_card_specializing",
-    "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
-    "difficulty": "simple",
-    "predicted_sql": "SELECT 1.0 * COUNT(CASE WHEN Currency = 'EUR' THEN 1 END) / COUNT(CASE WHEN Currency = 'CZK' THEN 1 END) AS ratio FROM customers",
-    "predicted_answer": [
-      [
-        0.06572769953051644
-      ]
-    ],
-    "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
-    "gold_answer": [
-      [
-        0.06572769953051644
-      ]
-    ],
-    "correct": true,
-    "error": null,
-    "latency_seconds": 10.3327,
-    "llm_calls": 2,
-    "prompt_tokens": 2304,
-    "completion_tokens": 1696,
-    "reasoning_tokens": 1400,
-    "total_tokens": 4000,
-    "cached_prompt_tokens": 0,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T021600Z-e82c860e",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_1076",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "european_football_2",
-    "question": "What is the difference of the average ball control score between Abdou Diallo and Aaron Appindangoye\n?",
-    "difficulty": "challenging",
-    "predicted_sql": "SELECT (CAST(SUM(CASE WHEN P.player_name = 'Abdou Diallo' THEN PA.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN P.player_name = 'Abdou Diallo' THEN PA.id ELSE NULL END)) - (CAST(SUM(CASE WHEN P.player_name = 'Aaron Appindangoye' THEN PA.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN P.player_name = 'Aaron Appindangoye' THEN PA.id ELSE NULL END)) FROM Player AS P INNER JOIN Player_Attributes AS PA ON P.player_api_id = PA.player_api_id",
-    "predicted_answer": [
-      [
-        0.7999999999999972
-      ]
-    ],
-    "gold_sql": "SELECT CAST(SUM(CASE WHEN t1.player_name = 'Abdou Diallo' THEN t2.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN t1.player_name = 'Abdou Diallo' THEN t2.id ELSE NULL END) - CAST(SUM(CASE WHEN t1.player_name = 'Aaron Appindangoye' THEN t2.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN t1.player_name = 'Aaron Appindangoye' THEN t2.id ELSE NULL END) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id",
-    "gold_answer": [
-      [
-        0.7999999999999972
-      ]
-    ],
-    "correct": true,
-    "error": null,
-    "latency_seconds": 33.0189,
-    "llm_calls": 2,
-    "prompt_tokens": 7614,
-    "completion_tokens": 7550,
-    "reasoning_tokens": 7119,
-    "total_tokens": 15164,
-    "cached_prompt_tokens": 3328,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T021600Z-e82c860e",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_775",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "superhero",
-    "question": "What is the percentage of blue female superheroes among all female superheroes?",
-    "difficulty": "challenging",
-    "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN g.gender = 'Female' AND c.colour = 'Blue' THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN g.gender = 'Female' THEN 1 ELSE 0 END), 0) AS percentage FROM superhero AS s INNER JOIN gender AS g ON s.gender_id = g.id INNER JOIN colour AS c ON s.skin_colour_id = c.id",
-    "predicted_answer": [
-      [
-        2.4630541871921183
-      ]
-    ],
-    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.colour = 'Blue' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id INNER JOIN colour AS T3 ON T1.skin_colour_id = T3.id WHERE T2.gender = 'Female'",
-    "gold_answer": [
-      [
-        2.4630541871921183
-      ]
-    ],
-    "correct": true,
-    "error": null,
-    "latency_seconds": 19.6221,
-    "llm_calls": 2,
-    "prompt_tokens": 3420,
-    "completion_tokens": 3721,
-    "reasoning_tokens": 3367,
-    "total_tokens": 7141,
-    "cached_prompt_tokens": 1280,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T021600Z-e82c860e",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_604",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "codebase_community",
-    "question": "What is the average of the up votes and the average user age for users creating more than 10 posts?",
-    "difficulty": "moderate",
-    "predicted_sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id), CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) FROM users AS T1 INNER JOIN ( SELECT T2.OwnerUserId FROM posts AS T2 WHERE T2.OwnerUserId IS NOT NULL GROUP BY T2.OwnerUserId HAVING COUNT(T2.OwnerUserId) > 10 ) AS T3 ON T1.Id = T3.OwnerUserId",
-    "predicted_answer": [
-      [
-        182.2832618025751,
-        9.127896995708154
-      ]
-    ],
-    "gold_sql": "SELECT AVG(T1.UpVotes), AVG(T1.Age) FROM users AS T1 INNER JOIN ( SELECT OwnerUserId, COUNT(*) AS post_count FROM posts GROUP BY OwnerUserId HAVING post_count > 10) AS T2 ON T1.Id = T2.OwnerUserId",
-    "gold_answer": [
-      [
-        182.2832618025751,
-        34.083333333333336
-      ]
-    ],
-    "correct": false,
-    "error": null,
-    "latency_seconds": 28.1201,
-    "llm_calls": 2,
-    "prompt_tokens": 6675,
-    "completion_tokens": 5745,
-    "reasoning_tokens": 5350,
-    "total_tokens": 12420,
-    "cached_prompt_tokens": 2816,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T021600Z-e82c860e",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_198",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "toxicology",
-    "question": "On average how many carcinogenic molecules are single bonded?",
-    "difficulty": "challenging",
-    "predicted_sql": "SELECT CAST((SELECT SUM(CASE WHEN b.bond_type = '-' THEN 1 ELSE 0 END) FROM bond AS b INNER JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE m.label = '+') AS REAL) / (SELECT COUNT(a.atom_id) FROM atom AS a INNER JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE m.label = '+')",
-    "predicted_answer": [
-      [
-        0.8336944745395449
-      ]
-    ],
-    "gold_sql": "SELECT AVG(single_bond_count) FROM (SELECT T3.molecule_id, COUNT(T1.bond_type) AS single_bond_count FROM bond AS T1  INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN molecule AS T3 ON T3.molecule_id = T2.molecule_id WHERE T1.bond_type = '-' AND T3.label = '+' GROUP BY T3.molecule_id) AS subquery",
-    "gold_answer": [
-      [
-        732.125
-      ]
-    ],
-    "correct": false,
-    "error": null,
-    "latency_seconds": 29.728,
-    "llm_calls": 2,
-    "prompt_tokens": 2719,
-    "completion_tokens": 5999,
-    "reasoning_tokens": 5572,
-    "total_tokens": 8718,
-    "cached_prompt_tokens": 0,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T021600Z-e82c860e",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_208",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "toxicology",
-    "question": "Which type of label is the most numerous in atoms with hydrogen?",
-    "difficulty": "moderate",
-    "predicted_sql": "SELECT m.label FROM atom AS a JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE a.element = 'h' GROUP BY m.label ORDER BY COUNT(m.label) DESC LIMIT 1;",
-    "predicted_answer": [
-      [
-        "-"
-      ]
-    ],
-    "gold_sql": "SELECT T.label FROM ( SELECT T2.label, COUNT(T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'h' GROUP BY T2.label ORDER BY COUNT(T2.molecule_id) DESC LIMIT 1 ) t",
-    "gold_answer": [
-      [
-        "-"
-      ]
-    ],
-    "correct": true,
-    "error": null,
-    "latency_seconds": 13.0246,
-    "llm_calls": 2,
-    "prompt_tokens": 2494,
-    "completion_tokens": 2338,
-    "reasoning_tokens": 2017,
-    "total_tokens": 4832,
-    "cached_prompt_tokens": 0,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T021600Z-e82c860e",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_218",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "toxicology",
-    "question": "What percentage of carcinogenic-type molecules does not contain fluorine?",
-    "difficulty": "challenging",
-    "predicted_sql": "SELECT CAST(COUNT(*) AS REAL) * 100.0 / (SELECT COUNT(*) FROM molecule WHERE label = '+') AS percentage FROM molecule AS m LEFT JOIN atom AS a ON m.molecule_id = a.molecule_id AND a.element = 'f' WHERE m.label = '+' AND a.atom_id IS NULL;",
-    "predicted_answer": [
-      [
-        99.34210526315789
-      ]
-    ],
-    "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element <> 'f' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
-    "gold_answer": [
-      [
-        100.0
-      ]
-    ],
-    "correct": false,
-    "error": null,
-    "latency_seconds": 30.9607,
-    "llm_calls": 2,
-    "prompt_tokens": 2635,
-    "completion_tokens": 7444,
-    "reasoning_tokens": 7109,
-    "total_tokens": 10079,
-    "cached_prompt_tokens": 0,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T021600Z-e82c860e",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_219",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "toxicology",
-    "question": "What is the percentage of carcinogenic molecules in triple type bonds?",
-    "difficulty": "challenging",
-    "predicted_sql": "SELECT CAST(SUM(b.bond_type = '#') * 100.0 / COUNT(b.bond_id) AS REAL) AS percent FROM bond AS b INNER JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE m.label = '+';",
-    "predicted_answer": [
-      [
-        0.08075370121130551
-      ]
-    ],
-    "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T2.label = '+' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '#'",
-    "gold_answer": [
-      [
-        66.66666666666667
-      ]
-    ],
-    "correct": false,
-    "error": null,
-    "latency_seconds": 8.9151,
-    "llm_calls": 2,
-    "prompt_tokens": 2633,
-    "completion_tokens": 1848,
-    "reasoning_tokens": 1537,
-    "total_tokens": 4481,
-    "cached_prompt_tokens": 0,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T021600Z-e82c860e",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_228",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "toxicology",
-    "question": "How much of the hydrogen in molecule TR206 is accounted for? Please provide your answer as a percentage with four decimal places.",
-    "difficulty": "moderate",
-    "predicted_sql": "SELECT printf('%.4f', CAST(SUM(element = 'h') AS REAL) * 100.0 / COUNT(atom_id)) AS percent FROM atom WHERE molecule_id = 'TR206';",
-    "predicted_answer": [
-      [
-        "45.4545"
-      ]
-    ],
-    "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T.element = 'h' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id),4) FROM atom AS T WHERE T.molecule_id = 'TR206'",
-    "gold_answer": [
-      [
-        45.4545
-      ]
-    ],
-    "correct": false,
-    "error": null,
-    "latency_seconds": 17.5019,
-    "llm_calls": 1,
-    "prompt_tokens": 1234,
-    "completion_tokens": 4450,
-    "reasoning_tokens": 4307,
-    "total_tokens": 5684,
-    "cached_prompt_tokens": 0,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T021600Z-e82c860e",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_282",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "toxicology",
-    "question": "What is the ratio of Hydrogen elements in molecule ID TR006? List the ratio with its label.",
-    "difficulty": "challenging",
-    "predicted_sql": "SELECT CAST(SUM(CASE WHEN a.element = 'h' THEN 1 ELSE 0 END) AS REAL) / COUNT(a.element) AS ratio, m.label AS label FROM atom AS a INNER JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE a.molecule_id = 'TR006';",
-    "predicted_answer": [
-      [
-        0.3617021276595745,
-        "+"
-      ]
-    ],
-    "gold_sql": "WITH SubQuery AS (SELECT DISTINCT T1.atom_id, T1.element, T1.molecule_id, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR006') SELECT CAST(COUNT(CASE WHEN element = 'h' THEN atom_id ELSE NULL END) AS REAL) / (CASE WHEN COUNT(atom_id) = 0 THEN NULL ELSE COUNT(atom_id) END) AS ratio, label FROM SubQuery GROUP BY label",
-    "gold_answer": [
-      [
-        0.3617021276595745,
-        "+"
-      ]
-    ],
-    "correct": true,
-    "error": null,
-    "latency_seconds": 8.2944,
-    "llm_calls": 2,
-    "prompt_tokens": 2613,
-    "completion_tokens": 1523,
-    "reasoning_tokens": 1270,
-    "total_tokens": 4136,
-    "cached_prompt_tokens": 0,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T021600Z-e82c860e",
-    "trace_schema_version": 3
-  }
+ {
+  "id": "bird_1471",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "debit_card_specializing",
+  "question": "What is the ratio of customers who pay in EUR against customers who pay in CZK?",
+  "difficulty": "simple",
+  "predicted_sql": "SELECT 1.0 * COUNT(CASE WHEN Currency = 'EUR' THEN 1 END) / COUNT(CASE WHEN Currency = 'CZK' THEN 1 END) AS ratio FROM customers",
+  "predicted_answer": [
+   [
+    0.06572769953051644
+   ]
+  ],
+  "gold_sql": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) AS ratio FROM customers",
+  "gold_answer": [
+   [
+    0.06572769953051644
+   ]
+  ],
+  "correct": true,
+  "error": null,
+  "latency_seconds": 10.3327,
+  "llm_calls": 2,
+  "prompt_tokens": 2304,
+  "completion_tokens": 1696,
+  "reasoning_tokens": 1400,
+  "total_tokens": 4000,
+  "cached_prompt_tokens": 0,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T021600Z-e82c860e",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_1076",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "european_football_2",
+  "question": "What is the difference of the average ball control score between Abdou Diallo and Aaron Appindangoye\n?",
+  "difficulty": "challenging",
+  "predicted_sql": "SELECT (CAST(SUM(CASE WHEN P.player_name = 'Abdou Diallo' THEN PA.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN P.player_name = 'Abdou Diallo' THEN PA.id ELSE NULL END)) - (CAST(SUM(CASE WHEN P.player_name = 'Aaron Appindangoye' THEN PA.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN P.player_name = 'Aaron Appindangoye' THEN PA.id ELSE NULL END)) FROM Player AS P INNER JOIN Player_Attributes AS PA ON P.player_api_id = PA.player_api_id",
+  "predicted_answer": [
+   [
+    0.7999999999999972
+   ]
+  ],
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN t1.player_name = 'Abdou Diallo' THEN t2.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN t1.player_name = 'Abdou Diallo' THEN t2.id ELSE NULL END) - CAST(SUM(CASE WHEN t1.player_name = 'Aaron Appindangoye' THEN t2.ball_control ELSE 0 END) AS REAL) / COUNT(CASE WHEN t1.player_name = 'Aaron Appindangoye' THEN t2.id ELSE NULL END) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id",
+  "gold_answer": [
+   [
+    0.7999999999999972
+   ]
+  ],
+  "correct": true,
+  "error": null,
+  "latency_seconds": 33.0189,
+  "llm_calls": 2,
+  "prompt_tokens": 7614,
+  "completion_tokens": 7550,
+  "reasoning_tokens": 7119,
+  "total_tokens": 15164,
+  "cached_prompt_tokens": 3328,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T021600Z-e82c860e",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_775",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "superhero",
+  "question": "What is the percentage of blue female superheroes among all female superheroes?",
+  "difficulty": "challenging",
+  "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN g.gender = 'Female' AND c.colour = 'Blue' THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN g.gender = 'Female' THEN 1 ELSE 0 END), 0) AS percentage FROM superhero AS s INNER JOIN gender AS g ON s.gender_id = g.id INNER JOIN colour AS c ON s.skin_colour_id = c.id",
+  "predicted_answer": [
+   [
+    2.4630541871921183
+   ]
+  ],
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.colour = 'Blue' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id INNER JOIN colour AS T3 ON T1.skin_colour_id = T3.id WHERE T2.gender = 'Female'",
+  "gold_answer": [
+   [
+    2.4630541871921183
+   ]
+  ],
+  "correct": true,
+  "error": null,
+  "latency_seconds": 19.6221,
+  "llm_calls": 2,
+  "prompt_tokens": 3420,
+  "completion_tokens": 3721,
+  "reasoning_tokens": 3367,
+  "total_tokens": 7141,
+  "cached_prompt_tokens": 1280,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T021600Z-e82c860e",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_604",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "codebase_community",
+  "question": "What is the average of the up votes and the average user age for users creating more than 10 posts?",
+  "difficulty": "moderate",
+  "predicted_sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id), CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) FROM users AS T1 INNER JOIN ( SELECT T2.OwnerUserId FROM posts AS T2 WHERE T2.OwnerUserId IS NOT NULL GROUP BY T2.OwnerUserId HAVING COUNT(T2.OwnerUserId) > 10 ) AS T3 ON T1.Id = T3.OwnerUserId",
+  "predicted_answer": [
+   [
+    182.2832618025751,
+    9.127896995708154
+   ]
+  ],
+  "gold_sql": "SELECT AVG(T1.UpVotes), AVG(T1.Age) FROM users AS T1 INNER JOIN ( SELECT OwnerUserId, COUNT(*) AS post_count FROM posts GROUP BY OwnerUserId HAVING post_count > 10) AS T2 ON T1.Id = T2.OwnerUserId",
+  "gold_answer": [
+   [
+    182.2832618025751,
+    34.083333333333336
+   ]
+  ],
+  "correct": false,
+  "error": null,
+  "latency_seconds": 28.1201,
+  "llm_calls": 2,
+  "prompt_tokens": 6675,
+  "completion_tokens": 5745,
+  "reasoning_tokens": 5350,
+  "total_tokens": 12420,
+  "cached_prompt_tokens": 2816,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T021600Z-e82c860e",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_198",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "toxicology",
+  "question": "On average how many carcinogenic molecules are single bonded?",
+  "difficulty": "challenging",
+  "predicted_sql": "SELECT CAST((SELECT SUM(CASE WHEN b.bond_type = '-' THEN 1 ELSE 0 END) FROM bond AS b INNER JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE m.label = '+') AS REAL) / (SELECT COUNT(a.atom_id) FROM atom AS a INNER JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE m.label = '+')",
+  "predicted_answer": [
+   [
+    0.8336944745395449
+   ]
+  ],
+  "gold_sql": "SELECT AVG(single_bond_count) FROM (SELECT T3.molecule_id, COUNT(T1.bond_type) AS single_bond_count FROM bond AS T1  INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN molecule AS T3 ON T3.molecule_id = T2.molecule_id WHERE T1.bond_type = '-' AND T3.label = '+' GROUP BY T3.molecule_id) AS subquery",
+  "gold_answer": [
+   [
+    732.125
+   ]
+  ],
+  "correct": false,
+  "error": null,
+  "latency_seconds": 29.728,
+  "llm_calls": 2,
+  "prompt_tokens": 2719,
+  "completion_tokens": 5999,
+  "reasoning_tokens": 5572,
+  "total_tokens": 8718,
+  "cached_prompt_tokens": 0,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T021600Z-e82c860e",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_208",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "toxicology",
+  "question": "Which type of label is the most numerous in atoms with hydrogen?",
+  "difficulty": "moderate",
+  "predicted_sql": "SELECT m.label FROM atom AS a JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE a.element = 'h' GROUP BY m.label ORDER BY COUNT(m.label) DESC LIMIT 1;",
+  "predicted_answer": [
+   [
+    "-"
+   ]
+  ],
+  "gold_sql": "SELECT T.label FROM ( SELECT T2.label, COUNT(T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'h' GROUP BY T2.label ORDER BY COUNT(T2.molecule_id) DESC LIMIT 1 ) t",
+  "gold_answer": [
+   [
+    "-"
+   ]
+  ],
+  "correct": true,
+  "error": null,
+  "latency_seconds": 13.0246,
+  "llm_calls": 2,
+  "prompt_tokens": 2494,
+  "completion_tokens": 2338,
+  "reasoning_tokens": 2017,
+  "total_tokens": 4832,
+  "cached_prompt_tokens": 0,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T021600Z-e82c860e",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_218",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "toxicology",
+  "question": "What percentage of carcinogenic-type molecules does not contain fluorine?",
+  "difficulty": "challenging",
+  "predicted_sql": "SELECT CAST(COUNT(*) AS REAL) * 100.0 / (SELECT COUNT(*) FROM molecule WHERE label = '+') AS percentage FROM molecule AS m LEFT JOIN atom AS a ON m.molecule_id = a.molecule_id AND a.element = 'f' WHERE m.label = '+' AND a.atom_id IS NULL;",
+  "predicted_answer": [
+   [
+    99.34210526315789
+   ]
+  ],
+  "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element <> 'f' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+  "gold_answer": [
+   [
+    100.0
+   ]
+  ],
+  "correct": false,
+  "error": null,
+  "latency_seconds": 30.9607,
+  "llm_calls": 2,
+  "prompt_tokens": 2635,
+  "completion_tokens": 7444,
+  "reasoning_tokens": 7109,
+  "total_tokens": 10079,
+  "cached_prompt_tokens": 0,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T021600Z-e82c860e",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_219",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "toxicology",
+  "question": "What is the percentage of carcinogenic molecules in triple type bonds?",
+  "difficulty": "challenging",
+  "predicted_sql": "SELECT CAST(SUM(b.bond_type = '#') * 100.0 / COUNT(b.bond_id) AS REAL) AS percent FROM bond AS b INNER JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE m.label = '+';",
+  "predicted_answer": [
+   [
+    0.08075370121130551
+   ]
+  ],
+  "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T2.label = '+' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '#'",
+  "gold_answer": [
+   [
+    66.66666666666667
+   ]
+  ],
+  "correct": false,
+  "error": null,
+  "latency_seconds": 8.9151,
+  "llm_calls": 2,
+  "prompt_tokens": 2633,
+  "completion_tokens": 1848,
+  "reasoning_tokens": 1537,
+  "total_tokens": 4481,
+  "cached_prompt_tokens": 0,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T021600Z-e82c860e",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_228",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "toxicology",
+  "question": "How much of the hydrogen in molecule TR206 is accounted for? Please provide your answer as a percentage with four decimal places.",
+  "difficulty": "moderate",
+  "predicted_sql": "SELECT printf('%.4f', CAST(SUM(element = 'h') AS REAL) * 100.0 / COUNT(atom_id)) AS percent FROM atom WHERE molecule_id = 'TR206';",
+  "predicted_answer": [
+   [
+    "45.4545"
+   ]
+  ],
+  "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T.element = 'h' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id),4) FROM atom AS T WHERE T.molecule_id = 'TR206'",
+  "gold_answer": [
+   [
+    45.4545
+   ]
+  ],
+  "correct": false,
+  "error": null,
+  "latency_seconds": 17.5019,
+  "llm_calls": 1,
+  "prompt_tokens": 1234,
+  "completion_tokens": 4450,
+  "reasoning_tokens": 4307,
+  "total_tokens": 5684,
+  "cached_prompt_tokens": 0,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T021600Z-e82c860e",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_282",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "toxicology",
+  "question": "What is the ratio of Hydrogen elements in molecule ID TR006? List the ratio with its label.",
+  "difficulty": "challenging",
+  "predicted_sql": "SELECT CAST(SUM(CASE WHEN a.element = 'h' THEN 1 ELSE 0 END) AS REAL) / COUNT(a.element) AS ratio, m.label AS label FROM atom AS a INNER JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE a.molecule_id = 'TR006';",
+  "predicted_answer": [
+   [
+    0.3617021276595745,
+    "+"
+   ]
+  ],
+  "gold_sql": "WITH SubQuery AS (SELECT DISTINCT T1.atom_id, T1.element, T1.molecule_id, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR006') SELECT CAST(COUNT(CASE WHEN element = 'h' THEN atom_id ELSE NULL END) AS REAL) / (CASE WHEN COUNT(atom_id) = 0 THEN NULL ELSE COUNT(atom_id) END) AS ratio, label FROM SubQuery GROUP BY label",
+  "gold_answer": [
+   [
+    0.3617021276595745,
+    "+"
+   ]
+  ],
+  "correct": true,
+  "error": null,
+  "latency_seconds": 8.2944,
+  "llm_calls": 2,
+  "prompt_tokens": 2613,
+  "completion_tokens": 1523,
+  "reasoning_tokens": 1270,
+  "total_tokens": 4136,
+  "cached_prompt_tokens": 0,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T021600Z-e82c860e",
+  "trace_schema_version": 3,
+  "scored": true
+ }
 ]

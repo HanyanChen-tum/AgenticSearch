@@ -27,7 +27,7 @@ from ours.recursive_db_rlm import DBRLM
 from ours.db_environment import get_db_path
 from ours.bird_few_shot_retriever import get_bird_retriever
 from ours.agent.config import agent_profile_names, get_agent_config
-from shared.evaluator import is_correct
+from shared.evaluator import is_correct, is_scored
 from shared.llm_config import resolve_llm_config
 from shared.sql_executor import execute_sql
 from shared.console import force_utf8_console
@@ -115,6 +115,9 @@ def run_one(
         "agent_profile": agent.agent_config.profile,
         "agent_config_sha256": agent.agent_config.sha256,
         "termination": termination,
+        # False means this harness failed to run the attempt (a crash, a
+        # rejected request) -- exclude it from accuracy, don't count it wrong.
+        "scored": is_scored(termination),
     }
     if capture_trace:
         final_attempt = attempt_traces[-1] if attempt_traces else {

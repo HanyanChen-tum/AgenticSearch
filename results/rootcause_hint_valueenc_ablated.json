@@ -1,179 +1,184 @@
 [
-  {
-    "id": "bird_1344",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "student_club",
-    "question": "What was the notes of the fundraising on 2019/9/14?",
-    "difficulty": "simple",
-    "predicted_sql": "SELECT T1.notes FROM income AS T1 WHERE T1.source = 'Fundraising' AND T1.date_received = '2019-09-14'",
-    "predicted_answer": [
-      [
-        "Secured donations to help pay for speaker gifts."
-      ]
-    ],
-    "gold_sql": "SELECT notes FROM income WHERE source = 'Fundraising' AND date_received = '2019-09-14'",
-    "gold_answer": [
-      [
-        "Secured donations to help pay for speaker gifts."
-      ]
-    ],
-    "correct": true,
-    "error": null,
-    "latency_seconds": 8.0993,
-    "llm_calls": 2,
-    "prompt_tokens": 3627,
-    "completion_tokens": 1328,
-    "reasoning_tokens": 1118,
-    "total_tokens": 4955,
-    "cached_prompt_tokens": 1280,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T022546Z-0e71db7b",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_1350",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "student_club",
-    "question": "What is the status of the event which bought \"Post Cards, Posters\" on 2019/8/20?",
-    "difficulty": "moderate",
-    "predicted_sql": "SELECT DISTINCT T1.status FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget WHERE T3.expense_description = 'Post Cards, Posters' AND T3.expense_date LIKE '2019-08-20%'",
-    "predicted_answer": [
-      [
-        "Closed"
-      ]
-    ],
-    "gold_sql": "SELECT T1.event_status FROM budget AS T1 INNER JOIN expense AS T2 ON T1.budget_id = T2.link_to_budget WHERE T2.expense_description = 'Post Cards, Posters' AND T2.expense_date = '2019-08-20'",
-    "gold_answer": [
-      [
-        "Closed"
-      ]
-    ],
-    "correct": true,
-    "error": null,
-    "latency_seconds": 8.8989,
-    "llm_calls": 2,
-    "prompt_tokens": 4060,
-    "completion_tokens": 1685,
-    "reasoning_tokens": 1204,
-    "total_tokens": 5745,
-    "cached_prompt_tokens": 1280,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T022546Z-0e71db7b",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_1238",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "thrombosis_prediction",
-    "question": "Among the patients who were diagnosed with SLE, who is the oldest with normal hemoglobin level. Provide the ID and sex.",
-    "difficulty": "moderate",
-    "predicted_sql": "SELECT P.ID, P.SEX FROM Patient AS P WHERE P.Birthday IS NOT NULL AND (P.Diagnosis LIKE '%SLE%' OR EXISTS (SELECT 1 FROM Examination AS E WHERE E.ID = P.ID AND E.Diagnosis LIKE '%SLE%')) AND EXISTS (SELECT 1 FROM Laboratory AS L WHERE L.ID = P.ID AND L.HGB > 10 AND L.HGB < 17) ORDER BY P.Birthday ASC, P.ID ASC LIMIT 1",
-    "predicted_answer": [
-      [
-        4792723,
-        "F"
-      ]
-    ],
-    "gold_sql": "SELECT T1.ID, T1.SEX FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.Diagnosis = 'SLE' AND T2.HGB > 10 AND T2.HGB < 17 ORDER BY T1.Birthday ASC LIMIT 1",
-    "gold_answer": [
-      [
-        4792723,
-        "F"
-      ]
-    ],
-    "correct": true,
-    "error": null,
-    "latency_seconds": 23.9178,
-    "llm_calls": 3,
-    "prompt_tokens": 6727,
-    "completion_tokens": 5152,
-    "reasoning_tokens": 4486,
-    "total_tokens": 11879,
-    "cached_prompt_tokens": 1280,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T022546Z-0e71db7b",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_1103",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "european_football_2",
-    "question": "What was the overall rating for Aaron Mooy on 2016/2/4?",
-    "difficulty": "moderate",
-    "predicted_sql": "SELECT T2.overall_rating FROM Player AS T1 INNER JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.player_name = 'Aaron Mooy' AND date(T2.date) = '2016-02-04';",
-    "predicted_answer": [
-      [
-        75
-      ]
-    ],
-    "gold_sql": "SELECT t2.overall_rating FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE SUBSTR(t2.`date`, 1, 10) = '2016-02-04' AND t1.player_name = 'Aaron Mooy'",
-    "gold_answer": [
-      [
-        75
-      ]
-    ],
-    "correct": true,
-    "error": null,
-    "latency_seconds": 11.7712,
-    "llm_calls": 2,
-    "prompt_tokens": 5163,
-    "completion_tokens": 2149,
-    "reasoning_tokens": 1816,
-    "total_tokens": 7312,
-    "cached_prompt_tokens": 2304,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T022546Z-0e71db7b",
-    "trace_schema_version": 3
-  },
-  {
-    "id": "bird_1113",
-    "method": "bird_indomain_fewshot_db_rlm",
-    "db_id": "european_football_2",
-    "question": "For the team \"Hannover 96\", what was its defence aggression class on 2015/9/10?",
-    "difficulty": "moderate",
-    "predicted_sql": "SELECT T1.defenceAggressionClass FROM Team_Attributes AS T1 INNER JOIN Team AS T2 ON T1.team_api_id = T2.team_api_id WHERE T2.team_long_name = 'Hannover 96' AND T1.date = '2015-09-10 00:00:00'",
-    "predicted_answer": [
-      [
-        "Press"
-      ]
-    ],
-    "gold_sql": "SELECT t2.defenceAggressionClass FROM Team AS t1 INNER JOIN Team_Attributes AS t2 ON t1.team_api_id = t2.team_api_id WHERE t1.team_long_name = 'Hannover 96' AND t2.`date` LIKE '2015-09-10%'",
-    "gold_answer": [
-      [
-        "Press"
-      ]
-    ],
-    "correct": true,
-    "error": null,
-    "latency_seconds": 12.8287,
-    "llm_calls": 3,
-    "prompt_tokens": 11096,
-    "completion_tokens": 2508,
-    "reasoning_tokens": 1916,
-    "total_tokens": 13604,
-    "cached_prompt_tokens": 6144,
-    "usage_missing_calls": 0,
-    "reasoning_usage_missing_calls": 0,
-    "agent_profile": "e3-c",
-    "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
-    "termination": "final",
-    "run_id": "20260808T022546Z-0e71db7b",
-    "trace_schema_version": 3
-  }
+ {
+  "id": "bird_1344",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "student_club",
+  "question": "What was the notes of the fundraising on 2019/9/14?",
+  "difficulty": "simple",
+  "predicted_sql": "SELECT T1.notes FROM income AS T1 WHERE T1.source = 'Fundraising' AND T1.date_received = '2019-09-14'",
+  "predicted_answer": [
+   [
+    "Secured donations to help pay for speaker gifts."
+   ]
+  ],
+  "gold_sql": "SELECT notes FROM income WHERE source = 'Fundraising' AND date_received = '2019-09-14'",
+  "gold_answer": [
+   [
+    "Secured donations to help pay for speaker gifts."
+   ]
+  ],
+  "correct": true,
+  "error": null,
+  "latency_seconds": 8.0993,
+  "llm_calls": 2,
+  "prompt_tokens": 3627,
+  "completion_tokens": 1328,
+  "reasoning_tokens": 1118,
+  "total_tokens": 4955,
+  "cached_prompt_tokens": 1280,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T022546Z-0e71db7b",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_1350",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "student_club",
+  "question": "What is the status of the event which bought \"Post Cards, Posters\" on 2019/8/20?",
+  "difficulty": "moderate",
+  "predicted_sql": "SELECT DISTINCT T1.status FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget WHERE T3.expense_description = 'Post Cards, Posters' AND T3.expense_date LIKE '2019-08-20%'",
+  "predicted_answer": [
+   [
+    "Closed"
+   ]
+  ],
+  "gold_sql": "SELECT T1.event_status FROM budget AS T1 INNER JOIN expense AS T2 ON T1.budget_id = T2.link_to_budget WHERE T2.expense_description = 'Post Cards, Posters' AND T2.expense_date = '2019-08-20'",
+  "gold_answer": [
+   [
+    "Closed"
+   ]
+  ],
+  "correct": true,
+  "error": null,
+  "latency_seconds": 8.8989,
+  "llm_calls": 2,
+  "prompt_tokens": 4060,
+  "completion_tokens": 1685,
+  "reasoning_tokens": 1204,
+  "total_tokens": 5745,
+  "cached_prompt_tokens": 1280,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T022546Z-0e71db7b",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_1238",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "thrombosis_prediction",
+  "question": "Among the patients who were diagnosed with SLE, who is the oldest with normal hemoglobin level. Provide the ID and sex.",
+  "difficulty": "moderate",
+  "predicted_sql": "SELECT P.ID, P.SEX FROM Patient AS P WHERE P.Birthday IS NOT NULL AND (P.Diagnosis LIKE '%SLE%' OR EXISTS (SELECT 1 FROM Examination AS E WHERE E.ID = P.ID AND E.Diagnosis LIKE '%SLE%')) AND EXISTS (SELECT 1 FROM Laboratory AS L WHERE L.ID = P.ID AND L.HGB > 10 AND L.HGB < 17) ORDER BY P.Birthday ASC, P.ID ASC LIMIT 1",
+  "predicted_answer": [
+   [
+    4792723,
+    "F"
+   ]
+  ],
+  "gold_sql": "SELECT T1.ID, T1.SEX FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.Diagnosis = 'SLE' AND T2.HGB > 10 AND T2.HGB < 17 ORDER BY T1.Birthday ASC LIMIT 1",
+  "gold_answer": [
+   [
+    4792723,
+    "F"
+   ]
+  ],
+  "correct": true,
+  "error": null,
+  "latency_seconds": 23.9178,
+  "llm_calls": 3,
+  "prompt_tokens": 6727,
+  "completion_tokens": 5152,
+  "reasoning_tokens": 4486,
+  "total_tokens": 11879,
+  "cached_prompt_tokens": 1280,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T022546Z-0e71db7b",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_1103",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "european_football_2",
+  "question": "What was the overall rating for Aaron Mooy on 2016/2/4?",
+  "difficulty": "moderate",
+  "predicted_sql": "SELECT T2.overall_rating FROM Player AS T1 INNER JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.player_name = 'Aaron Mooy' AND date(T2.date) = '2016-02-04';",
+  "predicted_answer": [
+   [
+    75
+   ]
+  ],
+  "gold_sql": "SELECT t2.overall_rating FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE SUBSTR(t2.`date`, 1, 10) = '2016-02-04' AND t1.player_name = 'Aaron Mooy'",
+  "gold_answer": [
+   [
+    75
+   ]
+  ],
+  "correct": true,
+  "error": null,
+  "latency_seconds": 11.7712,
+  "llm_calls": 2,
+  "prompt_tokens": 5163,
+  "completion_tokens": 2149,
+  "reasoning_tokens": 1816,
+  "total_tokens": 7312,
+  "cached_prompt_tokens": 2304,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T022546Z-0e71db7b",
+  "trace_schema_version": 3,
+  "scored": true
+ },
+ {
+  "id": "bird_1113",
+  "method": "bird_indomain_fewshot_db_rlm",
+  "db_id": "european_football_2",
+  "question": "For the team \"Hannover 96\", what was its defence aggression class on 2015/9/10?",
+  "difficulty": "moderate",
+  "predicted_sql": "SELECT T1.defenceAggressionClass FROM Team_Attributes AS T1 INNER JOIN Team AS T2 ON T1.team_api_id = T2.team_api_id WHERE T2.team_long_name = 'Hannover 96' AND T1.date = '2015-09-10 00:00:00'",
+  "predicted_answer": [
+   [
+    "Press"
+   ]
+  ],
+  "gold_sql": "SELECT t2.defenceAggressionClass FROM Team AS t1 INNER JOIN Team_Attributes AS t2 ON t1.team_api_id = t2.team_api_id WHERE t1.team_long_name = 'Hannover 96' AND t2.`date` LIKE '2015-09-10%'",
+  "gold_answer": [
+   [
+    "Press"
+   ]
+  ],
+  "correct": true,
+  "error": null,
+  "latency_seconds": 12.8287,
+  "llm_calls": 3,
+  "prompt_tokens": 11096,
+  "completion_tokens": 2508,
+  "reasoning_tokens": 1916,
+  "total_tokens": 13604,
+  "cached_prompt_tokens": 6144,
+  "usage_missing_calls": 0,
+  "reasoning_usage_missing_calls": 0,
+  "agent_profile": "e3-c",
+  "agent_config_sha256": "eafdf5cd9112474f672bfbcc29bddbb27ab0aa6743be7dff4f850298c20e3b97",
+  "termination": "final",
+  "run_id": "20260808T022546Z-0e71db7b",
+  "trace_schema_version": 3,
+  "scored": true
+ }
 ]

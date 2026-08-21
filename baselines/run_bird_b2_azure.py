@@ -25,9 +25,10 @@ if str(PROJECT_ROOT) not in sys.path:
 
 load_dotenv(PROJECT_ROOT / ".env")
 
-from shared.evaluator import is_correct
+from shared.evaluator import is_correct, is_scored
 from shared.llm_config import resolve_llm_config
 from shared.sql_executor import execute_sql
+from shared.console import force_utf8_console
 
 BIRD_DB_DIR  = PROJECT_ROOT / "data/raw/bird/minidev/MINIDEV/dev_databases"
 BIRD_DATASET = PROJECT_ROOT / "data/processed/bird_dev_500.json"
@@ -108,10 +109,11 @@ def run_one(ex: dict, model: str, api_key: str, api_base: str, top_k: int = 5) -
     started = time.perf_counter()
     predicted_sql = ""
     error_msg = None
+    termination = "final"
 
     try:
         full_schema = get_full_schema(db_path)
-        evidence = ex.get("evidence", "").strip()
+        evidence = (ex.get("evidence") or "").strip()
         selected_tables = select_tables(full_schema, ex["question"], evidence, top_k)
         filtered_schema = format_schema(full_schema, selected_tables)
         evidence_block = f"\nHint: {evidence}\n" if evidence else ""
@@ -127,6 +129,7 @@ def run_one(ex: dict, model: str, api_key: str, api_base: str, top_k: int = 5) -
         predicted_sql = clean_sql(resp.choices[0].message.content)
     except Exception as e:
         error_msg = str(e)
+        termination = type(e).__name__
 
     predicted_exec = (
         execute_sql(db_path, predicted_sql, read_only=True)
@@ -151,10 +154,15 @@ def run_one(ex: dict, model: str, api_key: str, api_base: str, top_k: int = 5) -
         ),
         "error": predicted_exec.get("error") or gold_exec.get("error") or error_msg,
         "latency_seconds": round(time.perf_counter() - started, 4),
+        "termination": termination,
+        "scored": is_scored(termination),
     }
 
 
 def main():
+    # Before anything prints: a database row the console codepage
+    # cannot encode would otherwise abort that question mid-run.
+    force_utf8_console()
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset",  default=str(BIRD_DATASET))
     parser.add_argument("--output",   default=str(PROJECT_ROOT / "results/bird_b2_azure_500.json"))

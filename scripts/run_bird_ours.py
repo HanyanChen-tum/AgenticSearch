@@ -21,7 +21,7 @@ load_dotenv(PROJECT_ROOT / ".env")
 from ours.recursive_db_rlm import DBRLM
 from ours.db_environment import get_db_path
 from ours.agent.config import agent_profile_names, get_agent_config
-from shared.evaluator import is_correct
+from shared.evaluator import is_correct, is_scored
 from shared.sql_executor import execute_sql
 from shared.console import force_utf8_console
 
@@ -41,7 +41,7 @@ def run_one(example: dict, database_dir: Path, agent: DBRLM) -> dict:
     try:
         predicted_sql = agent.complete_sql(
             example["question"], db_path,
-            evidence=example.get("evidence", ""),
+            evidence=example.get("evidence") or "",
         )
         termination = "final"
     except KeyboardInterrupt:
@@ -85,6 +85,7 @@ def run_one(example: dict, database_dir: Path, agent: DBRLM) -> dict:
         "agent_config_sha256": agent.agent_config.sha256,
         "iterations": agent.stats["iterations"],
         "termination": termination,
+        "scored": is_scored(termination),
     }
 
 
