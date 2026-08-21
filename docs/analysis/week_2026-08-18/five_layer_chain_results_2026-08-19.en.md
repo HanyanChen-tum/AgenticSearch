@@ -166,26 +166,42 @@ repeat in the chain.
 
 | Effort | Accuracy | Median reasoning tokens | Mean | Mean `llm_calls` | Median latency |
 |---|---:|---:|---:|---:|---:|
-| minimal | **72.2%** | 0 | 9 | 2.87 | 4.3s |
+| minimal run1 | 72.2% | 0 | 9 | 2.87 | 4.3s |
+| minimal run2 | 66.7% | 34 | 46 | — | — |
 | low | 83.7% | 232 | 330 | 3.34 | 6.5s |
 | medium | 85.9% | 864 | 1289 | 2.49 | 9.1s |
 | high run1 | 87.1% | 2262 | 3259 | 2.27 | 14.7s |
 | high run2 | 86.9% | 2046 | 3241 | 2.27 | 14.1s |
 
+**The two `minimal` runs differ by 5.4pp (same 496 questions), with a 15.9% per-question
+flip rate** — nearly 4x the 0.2pp gap and roughly-5-6% flip rate between the two high-effort
+runs. Both runs' reasoning volume is near zero (9 and 46 tokens); the gap is not "thought
+even less" but that **at the lowest reasoning setting, the output itself is less stable**.
+No single `minimal` run should be trusted alone.
+
 **Sharply diminishing returns:** minimal to low spends 232 reasoning tokens to buy
-+11.5pp; low to medium spends another 632 to buy +2.2pp; medium to high spends another
-1400 to buy +1.1pp. **Reasoning volume rises nearly tenfold (232 to 2262) to move accuracy
-from 83.7% to 87.0%.**
++11.5pp (+14.3pp if measured from the two-run mean of 69.45% instead -- the curve's left
+endpoint is itself unstable, so this number is only a rough magnitude); low to medium
+spends another 632 to buy +2.2pp; medium to high spends another 1400 to buy +1.1pp.
+**Reasoning volume rises nearly tenfold (232 to 2262) to move accuracy from 83.7% to 87.0%.**
 
-Two side conclusions:
+Three side conclusions:
 
-1. **`minimal` at 72.2% is comparable to B1 at 70.5%.** B1 is one-shot generation with high
-   reasoning; `minimal` is the full agent tool loop with almost no reasoning. That they land
-   together means **the agent loop and the model's internal reasoning are largely
+1. **Three independent estimates converge on the same point, and the substitution claim
+   holds.** A single 72.2% against B1's 70.5% is only 1.7pp apart, right at the edge of
+   noise; but folding in `minimal`'s own noise, three independent estimates --
+   `clean-e0 x minimal` (tool loop, almost no reasoning, run once) 69.1%, B1's mean
+   (one-shot, high reasoning) 70.4%, and `e3-c-conv-rules x minimal`'s mean (tool loop,
+   almost no reasoning) 69.45% -- **land inside a band under 1.5pp wide**, sturdier than any
+   single comparison. **The agent loop and the model's internal reasoning are largely
    substitutes for one another**, not two things that add up. This sharpens how layer 1's
    +13.4pp should be read: what it buys is not the tools as such.
 2. **Lower reasoning, more `llm_calls`** (2.27 to 3.34): a model that thinks less internally
    goes back to the database more often. The two kinds of "thinking" trade off observably.
+3. **Reasoning effort trades off reproducibility, not just cost for accuracy.** The two
+   `minimal` runs differ by 5.4pp with a 15.9% flip rate, nearly 4x the noise at high effort.
+   This is new this round -- the diminishing-returns curve above was built from one run per
+   setting, and the `minimal` endpoint is the least trustworthy point on it.
 
 ### How the error mix moves with effort
 
