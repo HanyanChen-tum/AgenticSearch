@@ -181,8 +181,10 @@ low → medium 再花 632 个换 +2.2pp；medium → high 再花 1400 个换 +1.
    「其它」是一个混合类，尚未细分。
 3. 逐题翻转率在同配置重复间稳定在 5~6%（20/480 量级）。**聚合稳定不等于单题稳定**，
    任何逐题因果分析不能拿聚合噪声当保证。
-4. 尚未修复：异常误分类与 `evidence=None`（见 harness_defects §二、§三），
-   `BadRequestError` 33 条未诊断。
+4. 尚未修复：异常误分类与 `evidence=None`（见 harness_defects §二、§三）。
+   `evidence=None` 已于 2026-08-20 修复（见 `reruns_2026-08-20.md`）；
+   `BadRequestError` 已于 2026-08-20 诊断为 Azure 内容安全策略误判（见 harness_defects §五），
+   影响范围小（当时正用的运行里仅 6 条），不改变本文任何层间结论。
 
 ---
 

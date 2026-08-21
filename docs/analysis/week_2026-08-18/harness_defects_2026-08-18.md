@@ -167,12 +167,36 @@ except Exception as e:
 
 ---
 
-## 五、尚未完成
+## 五、`BadRequestError` 诊断（2026-08-20）——Azure 内容安全策略误判，不是基础设施抖动
+
+全部 37 条错误消息一致：
+
+```
+litellm.BadRequestError: AzureException BadRequestError - Invalid prompt:
+your prompt was flagged as potentially violating our usage policy.
+```
+
+不是 token 超限、不是限流，是 Azure 的内容安全分类器判定这次请求违规。数据库分布高度集中：
+
+| db_id | 命中数 |
+|---|---:|
+| `thrombosis_prediction` | 7 |
+| `card_games` | 7 |
+| `european_football_2` | 5 |
+| `formula_1` | 4 |
+
+`card_games` 是卡牌 flavor text（此前编码 bug 调查里见过 `Diacre infâme`、`Insurreição` 这类带黑暗奇幻主题的文本），`thrombosis_prediction` 是医疗数据——两个都是"内容本身可能触发分类器、但对 SQL 任务完全无害"的数据库，与 `UnicodeEncodeError` 当时命中的高危库高度重合，不是巧合。
+
+逐条查了 `chain_clean_e0_corrected_run1` 里的 `bird_345`：题面、hint、前几轮的工具调用结果（`Legal`/`Restricted`/`Banned`、一条 SQL 语法错误提示）**全部肉眼看不出违规内容**，触发点大概率藏在 7477 字符的完整 schema 转储更深处（未逐字符扫描），或者是分类器本身的概率性判定——这一层排查到此为止，继续深挖性价比不高。
+
+**影响范围**：37 条里 **6 条落在当前正在使用的结果文件**（`chain_clean_e0_corrected_run1`、`chain_e3_c_noconv_corrected_run2`、`e3_c_arcwise_full_dev500_run1`、`e3_c_rc_trt_dev500_run1`），其余分布在已排除的旧运行（`bird_nofs_rhigh_500` 等 9 个不可用运行）。绝对数量小，不改变任何已报告的层间结论。
+
+**建议处置**：与 `TimeoutError`/`APIError` 同类对待——排除出计分，而不是retry。**不建议重试**：这是内容驱动的拒绝，同样的 prompt 重试大概率原样再被拒一次，重试消耗的是配额不是修复问题。真正的修复需要在送入 API 前对 schema/sample 内容做检测或改写，超出当前范围，留作后续。
+
+## 七、尚未完成
 
 1. 第二条（异常误分类）**仍未修**，在计分路径上——五层链已跑完，链本身不再是阻塞理由，
    但改动会让所有已发布数字的分母同步变化，需要一次性处理、同步更正引用
-2. `BadRequestError`（33 条）尚未诊断——37 道题各出现一次、无重复，形状像零散基础设施抖动而非
-   确定性故障，暂按事后审计 `termination` 分布处理，不建议在未查清前动代码
 
 ## 涉及文件
 
