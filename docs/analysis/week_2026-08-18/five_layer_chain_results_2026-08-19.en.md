@@ -218,13 +218,46 @@ result in section 3: **reasoning volume buys semantic correctness and cannot buy
 compliance.** Convention failures are near-immune both to reasoning effort and to method
 layer; they need a different instrument.
 
+### All four settings now repeated (2026-08-21): noise falls off monotonically with effort
+
+`low` and `medium` were each run a second time, joining `minimal`'s earlier repeat -- all
+four settings now have two independent runs:
+
+| Effort | Same-question accuracy gap | Per-question flip rate |
+|---|---:|---:|
+| minimal | 5.4pp | 15.9% |
+| low | 2.2pp | 9.9% |
+| medium | 2.2pp | 7.9% |
+| high | 0.2pp | ~5.5% |
+
+**Noise falls off monotonically with reasoning effort** -- it is not just the `minimal`
+endpoint that is unstable, it is a continuous curve. Reasoning effort buys reproducibility
+as well as accuracy and format compliance, and the effect is still visible at the middle
+settings, not only at the extremes.
+
+Recomputing the diminishing-returns curve from the two-run means instead of the single runs,
+the top end is less steep than it looked:
+
+| Interval | Increment from single runs | Increment from means |
+|---|---:|---:|
+| minimal to low | +11.5pp | **+13.15pp** |
+| low to medium | +2.2pp | +2.2pp |
+| medium to high | +1.1pp | **+2.2pp** (same as the interval above, not smaller) |
+
+The first jump (minimal to low) still dominates, but medium-to-high comes out the same
+size as low-to-medium once averaged, not smaller as the single-run numbers suggested --
+part of that earlier impression was `minimal`'s own noise dragging its mean down and making
+the later intervals look comparatively flatter. **The diminishing-returns direction still
+holds, but the stronger claim -- that it flattens out almost completely -- does not**;
+medium to high is still worth the spend.
+
 ---
 
 ## 5. Limitations
 
-1. Each effort setting was run **once**. That is sufficient for `reasoning_tokens`
-   (a continuous measure at n of about 496), but 1pp-scale **accuracy** differences between
-   settings need repeats - the 1.1pp between medium and high is not yet decidable.
+1. ~~Each effort setting was run once~~ **Resolved 2026-08-21**: all four settings now have
+   two independent runs; medium vs high comes out to 2.2pp by the two-run mean, not the
+   1.1pp the single runs showed -- see the new subsection above.
 2. The error classes in sections 3-4 come from the re-executable triage, which covers only
    what can be checked mechanically. "Other" remains a mixed class and is not yet broken
    down.
