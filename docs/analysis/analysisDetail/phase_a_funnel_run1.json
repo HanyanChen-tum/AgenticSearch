@@ -1,0 +1,130 @@
+{
+ "results_file": "results/e3_c_rules_reasoning_corrected_run1.json",
+ "total_questions": 498,
+ "unscored_harness_fault": 3,
+ "unscored_ids": [
+  "bird_1048",
+  "bird_1526",
+  "bird_897"
+ ],
+ "scored": 495,
+ "correct": 432,
+ "wrong": 63,
+ "by_category": {
+  "confident_miss": {
+   "n": 14,
+   "ids": [
+    "bird_1028",
+    "bird_1032",
+    "bird_1092",
+    "bird_1376",
+    "bird_212",
+    "bird_245",
+    "bird_349",
+    "bird_37",
+    "bird_671",
+    "bird_736",
+    "bird_744",
+    "bird_794",
+    "bird_829",
+    "bird_930"
+   ]
+  },
+  "other": {
+   "n": 25,
+   "ids": [
+    "bird_1068",
+    "bird_1241",
+    "bird_125",
+    "bird_1339",
+    "bird_1472",
+    "bird_1480",
+    "bird_1486",
+    "bird_1498",
+    "bird_1529",
+    "bird_173",
+    "bird_26",
+    "bird_36",
+    "bird_383",
+    "bird_407",
+    "bird_465",
+    "bird_50",
+    "bird_518",
+    "bird_587",
+    "bird_604",
+    "bird_637",
+    "bird_640",
+    "bird_750",
+    "bird_791",
+    "bird_85",
+    "bird_894"
+   ]
+  },
+  "rowset": {
+   "n": 4,
+   "ids": [
+    "bird_11",
+    "bird_23",
+    "bird_347",
+    "bird_773"
+   ]
+  },
+  "no_answer": {
+   "n": 2,
+   "ids": [
+    "bird_1148",
+    "bird_409"
+   ]
+  },
+  "ratio_formula": {
+   "n": 18,
+   "ids": [
+    "bird_1149",
+    "bird_1169",
+    "bird_1243",
+    "bird_1482",
+    "bird_1531",
+    "bird_226",
+    "bird_227",
+    "bird_228",
+    "bird_24",
+    "bird_255",
+    "bird_263",
+    "bird_273",
+    "bird_32",
+    "bird_352",
+    "bird_416",
+    "bird_48",
+    "bird_701",
+    "bird_881"
+   ]
+  }
+ },
+ "other_ids": [
+  "bird_1068",
+  "bird_1241",
+  "bird_125",
+  "bird_1339",
+  "bird_1472",
+  "bird_1480",
+  "bird_1486",
+  "bird_1498",
+  "bird_1529",
+  "bird_173",
+  "bird_26",
+  "bird_36",
+  "bird_383",
+  "bird_407",
+  "bird_465",
+  "bird_50",
+  "bird_518",
+  "bird_587",
+  "bird_604",
+  "bird_637",
+  "bird_640",
+  "bird_750",
+  "bird_791",
+  "bird_85",
+  "bird_894"
+ ]
+}

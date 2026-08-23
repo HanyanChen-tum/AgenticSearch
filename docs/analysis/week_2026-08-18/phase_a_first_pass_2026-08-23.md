@@ -19,6 +19,32 @@
 只留"其它"类真正的语义失败。两次运行各 25 道，21 道两次都失败（84% 重合，说明是可复现的
 真实困难，不是采样噪声），并集 **29 道**。
 
+### 漏斗的每一步，逐题可查（2026-08-23 补记）
+
+之前只在对话里临时算过这张表，没有存过文件——现在用新增的
+[`scripts/build_phase_a_funnel.py`](../../../scripts/build_phase_a_funnel.py) 固定下来，
+逐题 id 存在 `phase_a_funnel_run{1,2}.json` 里：
+
+| | run1 | run2 |
+|---|---:|---:|
+| 总题数 | 498 | 498 |
+| − harness/接口故障（`scored=False`，不计分） | 3 | 0 |
+| = 可计分 | 495 | 498 |
+| − 答对 | 432 | 442 |
+| = 答错 | **63** | **56** |
+| 　`no_answer`（模型没给出可执行答案） | 2 | 2 |
+| 　`confident_miss`（`ties`/`under_projection`/`distinct_repair`，可执行验证） | 14 | 14 |
+| 　`shape_miss`（`column_permutation`/`concat_columns`，可执行验证） | 0 | 0 |
+| 　`rowset`（`row_superset`/`row_subset`，可执行验证） | 4 | 4 |
+| 　`ratio_formula`（**正则文本匹配，非执行验证**，判定不机械化） | 18 | 11 |
+| 　`other`（进 Phase A 候选池） | **25** | **25** |
+
+分类优先级固定、按顺序匹配（先 `no_answer` → `confident_miss` → `shape_miss` → `rowset` →
+`ratio_formula` → 剩下才是 `other`），跟 `triage_failure_causes.py` 本身的检查顺序一致。
+前五类里，只有 `ratio_formula` 不是可重新执行验证的事实——它是扫描 SQL 文本形状的正则匹配
+（gold 含 `CAST(...AS REAL)/`、`SUM(...)/(COUNT|SUM)` 这类除法结构，且 pred 里有除号），
+识别的是"长得像分子分母问题"，不判断分子分母具体错在哪，后者需要理解题意，不该被机械"验证"。
+
 ## 结果
 
 | 指标 | 值 |
@@ -68,3 +94,5 @@ SQL 正常执行、返回了一行，我的脚本只看"有没有返回值"，�
 - `docs/analysis/analysisDetail/located_phaseA_verified.json`（含不可信的自动 verification 标签，
   仅供参考，不能引用其 confirmed/refuted 比例）
 - `docs/analysis/analysisDetail/phase_a_source_map.json`（29 道题各自取自 run1 还是 run2）
+- [`scripts/build_phase_a_funnel.py`](../../../scripts/build_phase_a_funnel.py)、
+  `docs/analysis/analysisDetail/phase_a_funnel_run{1,2}.json`（498 → 29 的逐题漏斗）
