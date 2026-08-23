@@ -132,7 +132,7 @@ strongest failure signal", which turned out to be a difficulty proxy.
 > below (`ties` / `under_projection` / `distinct_repair`). Two checks added later,
 > `column_permutation` and `concat_columns`, behave differently -- their reasoning
 > volume is *higher* than correct answers (1.94x), not lower (see
-> [`other_failures_breakdown_2026-08-21.md`](other_failures_breakdown_2026-08-21.md)).
+> [`拆开「其它」424%20道失败_2026-08-21.md`](拆开「其它」424%20道失败_2026-08-21.md)).
 > They are not part of "the model does not know it is wrong". Cite this section's
 > finding scoped to the original three checks, not extended to the later ones.
 
