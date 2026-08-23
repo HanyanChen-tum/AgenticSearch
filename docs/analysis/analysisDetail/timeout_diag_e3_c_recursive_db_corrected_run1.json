@@ -1,0 +1,41 @@
+[
+ {
+  "id": "bird_1031",
+  "db_id": "european_football_2",
+  "elapsed_seconds": 180.0,
+  "diagnosis": "still_times_out_or_errors",
+  "error": "SQL execution timed out after 180 seconds"
+ },
+ {
+  "id": "bird_1505",
+  "db_id": "debit_card_specializing",
+  "elapsed_seconds": 50.7,
+  "diagnosis": "slow_but_correct"
+ },
+ {
+  "id": "bird_408",
+  "db_id": "card_games",
+  "elapsed_seconds": 180.0,
+  "diagnosis": "still_times_out_or_errors",
+  "error": "SQL execution timed out after 180 seconds"
+ },
+ {
+  "id": "bird_518",
+  "db_id": "card_games",
+  "elapsed_seconds": 0.1,
+  "diagnosis": "slow_but_correct"
+ },
+ {
+  "id": "bird_529",
+  "db_id": "card_games",
+  "elapsed_seconds": 180.0,
+  "diagnosis": "still_times_out_or_errors",
+  "error": "SQL execution timed out after 180 seconds"
+ },
+ {
+  "id": "bird_701",
+  "db_id": "codebase_community",
+  "elapsed_seconds": 0.2,
+  "diagnosis": "slow_and_wrong"
+ }
+]

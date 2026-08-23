@@ -9,6 +9,25 @@ not being judged on the same questions.
 
 ---
 
+> **Correction, 2026-08-23.** 36 records across the eight arms were silently scored wrong
+> by `SQL execution timed out after 30 seconds`; re-verified, 16 turn out to be correct
+> (some because the *reference* query itself takes 60+ seconds, unrelated to the model).
+> Corrected in place; each layer moves up 0.27-0.47pp. **The layer-by-layer conclusions do
+> not change direction -- recursion's increment moves from +0.3pp to +0.10pp, closer to
+> zero, not overturned.** The original table below is kept as the historical record; see
+> [`sql_timeout_correction_2026-08-23.md`](sql_timeout_correction_2026-08-23.md).
+>
+> | Layer | Old mean | New mean |
+> |---|---:|---:|
+> | 0 B1 | 70.5% | 70.47% (untouched) |
+> | 1 clean-e0 | 83.9% | 84.32% |
+> | 2 noconv | 86.5% | 86.86% |
+> | 3 conv-rules | 86.9% | 87.37% |
+> | 4 recursive-db | 87.2% | 87.47% |
+>
+> Noise re-measured at 0.00-1.02pp; the ruler below stays 1.4pp so this document does not
+> flip its own yardstick mid-way.
+
 ## 1. The five-layer chain
 
 | Layer | Configuration | What it adds | run1 | run2 | Mean | Noise |
