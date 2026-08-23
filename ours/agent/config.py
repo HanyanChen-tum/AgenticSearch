@@ -351,6 +351,27 @@ _PROFILES = {
         sql_convention_mode=SQL_CONVENTION_VERSION,
         recursion_mode="leaf-db-v1",
     ),
+    # e3-c-recursive-db with reasoning_capture on, for causal tracing into *why*
+    # depth-1 recursion doesn't move accuracy (five_layer_chain_results
+    # 2026-08-19 §1: +0.3pp, inside noise, sign flips between repeats). Without
+    # this the recursive-db trace shows that a leaf was called and what it
+    # returned, but not what either side reasoned through to get there.
+    # Single variable against e3-c-recursive-db: reasoning_capture on, nothing
+    # else changes. Diagnostic caveat carries over from e3-c-rules-reasoning:
+    # the Responses API path is not accuracy-comparable to Chat Completions.
+    "e3-c-recursive-db-reasoning": AgentConfig(
+        profile="e3-c-recursive-db-reasoning",
+        experiment_variant="e3-c-recursive-db-reasoning",
+        prompt_profile="conventions-recursive-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        recursion_mode="leaf-db-v1",
+        reasoning_capture=REASONING_CAPTURE_MODE,
+    ),
     # First profile in the project that actually exposes RLM recursion. The
     # primitive has been in the REPL whenever capability_gate is off, but no
     # prompt profile ever named it — measured 0 invocations across 197 questions,

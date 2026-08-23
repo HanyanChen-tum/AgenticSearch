@@ -1,0 +1,50 @@
+[
+ {
+  "id": "bird_928",
+  "sentence_count": 14,
+  "index": 12,
+  "commitment": "It commits to using `position = 1` as the winning-condition filter.",
+  "claim": "The winning driver for the 2007 Canadian Grand Prix has `results.position = 1`.",
+  "check_sql": "SELECT d.forename, d.surname, d.driverRef FROM drivers d JOIN results r ON d.driverId = r.driverId JOIN races ra ON r.raceId = ra.raceId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1;",
+  "confidence": "high",
+  "sentence_text": "I’ll stick to using `position = 1` for this query and make sure it’s a read-only `SELECT`.",
+  "sentence_label": "AC",
+  "position_pct": 85.7
+ },
+ {
+  "id": "bird_1080",
+  "sentence_count": 61,
+  "index": 28,
+  "commitment": "It settles on a row-level WHERE filter for both conditions, equivalent to requiring preferred_foot = 'left' and attacking_work_rate = 'low' in the same record.",
+  "claim": "The query `SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low'` matches the intended answer.",
+  "check_sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low';",
+  "confidence": "high",
+  "sentence_text": "The SQL formula is straightforward: \n\nSELECT COUNT(DISTINCT player_api_id) \nFROM Player_Attributes \nWHERE preferred_foot = 'left' AND attacking_work_rate = 'low'.",
+  "sentence_label": "FAE",
+  "position_pct": 45.9
+ },
+ {
+  "id": "bird_931",
+  "sentence_count": 33,
+  "index": 24,
+  "commitment": "It settles on using `ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1`, i.e. ranking by the casted speed value rather than any alternative formulation.",
+  "claim": "Ordering the fastestLapSpeed values as REAL in descending order will return the maximum speed.",
+  "check_sql": "SELECT CAST(fastestLapSpeed AS REAL) AS speed FROM results r INNER JOIN races ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 5;",
+  "confidence": "high",
+  "sentence_text": "I realize that ordering by the fastest lap speed as text is not ideal, so I’ll use `ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1`.",
+  "sentence_label": "AC",
+  "position_pct": 72.7
+ },
+ {
+  "id": "bird_1479",
+  "sentence_count": 53,
+  "index": 13,
+  "commitment": "It commits to returning a specific year (implicitly 2012) rather than letting the aggregation determine the answer.",
+  "claim": null,
+  "check_sql": null,
+  "confidence": "medium",
+  "sentence_text": "The question asks for the year, not a specific value.",
+  "sentence_label": "PS",
+  "position_pct": 24.5
+ }
+]
