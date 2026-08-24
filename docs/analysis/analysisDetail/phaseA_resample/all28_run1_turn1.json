@@ -1,0 +1,1514 @@
+{
+ "bird_1472": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 8
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 10
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 4
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT y.CustomerID FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Segment = 'LAM' AND y.Date BETWEEN '201201' AND '201212' ORDER BY y.Consumption ASC LIMIT 1;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT ym.CustomerID FROM yearmonth ym JOIN customers c ON ym.CustomerID = c.CustomerID WHERE c.Segment = 'LAM' AND ym.Date BETWEEN '201201' AND '201212' ORDER BY ym.Consumption ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 8
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT ym.CustomerID FROM yearmonth AS ym JOIN customers AS c ON ym.CustomerID = c.CustomerID WHERE ym.Date BETWEEN 201201 AND 201212 AND c.Segment = 'LAM' ORDER BY ym.Consumption ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 10
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT y.CustomerID FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Segment = 'LAM' AND y.Date BETWEEN '201201' AND '201212' ORDER BY y.Consumption ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT ym.CustomerID FROM yearmonth AS ym JOIN customers AS c ON ym.CustomerID = c.CustomerID WHERE c.Segment = 'LAM' AND ym.Date BETWEEN '201201' AND '201212' ORDER BY ym.Consumption ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 5
+  }
+ ],
+ "bird_1068": [
+  {
+   "sample": 0,
+   "sql": "SELECT SUM(t2.overall_rating) * 1.0 / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT CAST(SUM(t2.overall_rating) AS REAL) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUM(t2.overall_rating)*1.0 / COUNT(t2.id) FROM Player AS t1 JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 10
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUM(t2.overall_rating) * 1.0 / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) FROM Player_Attributes AS t2 INNER JOIN Player AS t1 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 5
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(t2.overall_rating)/ COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  }
+ ],
+ "bird_1241": [
+  {
+   "sample": 0,
+   "sql": "SELECT SUM(CASE WHEN PLT < 100 THEN 1 ELSE 0 END) - SUM(CASE WHEN PLT > 400 THEN 1 ELSE 0 END) AS difference FROM Laboratory;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) FROM Laboratory;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) AS difference FROM Laboratory;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) FROM Laboratory",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) FROM Laboratory;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 23
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) AS difference FROM Laboratory WHERE PLT < 100 OR PLT > 400;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 15
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) FROM Laboratory;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 15
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) FROM Laboratory",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 26
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) AS difference FROM Laboratory;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) FROM Laboratory",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  }
+ ],
+ "bird_1486": [
+  {
+   "sample": 0,
+   "sql": "SELECT COALESCE(SUM(CASE WHEN c.Currency = 'CZK' THEN t.Amount * t.Price ELSE 0 END), 0) - COALESCE(SUM(CASE WHEN c.Currency = 'EUR' THEN t.Amount * t.Price ELSE 0 END), 0) FROM transactions_1k AS t INNER JOIN customers AS c ON t.CustomerID = c.CustomerID WHERE c.Segment = 'SME'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN t.Amount * t.Price ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN t.Amount * t.Price ELSE 0 END) FROM transactions_1k AS t JOIN customers AS c ON t.CustomerID = c.CustomerID WHERE c.Segment = 'SME'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT COALESCE(SUM(CASE WHEN c.Currency = 'CZK' THEN t.Amount * t.Price ELSE 0 END), 0) - COALESCE(SUM(CASE WHEN c.Currency = 'EUR' THEN t.Amount * t.Price ELSE 0 END), 0) FROM transactions_1k AS t INNER JOIN customers AS c ON t.CustomerID = c.CustomerID WHERE c.Segment = 'SME';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN t.Amount * t.Price ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN t.Amount * t.Price ELSE 0 END) FROM customers AS c JOIN transactions_1k AS t ON c.CustomerID = t.CustomerID WHERE c.Segment = 'SME'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN t.Amount * t.Price ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN t.Amount * t.Price ELSE 0 END) AS more_smes_pay FROM customers AS c JOIN transactions_1k AS t ON c.CustomerID = t.CustomerID WHERE c.Segment = 'SME'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN t.Amount * t.Price ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN t.Amount * t.Price ELSE 0 END) FROM customers AS c JOIN transactions_1k AS t ON c.CustomerID = t.CustomerID WHERE c.Segment = 'SME' AND c.Currency IN ('CZK', 'EUR')",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN t.Price * t.Amount ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN t.Price * t.Amount ELSE 0 END) FROM customers c JOIN transactions_1k t ON c.CustomerID = t.CustomerID WHERE c.Segment = 'SME';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 5
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 8
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN t.Amount * t.Price ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN t.Amount * t.Price ELSE 0 END) FROM customers AS c INNER JOIN transactions_1k AS t ON c.CustomerID = t.CustomerID WHERE c.Segment = 'SME'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  }
+ ],
+ "bird_1498": [
+  {
+   "sample": 0,
+   "sql": "SELECT SUM(Consumption) FROM yearmonth WHERE substr(Date,1,4)='2012' GROUP BY substr(Date,5,2) ORDER BY SUM(Consumption) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT Consumption FROM yearmonth WHERE substr(Date,1,4) = '2012' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT Consumption FROM yearmonth WHERE Date LIKE '2012%' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT Consumption FROM yearmonth WHERE Date LIKE '2012%' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT Consumption FROM yearmonth WHERE Date LIKE '2012%' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT Consumption FROM yearmonth WHERE Date LIKE '2012%' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 3
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT Consumption FROM yearmonth WHERE Date LIKE '2012%' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 8
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT Consumption FROM yearmonth WHERE Date LIKE '2012%' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  }
+ ],
+ "bird_1480": [
+  {
+   "sample": 0,
+   "sql": "SELECT substr(T1.Date, 5, 2) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND T1.Date BETWEEN '201301' AND '201312' GROUP BY substr(T1.Date, 5, 2) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 18
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT substr(T1.Date, 5, 2) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND substr(T1.Date, 1, 4) = '2013' GROUP BY substr(T1.Date, 5, 2) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT substr(Y.Date, 5, 2) FROM yearmonth AS Y INNER JOIN customers AS C ON Y.CustomerID = C.CustomerID WHERE C.Segment = 'SME' AND CAST(Y.Date AS INTEGER) BETWEEN 201301 AND 201312 GROUP BY substr(Y.Date, 5, 2) ORDER BY SUM(Y.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 37
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT T1.Date FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND T1.Date BETWEEN '201301' AND '201312' GROUP BY T1.Date ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT T1.Date FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND T1.Date BETWEEN '201301' AND '201312' GROUP BY T1.Date ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT y.Date FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Segment = 'SME' AND y.Date BETWEEN '201301' AND '201312' GROUP BY y.Date ORDER BY SUM(y.Consumption) DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 15
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT substr(T1.Date, 5, 2) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND T1.Date BETWEEN '201301' AND '201312' GROUP BY substr(T1.Date, 5, 2) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT substr(T1.Date, 5, 2) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND T1.Date BETWEEN '201301' AND '201312' GROUP BY substr(T1.Date, 5, 2) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 24
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT substr(T1.Date, 5, 2) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date BETWEEN '201301' AND '201312' AND T2.Segment = 'SME' GROUP BY substr(T1.Date, 5, 2) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 21
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUBSTR(T1.Date, 5, 2) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND T1.Date BETWEEN '201301' AND '201312' GROUP BY SUBSTR(T1.Date, 5, 2) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 10
+  }
+ ],
+ "bird_1339": [
+  {
+   "sample": 0,
+   "sql": "SELECT AVG(cost) FROM expense JOIN member ON expense.link_to_member = member.member_id WHERE member.first_name = 'Elijah' AND member.last_name = 'Allen' AND SUBSTR(expense_date, 6, 2) IN ('09', '10')",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT AVG(event_spend) FROM (SELECT b.link_to_event, SUM(e.cost) AS event_spend FROM expense e JOIN member m ON e.link_to_member = m.member_id JOIN budget b ON e.link_to_budget = b.budget_id WHERE m.first_name = 'Elijah' AND m.last_name = 'Allen' AND (SUBSTR(e.expense_date, 6, 2) = '09' OR SUBSTR(e.expense_date, 6, 2) = '10') GROUP BY b.link_to_event) AS event_totals",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT AVG(event_total) FROM (SELECT SUM(e.cost) AS event_total FROM expense e JOIN member m ON e.link_to_member = m.member_id JOIN budget b ON e.link_to_budget = b.budget_id WHERE m.first_name = 'Elijah' AND m.last_name = 'Allen' AND SUBSTR(e.expense_date, 6, 2) IN ('09', '10') GROUP BY b.link_to_event) AS event_totals;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 18
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT AVG(event_spend) FROM (SELECT ev.event_id, SUM(ex.cost) AS event_spend FROM expense ex JOIN member m ON ex.link_to_member = m.member_id JOIN budget b ON ex.link_to_budget = b.budget_id JOIN event ev ON b.link_to_event = ev.event_id WHERE m.first_name = 'Elijah' AND m.last_name = 'Allen' AND SUBSTR(ex.expense_date, 6, 2) IN ('09', '10') GROUP BY ev.event_id) AS per_event",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT AVG(event_spend) FROM (SELECT b.link_to_event, SUM(e.cost) AS event_spend FROM expense AS e JOIN budget AS b ON e.link_to_budget = b.budget_id JOIN member AS m ON e.link_to_member = m.member_id WHERE m.first_name = 'Elijah' AND m.last_name = 'Allen' AND (SUBSTR(e.expense_date, 6, 2) = '09' OR SUBSTR(e.expense_date, 6, 2) = '10') GROUP BY b.link_to_event) AS t",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 31
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT AVG(event_spend) FROM (SELECT b.link_to_event, SUM(e.cost) AS event_spend FROM expense e JOIN member m ON e.link_to_member = m.member_id JOIN budget b ON e.link_to_budget = b.budget_id WHERE m.first_name = 'Elijah' AND m.last_name = 'Allen' AND (SUBSTR(e.expense_date, 6, 2) = '09' OR SUBSTR(e.expense_date, 6, 2) = '10') GROUP BY b.link_to_event) AS t",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT AVG(event_spend) FROM (SELECT b.link_to_event, SUM(ex.cost) AS event_spend FROM expense ex JOIN member m ON ex.link_to_member = m.member_id JOIN budget b ON ex.link_to_budget = b.budget_id WHERE m.first_name = 'Elijah' AND m.last_name = 'Allen' AND SUBSTR(ex.expense_date, 6, 2) IN ('09', '10') GROUP BY b.link_to_event) AS per_event",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 32
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "BadRequestError: litellm.BadRequestError: AzureException BadRequestError - {\n  \"error\": {\n    \"message\": \"Invalid prompt: your prompt was flagged as potentially violating our usage policy. Please try ",
+   "section_count": 0
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT AVG(expense.cost) FROM expense JOIN member ON expense.link_to_member = member.member_id WHERE member.first_name = 'Elijah' AND member.last_name = 'Allen' AND SUBSTR(expense.expense_date, 6, 2) IN ('09', '10')",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT AVG(event_spend) FROM (SELECT b.link_to_event, SUM(e.cost) AS event_spend FROM expense e JOIN member m ON e.link_to_member = m.member_id JOIN budget b ON e.link_to_budget = b.budget_id WHERE m.first_name = 'Elijah' AND m.last_name = 'Allen' AND SUBSTR(e.expense_date, 6, 2) IN ('09', '10') GROUP BY b.link_to_event) AS t",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  }
+ ],
+ "bird_1529": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 19
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT SUM(t.Amount * t.Price) FROM transactions_1k t WHERE t.CustomerID = '38508' AND t.Date LIKE '2012-08%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUM(Amount) FROM transactions_1k WHERE CustomerID = '38508' AND Date LIKE '2012-08%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 2
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(Amount) FROM transactions_1k WHERE CustomerID = '38508' AND Date LIKE '2012-08%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 27
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUM(Amount) FROM transactions_1k WHERE CustomerID = 38508 AND Date LIKE '2012-08%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT SUM(t.Amount * t.Price) FROM transactions_1k t WHERE t.CustomerID = 38508 AND t.Date LIKE '2012-08%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 19
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT SUM(t.Amount) FROM transactions_1k t WHERE t.CustomerID = '38508' AND t.Date LIKE '2012-08%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(t.Amount * t.Price) FROM transactions_1k t WHERE t.CustomerID = 38508 AND t.Date LIKE '2012-08%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 18
+  }
+ ],
+ "bird_125": [
+  {
+   "sample": 0,
+   "sql": "SELECT 100.0 * (d.A13 - d.A12) / d.A12 AS unemployment_rate_increment FROM loan AS l INNER JOIN account AS a ON l.account_id = a.account_id INNER JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 33
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT 100.0 * (d.A13 - d.A12) / d.A12 FROM loan AS l INNER JOIN account AS a ON l.account_id = a.account_id INNER JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 32
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT 100.0 * (T3.A13 - T3.A12) / T3.A12 FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T2.district_id = T3.district_id WHERE T1.status = 'D'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 40
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT DISTINCT T3.A2 AS district_name, 100.0 * (T3.A13 - T3.A12) / T3.A12 AS district_percentage_unemployment_rate_increment FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T2.district_id = T3.district_id WHERE T1.status = 'D' ORDER BY T3.A2",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 33
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 19
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT 100.0 * (d.A13 - d.A12) / d.A12 AS unemployment_increment FROM loan AS l JOIN account AS a ON l.account_id = a.account_id JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 33
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT 100.0 * (T3.A13 - T3.A12) / T3.A12 FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T2.district_id = T3.district_id WHERE T1.status = 'D' GROUP BY T3.district_id",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 27
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT DISTINCT district.A2, 100.0 * (district.A13 - district.A12) / district.A12 FROM loan JOIN disp ON loan.account_id = disp.account_id JOIN client ON disp.client_id = client.client_id JOIN district ON client.district_id = district.district_id WHERE loan.status = 'D' ORDER BY district.A2;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 27
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT AVG(100.0 * (d.A13 - d.A12) / d.A12) AS unemployment_increment_rate_percent FROM loan AS l INNER JOIN account AS a ON l.account_id = a.account_id INNER JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D' GROUP BY d.district_id ORDER BY d.district_id;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 39
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT 100.0 * (d.A13 - d.A12) / d.A12 AS district_unemployment_increment FROM loan AS l INNER JOIN account AS a ON l.account_id = a.account_id INNER JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D' GROUP BY d.district_id ORDER BY d.district_id;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 37
+  }
+ ],
+ "bird_36": [
+  {
+   "sample": 0,
+   "sql": "SELECT AdmFName1, AdmLName1, AdmFName2, AdmLName2, AdmFName3, AdmLName3 FROM schools WHERE CDSCode = (SELECT cds FROM satscores ORDER BY NumGE1500 DESC LIMIT 1)",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT sch.AdmFName1, sch.AdmLName1, sch.AdmFName2, sch.AdmLName2, sch.AdmFName3, sch.AdmLName3 FROM schools AS sch JOIN satscores AS ss ON sch.CDSCode = ss.cds ORDER BY ss.NumGE1500 DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 9
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT s.AdmFName1, s.AdmLName1, s.AdmFName2, s.AdmLName2, s.AdmFName3, s.AdmLName3 FROM satscores AS ss JOIN schools AS s ON ss.cds = s.CDSCode ORDER BY ss.NumGE1500 DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 4,
+   "sql": "WITH top_school AS (SELECT s.AdmFName1, s.AdmLName1, s.AdmFName2, s.AdmLName2, s.AdmFName3, s.AdmLName3 FROM schools AS s JOIN satscores AS sc ON sc.cds = s.CDSCode ORDER BY sc.NumGE1500 DESC LIMIT 1) SELECT AdmFName1 AS first_name, AdmLName1 AS last_name FROM top_school WHERE AdmFName1 IS NOT NULL AND AdmLName1 IS NOT NULL UNION ALL SELECT AdmFName2, AdmLName2 FROM top_school WHERE AdmFName2 IS NOT NULL AND AdmLName2 IS NOT NULL UNION ALL SELECT AdmFName3, AdmLName3 FROM top_school WHERE AdmFName3 IS NOT NULL AND AdmLName3 IS NOT NULL",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT schools.AdmFName1, schools.AdmLName1, schools.AdmFName2, schools.AdmLName2, schools.AdmFName3, schools.AdmLName3 FROM schools JOIN satscores ON schools.CDSCode = satscores.cds ORDER BY satscores.NumGE1500 DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 6,
+   "sql": "WITH top_school AS ( SELECT sc.AdmFName1 AS f1, sc.AdmLName1 AS l1, sc.AdmFName2 AS f2, sc.AdmLName2 AS l2, sc.AdmFName3 AS f3, sc.AdmLName3 AS l3 FROM schools sc JOIN satscores ss ON sc.CDSCode = ss.cds ORDER BY ss.NumGE1500 DESC LIMIT 1 ) SELECT f1 AS first_name, l1 AS last_name FROM top_school WHERE f1 IS NOT NULL AND l1 IS NOT NULL UNION ALL SELECT f2 AS first_name, l2 AS last_name FROM top_school WHERE f2 IS NOT NULL AND l2 IS NOT NULL UNION ALL SELECT f3 AS first_name, l3 AS last_name FROM top_school WHERE f3 IS NOT NULL AND l3 IS NOT NULL;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 21
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT schools.AdmFName1, schools.AdmLName1, schools.AdmFName2, schools.AdmLName2, schools.AdmFName3, schools.AdmLName3 FROM schools JOIN satscores ON schools.CDSCode = satscores.cds ORDER BY satscores.NumGE1500 DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 28
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT AdmFName1, AdmLName1, AdmFName2, AdmLName2, AdmFName3, AdmLName3 FROM schools WHERE CDSCode = ( SELECT cds FROM satscores ORDER BY NumGE1500 DESC LIMIT 1 )",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 9,
+   "sql": "WITH top_school AS (\n  SELECT sc.CDSCode\n  FROM satscores AS s\n  JOIN schools AS sc\n    ON s.cds = sc.CDSCode\n  ORDER BY s.NumGE1500 DESC\n  LIMIT 1\n), admins AS (\n  SELECT 1 AS ord, AdmFName1 AS first_name, AdmLName1 AS last_name\n  FROM schools\n  WHERE CDSCode = (SELECT CDSCode FROM top_school)\n    AND AdmFName1 IS NOT NULL\n    AND AdmLName1 IS NOT NULL\n  UNION ALL\n  SELECT 2, AdmFName2, AdmLName2\n  FROM schools\n  WHERE CDSCode = (SELECT CDSCode FROM top_school)\n    AND AdmFName2 IS NOT NULL\n    AND AdmLName2 IS NOT NULL\n  UNION ALL\n  SELECT 3, AdmFName3, AdmLName3\n  FROM schools\n  WHERE CDSCode = (SELECT CDSCode FROM top_school)\n    AND AdmFName3 IS NOT NULL\n    AND AdmLName3 IS NOT NULL\n)\nSELECT first_name, last_name\nFROM admins\nORDER BY ord;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  }
+ ],
+ "bird_383": [
+  {
+   "sample": 0,
+   "sql": "SELECT COUNT(*) FROM cards WHERE borderColor = 'white' AND EXISTS (SELECT 1 FROM legalities WHERE legalities.uuid = cards.uuid AND legalities.status = 'Banned')",
+   "correct": false,
+   "exec_error": "SQL execution timed out after 180 seconds",
+   "section_count": 14
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT COUNT(*) FROM cards c WHERE c.borderColor = 'white' AND EXISTS (SELECT 1 FROM legalities l WHERE l.uuid = c.uuid AND l.status = 'Banned')",
+   "correct": false,
+   "exec_error": "SQL execution timed out after 180 seconds",
+   "section_count": 17
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 2
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT COUNT(DISTINCT cards.id) FROM cards JOIN legalities ON cards.uuid = legalities.uuid WHERE legalities.status = 'Banned' AND cards.borderColor = 'white'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT COUNT(DISTINCT cards.id) FROM cards JOIN legalities ON legalities.uuid = cards.uuid WHERE legalities.status = 'Banned' AND cards.borderColor = 'white';",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT COUNT(DISTINCT cards.id) FROM cards JOIN legalities ON cards.uuid = legalities.uuid WHERE legalities.status = 'Banned' AND cards.borderColor = 'white'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 13
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 9
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT COUNT(DISTINCT cards.uuid) FROM cards JOIN legalities ON legalities.uuid = cards.uuid WHERE legalities.status = 'Banned' AND cards.borderColor = 'white'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 6
+  }
+ ],
+ "bird_26": [
+  {
+   "sample": 0,
+   "sql": "SELECT s.School AS \"School Name\", s.Street || ', ' || s.City || ', ' || s.State || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END AS \"Full Communication Address\" FROM schools AS s JOIN frpm AS f ON s.CDSCode = f.CDSCode WHERE f.\"County Name\" = 'Monterey' AND f.\"School Type\" = 'High Schools (Public)' AND f.\"FRPM Count (Ages 5-17)\" > 800 ORDER BY s.School;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT s.School, COALESCE(s.Street, '') || ', ' || COALESCE(s.City, '') || ', ' || COALESCE(s.State, '') || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END AS [full communication address] FROM schools AS s JOIN frpm AS f ON s.CDSCode = f.CDSCode WHERE s.County = 'Monterey' AND s.EILName = 'High School' AND f.[FRPM Count (Ages 5-17)] > 800 ORDER BY s.School",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 25
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT s.School AS name, COALESCE(s.Street,'') || ', ' || COALESCE(s.City,'') || ', ' || COALESCE(s.State,'') || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END AS full_communication_address FROM schools AS s INNER JOIN frpm AS f ON s.CDSCode = f.CDSCode WHERE s.City = 'Monterey' AND f.\"School Type\" = 'High Schools (Public)' AND f.\"FRPM Count (Ages 5-17)\" > 800 ORDER BY s.School",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 50
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT s.School AS name, s.Street || ', ' || s.City || ', ' || s.State || COALESCE(' ' || NULLIF(s.Zip,''), '') AS full_communication_address FROM frpm AS f JOIN schools AS s ON f.CDSCode = s.CDSCode WHERE f.[County Name] = 'Monterey' AND f.[School Type] = 'High Schools (Public)' AND f.[FRPM Count (Ages 5-17)] > 800 ORDER BY s.School",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 27
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT T1.School AS School, TRIM(COALESCE(T1.Street, '') || ', ' || COALESCE(T1.City, '') || ', ' || COALESCE(T1.State, '') || CASE WHEN T1.Zip IS NOT NULL AND T1.Zip <> '' THEN ' ' || T1.Zip ELSE '' END) AS \"Full communication address\" FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.County = 'Monterey' AND T2.\"School Type\" = 'High Schools (Public)' AND T2.\"FRPM Count (Ages 5-17)\" > 800 ORDER BY T1.School",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT s.School, s.Street || ', ' || s.City || ', ' || s.State || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END AS full_communication_address FROM schools AS s JOIN frpm AS f ON s.CDSCode = f.CDSCode WHERE s.County = 'Monterey' AND s.EILCode = 'HS' AND f.\"FRPM Count (Ages 5-17)\" > 800 ORDER BY s.School;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 15
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT s.School AS school_name, CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN COALESCE(s.Street,'') || ', ' || COALESCE(s.City,'') || ', ' || COALESCE(s.State,'') || ' ' || s.Zip ELSE COALESCE(s.Street,'') || ', ' || COALESCE(s.City,'') || ', ' || COALESCE(s.State,'') END AS full_communication_address FROM frpm AS f JOIN schools AS s ON f.CDSCode = s.CDSCode WHERE f.`County Name` = 'Monterey' AND f.`School Type` = 'High Schools (Public)' AND f.`FRPM Count (Ages 5-17)` > 800 ORDER BY s.School",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 28
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT s.School AS School, TRIM(s.Street || ', ' || s.City || ', ' || s.State || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END) AS `full communication address` FROM schools AS s JOIN frpm AS f ON s.CDSCode = f.CDSCode WHERE s.City = 'Monterey' AND s.EILCode = 'HS' AND f.`FRPM Count (Ages 5-17)` > 800 ORDER BY s.School;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 41
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT s.School AS school_name, COALESCE(s.Street, '') || ', ' || COALESCE(s.City, '') || ', ' || COALESCE(s.State, '') || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END AS full_communication_address FROM schools AS s JOIN frpm AS f ON s.CDSCode = f.CDSCode WHERE f.[County Name] = 'Monterey' AND f.[School Type] = 'High Schools (Public)' AND f.[FRPM Count (Ages 5-17)] > 800 ORDER BY s.School;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT s.School, TRIM(COALESCE(s.Street, '') || ', ' || COALESCE(s.City, '') || ', ' || COALESCE(s.State, '') || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END) AS full_communication_address FROM frpm AS f INNER JOIN schools AS s ON f.CDSCode = s.CDSCode WHERE f.[County Name] = 'Monterey' AND f.[School Type] = 'High Schools (Public)' AND f.[FRPM Count (Ages 5-17)] > 800 ORDER BY s.School",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 23
+  }
+ ],
+ "bird_173": [
+  {
+   "sample": 0,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY'), (SELECT k_symbol FROM `order` GROUP BY k_symbol HAVING SUM(amount) = 3539 ORDER BY k_symbol LIMIT 1);",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 36
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_request_count, (SELECT k_symbol FROM \"order\" WHERE amount = 3539 ORDER BY order_id LIMIT 1) AS aim;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT DISTINCT k_symbol FROM `order` WHERE amount = 3539 LIMIT 1) AS aim",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT k_symbol FROM \"order\" WHERE amount = 3539 LIMIT 1) AS aim;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 26
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT (SELECT frequency FROM account WHERE account_id = 3) AS frequency, (SELECT k_symbol FROM \"order\" WHERE amount = 3539 LIMIT 1) AS k_symbol;",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 50
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_release_count, (SELECT k_symbol FROM [order] GROUP BY k_symbol HAVING SUM(amount) = 3539 LIMIT 1) AS debit_aim;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 49
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 30
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 14
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT k_symbol FROM `order` GROUP BY k_symbol HAVING SUM(amount) = 3539 ORDER BY k_symbol LIMIT 1) AS aim;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 32
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 19
+  }
+ ],
+ "bird_465": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 15
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 9
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT DISTINCT T2.name FROM cards AS T1 INNER JOIN sets AS T2 ON T1.setCode = T2.code INNER JOIN foreign_data AS T3 ON T3.uuid = T1.uuid WHERE T1.name = 'Ancestor''s Chosen' AND T3.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN foreign_data AS f ON f.uuid = c.uuid INNER JOIN sets AS s ON s.code = c.setCode WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean' ORDER BY s.name;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN foreign_data AS f ON f.uuid = c.uuid INNER JOIN sets AS s ON s.code = c.setCode WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 12
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT DISTINCT sets.name FROM cards INNER JOIN foreign_data ON foreign_data.uuid = cards.uuid INNER JOIN sets ON sets.code = cards.setCode WHERE cards.name = 'Ancestor''s Chosen' AND foreign_data.language = 'Korean' ORDER BY sets.name ASC;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 18
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT DISTINCT sets.name FROM cards INNER JOIN sets ON cards.setCode = sets.code INNER JOIN foreign_data ON foreign_data.uuid = cards.uuid WHERE cards.name = 'Ancestor''s Chosen' AND foreign_data.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 17
+  }
+ ],
+ "bird_50": [
+  {
+   "sample": 0,
+   "sql": "SELECT S.School, S.MailStreet FROM schools AS S INNER JOIN satscores AS T ON S.CDSCode = T.cds WHERE T.AvgScrMath IS NOT NULL ORDER BY T.AvgScrMath DESC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 25
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT sch.School, sch.MailStreet FROM satscores AS s JOIN schools AS sch ON s.cds = sch.CDSCode WHERE s.AvgScrMath IS NOT NULL ORDER BY s.AvgScrMath DESC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 30
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT s.sname, sc.MailStreet FROM satscores AS s INNER JOIN schools AS sc ON s.cds = sc.CDSCode WHERE s.AvgScrMath IS NOT NULL ORDER BY s.AvgScrMath DESC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT T1.School, T1.MailStreet FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T2.AvgScrMath IS NOT NULL ORDER BY T2.AvgScrMath DESC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT COALESCE(s.sname, sch.School) AS SchoolName, sch.MailStreet FROM satscores AS s INNER JOIN schools AS sch ON s.cds = sch.CDSCode WHERE s.AvgScrMath IS NOT NULL ORDER BY s.AvgScrMath DESC LIMIT 1 OFFSET 6;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 18
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT satscores.sname, schools.MailStreet FROM satscores INNER JOIN schools ON satscores.cds = schools.CDSCode WHERE satscores.AvgScrMath IS NOT NULL ORDER BY satscores.AvgScrMath DESC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 18
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT T1.School, T1.MailStreet FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds ORDER BY T2.AvgScrMath DESC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT T1.School, T1.MailStreet FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds ORDER BY T2.AvgScrMath DESC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT s.sname, sch.MailStreet FROM satscores AS s JOIN schools AS sch ON s.cds = sch.CDSCode WHERE s.AvgScrMath IS NOT NULL ORDER BY s.AvgScrMath DESC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 25
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT T2.School AS SchoolName, T2.MailStreet AS PostalStreetAddress FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.AvgScrMath DESC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 11
+  }
+ ],
+ "bird_407": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT T2.type FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'German' AND T1.subtypes IS NOT NULL AND T1.supertypes IS NOT NULL ORDER BY T2.type",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 18
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT DISTINCT F.type FROM foreign_data AS F INNER JOIN cards AS C ON F.uuid = C.uuid WHERE F.language = 'German' AND C.subtypes IS NOT NULL AND C.supertypes IS NOT NULL AND F.type IS NOT NULL ORDER BY F.type",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 21
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 42
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT T1.type FROM foreign_data AS T1 INNER JOIN cards AS T2 ON T1.uuid = T2.uuid WHERE T1.language = 'German' AND T2.subtypes IS NOT NULL AND T2.supertypes IS NOT NULL ORDER BY T1.type",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 27
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT DISTINCT T1.supertypes, T1.subtypes FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'German' AND T1.subtypes IS NOT NULL AND T1.supertypes IS NOT NULL ORDER BY T1.supertypes, T1.subtypes",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 27
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT DISTINCT F.type FROM foreign_data AS F INNER JOIN cards AS C ON F.uuid = C.uuid WHERE F.language = 'German' AND C.subtypes IS NOT NULL AND C.supertypes IS NOT NULL ORDER BY F.type;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 22
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT DISTINCT T1.type FROM foreign_data AS T1 INNER JOIN cards AS T2 ON T1.uuid = T2.uuid WHERE T1.language = 'German' AND T1.type IS NOT NULL AND T2.subtypes IS NOT NULL AND T2.supertypes IS NOT NULL ORDER BY T1.type;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT DISTINCT T1.type FROM foreign_data AS T1 INNER JOIN cards AS T2 ON T1.uuid = T2.uuid WHERE T1.language = 'German' AND T2.subtypes IS NOT NULL AND T2.supertypes IS NOT NULL ORDER BY T1.type",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT T1.subtypes, T1.supertypes FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'German' AND T1.subtypes IS NOT NULL AND T1.supertypes IS NOT NULL",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 38
+  }
+ ],
+ "bird_750": [
+  {
+   "sample": 0,
+   "sql": "SELECT AVG(weight_kg) FROM superhero AS s INNER JOIN gender AS g ON s.gender_id = g.id WHERE g.gender = 'Female'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT AVG(T1.weight_kg) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Female'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT AVG(T1.weight_kg) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Female'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT AVG(weight_kg) FROM superhero AS s INNER JOIN gender AS g ON s.gender_id = g.id WHERE g.gender = 'Female'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT AVG(weight_kg) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Female'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT AVG(T1.weight_kg) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Female'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT AVG(T1.weight_kg) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Female'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT AVG(weight_kg) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Female'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 2
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT AVG(weight_kg) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Female'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  }
+ ],
+ "bird_637": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 6
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 7
+  },
+  {
+   "sample": 2,
+   "sql": "WITH RECURSIVE split(post_id, tag, rest) AS (SELECT p.Id, substr(p.Tags, 2, instr(p.Tags, '>') - 2), substr(p.Tags, instr(p.Tags, '>') + 1) FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '' UNION ALL SELECT post_id, substr(rest, 2, instr(rest, '>') - 2), substr(rest, instr(rest, '>') + 1) FROM split WHERE rest <> '') SELECT DISTINCT tag FROM split WHERE tag <> '' ORDER BY tag",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 3,
+   "sql": "WITH RECURSIVE split_tags(tag, rest) AS (SELECT CASE WHEN instr(p.Tags, '>') > 0 THEN substr(p.Tags, 2, instr(p.Tags, '>') - 2) ELSE substr(p.Tags, 2) END, CASE WHEN instr(p.Tags, '>') > 0 THEN substr(p.Tags, instr(p.Tags, '>') + 1) ELSE '' END FROM posts AS p JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '' UNION ALL SELECT CASE WHEN instr(rest, '>') > 0 THEN substr(rest, 2, instr(rest, '>') - 2) ELSE substr(rest, 2) END, CASE WHEN instr(rest, '>') > 0 THEN substr(rest, instr(rest, '>') + 1) ELSE '' END FROM split_tags WHERE rest IS NOT NULL AND rest <> '') SELECT DISTINCT tag FROM split_tags WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 4,
+   "sql": "WITH RECURSIVE tag_split(tag, rest) AS (\n  SELECT substr(p.Tags, 2, instr(p.Tags, '>') - 2) AS tag,\n         substr(p.Tags, instr(p.Tags, '>') + 1) AS rest\n  FROM posts AS p\n  INNER JOIN users AS u ON p.OwnerUserId = u.Id\n  WHERE u.DisplayName = 'Mark Meckes'\n    AND p.CommentCount = 0\n    AND p.Tags IS NOT NULL\n  UNION ALL\n  SELECT substr(rest, 2, instr(rest, '>') - 2),\n         substr(rest, instr(rest, '>') + 1)\n  FROM tag_split\n  WHERE rest <> ''\n)\nSELECT DISTINCT tag\nFROM tag_split\nWHERE tag IS NOT NULL AND tag <> ''\nORDER BY tag;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 5,
+   "sql": "WITH RECURSIVE split(tag, rest) AS (SELECT substr(p.Tags, 2, instr(substr(p.Tags, 2), '>') - 1) AS tag, substr(p.Tags, instr(substr(p.Tags, 2), '>') + 2) AS rest FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL UNION ALL SELECT substr(rest, 2, instr(substr(rest, 2), '>') - 1), substr(rest, instr(substr(rest, 2), '>') + 2) FROM split WHERE rest IS NOT NULL AND rest <> '') SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT DISTINCT posts.Tags FROM posts INNER JOIN users ON posts.OwnerUserId = users.Id WHERE users.DisplayName = 'Mark Meckes' AND posts.CommentCount = 0 AND posts.Tags IS NOT NULL",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 6
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "APIError: litellm.APIError: AzureException APIError - {\n  \"error\": {\n    \"message\": \"The server had an error processing your request. Sorry about that! You can retry your request, or contact us throug",
+   "section_count": 0
+  }
+ ],
+ "bird_604": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(SUM(U.UpVotes) AS REAL) / COUNT(T.UserId) AS avg_upvotes, CAST(SUM(U.Age) AS REAL) / COUNT(T.UserId) AS avg_age FROM users AS U INNER JOIN (SELECT OwnerUserId AS UserId FROM posts GROUP BY OwnerUserId HAVING COUNT(OwnerUserId) > 10) AS T ON U.Id = T.UserId",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 23
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id), CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) FROM users AS T1 INNER JOIN ( SELECT T2.OwnerUserId AS UserId FROM posts AS T2 GROUP BY T2.OwnerUserId HAVING COUNT(T2.OwnerUserId) > 10 ) AS T3 ON T1.Id = T3.UserId",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id) AS avg_up_votes, CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) AS avg_age FROM users AS T1 INNER JOIN ( SELECT posts.OwnerUserId AS UserId FROM posts WHERE posts.OwnerUserId IS NOT NULL GROUP BY posts.OwnerUserId HAVING COUNT(posts.OwnerUserId) > 10 ) AS T2 ON T1.Id = T2.UserId",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 7
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id), CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) FROM users AS T1 INNER JOIN ( SELECT T2.OwnerUserId FROM posts AS T2 WHERE T2.OwnerUserId IS NOT NULL GROUP BY T2.OwnerUserId HAVING COUNT(T2.OwnerUserId) > 10 ) AS T3 ON T1.Id = T3.OwnerUserId",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id), CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) FROM users AS T1 INNER JOIN ( SELECT U.Id FROM users AS U INNER JOIN posts AS P ON U.Id = P.OwnerUserId GROUP BY U.Id HAVING COUNT(P.Id) > 10 ) AS T2 ON T1.Id = T2.Id",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id) AS avg_up_votes, CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) AS avg_age FROM users AS T1 INNER JOIN ( SELECT T2.OwnerUserId FROM posts AS T2 WHERE T2.OwnerUserId IS NOT NULL GROUP BY T2.OwnerUserId HAVING COUNT(T2.OwnerUserId) > 10 ) AS T3 ON T1.Id = T3.OwnerUserId;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id), CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) FROM users AS T1 INNER JOIN ( SELECT posts.OwnerUserId FROM posts WHERE posts.OwnerUserId IS NOT NULL GROUP BY posts.OwnerUserId HAVING COUNT(*) > 10 ) AS T2 ON T1.Id = T2.OwnerUserId",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id) AS avg_up_votes, CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) AS avg_user_age FROM users AS T1 INNER JOIN ( SELECT T2.OwnerUserId FROM posts AS T2 WHERE T2.OwnerUserId IS NOT NULL GROUP BY T2.OwnerUserId HAVING COUNT(T2.OwnerUserId) > 10 ) AS T3 ON T1.Id = T3.OwnerUserId",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id), CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) FROM users AS T1 INNER JOIN ( SELECT T2.OwnerUserId AS UserId FROM posts AS T2 GROUP BY T2.OwnerUserId HAVING COUNT(T2.OwnerUserId) > 10 ) AS T3 ON T1.Id = T3.UserId",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 15
+  }
+ ],
+ "bird_640": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 8
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT SUM(CASE WHEN COALESCE(u.DisplayName, p.OwnerDisplayName) = 'Mornington' THEN COALESCE(p.ViewCount, 0) ELSE 0 END) - SUM(CASE WHEN COALESCE(u.DisplayName, p.OwnerDisplayName) = 'Amos' THEN COALESCE(p.ViewCount, 0) ELSE 0 END) FROM posts p LEFT JOIN users u ON p.OwnerUserId = u.Id",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUM(CASE WHEN COALESCE(u.DisplayName, p.OwnerDisplayName) = 'Mornington' THEN p.ViewCount ELSE 0 END) - SUM(CASE WHEN COALESCE(u.DisplayName, p.OwnerDisplayName) = 'Amos' THEN p.ViewCount ELSE 0 END) FROM posts p LEFT JOIN users u ON p.OwnerUserId = u.Id",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(CASE WHEN COALESCE(u.DisplayName, p.OwnerDisplayName) = 'Mornington' THEN COALESCE(p.ViewCount, 0) ELSE 0 END) - SUM(CASE WHEN COALESCE(u.DisplayName, p.OwnerDisplayName) = 'Amos' THEN COALESCE(p.ViewCount, 0) ELSE 0 END) FROM posts p LEFT JOIN users u ON p.OwnerUserId = u.Id WHERE COALESCE(u.DisplayName, p.OwnerDisplayName) IN ('Mornington', 'Amos');",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(CASE WHEN OwnerDisplayName = 'Mornington' THEN ViewCount ELSE 0 END) - SUM(CASE WHEN OwnerDisplayName = 'Amos' THEN ViewCount ELSE 0 END) AS difference FROM posts;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUM(CASE WHEN COALESCE(u.DisplayName, p.OwnerDisplayName) = 'Mornington' THEN COALESCE(p.ViewCount, 0) ELSE 0 END) - SUM(CASE WHEN COALESCE(u.DisplayName, p.OwnerDisplayName) = 'Amos' THEN COALESCE(p.ViewCount, 0) ELSE 0 END) FROM posts p LEFT JOIN users u ON p.OwnerUserId = u.Id;",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT SUM(CASE WHEN OwnerDisplayName = 'Mornington' THEN COALESCE(ViewCount, 0) ELSE 0 END) - SUM(CASE WHEN OwnerDisplayName = 'Amos' THEN COALESCE(ViewCount, 0) ELSE 0 END) FROM posts",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT COALESCE((SELECT SUM(p.ViewCount) FROM posts p JOIN users u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mornington'), 0) - COALESCE((SELECT SUM(p.ViewCount) FROM posts p JOIN users u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Amos'), 0);",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT SUM(CASE WHEN u.DisplayName = 'Mornington' THEN p.ViewCount ELSE 0 END) - SUM(CASE WHEN u.DisplayName = 'Amos' THEN p.ViewCount ELSE 0 END) FROM posts p JOIN users u ON p.OwnerUserId = u.Id;",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 18
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(CASE WHEN OwnerDisplayName = 'Mornington' THEN COALESCE(ViewCount, 0) ELSE 0 END) - SUM(CASE WHEN OwnerDisplayName = 'Amos' THEN COALESCE(ViewCount, 0) ELSE 0 END) FROM posts;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  }
+ ],
+ "bird_587": [
+  {
+   "sample": 0,
+   "sql": "SELECT p.Title, c.Text, (SELECT AVG(ViewCount) FROM posts WHERE Tags = '<humor>') AS AvgViewCount FROM posts AS p LEFT JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags = '<humor>';",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT p.Title AS title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts AS p LEFT JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 39
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT p.Title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS average_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT p.Title, c.Text AS Comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS overall_avg_view_count FROM posts AS p JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 29
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT p.Title, c.Text, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts AS p LEFT JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT p.Title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS overall_average_view_count FROM posts AS p LEFT JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT p.Title, c.Text, (SELECT AVG(ViewCount) FROM posts WHERE Tags = '<humor>') AS average_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags = '<humor>';",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 25
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT p.Title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts AS p JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 22
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT p.Title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 22
+  }
+ ]
+}

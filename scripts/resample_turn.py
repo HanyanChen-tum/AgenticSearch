@@ -87,7 +87,19 @@ def resample_one_question(cfg, trace_path, row, resume_turn, n, summary, existin
 
     samples = list(existing)
     for i in range(len(samples), n):
-        text, section_count = one_sample(cfg, instructions, body, summary)
+        try:
+            text, section_count = one_sample(cfg, instructions, body, summary)
+        except Exception as exc:
+            # A single refused or failed call must not take the batch down with it:
+            # Azure's content filter rejects some BIRD prompts outright
+            # (harness_defects_2026-08-18.md §五), and one such rejection used to
+            # propagate out of the pool and discard every question in the k-batch,
+            # including ones already paid for. Record it as an invalid sample --
+            # the same shape as "no FINAL() found" -- and keep going.
+            samples.append({"sample": i, "sql": None, "correct": None,
+                            "error": f"{type(exc).__name__}: {exc}"[:200],
+                            "section_count": 0})
+            continue
         sql = extract_sql(text)
         if sql is None:
             record = {"sample": i, "sql": None, "correct": None, "error": "no FINAL() found",

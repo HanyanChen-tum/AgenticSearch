@@ -1,0 +1,290 @@
+{
+ "bird_1068": [
+  {
+   "sample": 0,
+   "sql": "SELECT 1.0 * SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 1
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(t2.overall_rating) * 1.0 / COUNT(t2.id) AS average_overall_rating FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUM(t2.overall_rating) * 1.0 / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 19
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 9
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT SUM(t2.overall_rating) * 1.0 / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(t2.overall_rating) * 1.0 / COUNT(t2.id) AS average_overall_rating FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  }
+ ],
+ "bird_465": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN foreign_data AS fd ON c.uuid = fd.uuid INNER JOIN sets AS s ON c.setCode = s.code WHERE c.name = 'Ancestor''s Chosen' AND fd.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 12
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 10
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN foreign_data AS f ON f.uuid = c.uuid INNER JOIN sets AS s ON s.code = c.setCode WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean' ORDER BY s.name;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON f.uuid = c.uuid WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN foreign_data AS fd ON c.uuid = fd.uuid INNER JOIN sets AS s ON c.setCode = s.code WHERE c.name = 'Ancestor''s Chosen' AND fd.language = 'Korean' ORDER BY s.name;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON c.uuid = f.uuid WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean' ORDER BY s.name;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN foreign_data AS f ON c.uuid = f.uuid INNER JOIN sets AS s ON c.setCode = s.code WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT DISTINCT T3.name FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid INNER JOIN sets AS T3 ON T1.setCode = T3.code WHERE T1.name = 'Ancestor''s Chosen' AND T2.language = 'Korean' ORDER BY T3.name;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 18
+  }
+ ],
+ "bird_637": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT P.Tags FROM posts AS P INNER JOIN users AS U ON P.OwnerUserId = U.Id WHERE U.DisplayName = 'Mark Meckes' AND P.CommentCount = 0 AND P.Tags IS NOT NULL",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 1,
+   "sql": "WITH RECURSIVE tag_split(rest, tag) AS (SELECT p.Tags, NULL FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '' UNION ALL SELECT substr(rest, instr(rest, '>') + 1), substr(rest, 2, instr(rest, '>') - 2) FROM tag_split WHERE rest <> '') SELECT DISTINCT tag FROM tag_split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT DISTINCT P.Tags FROM posts AS P INNER JOIN users AS U ON P.OwnerUserId = U.Id WHERE U.DisplayName = 'Mark Meckes' AND P.CommentCount = 0 AND P.Tags IS NOT NULL",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 6
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT posts.Tags FROM posts INNER JOIN users ON posts.OwnerUserId = users.Id WHERE users.DisplayName = 'Mark Meckes' AND posts.CommentCount = 0 AND posts.Tags IS NOT NULL",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT P.Tags FROM posts AS P INNER JOIN users AS U ON P.OwnerUserId = U.Id WHERE U.DisplayName = 'Mark Meckes' AND P.CommentCount = 0 AND P.Tags IS NOT NULL",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 6,
+   "sql": "WITH RECURSIVE split(post_id, tag, rest) AS (SELECT p.Id, substr(p.Tags, 2, instr(p.Tags, '>') - 2), substr(p.Tags, instr(p.Tags, '>') + 1) FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL UNION ALL SELECT post_id, substr(rest, 2, instr(rest, '>') - 2), substr(rest, instr(rest, '>') + 1) FROM split WHERE rest <> '') SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 21
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT DISTINCT P.Tags FROM posts AS P INNER JOIN users AS U ON P.OwnerUserId = U.Id WHERE U.DisplayName = 'Mark Meckes' AND P.CommentCount = 0 AND P.Tags IS NOT NULL",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT DISTINCT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL ORDER BY p.Tags",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 4
+  }
+ ],
+ "bird_587": [
+  {
+   "sample": 0,
+   "sql": "SELECT p.Title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts AS p JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 25
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT p.Title AS title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts AS p JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 23
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT p.Title, c.Text, avg_humor.avg_view_count FROM posts AS p JOIN comments AS c ON c.PostId = p.Id CROSS JOIN (SELECT AVG(ViewCount) AS avg_view_count FROM posts WHERE Tags LIKE '%<humor>%') AS avg_humor WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT p.Title, c.Text AS comment, a.avg_view_count FROM posts p LEFT JOIN comments c ON c.PostId = p.Id CROSS JOIN (SELECT AVG(ViewCount) AS avg_view_count FROM posts WHERE Tags LIKE '%<humor>%') a WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 4,
+   "sql": "WITH humor_posts AS (SELECT Id, Title, ViewCount FROM posts WHERE Tags LIKE '%<humor>%') SELECT hp.Title, c.Text AS comment, (SELECT AVG(ViewCount) FROM humor_posts) AS average_view_count FROM humor_posts hp LEFT JOIN comments c ON c.PostId = hp.Id;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 26
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT p.Title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p LEFT JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT p.Title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p LEFT JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 23
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT p.Title AS title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS average_view_count FROM posts AS p JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT p.Title, c.Text, avg_tbl.avg_view_count FROM posts AS p JOIN comments AS c ON c.PostId = p.Id CROSS JOIN (SELECT AVG(ViewCount) AS avg_view_count FROM posts WHERE Tags = '<humor>') AS avg_tbl WHERE p.Tags = '<humor>'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT p.Title, c.Text, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts AS p LEFT JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 9
+  }
+ ]
+}

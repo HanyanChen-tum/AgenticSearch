@@ -16,8 +16,13 @@
 | 9 | [`sql_timeout_correction_2026-08-23.md`](sql_timeout_correction_2026-08-23.md) | SQL 执行超时误判诊断：36 条记录被静默判错，16 条确认答对并修正，五层链数字更新 |
 | 10 | [`recursion_failure_traces_2026-08-24.md`](recursion_failure_traces_2026-08-24.md) | 递归为什么没用：15 道失败逐题追踪，11 道 leaf 答对但仍失败在约定不匹配 |
 | 10 | [`timeout_agent_side_fix_2026-08-24.md`](timeout_agent_side_fix_2026-08-24.md) | 承接 9：根因是数据库缺索引；全仓回填 121 条；`no_answer` 21→6 且余下均为随机残留；`final_execution_gate` 实测 0.0pp、天花板 ~1pp，已作为防复发加入推荐默认 profile |
+| 11 | [`tie_convention_audit_2026-08-24.md`](tie_convention_audit_2026-08-24.md) | 并列约定审计：train 90:10 vs dev 44pp 落差，`ties` 不该修，应作为基准约定不一致报告 |
+| 12 | [`tie_convention_manual_review.md`](tie_convention_manual_review.md) | 承接 11：28 道并列题的人工判读对照表，**等人判读**（本轮唯一未完成的一步） |
+| 13 | [`phase_a_turn_resampling_2026-08-24.md`](phase_a_turn_resampling_2026-08-24.md) | Phase A 轮次级反事实重采样首批 5 道：三种形态，`bird_637` 给出 few-shot 介入臂的设计 |
+| 14 | [`WEEKLY_REPORT_2026-08-24.md`](WEEKLY_REPORT_2026-08-24.md) | **本周报告**：1~13 的汇总 + 目前最好配置的完整规格 + 下一阶段计划 |
+| 14' | [`WEEKLY_REPORT_2026-08-24_EN.md`](WEEKLY_REPORT_2026-08-24_EN.md) | 同上的英文版（内容一一对应） |
 
-只想看一个的话，看 1；只想知道下一步做什么，看 2。
+只想看一个的话，看 14；只想知道下一步做什么，看 14 的「后面的计划」。
 
 ## 本周的三个主要结论
 

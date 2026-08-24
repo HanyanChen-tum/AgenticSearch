@@ -1,0 +1,49 @@
+{
+ "train": {
+  "pool_size": 9428,
+  "singular_superlative": 1688,
+  "by_convention": {
+   "LIMIT1": 1255,
+   "neither": 288,
+   "MAX-subquery": 139,
+   "both": 6
+  },
+  "share_LIMIT1_among_decidable": 0.9003
+ },
+ "dev": {
+  "results_file": "results/e3_c_rules_reasoning_corrected_run1.json",
+  "singular_superlative": 89,
+  "by_convention": {
+   "LIMIT1": 51,
+   "MAX-subquery": 14,
+   "both": 2,
+   "neither": 22
+  },
+  "accuracy_by_gold_convention": {
+   "LIMIT1": {
+    "n": 50,
+    "correct": 47,
+    "accuracy": 0.94,
+    "wrong_ids": [
+     "bird_1498",
+     "bird_1531",
+     "bird_36"
+    ]
+   },
+   "MAX-subquery": {
+    "n": 14,
+    "correct": 7,
+    "accuracy": 0.5,
+    "wrong_ids": [
+     "bird_1028",
+     "bird_1032",
+     "bird_1092",
+     "bird_349",
+     "bird_37",
+     "bird_736",
+     "bird_794"
+    ]
+   }
+  }
+ }
+}
