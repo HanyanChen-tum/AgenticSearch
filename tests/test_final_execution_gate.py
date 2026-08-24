@@ -137,5 +137,44 @@ class FinalExecutionGateTests(unittest.TestCase):
         self.assertEqual(db_events, [])
 
 
+class FinalGateProfileTests(unittest.TestCase):
+    PAIRS = (
+        ("e3-c-conv-rules", "e3-c-conv-rules-final-gate"),
+        ("e3-c-recursive-db", "e3-c-recursive-db-final-gate"),
+    )
+
+    def test_gate_profiles_differ_from_their_base_only_by_the_gate(self):
+        for base_name, gate_name in self.PAIRS:
+            base, gate = get_agent_config(base_name), get_agent_config(gate_name)
+            self.assertFalse(base.final_execution_gate, base_name)
+            self.assertTrue(gate.final_execution_gate, gate_name)
+            for field in dataclasses.fields(base):
+                if field.name in ("profile", "experiment_variant", "final_execution_gate"):
+                    continue
+                self.assertEqual(
+                    getattr(base, field.name), getattr(gate, field.name),
+                    f"{gate_name}.{field.name} must match {base_name}; "
+                    "only final_execution_gate may differ",
+                )
+            self.assertNotEqual(base.sha256, gate.sha256)
+
+    def test_the_recommended_default_carries_the_gate(self):
+        # e3-c-recursive-db is the highest-scoring chain arm (88.10% mean on
+        # the corrected 498); its gate variant is what new runs should use so
+        # an errored or timed-out query is returned to the model rather than
+        # reaching scoring as a no_answer.
+        self.assertTrue(
+            get_agent_config("e3-c-recursive-db-final-gate").final_execution_gate
+        )
+
+    def test_the_two_final_gates_are_mutually_exclusive(self):
+        # verified_final (clean-e1) was rejected; the two gates answer the same
+        # question in incompatible ways, so a profile must not carry both.
+        with self.assertRaises(ValueError):
+            dataclasses.replace(
+                get_agent_config("e3-c-recursive-db-final-gate"), verified_final=True
+            )
+
+
 if __name__ == "__main__":
     unittest.main()

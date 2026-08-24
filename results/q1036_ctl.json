@@ -1,0 +1,804 @@
+[
+  {
+    "id": "bird_1036",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "List the long name of teams with above-average build-up play passing in 2012.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT DISTINCT T.team_long_name FROM Team_Attributes AS TA JOIN Team AS T ON TA.team_api_id = T.team_api_id WHERE strftime('%Y', TA.date) = '2012' AND TA.buildUpPlayPassing > ( SELECT 1.0 * SUM(TA2.buildUpPlayPassing) / COUNT(T2.team_long_name) FROM Team_Attributes AS TA2 JOIN Team AS T2 ON TA2.team_api_id = T2.team_api_id WHERE strftime('%Y', TA2.date) = '2012' AND TA2.buildUpPlayPassing IS NOT NULL ) ORDER BY T.team_long_name;",
+    "predicted_answer": [
+      [
+        "1. FC Kaiserslautern"
+      ],
+      [
+        "1. FC Köln"
+      ],
+      [
+        "1. FSV Mainz 05"
+      ],
+      [
+        "AC Ajaccio"
+      ],
+      [
+        "AS Saint-Étienne"
+      ],
+      [
+        "Aberdeen"
+      ],
+      [
+        "Angers SCO"
+      ],
+      [
+        "Aston Villa"
+      ],
+      [
+        "Atalanta"
+      ],
+      [
+        "Athletic Club de Bilbao"
+      ],
+      [
+        "Atlético Madrid"
+      ],
+      [
+        "BSC Young Boys"
+      ],
+      [
+        "Bari"
+      ],
+      [
+        "Bayer 04 Leverkusen"
+      ],
+      [
+        "Beerschot AC"
+      ],
+      [
+        "Birmingham City"
+      ],
+      [
+        "Blackburn Rovers"
+      ],
+      [
+        "Blackpool"
+      ],
+      [
+        "Bologna"
+      ],
+      [
+        "Bolton Wanderers"
+      ],
+      [
+        "Borussia Mönchengladbach"
+      ],
+      [
+        "CA Osasuna"
+      ],
+      [
+        "Cagliari"
+      ],
+      [
+        "Cardiff City"
+      ],
+      [
+        "Catania"
+      ],
+      [
+        "Celtic"
+      ],
+      [
+        "Chievo Verona"
+      ],
+      [
+        "Club Brugge KV"
+      ],
+      [
+        "Cracovia"
+      ],
+      [
+        "Córdoba CF"
+      ],
+      [
+        "Dundee United"
+      ],
+      [
+        "Dunfermline Athletic"
+      ],
+      [
+        "ES Troyes AC"
+      ],
+      [
+        "Eintracht Braunschweig"
+      ],
+      [
+        "Elche CF"
+      ],
+      [
+        "Empoli"
+      ],
+      [
+        "Everton"
+      ],
+      [
+        "Excelsior"
+      ],
+      [
+        "FC Augsburg"
+      ],
+      [
+        "FC Nantes"
+      ],
+      [
+        "FC Porto"
+      ],
+      [
+        "FC St. Pauli"
+      ],
+      [
+        "FC Utrecht"
+      ],
+      [
+        "Fiorentina"
+      ],
+      [
+        "GKS Bełchatów"
+      ],
+      [
+        "Genoa"
+      ],
+      [
+        "Grasshopper Club Zürich"
+      ],
+      [
+        "Hannover 96"
+      ],
+      [
+        "Heart of Midlothian"
+      ],
+      [
+        "Hellas Verona"
+      ],
+      [
+        "Hércules Club de Fútbol"
+      ],
+      [
+        "Inter"
+      ],
+      [
+        "Inverness Caledonian Thistle"
+      ],
+      [
+        "Jagiellonia Białystok"
+      ],
+      [
+        "KRC Genk"
+      ],
+      [
+        "KSV Cercle Brugge"
+      ],
+      [
+        "KV Mechelen"
+      ],
+      [
+        "KVC Westerlo"
+      ],
+      [
+        "Kilmarnock"
+      ],
+      [
+        "Korona Kielce"
+      ],
+      [
+        "Lazio"
+      ],
+      [
+        "Le Havre AC"
+      ],
+      [
+        "Lecce"
+      ],
+      [
+        "Lech Poznań"
+      ],
+      [
+        "Lechia Gdańsk"
+      ],
+      [
+        "Legia Warszawa"
+      ],
+      [
+        "Levante UD"
+      ],
+      [
+        "Lierse SK"
+      ],
+      [
+        "Liverpool"
+      ],
+      [
+        "Livorno"
+      ],
+      [
+        "Manchester City"
+      ],
+      [
+        "Manchester United"
+      ],
+      [
+        "Middlesbrough"
+      ],
+      [
+        "Milan"
+      ],
+      [
+        "Motherwell"
+      ],
+      [
+        "Napoli"
+      ],
+      [
+        "Neuchâtel Xamax"
+      ],
+      [
+        "Newcastle United"
+      ],
+      [
+        "Norwich City"
+      ],
+      [
+        "Novara"
+      ],
+      [
+        "OGC Nice"
+      ],
+      [
+        "Olympique Lyonnais"
+      ],
+      [
+        "Olympique de Marseille"
+      ],
+      [
+        "Oud-Heverlee Leuven"
+      ],
+      [
+        "Pescara"
+      ],
+      [
+        "Podbeskidzie Bielsko-Biała"
+      ],
+      [
+        "Portsmouth"
+      ],
+      [
+        "Queens Park Rangers"
+      ],
+      [
+        "RAEC Mons"
+      ],
+      [
+        "RC Celta de Vigo"
+      ],
+      [
+        "RC Recreativo"
+      ],
+      [
+        "RCD Mallorca"
+      ],
+      [
+        "Real Valladolid"
+      ],
+      [
+        "Reggio Calabria"
+      ],
+      [
+        "Roda JC Kerkrade"
+      ],
+      [
+        "Ruch Chorzów"
+      ],
+      [
+        "SC Bastia"
+      ],
+      [
+        "SC Freiburg"
+      ],
+      [
+        "SC Heerenveen"
+      ],
+      [
+        "SC Paderborn 07"
+      ],
+      [
+        "SM Caen"
+      ],
+      [
+        "SV Zulte-Waregem"
+      ],
+      [
+        "Sassuolo"
+      ],
+      [
+        "Servette FC"
+      ],
+      [
+        "Sevilla FC"
+      ],
+      [
+        "Siena"
+      ],
+      [
+        "Sint-Truidense VV"
+      ],
+      [
+        "Southampton"
+      ],
+      [
+        "Sporting CP"
+      ],
+      [
+        "Sporting Lokeren"
+      ],
+      [
+        "St. Johnstone FC"
+      ],
+      [
+        "St. Mirren"
+      ],
+      [
+        "Stade Brestois 29"
+      ],
+      [
+        "Standard de Liège"
+      ],
+      [
+        "Stoke City"
+      ],
+      [
+        "Sunderland"
+      ],
+      [
+        "TSG 1899 Hoffenheim"
+      ],
+      [
+        "Torino"
+      ],
+      [
+        "Toulouse FC"
+      ],
+      [
+        "UD Almería"
+      ],
+      [
+        "VVV-Venlo"
+      ],
+      [
+        "Valenciennes FC"
+      ],
+      [
+        "VfL Wolfsburg"
+      ],
+      [
+        "Watford"
+      ],
+      [
+        "West Ham United"
+      ],
+      [
+        "Widzew Łódź"
+      ],
+      [
+        "Wolverhampton Wanderers"
+      ],
+      [
+        "Śląsk Wrocław"
+      ]
+    ],
+    "gold_sql": "SELECT DISTINCT t4.team_long_name FROM Team_Attributes AS t3 INNER JOIN Team AS t4 ON t3.team_api_id = t4.team_api_id WHERE SUBSTR(t3.\"date\", 1, 4) = '2012' AND t3.buildUpPlayPassing > ( SELECT CAST(SUM(t2.buildUpPlayPassing) AS REAL) / COUNT(t1.id) FROM Team AS t1 INNER JOIN Team_Attributes AS t2 ON t1.team_api_id = t2.team_api_id WHERE STRFTIME('%Y',t2.\"date\") = '2012')",
+    "gold_answer": [
+      [
+        "Aberdeen"
+      ],
+      [
+        "AC Ajaccio"
+      ],
+      [
+        "Milan"
+      ],
+      [
+        "UD Almería"
+      ],
+      [
+        "Angers SCO"
+      ],
+      [
+        "Aston Villa"
+      ],
+      [
+        "Atalanta"
+      ],
+      [
+        "Athletic Club de Bilbao"
+      ],
+      [
+        "Atlético Madrid"
+      ],
+      [
+        "FC Augsburg"
+      ],
+      [
+        "Bari"
+      ],
+      [
+        "Bayer 04 Leverkusen"
+      ],
+      [
+        "Beerschot AC"
+      ],
+      [
+        "Birmingham City"
+      ],
+      [
+        "Blackburn Rovers"
+      ],
+      [
+        "Blackpool"
+      ],
+      [
+        "Bologna"
+      ],
+      [
+        "Bolton Wanderers"
+      ],
+      [
+        "Borussia Mönchengladbach"
+      ],
+      [
+        "Stade Brestois 29"
+      ],
+      [
+        "SM Caen"
+      ],
+      [
+        "Cagliari"
+      ],
+      [
+        "Cardiff City"
+      ],
+      [
+        "Catania"
+      ],
+      [
+        "RC Celta de Vigo"
+      ],
+      [
+        "Celtic"
+      ],
+      [
+        "KSV Cercle Brugge"
+      ],
+      [
+        "Chievo Verona"
+      ],
+      [
+        "Club Brugge KV"
+      ],
+      [
+        "Córdoba CF"
+      ],
+      [
+        "Cracovia"
+      ],
+      [
+        "Dundee United"
+      ],
+      [
+        "Dunfermline Athletic"
+      ],
+      [
+        "Eintracht Braunschweig"
+      ],
+      [
+        "Elche CF"
+      ],
+      [
+        "Empoli"
+      ],
+      [
+        "Everton"
+      ],
+      [
+        "Excelsior"
+      ],
+      [
+        "1. FC Köln"
+      ],
+      [
+        "FC Porto"
+      ],
+      [
+        "FC Utrecht"
+      ],
+      [
+        "Fiorentina"
+      ],
+      [
+        "SC Freiburg"
+      ],
+      [
+        "KRC Genk"
+      ],
+      [
+        "Genoa"
+      ],
+      [
+        "GKS Bełchatów"
+      ],
+      [
+        "Grasshopper Club Zürich"
+      ],
+      [
+        "Hannover 96"
+      ],
+      [
+        "Heart of Midlothian"
+      ],
+      [
+        "Hércules Club de Fútbol"
+      ],
+      [
+        "TSG 1899 Hoffenheim"
+      ],
+      [
+        "Inter"
+      ],
+      [
+        "Inverness Caledonian Thistle"
+      ],
+      [
+        "Jagiellonia Białystok"
+      ],
+      [
+        "1. FC Kaiserslautern"
+      ],
+      [
+        "Kilmarnock"
+      ],
+      [
+        "Korona Kielce"
+      ],
+      [
+        "KV Mechelen"
+      ],
+      [
+        "Lazio"
+      ],
+      [
+        "Le Havre AC"
+      ],
+      [
+        "Lecce"
+      ],
+      [
+        "Lech Poznań"
+      ],
+      [
+        "Lechia Gdańsk"
+      ],
+      [
+        "Legia Warszawa"
+      ],
+      [
+        "Levante UD"
+      ],
+      [
+        "Lierse SK"
+      ],
+      [
+        "Liverpool"
+      ],
+      [
+        "Livorno"
+      ],
+      [
+        "Widzew Łódź"
+      ],
+      [
+        "Sporting Lokeren"
+      ],
+      [
+        "Olympique Lyonnais"
+      ],
+      [
+        "1. FSV Mainz 05"
+      ],
+      [
+        "RCD Mallorca"
+      ],
+      [
+        "Manchester City"
+      ],
+      [
+        "Manchester United"
+      ],
+      [
+        "Olympique de Marseille"
+      ],
+      [
+        "Middlesbrough"
+      ],
+      [
+        "RAEC Mons"
+      ],
+      [
+        "Motherwell"
+      ],
+      [
+        "FC Nantes"
+      ],
+      [
+        "Newcastle United"
+      ],
+      [
+        "OGC Nice"
+      ],
+      [
+        "Norwich City"
+      ],
+      [
+        "Novara"
+      ],
+      [
+        "CA Osasuna"
+      ],
+      [
+        "Oud-Heverlee Leuven"
+      ],
+      [
+        "SC Paderborn 07"
+      ],
+      [
+        "Pescara"
+      ],
+      [
+        "Podbeskidzie Bielsko-Biała"
+      ],
+      [
+        "Portsmouth"
+      ],
+      [
+        "Queens Park Rangers"
+      ],
+      [
+        "RC Recreativo"
+      ],
+      [
+        "Reggio Calabria"
+      ],
+      [
+        "Siena"
+      ],
+      [
+        "Roda JC Kerkrade"
+      ],
+      [
+        "Ruch Chorzów"
+      ],
+      [
+        "AS Saint-Étienne"
+      ],
+      [
+        "Sassuolo"
+      ],
+      [
+        "SC Bastia"
+      ],
+      [
+        "SC Heerenveen"
+      ],
+      [
+        "Servette FC"
+      ],
+      [
+        "Sevilla FC"
+      ],
+      [
+        "Śląsk Wrocław"
+      ],
+      [
+        "Southampton"
+      ],
+      [
+        "Sporting CP"
+      ],
+      [
+        "Napoli"
+      ],
+      [
+        "St. Mirren"
+      ],
+      [
+        "FC St. Pauli"
+      ],
+      [
+        "St. Johnstone FC"
+      ],
+      [
+        "Sint-Truidense VV"
+      ],
+      [
+        "Standard de Liège"
+      ],
+      [
+        "Stoke City"
+      ],
+      [
+        "Sunderland"
+      ],
+      [
+        "Torino"
+      ],
+      [
+        "Toulouse FC"
+      ],
+      [
+        "ES Troyes AC"
+      ],
+      [
+        "Valenciennes FC"
+      ],
+      [
+        "Real Valladolid"
+      ],
+      [
+        "Hellas Verona"
+      ],
+      [
+        "VVV-Venlo"
+      ],
+      [
+        "Watford"
+      ],
+      [
+        "West Ham United"
+      ],
+      [
+        "KVC Westerlo"
+      ],
+      [
+        "VfL Wolfsburg"
+      ],
+      [
+        "Wolverhampton Wanderers"
+      ],
+      [
+        "Neuchâtel Xamax"
+      ],
+      [
+        "BSC Young Boys"
+      ],
+      [
+        "SV Zulte-Waregem"
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 16.0134,
+    "llm_calls": 1,
+    "prompt_tokens": 3446,
+    "completion_tokens": 3509,
+    "reasoning_tokens": 3295,
+    "total_tokens": 6955,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-noconv",
+    "agent_config_sha256": "9211e98bc66c787022e43e6cdfab78432542058c56c986be2045b8707c40d6b8",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260824T044137Z-fdc153ca",
+    "trace_schema_version": 3
+  }
+]

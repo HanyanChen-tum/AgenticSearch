@@ -391,6 +391,35 @@ _PROFILES = {
         sql_convention_mode=SQL_CONVENTION_VERSION,
         recursion_mode="leaf-db-v1",
     ),
+    # The recommended default for new runs: the highest-scoring chain arm
+    # (e3-c-recursive-db, 88.10% mean on the corrected 498) plus the FINAL
+    # execution gate, so a query that errors or times out inside the agent
+    # loop comes back to the model with its actual error instead of reaching
+    # scoring as a no_answer. A new profile rather than flipping the flag on
+    # e3-c-recursive-db itself: agent_config_sha256 goes into every run
+    # manifest, so mutating that profile would stop audit_run_configs.py from
+    # recognising the existing eight-arm runs as the same configuration.
+    #
+    # Measured on 24 questions against e3-c-conv-rules (the same gate, one
+    # layer down): 0.0pp accuracy, zero per-question flips, +10% tokens, and
+    # the gate fired on 8.3% of questions -- see
+    # docs/analysis/week_2026-08-18/timeout_agent_side_fix_2026-08-24.md.
+    # It is here to keep no_answer from recurring, not as an accuracy
+    # mechanism; the accuracy ceiling for an execution gate is ~1pp because
+    # 60 of 61 remaining failures execute fine and are semantically wrong.
+    "e3-c-recursive-db-final-gate": AgentConfig(
+        profile="e3-c-recursive-db-final-gate",
+        experiment_variant="e3-c-recursive-db-final-gate",
+        prompt_profile="conventions-recursive-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        recursion_mode="leaf-db-v1",
+        final_execution_gate=True,
+    ),
     # e3-c-recursive-db with reasoning_capture on, for causal tracing into *why*
     # depth-1 recursion doesn't move accuracy (five_layer_chain_results
     # 2026-08-19 §1: +0.3pp, inside noise, sign flips between repeats). Without

@@ -175,12 +175,51 @@ E1 是通过「强制验证消除了 `UNVERIFIED_FINAL` 标签但准确率没动
 
 ---
 
-## 八、结论与建议
+## 八、`no_answer` 到底解决了没有：量化回答
+
+用 `triage_failure_causes.py:146` 的原定义（`predicted_answer is None`）重新统计，
+口径对齐 [`拆开「其它」424 道失败_2026-08-21.md`](拆开「其它」424%20道失败_2026-08-21.md)
+（该文记录八臂合计 21 条）：
+
+| | 数量 |
+|---|---:|
+| 原文档记录 | 21 |
+| **判分侧回填后** | **6**（降 71%） |
+| 其中仍是超时 | 5 |
+| 其中其他（`misuse of aggregate: COUNT()`） | 1 |
+
+**剩下这 6 条不需要修，因为重跑就不存在了。** 这 6 条只涉及 4 道不同的题
+（`bird_529` 在三个臂里重复）。把这 4 道重新跑一遍：
+
+| 题目 | 控制组（无 gate） | 实验组（有 gate） |
+|---|---|---|
+| `bird_409` | 有答案，对 | 有答案，对 |
+| `bird_416` | 有答案，错（语义） | 有答案，错（语义） |
+| `bird_529` | 有答案，对 | 有答案，对 |
+| `bird_1036` | 有答案，对（gate 未触发） | 有答案，对（gate 未触发） |
+
+**关键是控制组也全都出了答案。** 所以这些 `no_answer` 不是「这些题有问题」，
+而是当时那次采样恰好生成了低效或错误的 SQL。
+
+**结论：`no_answer` 是一个随机现象，不是一批固定的坏题。** 它取决于模型那一次
+采样出什么 SQL，因此「把这 N 道修掉」这个说法本身不成立——它们已经不存在于新运行里。
+能问的只有「开着 gate 跑全量，`no_answer` 的发生率会不会下降」，但当前基准发生率
+已经是 ~1/496，这个效应量在 498 道上测不出来。
+
+---
+
+## 九、结论与建议
 
 1. **判分侧修复应当保留并采用**：121 条误判是实打实的测量偏差，与模型能力无关。
-2. **`final_execution_gate` 建议保留为可选、默认关闭**：它不伤害准确率、触发率低、
-   行为符合设计，且能让模型自己产出高效 SQL 而不是靠判分侧兜底（有独立价值）。
-   但**不应作为提升准确率的手段推荐**——天花板 ~1pp，实测 0.0pp。
+2. **`final_execution_gate` 已加入推荐默认配置**：新增 profile
+   `e3-c-recursive-db-final-gate` = 最高分臂 `e3-c-recursive-db`（88.10%）+ gate，
+   单变量。理由是**防复发**而非提准：它让循环内出错或超时的查询带着真实错误
+   回到模型手里，而不是以 `no_answer` 的形式流到判分。
+   **不作为提准手段**——天花板 ~1pp，实测 0.0pp。
+
+   *为什么新建 profile 而不是直接翻 `e3-c-recursive-db` 的开关*：`agent_config_sha256`
+   进入每次运行的 manifest，改动现有 profile 会让 `audit_run_configs.py` 不再认为
+   已有八臂运行是「同配置」，断掉既有对照关系。项目惯例也是一个变量一个新 profile。
 3. **下一步不应继续在执行验证方向投入**。剩余 60/61 的语义失败才是瓶颈，
    与 `WEEK_PLAN` 的 Phase A 人工判读方向一致。
 
@@ -188,9 +227,11 @@ E1 是通过「强制验证消除了 `UNVERIFIED_FINAL` 标签但准确率没动
 
 - [`shared/timeout_recovery.py`](../../../shared/timeout_recovery.py)、
   [`shared/sql_executor.py`](../../../shared/sql_executor.py)（30s → 180s）
-- [`ours/agent/config.py`](../../../ours/agent/config.py)（`final_execution_gate`、
-  profile `e3-c-conv-rules-final-gate`）、
+- [`ours/agent/config.py`](../../../ours/agent/config.py)（`final_execution_gate` 字段、
+  profile `e3-c-conv-rules-final-gate`（实验用）与
+  **`e3-c-recursive-db-final-gate`（新运行推荐默认）**）、
   [`ours/recursive_db_rlm.py`](../../../ours/recursive_db_rlm.py)（FINAL 分支）
+- `results/q1036_{ctl,trt}.json`（第八节重跑 `bird_1036` 的两臂证据）
 - `tests/test_timeout_recovery.py`、`tests/test_final_execution_gate.py`（8 个新测试）
 - `data/processed/finalgate_sample24.json`（24 道对照样本，逐题可复现）
 - `scripts/compare_final_gate.py`（两臂对比分析）
