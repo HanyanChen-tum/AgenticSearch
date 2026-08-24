@@ -1,0 +1,218 @@
+{
+ "bird_465": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON f.uuid = c.uuid WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean' ORDER BY s.name;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 0
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON c.uuid = f.uuid WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON f.uuid = c.uuid WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON f.uuid = c.uuid WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 3
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON c.uuid = f.uuid WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 3
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 6
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON c.uuid = f.uuid WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 3
+  }
+ ],
+ "bird_173": [
+  {
+   "sample": 0,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT k_symbol FROM [order] WHERE amount = 3539 LIMIT 1) AS aim;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT t.statement_requests, o.aim FROM (SELECT COUNT(*) AS statement_requests FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS t CROSS JOIN (SELECT k_symbol AS aim FROM \"order\" WHERE amount = 3539 LIMIT 1) AS o;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT k_symbol FROM [order] WHERE amount = 3539 LIMIT 1) AS aim",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT k_symbol FROM \"order\" WHERE amount = 3539 LIMIT 1) AS aim;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT k_symbol FROM \"order\" WHERE amount = 3539 LIMIT 1) AS aim",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT t.statement_requests, o.aim FROM (SELECT COUNT(1) AS statement_requests FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS t CROSS JOIN (SELECT k_symbol AS aim FROM [order] WHERE amount = 3539 LIMIT 1) AS o",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT k_symbol FROM \"order\" WHERE amount = 3539 LIMIT 1) AS aim;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT k_symbol FROM [order] WHERE amount = 3539 LIMIT 1) AS aim;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT (SELECT COUNT(1) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT k_symbol FROM [order] WHERE amount = 3539 LIMIT 1) AS aim",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_requests, (SELECT k_symbol FROM \"order\" WHERE amount = 3539 LIMIT 1) AS aim;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 0
+  }
+ ],
+ "bird_587": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 5
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT p.Title AS title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 2
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT p.Title AS title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT p.Title AS title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 9
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT p.Title AS title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT p.Title AS title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT p.Title AS title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT p.Title AS title, c.Text AS comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 5
+  }
+ ]
+}

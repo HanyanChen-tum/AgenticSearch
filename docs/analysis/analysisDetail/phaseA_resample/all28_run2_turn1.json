@@ -1,0 +1,290 @@
+{
+ "bird_928": [
+  {
+   "sample": 0,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId INNER JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 5
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 4
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 2
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 2
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 3
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 3
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 3
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 4
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 2
+  }
+ ],
+ "bird_1479": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(substr(ym.Date,1,4) AS INTEGER) AS year FROM yearmonth AS ym JOIN customers AS c ON ym.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY CAST(substr(ym.Date,1,4) AS INTEGER) ORDER BY SUM(ym.Consumption) DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT CAST(substr(T1.Date,1,4) AS INTEGER) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Currency = 'CZK' GROUP BY CAST(substr(T1.Date,1,4) AS INTEGER) ORDER BY SUM(T1.Consumption) DESC LIMIT 1;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUBSTR(y.Date, 1, 4) FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY SUBSTR(y.Date, 1, 4) ORDER BY SUM(y.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 4
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT substr(Date, 1, 4) AS year FROM yearmonth INNER JOIN customers USING (CustomerID) WHERE customers.Currency = 'CZK' GROUP BY substr(Date, 1, 4) ORDER BY SUM(Consumption) DESC LIMIT 1;",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUBSTR(y.Date, 1, 4) AS year FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY SUBSTR(y.Date, 1, 4) ORDER BY SUM(y.Consumption) DESC LIMIT 1;",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT CAST(substr(y.Date, 1, 4) AS INTEGER) AS year FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY CAST(substr(y.Date, 1, 4) AS INTEGER) ORDER BY SUM(y.Consumption) DESC LIMIT 1;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 4
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT CAST(SUBSTR(Y.Date, 1, 4) AS INTEGER) AS Year FROM yearmonth AS Y INNER JOIN customers AS C ON Y.CustomerID = C.CustomerID WHERE C.Currency = 'CZK' GROUP BY CAST(SUBSTR(Y.Date, 1, 4) AS INTEGER) ORDER BY SUM(Y.Consumption) DESC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT substr(T1.Date,1,4) AS year FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Currency = 'CZK' GROUP BY substr(T1.Date,1,4) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 5
+  }
+ ],
+ "bird_931": [
+  {
+   "sample": 0,
+   "sql": "SELECT results.fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.name = 'Spanish Grand Prix' AND races.year = 2009 AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1;",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT results.fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND races.name = 'Spanish Grand Prix' AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 8
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT results.fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.name = 'Spanish Grand Prix' AND races.year = 2009 ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.name = 'Spanish Grand Prix' AND races.year = 2009 AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT results.fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.name = 'Spanish Grand Prix' AND races.year = 2009 AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1;",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT results.fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND races.name = 'Spanish Grand Prix' AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT T1.fastestLapSpeed FROM results AS T1 INNER JOIN races AS T2 ON T1.raceId = T2.raceId WHERE T2.year = 2009 AND T2.name = 'Spanish Grand Prix' ORDER BY CAST(T1.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT results.fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND races.name = 'Spanish Grand Prix' AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 8
+  }
+ ],
+ "bird_1080": [
+  {
+   "sample": 0,
+   "sql": "SELECT COUNT(*) FROM (SELECT DISTINCT player_api_id FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low')",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING MAX(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) = 1 AND MAX(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) = 1) AS t",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low';",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low';",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) AS t1;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING MAX(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) = 1 AND MAX(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) = 1) AS t;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 19
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low';",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) t",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 26
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) AS t;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 26
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 35
+  }
+ ]
+}

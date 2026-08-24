@@ -1,0 +1,107 @@
+[
+ {
+  "sample": 0,
+  "sql": null,
+  "correct": null,
+  "error": "no FINAL() found",
+  "section_count": 6
+ },
+ {
+  "sample": 1,
+  "sql": "SELECT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 5
+ },
+ {
+  "sample": 2,
+  "sql": "SELECT DISTINCT T1.Tags FROM posts AS T1 INNER JOIN users AS T2 ON T1.OwnerUserId = T2.Id WHERE T2.DisplayName = 'Mark Meckes' AND T1.CommentCount = 0 AND T1.Tags IS NOT NULL",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 12
+ },
+ {
+  "sample": 3,
+  "sql": "SELECT DISTINCT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL ORDER BY p.Tags",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 7
+ },
+ {
+  "sample": 4,
+  "sql": "SELECT DISTINCT T2.TagName FROM posts AS T1 INNER JOIN users AS T3 ON T1.OwnerUserId = T3.Id INNER JOIN tags AS T2 ON instr(T1.Tags, '<' || T2.TagName || '>') > 0 WHERE T3.DisplayName = 'Mark Meckes' AND T1.CommentCount = 0 AND T1.Tags IS NOT NULL AND T1.Tags <> '' ORDER BY T2.TagName",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 9
+ },
+ {
+  "sample": 5,
+  "sql": "WITH RECURSIVE split(tag, rest) AS (\n  SELECT substr(p.Tags, 2, instr(p.Tags, '>') - 2) AS tag,\n         substr(p.Tags, instr(p.Tags, '>') + 1) AS rest\n  FROM posts AS p\n  INNER JOIN users AS u ON p.OwnerUserId = u.Id\n  WHERE u.DisplayName = 'Mark Meckes'\n    AND p.CommentCount = 0\n    AND p.Tags IS NOT NULL\n    AND p.Tags LIKE '<%>'\n  UNION ALL\n  SELECT substr(rest, 2, instr(rest, '>') - 2),\n         substr(rest, instr(rest, '>') + 1)\n  FROM split\n  WHERE rest LIKE '<%>'\n)\nSELECT DISTINCT tag\nFROM split\nWHERE tag <> ''\nORDER BY tag",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 12
+ },
+ {
+  "sample": 6,
+  "sql": "SELECT DISTINCT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL ORDER BY p.Tags",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 15
+ },
+ {
+  "sample": 7,
+  "sql": "SELECT DISTINCT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL ORDER BY p.Tags",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 19
+ },
+ {
+  "sample": 8,
+  "sql": "SELECT DISTINCT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL ORDER BY p.Tags",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 5
+ },
+ {
+  "sample": 9,
+  "sql": "SELECT DISTINCT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 2
+ },
+ {
+  "sample": 10,
+  "sql": "WITH RECURSIVE\nbase AS (\n  SELECT p.Id AS post_id, trim(p.Tags, '<>') AS tagstr\n  FROM posts p\n  JOIN users u ON u.Id = p.OwnerUserId\n  WHERE u.DisplayName = 'Mark Meckes'\n    AND p.CommentCount = 0\n    AND p.Tags IS NOT NULL\n    AND p.Tags <> ''\n),\npost_tags(post_id, tag, rest) AS (\n  SELECT\n    post_id,\n    CASE WHEN instr(tagstr, '><') = 0 THEN tagstr ELSE substr(tagstr, 1, instr(tagstr, '><') - 1) END,\n    CASE WHEN instr(tagstr, '><') = 0 THEN '' ELSE substr(tagstr, instr(tagstr, '><') + 2) END\n  FROM base\n  UNION ALL\n  SELECT\n    post_id,\n    CASE WHEN instr(rest, '><') = 0 THEN rest ELSE substr(rest, 1, instr(rest, '><') - 1) END,\n    CASE WHEN instr(rest, '><') = 0 THEN '' ELSE substr(rest, instr(rest, '><') + 2) END\n  FROM post_tags\n  WHERE rest <> ''\n)\nSELECT DISTINCT tag\nFROM post_tags\nWHERE tag <> ''\nORDER BY tag;",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 10
+ },
+ {
+  "sample": 11,
+  "sql": null,
+  "correct": null,
+  "error": "no FINAL() found",
+  "section_count": 8
+ },
+ {
+  "sample": 12,
+  "sql": "SELECT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 8
+ },
+ {
+  "sample": 13,
+  "sql": "SELECT DISTINCT T1.Tags FROM posts AS T1 INNER JOIN users AS T2 ON T1.OwnerUserId = T2.Id WHERE T2.DisplayName = 'Mark Meckes' AND T1.CommentCount = 0 AND T1.Tags IS NOT NULL ORDER BY T1.Tags",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 9
+ },
+ {
+  "sample": 14,
+  "sql": "SELECT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 6
+ }
+]

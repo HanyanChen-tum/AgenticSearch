@@ -1,0 +1,107 @@
+[
+ {
+  "sample": 0,
+  "sql": "SELECT DISTINCT p.Tags FROM posts p JOIN users u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL ORDER BY p.Tags",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 5
+ },
+ {
+  "sample": 1,
+  "sql": "WITH RECURSIVE tag_split(tag, rest) AS (\n  SELECT substr(p.Tags, 2, instr(p.Tags, '>') - 2),\n         substr(p.Tags, instr(p.Tags, '>') + 1)\n  FROM posts p\n  JOIN users u ON u.Id = p.OwnerUserId\n  WHERE u.DisplayName = 'Mark Meckes'\n    AND p.CommentCount = 0\n    AND p.Tags IS NOT NULL\n    AND p.Tags <> ''\n    AND instr(p.Tags, '<') = 1\n    AND instr(p.Tags, '>') > 0\n  UNION ALL\n  SELECT substr(rest, 2, instr(rest, '>') - 2),\n         substr(rest, instr(rest, '>') + 1)\n  FROM tag_split\n  WHERE rest <> ''\n    AND instr(rest, '>') > 0\n)\nSELECT DISTINCT tag\nFROM tag_split\nWHERE tag IS NOT NULL AND tag <> ''\nORDER BY tag;",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 6
+ },
+ {
+  "sample": 2,
+  "sql": null,
+  "correct": null,
+  "error": "no FINAL() found",
+  "section_count": 10
+ },
+ {
+  "sample": 3,
+  "sql": null,
+  "correct": null,
+  "error": "no FINAL() found",
+  "section_count": 3
+ },
+ {
+  "sample": 4,
+  "sql": "SELECT DISTINCT t.TagName FROM posts AS p JOIN users AS u ON u.Id = p.OwnerUserId JOIN tags AS t ON instr(p.Tags, '<' || t.TagName || '>') > 0 WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL ORDER BY t.TagName;",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 5
+ },
+ {
+  "sample": 5,
+  "sql": "WITH RECURSIVE split(post_id, rest, tag) AS (SELECT p.Id, replace(replace(replace(p.Tags, '><', ','), '<', ''), '>', '') AS rest, NULL AS tag FROM posts p JOIN users u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL UNION ALL SELECT post_id, CASE WHEN instr(rest, ',') > 0 THEN substr(rest, instr(rest, ',') + 1) ELSE '' END, CASE WHEN instr(rest, ',') > 0 THEN substr(rest, 1, instr(rest, ',') - 1) ELSE rest END FROM split WHERE rest <> '') SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag;",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 8
+ },
+ {
+  "sample": 6,
+  "sql": "WITH RECURSIVE tag_parts(rest, tag) AS (\n  SELECT p.Tags, NULL\n  FROM posts p\n  JOIN users u ON p.OwnerUserId = u.Id\n  WHERE u.DisplayName = 'Mark Meckes'\n    AND p.CommentCount = 0\n    AND p.Tags IS NOT NULL\n  UNION ALL\n  SELECT substr(rest, instr(rest, '>') + 1),\n         substr(rest, 2, instr(rest, '>') - 2)\n  FROM tag_parts\n  WHERE rest LIKE '<%>%'\n)\nSELECT DISTINCT tag\nFROM tag_parts\nWHERE tag IS NOT NULL AND tag <> ''\nORDER BY tag;",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 4
+ },
+ {
+  "sample": 7,
+  "sql": "WITH RECURSIVE tag_split(tag, rest) AS (SELECT substr(p.Tags, 2, instr(p.Tags, '>') - 2), substr(p.Tags, instr(p.Tags, '>') + 1) FROM posts p JOIN users u ON u.Id = p.OwnerUserId WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags LIKE '<%>%' UNION ALL SELECT substr(rest, 2, instr(rest, '>') - 2), substr(rest, instr(rest, '>') + 1) FROM tag_split WHERE rest LIKE '<%>%') SELECT DISTINCT tag FROM tag_split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 7
+ },
+ {
+  "sample": 8,
+  "sql": "WITH RECURSIVE split(tag, rest) AS ( SELECT substr(p.Tags, 2, instr(p.Tags, '>') - 2), substr(p.Tags, instr(p.Tags, '>') + 1) FROM posts p JOIN users u ON u.Id = p.OwnerUserId WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '' AND p.Tags LIKE '<%>%' UNION ALL SELECT substr(rest, 2, instr(rest, '>') - 2), substr(rest, instr(rest, '>') + 1) FROM split WHERE rest LIKE '<%>%' ) SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag;",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 15
+ },
+ {
+  "sample": 9,
+  "sql": "WITH RECURSIVE tag_split(tag, rest) AS (\n  SELECT\n    substr(p.Tags, 2, instr(p.Tags, '>') - 2) AS tag,\n    substr(p.Tags, instr(p.Tags, '>') + 1) AS rest\n  FROM posts p\n  JOIN users u ON u.Id = p.OwnerUserId\n  WHERE u.DisplayName = 'Mark Meckes'\n    AND p.CommentCount = 0\n    AND p.Tags IS NOT NULL\n    AND p.Tags <> ''\n    AND p.Tags LIKE '<%>%'\n  UNION ALL\n  SELECT\n    substr(rest, 2, instr(rest, '>') - 2),\n    substr(rest, instr(rest, '>') + 1)\n  FROM tag_split\n  WHERE rest LIKE '<%>%'\n)\nSELECT DISTINCT tag\nFROM tag_split\nWHERE tag IS NOT NULL AND tag <> ''\nORDER BY tag;",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 19
+ },
+ {
+  "sample": 10,
+  "sql": "WITH RECURSIVE split(rest, tag) AS (SELECT p.Tags, NULL FROM posts p JOIN users u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '' UNION ALL SELECT substr(rest, instr(rest, '>') + 1), substr(rest, 2, instr(rest, '>') - 2) FROM split WHERE rest <> '' AND instr(rest, '>') > 0) SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag;",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 7
+ },
+ {
+  "sample": 11,
+  "sql": "WITH RECURSIVE split(post_id, tag, rest) AS (SELECT p.Id, substr(p.Tags, 2, instr(p.Tags, '>') - 2) AS tag, substr(p.Tags, instr(p.Tags, '>') + 1) AS rest FROM posts p JOIN users u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '' UNION ALL SELECT post_id, substr(rest, 2, instr(rest, '>') - 2) AS tag, substr(rest, instr(rest, '>') + 1) AS rest FROM split WHERE rest <> '') SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 3
+ },
+ {
+  "sample": 12,
+  "sql": "WITH RECURSIVE tag_split(post_id, rest, tag) AS (SELECT p.Id, substr(p.Tags, instr(p.Tags, '>') + 1), substr(p.Tags, 2, instr(p.Tags, '>') - 2) FROM posts p JOIN users u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '' UNION ALL SELECT post_id, substr(rest, instr(rest, '>') + 1), substr(rest, 2, instr(rest, '>') - 2) FROM tag_split WHERE rest <> '' AND instr(rest, '>') > 0) SELECT DISTINCT tag FROM tag_split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag;",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 14
+ },
+ {
+  "sample": 13,
+  "sql": "WITH RECURSIVE mark_posts(Tags) AS (SELECT p.Tags FROM posts p JOIN users u ON u.Id = p.OwnerUserId WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> ''), split(tag, rest) AS (SELECT substr(Tags, 2, instr(Tags, '>') - 2), substr(Tags, instr(Tags, '>') + 1) FROM mark_posts UNION ALL SELECT substr(rest, 2, instr(rest, '>') - 2), substr(rest, instr(rest, '>') + 1) FROM split WHERE rest <> '') SELECT DISTINCT tag FROM split WHERE tag <> '' ORDER BY tag",
+  "correct": false,
+  "exec_error": null,
+  "section_count": 8
+ },
+ {
+  "sample": 14,
+  "sql": "SELECT DISTINCT p.Tags FROM posts p JOIN users u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL ORDER BY p.Tags;",
+  "correct": true,
+  "exec_error": null,
+  "section_count": 5
+ }
+]

@@ -1510,5 +1510,221 @@
    "error": "no FINAL() found",
    "section_count": 22
   }
+ ],
+ "bird_791": [
+  {
+   "sample": 0,
+   "sql": "SELECT SUM(height_cm) * 1.0 / COUNT(*) FROM superhero;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 25
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT AVG(height_cm) FROM superhero;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(SUM(height_cm) AS REAL) / COUNT(*) FROM superhero;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT AVG(height_cm) FROM superhero;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT AVG(height_cm) FROM superhero;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUM(height_cm) * 1.0 / COUNT(*) FROM superhero;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT AVG(height_cm) FROM superhero;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT SUM(COALESCE(height_cm, 0)) * 1.0 / COUNT(*) FROM superhero;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT SUM(height_cm) * 1.0 / COUNT(*) FROM superhero;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT AVG(height_cm) FROM superhero;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  }
+ ],
+ "bird_894": [
+  {
+   "sample": 0,
+   "sql": "SELECT lapTimes.time, drivers.forename, drivers.surname, races.name FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1;",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT lapTimes.time, drivers.forename, drivers.surname, races.name FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT lt.time AS recorded_lap_time, d.forename || ' ' || d.surname AS driver, r.name AS race FROM lapTimes lt JOIN drivers d ON lt.driverId = d.driverId JOIN races r ON lt.raceId = r.raceId ORDER BY lt.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT lapTimes.time, drivers.forename, drivers.surname, races.name FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT lapTimes.time, drivers.forename || ' ' || drivers.surname AS driver, races.name AS race FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT lapTimes.time, drivers.forename || ' ' || drivers.surname AS driver, races.name AS race FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT lt.time, d.forename, d.surname, r.name FROM lapTimes AS lt JOIN drivers AS d ON lt.driverId = d.driverId JOIN races AS r ON lt.raceId = r.raceId ORDER BY lt.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 15
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT lapTimes.time, drivers.forename, drivers.surname, races.name FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT lt.time, d.forename || ' ' || d.surname AS driver, r.name AS race FROM lapTimes AS lt JOIN drivers AS d ON lt.driverId = d.driverId JOIN races AS r ON lt.raceId = r.raceId ORDER BY lt.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT lapTimes.time, drivers.forename, drivers.surname, races.name FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  }
+ ],
+ "bird_85": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 9
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT f.`District Code`, f.`Free Meal Count (K-12)` / f.`Enrollment (K-12)` * 100.0 FROM schools AS s JOIN frpm AS f ON f.CDSCode = s.CDSCode WHERE s.AdmFName1 = 'Alusine'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 21
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT f.`District Code`, f.`Percent (%) Eligible Free (K-12)` FROM schools s JOIN frpm f ON s.CDSCode = f.CDSCode WHERE s.AdmFName1 = 'Alusine'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 21
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT (f.[Free Meal Count (K-12)] / f.[Enrollment (K-12)] * 100.0), f.[District Code] FROM schools s JOIN frpm f ON s.CDSCode = f.CDSCode WHERE s.AdmFName1 = 'Alusine'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 28
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT 100.0 * frpm.\"Free Meal Count (K-12)\" / frpm.\"Enrollment (K-12)\" AS \"Percent (%) Eligible Free (K-12)\", frpm.\"District Code\" FROM schools JOIN frpm ON schools.CDSCode = frpm.CDSCode WHERE schools.AdmFName1 = 'Alusine'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT 100.0 * f.[Free Meal Count (K-12)] / f.[Enrollment (K-12)] AS [Percent (%) Eligible Free (K-12)], f.[District Code] FROM schools s JOIN frpm f ON s.CDSCode = f.CDSCode WHERE s.AdmFName1 = 'Alusine'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 24
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT f.[Free Meal Count (K-12)] / f.[Enrollment (K-12)] AS [Percent (%) Eligible Free (K-12)], f.[District Code] FROM schools AS s JOIN frpm AS f ON f.CDSCode = s.CDSCode WHERE s.[AdmFName1] = 'Alusine'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 24
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT f.\"Free Meal Count (K-12)\" / f.\"Enrollment (K-12)\" * 100 AS \"Percent (%) Eligible Free (K-12)\", f.\"District Code\" FROM schools s JOIN frpm f ON s.CDSCode = f.CDSCode WHERE s.AdmFName1 = 'Alusine'",
+   "correct": false,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 0
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT frpm.\"Free Meal Count (K-12)\" * 100.0 / frpm.\"Enrollment (K-12)\" AS \"Percent (%) Eligible Free (K-12)\", frpm.\"District Code\" FROM schools JOIN frpm ON schools.CDSCode = frpm.CDSCode WHERE schools.AdmFName1 = 'Alusine'",
+   "correct": true,
+   "exec_error": null,
+   "section_count": 19
+  }
  ]
 }
