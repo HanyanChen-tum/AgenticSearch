@@ -14,6 +14,7 @@
 | 7 | [`拆开「其它」424%20道失败_2026-08-21.md`](拆开「其它」424%20道失败_2026-08-21.md) | 拆开「其它」424 道失败：新增两条可复算检查，量化但未机械化的比例公式子模式 |
 | 8 | [`phase_a_first_pass_2026-08-23.md`](phase_a_first_pass_2026-08-23.md) | Phase A 首轮定位 29 道，及"非空即真"自动验证失效的教训——人工基准校准还没做 |
 | 9 | [`sql_timeout_correction_2026-08-23.md`](sql_timeout_correction_2026-08-23.md) | SQL 执行超时误判诊断：36 条记录被静默判错，16 条确认答对并修正，五层链数字更新 |
+| 10 | [`recursion_failure_traces_2026-08-24.md`](recursion_failure_traces_2026-08-24.md) | 递归为什么没用：15 道失败逐题追踪，11 道 leaf 答对但仍失败在约定不匹配 |
 | 10 | [`timeout_agent_side_fix_2026-08-24.md`](timeout_agent_side_fix_2026-08-24.md) | 承接 9：根因是数据库缺索引；全仓回填 121 条；`no_answer` 21→6 且余下均为随机残留；`final_execution_gate` 实测 0.0pp、天花板 ~1pp，已作为防复发加入推荐默认 profile |
 
 只想看一个的话，看 1；只想知道下一步做什么，看 2。

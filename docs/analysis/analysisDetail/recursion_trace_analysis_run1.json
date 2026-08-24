@@ -1,0 +1,2634 @@
+[
+ {
+  "id": "bird_1030",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find which league had the most draws in the 2015/2016 season. Use Match.season = '2015/2016', count draws as SUM(home_team_goal = away_team_goal) per league, and return the league name with the highest count.",
+    "leaf_answer": "France Ligue 1 with 108 draws",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT League.name FROM Match JOIN League ON Match.league_id = League.id WHERE Match.season = '2015/2016' GROUP BY League.id ORDER BY SUM(Match.home_team_goal = Match.away_team_goal) DESC LIMIT 1",
+  "predicted_answer": [
+   [
+    "France Ligue 1"
+   ]
+  ],
+  "gold_sql": "SELECT t2.name FROM Match AS t1 INNER JOIN League AS t2 ON t1.league_id = t2.id WHERE t1.season = '2015/2016' AND t1.home_team_goal = t1.away_team_goal GROUP BY t2.name ORDER BY COUNT(t1.id) DESC LIMIT 1",
+  "gold_answer": [
+   [
+    "France Ligue 1"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1107",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the earliest date when player_name = 'Kevin Constant' had his maximum crossing value in Player_Attributes. Return only the date string if you can determine it by querying the database.",
+    "leaf_answer": "2010-02-22 00:00:00",
+    "leaf_turns": 3,
+    "leaf_terminated": "final_without_query"
+   }
+  ],
+  "predicted_sql": "SELECT PA.date FROM Player_Attributes AS PA INNER JOIN Player AS P ON PA.player_api_id = P.player_api_id WHERE P.player_name = 'Kevin Constant' ORDER BY PA.crossing DESC, PA.date ASC LIMIT 1;",
+  "predicted_answer": [
+   [
+    "2013-02-15 00:00:00"
+   ]
+  ],
+  "gold_sql": "SELECT t2.`date` FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_fifa_api_id = t2.player_fifa_api_id WHERE t1.player_name = 'Kevin Constant' ORDER BY t2.crossing DESC, t2.`date` ASC LIMIT 1",
+  "gold_answer": [
+   [
+    "2013-02-15 00:00:00"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1139",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "In the database, find all Match rows for the league named 'Belgium Jupiler League' on date starting with '2008-09-24'. Return the home_team_goal and away_team_goal values and say whether there is exactly one match or multiple matches.",
+    "leaf_answer": "Exactly one match; home_team_goal=1 and away_team_goal=1.",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT Match.home_team_goal, Match.away_team_goal FROM Match JOIN League ON Match.league_id = League.id WHERE Match.date LIKE '2008-09-24%' AND League.name = 'Belgium Jupiler League'",
+  "predicted_answer": [
+   [
+    1,
+    1
+   ]
+  ],
+  "gold_sql": "SELECT t2.home_team_goal, t2.away_team_goal FROM League AS t1 INNER JOIN Match AS t2 ON t1.id = t2.league_id WHERE t1.name = 'Belgium Jupiler League' AND t2.\"date\" LIKE '2008-09-24%'",
+  "gold_answer": [
+   [
+    1,
+    1
+   ]
+  ]
+ },
+ {
+  "id": "bird_115",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Find the district in region south Bohemia with the largest inhabitants. The database has a district table with columns district_id, A3 (region name), and A4 (inhabitants as text). Return the district_id, A2, and A4 of that district.",
+    "leaf_answer": "14, Ceske Budejovice, 177686",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN gender = 'M' THEN 1 ELSE 0 END) / COUNT(*) AS percentage_of_male_clients FROM client WHERE district_id = (SELECT district_id FROM district WHERE A3 = 'south Bohemia' ORDER BY CAST(A4 AS INTEGER) DESC LIMIT 1);",
+  "predicted_answer": [
+   [
+    40.0
+   ]
+  ],
+  "gold_sql": "SELECT CAST(SUM(T1.gender = 'M') AS REAL) * 100 / COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A3 = 'south Bohemia' GROUP BY T2.A4 ORDER BY CAST(T2.A4 AS INTEGER) DESC LIMIT 1",
+  "gold_answer": [
+   [
+    40.0
+   ]
+  ]
+ },
+ {
+  "id": "bird_116",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 4,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find the balance for account 1787 on 1993-03-22 and on 1998-12-27 in table trans. Return the two balances and note whether there are multiple rows on either date.",
+    "leaf_answer": "1993-03-22: 1100; 1998-12-27: 5835; one row on each date",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT ((SELECT balance FROM trans WHERE account_id = (SELECT account_id FROM loan WHERE date = '1993-07-05' ORDER BY loan_id ASC LIMIT 1) AND date = '1998-12-27' ORDER BY trans_id DESC LIMIT 1) - (SELECT balance FROM trans WHERE account_id = (SELECT account_id FROM loan WHERE date = '1993-07-05' ORDER BY loan_id ASC LIMIT 1) AND date = '1993-03-22' ORDER BY trans_id DESC LIMIT 1)) * 100.0 / (SELECT balance FROM trans WHERE account_id = (SELECT account_id FROM loan WHERE date = '1993-07-05' ORDER BY loan_id ASC LIMIT 1) AND date = '1993-03-22' ORDER BY trans_id DESC LIMIT 1)",
+  "predicted_answer": [
+   [
+    430.45454545454544
+   ]
+  ],
+  "gold_sql": "SELECT CAST((SUM(IIF(T3.date = '1998-12-27', T3.balance, 0)) - SUM(IIF(T3.date = '1993-03-22', T3.balance, 0))) AS REAL) * 100 / SUM(IIF(T3.date = '1993-03-22', T3.balance, 0)) FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN trans AS T3 ON T3.account_id = T2.account_id WHERE T1.date = '1993-07-05'",
+  "gold_answer": [
+   [
+    430.45454545454544
+   ]
+  ]
+ },
+ {
+  "id": "bird_1252",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Count the matching patients",
+    "leaf_answer": "1 distinct patient",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT COUNT(DISTINCT L.ID) FROM Laboratory AS L INNER JOIN Examination AS E ON L.ID = E.ID WHERE L.IGG > 900 AND L.IGG < 2000 AND E.Symptoms IS NOT NULL",
+  "predicted_answer": [
+   [
+    1
+   ]
+  ],
+  "gold_sql": "SELECT COUNT(DISTINCT T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID INNER JOIN Examination AS T3 ON T3.ID = T2.ID WHERE T2.IGG BETWEEN 900 AND 2000 AND T3.Symptoms IS NOT NULL",
+  "gold_answer": [
+   [
+    1
+   ]
+  ]
+ },
+ {
+  "id": "bird_1267",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Count patients with normal anti-SM and no thrombosis",
+    "leaf_answer": "6",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT COUNT(DISTINCT P.ID) FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID INNER JOIN Examination AS E ON P.ID = E.ID WHERE L.SM IN ('negative', '0') AND E.Thrombosis = 0",
+  "predicted_answer": [
+   [
+    6
+   ]
+  ],
+  "gold_sql": "WITH normal_sm AS (\n  SELECT DISTINCT `ID`\n  FROM `Laboratory`\n  WHERE `SM` IN ('negative','0')\n), no_thrombosis AS (\n  SELECT n.`ID`\n  FROM normal_sm n\n  JOIN `Examination` e ON e.`ID` = n.`ID`\n  GROUP BY n.`ID`\n  HAVING MAX(COALESCE(e.`Thrombosis`,0)) = 0\n)\nSELECT COUNT(*)\nFROM no_thrombosis;",
+  "gold_answer": [
+   [
+    6
+   ]
+  ]
+ },
+ {
+  "id": "bird_1334",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the full names (first_name, last_name) of rows in the member table whose zip links to a zip_code row with state = 'Illinois'. Return only the matching names, one per line if multiple.",
+    "leaf_answer": "Tyler Hewitt\nTrent Smith\nAnnabella Warren",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT first_name, last_name FROM member JOIN zip_code ON member.zip = zip_code.zip_code WHERE zip_code.state = 'Illinois'",
+  "predicted_answer": [
+   [
+    "Trent",
+    "Smith"
+   ],
+   [
+    "Tyler",
+    "Hewitt"
+   ],
+   [
+    "Annabella",
+    "Warren"
+   ]
+  ],
+  "gold_sql": "SELECT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN zip_code AS T2 ON T1.zip = T2.zip_code WHERE T2.state = 'Illinois'",
+  "gold_answer": [
+   [
+    "Trent",
+    "Smith"
+   ],
+   [
+    "Tyler",
+    "Hewitt"
+   ],
+   [
+    "Annabella",
+    "Warren"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1338",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find all expense approved values for the event 'October Meeting' on 2019-10-08. The schema has tables event(event_id, event_name, event_date), budget(link_to_event, budget_id), and expense(link_to_budget, approved). Return just the approved values in row order.",
+    "leaf_answer": "true",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT e.approved FROM expense AS e JOIN budget AS b ON e.link_to_budget = b.budget_id JOIN event AS ev ON b.link_to_event = ev.event_id WHERE ev.event_name = 'October Meeting' AND ev.event_date LIKE '2019-10-08%' ORDER BY e.expense_id;",
+  "predicted_answer": [
+   [
+    "true"
+   ],
+   [
+    "true"
+   ],
+   [
+    "true"
+   ]
+  ],
+  "gold_sql": "SELECT T3.approved FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget WHERE T1.event_name = 'October Meeting' AND T1.event_date LIKE '2019-10-08%'",
+  "gold_answer": [
+   [
+    "true"
+   ],
+   [
+    "true"
+   ],
+   [
+    "true"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1340",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find out whether the event table contains a club name like 'Student_Club' in any column, and if not, whether all events should be included when a question says 'by the Student_Club'. Return a plain-text summary with the relevant column/value if one exists.",
+    "leaf_answer": "0 matches for Student_Club in event; no club field exists, so include all events unless another table provides a club filter",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT SUM(CASE WHEN substr(E.event_date, 1, 4) = '2019' THEN B.spent ELSE 0 END) - SUM(CASE WHEN substr(E.event_date, 1, 4) = '2020' THEN B.spent ELSE 0 END) FROM event AS E INNER JOIN budget AS B ON E.event_id = B.link_to_event",
+  "predicted_answer": [
+   [
+    2086.05
+   ]
+  ],
+  "gold_sql": "SELECT SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2019' THEN T2.spent ELSE 0 END) - SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2020' THEN T2.spent ELSE 0 END) AS num FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event",
+  "gold_answer": [
+   [
+    2086.05
+   ]
+  ]
+ },
+ {
+  "id": "bird_1352",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Count club members in the Business major who wear Medium t-shirts.",
+    "leaf_answer": "1",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT COUNT(*) AS count FROM member AS m INNER JOIN major AS maj ON m.link_to_major = maj.major_id WHERE maj.major_name = 'Business' AND m.t_shirt_size = 'Medium'",
+  "predicted_answer": [
+   [
+    1
+   ]
+  ],
+  "gold_sql": "SELECT COUNT(T1.member_id) FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T2.major_name = 'Business' AND T1.t_shirt_size = 'Medium'",
+  "gold_answer": [
+   [
+    1
+   ]
+  ]
+ },
+ {
+  "id": "bird_1356",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "In this student club database, what table and join path should I use to find the department associated with the member whose position is President? Also, is President a value in member.position?",
+    "leaf_answer": "(no answer: the sub-agent ran out of turns)",
+    "leaf_turns": 4,
+    "leaf_terminated": "max_iterations"
+   }
+  ],
+  "predicted_sql": "SELECT t2.department FROM member AS t1 INNER JOIN major AS t2 ON t1.link_to_major = t2.major_id WHERE t1.position = 'President'",
+  "predicted_answer": [
+   [
+    "Liberal Arts Program"
+   ]
+  ],
+  "gold_sql": "SELECT T2.department FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.position = 'President'",
+  "gold_answer": [
+   [
+    "Liberal Arts Program"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1361",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Check the expense table in this database. I need to know whether any rows have expense_description exactly 'Pizza', and if so what the SUM(cost) is for those rows. Return the numeric sum or say none.",
+    "leaf_answer": "600.11",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT SUM(cost) AS total_cost FROM expense WHERE expense_description = 'Pizza';",
+  "predicted_answer": [
+   [
+    600.11
+   ]
+  ],
+  "gold_sql": "SELECT SUM(cost) FROM expense WHERE expense_description = 'Pizza'",
+  "gold_answer": [
+   [
+    600.11
+   ]
+  ]
+ },
+ {
+  "id": "bird_1368",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find the major_name for the member whose phone is 809-555-3360 in the database with tables member(member_id, link_to_major, phone) and major(major_id, major_name). Return only the major name.",
+    "leaf_answer": "Agricultural Education",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT major.major_name FROM member INNER JOIN major ON member.link_to_major = major.major_id WHERE member.phone = '809-555-3360'",
+  "predicted_answer": [
+   [
+    "Agricultural Education"
+   ]
+  ],
+  "gold_sql": "SELECT T2.major_name FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.phone = '809-555-3360'",
+  "gold_answer": [
+   [
+    "Agricultural Education"
+   ]
+  ]
+ },
+ {
+  "id": "bird_138",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Which district has the second-highest A15 value, and how many male clients are in that district?",
+    "leaf_answer": "Ostrava - mesto (district 74) has the second-highest A15 value, 18782, and there are 96 male clients in that district.",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT COUNT(*) FROM client AS c INNER JOIN district AS d ON c.district_id = d.district_id WHERE c.gender = 'M' AND d.district_id = (SELECT district_id FROM district ORDER BY A15 DESC LIMIT 1 OFFSET 1)",
+  "predicted_answer": [
+   [
+    96
+   ]
+  ],
+  "gold_sql": "SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'M' AND T2.A15 = (SELECT T3.A15 FROM district AS T3 ORDER BY T3.A15 DESC LIMIT 1, 1)",
+  "gold_answer": [
+   [
+    96
+   ]
+  ]
+ },
+ {
+  "id": "bird_1387",
+  "correct": false,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find the full name of the member associated with the budget for the event named 'Yearly Kickoff'. The database has an event table with event_name, a budget table linked to event by event id, an expense table linked to budget by budget id and to member by member id, and a member table with first_name and last_name. Determine which member is entrusted to use the budget for that event and return the full name only.",
+    "leaf_answer": "Sacha Harrison",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT m.first_name || ' ' || m.last_name AS full_name FROM event ev JOIN budget b ON b.link_to_event = ev.event_id JOIN expense e ON e.link_to_budget = b.budget_id JOIN member m ON m.member_id = e.link_to_member WHERE ev.event_name = 'Yearly Kickoff' ORDER BY full_name;",
+  "predicted_answer": [
+   [
+    "Elijah Allen"
+   ],
+   [
+    "Sacha Harrison"
+   ]
+  ],
+  "gold_sql": "SELECT T4.first_name, T4.last_name FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget INNER JOIN member AS T4 ON T3.link_to_member = T4.member_id WHERE T1.event_name = 'Yearly Kickoff'",
+  "gold_answer": [
+   [
+    "Sacha",
+    "Harrison"
+   ],
+   [
+    "Elijah",
+    "Allen"
+   ],
+   [
+    "Elijah",
+    "Allen"
+   ],
+   [
+    "Sacha",
+    "Harrison"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1392",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the source in table income with the largest total amount received between 2019-09-01 and 2019-09-30 inclusive. Return the source name and total amount if possible.",
+    "leaf_answer": "School Appropration, 3000",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT source FROM income WHERE date_received BETWEEN '2019-09-01' AND '2019-09-30' GROUP BY source ORDER BY SUM(amount) DESC LIMIT 1",
+  "predicted_answer": [
+   [
+    "School Appropration"
+   ]
+  ],
+  "gold_sql": "SELECT `source`\nFROM `Income`\nWHERE `date_received` BETWEEN '2019-09-01' AND '2019-09-30'\nGROUP BY `source`\nORDER BY SUM(`amount`) DESC\nLIMIT 1;",
+  "gold_answer": [
+   [
+    "School Appropration"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1399",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Determine whether the member with first_name Maya and last_name Mclean has an attendance row for the event whose event_name is exactly Women's Soccer. Return only YES or NO.",
+    "leaf_answer": "YES",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT CASE WHEN EXISTS ( SELECT 1 FROM attendance AS A INNER JOIN member AS M ON A.link_to_member = M.member_id INNER JOIN event AS E ON A.link_to_event = E.event_id WHERE M.first_name = 'Maya' AND M.last_name = 'Mclean' AND E.event_name = 'Women''s Soccer' ) THEN 'YES' ELSE 'NO' END;",
+  "predicted_answer": [
+   [
+    "YES"
+   ]
+  ],
+  "gold_sql": "SELECT CASE WHEN COUNT(*) > 0 THEN 'YES' ELSE 'NO' END FROM member AS T1 INNER JOIN attendance AS T2 ON T1.member_id = T2.link_to_member INNER JOIN event AS T3 ON T2.link_to_event = T3.event_id WHERE T1.first_name = 'Maya' AND T1.last_name = 'Mclean' AND T3.event_name = 'Women''s Soccer'",
+  "gold_answer": [
+   [
+    "YES"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1411",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Find the expense descriptions incurred by the member named Sacha Harrison in the database. Return just the distinct expense_description values if multiple, and mention if there are none.",
+    "leaf_answer": "Alumni Glass; Bakery - Donuts, muffins; Pizza; Post Cards, Posters; Posters; Travel Mug; Water, chips, cookies",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT E.expense_description FROM expense AS E INNER JOIN member AS M ON E.link_to_member = M.member_id WHERE M.first_name = 'Sacha' AND M.last_name = 'Harrison' ORDER BY E.expense_description",
+  "predicted_answer": [
+   [
+    "Alumni Glass"
+   ],
+   [
+    "Bakery - Donuts, muffins"
+   ],
+   [
+    "Pizza"
+   ],
+   [
+    "Post Cards, Posters"
+   ],
+   [
+    "Posters"
+   ],
+   [
+    "Travel Mug"
+   ],
+   [
+    "Water, chips, cookies"
+   ]
+  ],
+  "gold_sql": "SELECT T2.expense_description FROM member AS T1 INNER JOIN expense AS T2 ON T1.member_id = T2.link_to_member WHERE T1.first_name = 'Sacha' AND T1.last_name = 'Harrison'",
+  "gold_answer": [
+   [
+    "Post Cards, Posters"
+   ],
+   [
+    "Posters"
+   ],
+   [
+    "Water, chips, cookies"
+   ],
+   [
+    "Posters"
+   ],
+   [
+    "Water, chips, cookies"
+   ],
+   [
+    "Pizza"
+   ],
+   [
+    "Water, chips, cookies"
+   ],
+   [
+    "Travel Mug"
+   ],
+   [
+    "Alumni Glass"
+   ],
+   [
+    "Posters"
+   ],
+   [
+    "Travel Mug"
+   ],
+   [
+    "Bakery - Donuts, muffins"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1422",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Which event type(s) appear for rows in the event table where location is exactly 'MU 215'? Return the distinct type value(s) and note whether there is only one.",
+    "leaf_answer": "Election, Guest Speaker, and Meeting; 3 distinct types",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT type FROM event WHERE location = 'MU 215'",
+  "predicted_answer": [
+   [
+    "Meeting"
+   ],
+   [
+    "Election"
+   ],
+   [
+    "Guest Speaker"
+   ]
+  ],
+  "gold_sql": "SELECT `type`\nFROM `event`\nWHERE `location` = 'MU 215';",
+  "gold_answer": [
+   [
+    "Meeting"
+   ],
+   [
+    "Election"
+   ],
+   [
+    "Guest Speaker"
+   ],
+   [
+    "Guest Speaker"
+   ],
+   [
+    "Guest Speaker"
+   ],
+   [
+    "Guest Speaker"
+   ],
+   [
+    "Guest Speaker"
+   ],
+   [
+    "Election"
+   ],
+   [
+    "Meeting"
+   ],
+   [
+    "Meeting"
+   ],
+   [
+    "Meeting"
+   ],
+   [
+    "Meeting"
+   ],
+   [
+    "Guest Speaker"
+   ],
+   [
+    "Meeting"
+   ],
+   [
+    "Guest Speaker"
+   ],
+   [
+    "Meeting"
+   ],
+   [
+    "Meeting"
+   ],
+   [
+    "Meeting"
+   ],
+   [
+    "Meeting"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1435",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the event_name values in the event table where type is 'Game', status is 'Closed', and event_date is between 2019-03-15 and 2020-03-20 inclusive. Return just the matching event names, one per line, and mention if the date range should be applied with date(event_date) or plain event_date.",
+    "leaf_answer": "Use date(event_date). Football game\nWomen's Soccer\nFootball game",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT event_name FROM event WHERE type = 'Game' AND status = 'Closed' AND date(event_date) BETWEEN '2019-03-15' AND '2020-03-20'",
+  "predicted_answer": [
+   [
+    "Women's Soccer"
+   ],
+   [
+    "Football game"
+   ],
+   [
+    "Football game"
+   ]
+  ],
+  "gold_sql": "SELECT DISTINCT event_name FROM event WHERE type = 'Game' AND date(SUBSTR(event_date, 1, 10)) BETWEEN '2019-03-15' AND '2020-03-20' AND status = 'Closed'",
+  "gold_answer": [
+   [
+    "Women's Soccer"
+   ],
+   [
+    "Football game"
+   ]
+  ]
+ },
+ {
+  "id": "bird_149",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the distinct values of disp.type for rows in disp joined to account on account_id and district on district_id, where district.A11 is greater than 8000 and at most 9000, and disp.type is not 'OWNER'. Return just the types present.",
+    "leaf_answer": "DISPONENT",
+    "leaf_turns": 3,
+    "leaf_terminated": "final_without_query"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT d1.type FROM disp d1 JOIN account a ON d1.account_id = a.account_id JOIN district d ON a.district_id = d.district_id WHERE d.A11 > 8000 AND d.A11 <= 9000 AND d1.type <> 'OWNER' ORDER BY d1.type",
+  "predicted_answer": [
+   [
+    "DISPONENT"
+   ]
+  ],
+  "gold_sql": "SELECT DISTINCT T3.`type`\nFROM `district` AS T1\nJOIN `account`  AS T2 ON T1.`district_id` = T2.`district_id`\nJOIN `disp`     AS T3 ON T2.`account_id`  = T3.`account_id`\nWHERE T3.`type` <> 'OWNER'\n  AND T1.`A11`  > 8000\n  AND T1.`A11` <= 9000;",
+  "gold_answer": [
+   [
+    "DISPONENT"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1514",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find the currency for the customer who made the transaction on 2012-08-24 at 16:25:00.",
+    "leaf_answer": "CZK",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT c.Currency FROM transactions_1k AS t INNER JOIN customers AS c ON t.CustomerID = c.CustomerID WHERE t.Date = '2012-08-24' AND t.Time = '16:25:00'",
+  "predicted_answer": [
+   [
+    "CZK"
+   ]
+  ],
+  "gold_sql": "SELECT DISTINCT T3.Currency FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN customers AS T3 ON T1.CustomerID = T3.CustomerID WHERE T1.Date = '2012-08-24' AND T1.Time = '16:25:00'",
+  "gold_answer": [
+   [
+    "CZK"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1515",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the customer segment for the transaction(s) on 2012-08-23 at 21:20:00.",
+    "leaf_answer": "KAM",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT C.Segment FROM transactions_1k AS T JOIN customers AS C ON T.CustomerID = C.CustomerID WHERE T.Date = '2012-08-23' AND T.Time = '21:20:00'",
+  "predicted_answer": [
+   [
+    "KAM"
+   ]
+  ],
+  "gold_sql": "SELECT T2.Segment FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.date = '2012-08-23' AND T1.time = '21:20:00'",
+  "gold_answer": [
+   [
+    "KAM"
+   ]
+  ]
+ },
+ {
+  "id": "bird_152",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "What do values in account.date look like? Are they stored as 'YYYY-MM-DD' dates or as 'YYMMDD' text? Give a few examples from the database.",
+    "leaf_answer": "account.date is stored as YYYY-MM-DD dates; examples include 1995-03-24, 1993-02-26, and 1997-07-07",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT AVG(d.A15) AS avg_crimes_1995 FROM district AS d WHERE d.A15 > 4000 AND EXISTS (SELECT 1 FROM account AS a WHERE a.district_id = d.district_id AND a.date >= '1997-01-01')",
+  "predicted_answer": [
+   [
+    9675.038461538461
+   ]
+  ],
+  "gold_sql": "SELECT AVG(T1.A15) FROM district AS T1 WHERE T1.district_id IN (SELECT DISTINCT T2.district_id FROM account T2 WHERE STRFTIME('%Y', T2.date) >= '1997') AND T1.A15 > 4000",
+  "gold_answer": [
+   [
+    9675.038461538461
+   ]
+  ]
+ },
+ {
+  "id": "bird_1524",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 12,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the customer ID and segment for the transaction on 2012-08-24 whose total spent is 548.4. Use the database tables customers and transactions_1k. The transaction total is Amount * Price. Return the matching customer ID(s) and segment(s) if you can identify them.",
+    "leaf_answer": "no matching transaction found on 2012-08-24 with total 548.4",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT T1.Segment FROM customers AS T1 INNER JOIN transactions_1k AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Date = '2012-08-24' AND T2.Price = 548.4",
+  "predicted_answer": [
+   [
+    "KAM"
+   ]
+  ],
+  "gold_sql": "SELECT T2.Segment FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-24' AND T1.Price = 548.4",
+  "gold_answer": [
+   [
+    "KAM"
+   ]
+  ]
+ },
+ {
+  "id": "bird_1526",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find the customer in transactions_1k who paid 634.8 on 2012-08-25. Please look for the matching transaction row and report the CustomerID, and whether the match is based on Amount*Price or Price. The database has tables transactions_1k(CustomerID, TransactionID, GasStationID, ProductID, Time, Date, CardID, Amount, Price) and yearmonth(CustomerID, Date, Consumption).",
+    "leaf_answer": "CustomerID 6718; match based on Price, not Amount*Price",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT (SUM(CASE WHEN SUBSTR(Date,1,4) = '2012' THEN Consumption ELSE 0 END) - SUM(CASE WHEN SUBSTR(Date,1,4) = '2013' THEN Consumption ELSE 0 END)) * 1.0 / SUM(CASE WHEN SUBSTR(Date,1,4) = '2012' THEN Consumption ELSE 0 END) AS consumption_decrease_rate FROM yearmonth WHERE CustomerID = (SELECT CustomerID FROM transactions_1k WHERE Date = '2012-08-25' AND Price = 634.8 LIMIT 1)",
+  "predicted_answer": [
+   [
+    -5.815242674672346
+   ]
+  ],
+  "gold_sql": "SELECT CAST(SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) - SUM(IIF(SUBSTRING(Date, 1, 4) = '2013', Consumption, 0)) AS FLOAT) / SUM(IIF(SUBSTRING(Date, 1, 4) = '2012', Consumption, 0)) FROM yearmonth WHERE CustomerID = ( SELECT T1.CustomerID FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-25' AND T1.Price  = 634.8 )",
+  "gold_answer": [
+   [
+    -5.815242674672346
+   ]
+  ]
+ },
+ {
+  "id": "bird_173",
+  "correct": false,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "In the Czech bank dataset, for the `order` table, what k_symbol value is associated with debiting amount 3539? If there are multiple possibilities, say so.",
+    "leaf_answer": "UVER",
+    "leaf_turns": 3,
+    "leaf_terminated": "final_without_query"
+   }
+  ],
+  "predicted_sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_release_count, (SELECT DISTINCT k_symbol FROM [order] WHERE amount = 3539 LIMIT 1) AS aim;",
+  "predicted_answer": [
+   [
+    13,
+    "POJISTNE"
+   ]
+  ],
+  "gold_sql": "SELECT T1.frequency, T2.k_symbol FROM account AS T1 INNER JOIN (SELECT account_id, k_symbol, SUM(amount) AS total_amount FROM \"order\" GROUP BY account_id, k_symbol) AS T2 ON T1.account_id = T2.account_id WHERE T1.account_id = 3 AND T2.total_amount = 3539",
+  "gold_answer": [
+   [
+    "POPLATEK MESICNE",
+    "POJISTNE"
+   ]
+  ]
+ },
+ {
+  "id": "bird_220",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "For the molecule TR000, what are the three most frequent atom elements? Return the elements only, based on counting rows in the atom table for molecule_id TR000 and ranking by frequency descending.",
+    "leaf_answer": "cl, c, h",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT element FROM (SELECT element FROM atom WHERE molecule_id = 'TR000' GROUP BY element ORDER BY COUNT(*) DESC, element ASC LIMIT 3) ORDER BY element ASC",
+  "predicted_answer": [
+   [
+    "c"
+   ],
+   [
+    "cl"
+   ],
+   [
+    "h"
+   ]
+  ],
+  "gold_sql": "SELECT DISTINCT T.element FROM atom AS T WHERE T.molecule_id = 'TR000' ORDER BY T.element LIMIT 3",
+  "gold_answer": [
+   [
+    "c"
+   ],
+   [
+    "cl"
+   ],
+   [
+    "h"
+   ]
+  ]
+ },
+ {
+  "id": "bird_226",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Look up molecule TR008 in the bond table and compute the percentage of bonds with bond_type = '=' out of all bonds for that molecule. Return the numeric percentage with five decimal places, and mention the counts you used.",
+    "leaf_answer": "1 out of 26 bonds are '=', which is 3.84615%",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT ROUND(CAST(SUM(IIF(bond_type = '=', 1, 0)) AS REAL) * 100.0 / COUNT(bond_id), 5) FROM bond WHERE molecule_id = 'TR008';",
+  "predicted_answer": [
+   [
+    3.84615
+   ]
+  ],
+  "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T.bond_type = '=' THEN T.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T.bond_id),5) FROM bond AS T WHERE T.molecule_id = 'TR008'",
+  "gold_answer": [
+   [
+    3.84615
+   ]
+  ]
+ },
+ {
+  "id": "bird_230",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "For molecule TR060 in a database with tables atom(molecule_id, atom_id, element) and molecule(molecule_id, label), tell me the distinct atom elements present for TR060 and the molecule label. Return a plain-text summary.",
+    "leaf_answer": "TR060 has c, cl, h, n, and o atoms, and the molecule label is -",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT a.element, m.label FROM atom AS a INNER JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE a.molecule_id = 'TR060' ORDER BY a.element;",
+  "predicted_answer": [
+   [
+    "c",
+    "-"
+   ],
+   [
+    "cl",
+    "-"
+   ],
+   [
+    "h",
+    "-"
+   ],
+   [
+    "n",
+    "-"
+   ],
+   [
+    "o",
+    "-"
+   ]
+  ],
+  "gold_sql": "SELECT DISTINCT T1.element, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR060'",
+  "gold_answer": [
+   [
+    "c",
+    "-"
+   ],
+   [
+    "h",
+    "-"
+   ],
+   [
+    "o",
+    "-"
+   ],
+   [
+    "n",
+    "-"
+   ],
+   [
+    "cl",
+    "-"
+   ]
+  ]
+ },
+ {
+  "id": "bird_234",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "In the database, for molecule TR009, how many distinct bonds involve atom TR009_12? Use the tables bond and connected, and count each bond once even though connected may list both directions.",
+    "leaf_answer": "3",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT COUNT(DISTINCT c.bond_id) AS bond_count FROM connected AS c JOIN bond AS b ON c.bond_id = b.bond_id WHERE b.molecule_id = 'TR009' AND (c.atom_id = 'TR009_12' OR c.atom_id2 = 'TR009_12');",
+  "predicted_answer": [
+   [
+    3
+   ]
+  ],
+  "gold_sql": "SELECT COUNT(DISTINCT bond_id) FROM connected WHERE atom_id = 'TR009_12' OR atom_id2 = 'TR009_12'",
+  "gold_answer": [
+   [
+    3
+   ]
+  ]
+ },
+ {
+  "id": "bird_244",
+  "correct": false,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Find the molecule_id that has the most bonds with bond_type exactly ' = ' (double bonds), and tell me its label from the molecule table. Return just the molecule_id and label.",
+    "leaf_answer": "(no answer: the sub-agent ran out of turns)",
+    "leaf_turns": 4,
+    "leaf_terminated": "max_iterations"
+   }
+  ],
+  "predicted_sql": "SELECT m.label FROM molecule AS m INNER JOIN bond AS b ON m.molecule_id = b.molecule_id WHERE b.bond_type = ' = ' GROUP BY m.molecule_id ORDER BY COUNT(*) DESC LIMIT 1",
+  "predicted_answer": [],
+  "gold_sql": "with sub as ( SELECT T.molecule_id, COUNT(T.bond_type) as cnt\n FROM bond AS T WHERE T.bond_type = '=' GROUP BY T.molecule_id \n) \nSELECT T1.label FROM molecule AS T1 INNER JOIN sub\n AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.cnt = (select max(cnt) from sub)",
+  "gold_answer": [
+   [
+    "+"
+   ],
+   [
+    "+"
+   ]
+  ]
+ },
+ {
+  "id": "bird_245",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "We need a SQL pattern for: average number of bonds the atoms with element='i' have. The database has tables atom(atom_id, molecule_id, element), bond(bond_id, molecule_id, bond_type), and connected(bond_id, atom_id, atom_id2). connected has about twice as many rows as bond, and sample values suggest bond links two atoms. What join/filter pattern should count bonds for iodine atoms without double counting?",
+    "leaf_answer": "join atom to connected on either endpoint, filter element='i', and count distinct bond_id per atom before averaging",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT CAST(COUNT(c.bond_id) AS REAL) / COUNT(a.atom_id) FROM atom AS a INNER JOIN connected AS c ON a.atom_id = c.atom_id OR a.atom_id = c.atom_id2 WHERE a.element = 'i'",
+  "predicted_answer": [
+   [
+    1.0
+   ]
+  ],
+  "gold_sql": "SELECT CAST(COUNT(T2.bond_id) AS REAL) / COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T1.element = 'i'",
+  "gold_answer": [
+   [
+    1.0
+   ]
+  ]
+ },
+ {
+  "id": "bird_412",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the card in the MTG cards database that matches: artist = Matthew D. Wilson, layout = normal, borderColor = black, types = Creature, and French foreign_data entry. Return the English card name and the French foreign name, and mention if there is only one match.",
+    "leaf_answer": "multiple matches; not unique",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT fd.name FROM cards c JOIN foreign_data fd ON c.uuid = fd.uuid WHERE c.artist = 'Matthew D. Wilson' AND c.layout = 'normal' AND c.borderColor = 'black' AND c.types = 'Creature' AND fd.language = 'French' ORDER BY fd.name",
+  "predicted_answer": [
+   [
+    "Acolyte de l'obsidienne"
+   ],
+   [
+    "Ange déchu"
+   ],
+   [
+    "Ange lumineux"
+   ],
+   [
+    "Ange vengeresse"
+   ],
+   [
+    "Assassin de la Forteresse"
+   ],
+   [
+    "Capitaine ramosienne"
+   ],
+   [
+    "Collecteur d'âmes"
+   ],
+   [
+    "Diacre infâme"
+   ],
+   [
+    "Disciple de la loi"
+   ],
+   [
+    "Dragon du fourneau"
+   ],
+   [
+    "Dragon exalté"
+   ],
+   [
+    "Dragon mage"
+   ],
+   [
+    "Enchanteresse de la Yavimaya"
+   ],
+   [
+    "Ensorceleuse du Marennois"
+   ],
+   [
+    "Escouade de baliste"
+   ],
+   [
+    "Escouade de balistes"
+   ],
+   [
+    "Etrangleur mou"
+   ],
+   [
+    "Gardienne de l'esprit"
+   ],
+   [
+    "Gorgone masquée"
+   ],
+   [
+    "Griffon Enchainé"
+   ],
+   [
+    "Héraut de Serra"
+   ],
+   [
+    "Jolrael, impératrice des bêtes"
+   ],
+   [
+    "Kamahl, la Poigne de la Krosia"
+   ],
+   [
+    "Karona, fausse divinité"
+   ],
+   [
+    "Kezzerdrix"
+   ],
+   [
+    "Lancier soltari"
+   ],
+   [
+    "Mage au kriss"
+   ],
+   [
+    "Maréchale Aguerrie"
+   ],
+   [
+    "Maréchale aguerrie"
+   ],
+   [
+    "Mercenaire dauthi"
+   ],
+   [
+    "Palinchrone"
+   ],
+   [
+    "Rats enragés"
+   ],
+   [
+    "Rayne, Chancelière de l'Académie"
+   ],
+   [
+    "Reya Aubevenant"
+   ],
+   [
+    "Saurien des escarpements"
+   ],
+   [
+    "Sélénia, l'ange noir"
+   ],
+   [
+    "Séraphin argenté"
+   ],
+   [
+    "Tisseuse d'esprit"
+   ],
+   [
+    "Troll de Linciel"
+   ],
+   [
+    "Vampire de Mephidross"
+   ],
+   [
+    "Élu de Tel-Jilad"
+   ],
+   [
+    "Étrangleur mou"
+   ]
+  ],
+  "gold_sql": "SELECT name FROM foreign_data WHERE uuid IN ( SELECT uuid FROM cards WHERE types = 'Creature' AND layout = 'normal' AND borderColor = 'black' AND artist = 'Matthew D. Wilson' ) AND language = 'French'",
+  "gold_answer": [
+   [
+    "Escouade de balistes"
+   ],
+   [
+    "Reya Aubevenant"
+   ],
+   [
+    "Tisseuse d'esprit"
+   ],
+   [
+    "Étrangleur mou"
+   ],
+   [
+    "Vampire de Mephidross"
+   ],
+   [
+    "Assassin de la Forteresse"
+   ],
+   [
+    "Dragon mage"
+   ],
+   [
+    "Dragon mage"
+   ],
+   [
+    "Ange déchu"
+   ],
+   [
+    "Maréchale aguerrie"
+   ],
+   [
+    "Dragon du fourneau"
+   ],
+   [
+    "Dragon exalté"
+   ],
+   [
+    "Gardienne de l'esprit"
+   ],
+   [
+    "Acolyte de l'obsidienne"
+   ],
+   [
+    "Reya Aubevenant"
+   ],
+   [
+    "Tisseuse d'esprit"
+   ],
+   [
+    "Séraphin argenté"
+   ],
+   [
+    "Gorgone masquée"
+   ],
+   [
+    "Diacre infâme"
+   ],
+   [
+    "Dragon mage"
+   ],
+   [
+    "Escouade de baliste"
+   ],
+   [
+    "Capitaine ramosienne"
+   ],
+   [
+    "Saurien des escarpements"
+   ],
+   [
+    "Mage au kriss"
+   ],
+   [
+    "Ange lumineux"
+   ],
+   [
+    "Élu de Tel-Jilad"
+   ],
+   [
+    "Etrangleur mou"
+   ],
+   [
+    "Kamahl, la Poigne de la Krosia"
+   ],
+   [
+    "Ensorceleuse du Marennois"
+   ],
+   [
+    "Jolrael, impératrice des bêtes"
+   ],
+   [
+    "Collecteur d'âmes"
+   ],
+   [
+    "Dragon mage"
+   ],
+   [
+    "Karona, fausse divinité"
+   ],
+   [
+    "Rats enragés"
+   ],
+   [
+    "Assassin de la Forteresse"
+   ],
+   [
+    "Ange vengeresse"
+   ],
+   [
+    "Lancier soltari"
+   ],
+   [
+    "Mercenaire dauthi"
+   ],
+   [
+    "Kezzerdrix"
+   ],
+   [
+    "Troll de Linciel"
+   ],
+   [
+    "Sélénia, l'ange noir"
+   ],
+   [
+    "Collecteur d'âmes"
+   ],
+   [
+    "Jolrael, impératrice des bêtes"
+   ],
+   [
+    "Griffon Enchainé"
+   ],
+   [
+    "Rayne, Chancelière de l'Académie"
+   ],
+   [
+    "Enchanteresse de la Yavimaya"
+   ],
+   [
+    "Palinchrone"
+   ],
+   [
+    "Disciple de la loi"
+   ],
+   [
+    "Héraut de Serra"
+   ],
+   [
+    "Maréchale Aguerrie"
+   ]
+  ]
+ },
+ {
+  "id": "bird_416",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "In this database, does foreign_data have multiple rows per card uuid across languages, or is there typically one row per uuid? I need to know whether counting joined rows would overcount cards. Please inspect the database and summarize.",
+    "leaf_answer": "foreign_data has multiple rows per uuid, so joined row counts can overcount cards",
+    "leaf_turns": 3,
+    "leaf_terminated": "final_without_query"
+   }
+  ],
+  "predicted_sql": "SELECT CAST(SUM(CASE WHEN EXISTS (SELECT 1 FROM foreign_data fd WHERE fd.uuid = c.uuid AND fd.language = 'French') THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) FROM cards c WHERE c.power IS NULL OR c.power = '*'",
+  "predicted_answer": [
+   [
+    47.95671915756932
+   ]
+  ],
+  "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T2.language = 'French' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T1.id) FROM cards AS T1 LEFT JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.power IS NULL OR T1.power = '*'",
+  "gold_answer": [
+   [
+    47.95671915756932
+   ]
+  ]
+ },
+ {
+  "id": "bird_422",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the language in the MTG database for the card with multiverseid 149934. The relevant table is foreign_data, which has columns multiverseid and language; cards can be joined by uuid if needed. Return just the language value(s) you find.",
+    "leaf_answer": "French",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT language FROM foreign_data WHERE multiverseid = 149934",
+  "predicted_answer": [
+   [
+    "French"
+   ]
+  ],
+  "gold_sql": "SELECT language FROM foreign_data WHERE multiverseid = 149934",
+  "gold_answer": [
+   [
+    "French"
+   ]
+  ]
+ },
+ {
+  "id": "bird_45",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Look up schools managed by the administrator Ricci Ulrich in a database with tables: schools(CDSCode, AdmFName1, AdmLName1, School) and satscores(cds, AvgScrWrite). Join schools.CDSCode to satscores.cds. Return the school names and AvgScrWrite values for all matching rows, or say if none.",
+    "leaf_answer": "Buchanan High, 507",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT s.School, sc.AvgScrWrite FROM schools AS s INNER JOIN satscores AS sc ON s.CDSCode = sc.cds WHERE s.AdmFName1 = 'Ricci' AND s.AdmLName1 = 'Ulrich' ORDER BY s.School",
+  "predicted_answer": [
+   [
+    "Buchanan High",
+    507
+   ]
+  ],
+  "gold_sql": "SELECT T2.School, T1.AvgScrWrite FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.AdmFName1 = 'Ricci' AND T2.AdmLName1 = 'Ulrich'",
+  "gold_answer": [
+   [
+    "Buchanan High",
+    507
+   ]
+  ]
+ },
+ {
+  "id": "bird_459",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Look up the convertedManaCost for the card named 'Shrine Keeper' in the cards table. Return only the numeric value or values you find, and mention if there are multiple rows.",
+    "leaf_answer": "2.0 and 2.0; multiple rows (2), both 2.0",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT name FROM cards WHERE name IN ('Serra Angel', 'Shrine Keeper') ORDER BY convertedManaCost DESC LIMIT 1",
+  "predicted_answer": [
+   [
+    "Serra Angel"
+   ]
+  ],
+  "gold_sql": "SELECT name FROM cards WHERE name IN ('Serra Angel', 'Shrine Keeper') ORDER BY convertedManaCost DESC LIMIT 1",
+  "gold_answer": [
+   [
+    "Serra Angel"
+   ]
+  ]
+ },
+ {
+  "id": "bird_462",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 4,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Identify the set code for the Magic card named Ancestor's Chosen, and if possible the Italian set translation.",
+    "leaf_answer": "JUD; Italian set translation: Giudizio",
+    "leaf_turns": 3,
+    "leaf_terminated": "final_without_query"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT st.translation FROM cards AS c INNER JOIN set_translations AS st ON c.setCode = st.setCode WHERE c.name = 'Ancestor''s Chosen' AND st.language = 'Italian' AND st.translation IS NOT NULL ORDER BY st.translation",
+  "predicted_answer": [
+   [
+    "Sentenza"
+   ],
+   [
+    "Set Base Decima Edizione"
+   ]
+  ],
+  "gold_sql": "SELECT translation FROM set_translations WHERE setCode IN ( SELECT setCode FROM cards WHERE name = 'Ancestor''s Chosen' ) AND language = 'Italian'",
+  "gold_answer": [
+   [
+    "Set Base Decima Edizione"
+   ],
+   [
+    "Sentenza"
+   ]
+  ]
+ },
+ {
+  "id": "bird_468",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Find the Simplified Chinese translation for the set whose name is 'Eighth Edition'. The relevant tables are sets(code, name) and set_translations(setCode, language, translation). Return just the translation text.",
+    "leaf_answer": "核心系列第八版",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT st.translation FROM set_translations AS st JOIN sets AS s ON st.setCode = s.code WHERE s.name = 'Eighth Edition' AND st.language = 'Chinese Simplified';",
+  "predicted_answer": [
+   [
+    "核心系列第八版"
+   ]
+  ],
+  "gold_sql": "SELECT T2.translation FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.name = 'Eighth Edition' AND T2.language = 'Chinese Simplified'",
+  "gold_answer": [
+   [
+    "核心系列第八版"
+   ]
+  ]
+ },
+ {
+  "id": "bird_472",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Count the number of sets whose block is exactly 'Ice Age' and that have a row in set_translations with language='Italian' and a non-null translation. Return only the count and briefly note any relevant set codes if helpful.",
+    "leaf_answer": "1 set (CSP)",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT COUNT(DISTINCT s.code) FROM sets AS s INNER JOIN set_translations AS t ON s.code = t.setCode WHERE s.block = 'Ice Age' AND t.language = 'Italian' AND t.translation IS NOT NULL",
+  "predicted_answer": [
+   [
+    1
+   ]
+  ],
+  "gold_sql": "SELECT COUNT(DISTINCT T1.id) FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.block = 'Ice Age' AND T2.language = 'Italian' AND T2.translation IS NOT NULL",
+  "gold_answer": [
+   [
+    1
+   ]
+  ]
+ },
+ {
+  "id": "bird_48",
+  "correct": false,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find the distinct values in schools.StatusType and whether one of them is exactly Merged.",
+    "leaf_answer": "Distinct values: Active, Closed, Merged, Pending; yes, exactly 'Merged' exists.",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT 1.0 * COUNT(CASE WHEN StatusType = 'Merged' AND DOC = '54' AND County = 'Orange' THEN 1 END) / COUNT(CASE WHEN StatusType = 'Merged' AND DOC = '52' THEN 1 END) AS ratio FROM schools;",
+  "predicted_answer": [
+   [
+    0.008403361344537815
+   ]
+  ],
+  "gold_sql": "SELECT CAST((\nSELECT COUNT(*) FROM schools \nWHERE County = 'Orange' AND DOC = '54' AND StatusType = 'Merged' AND school is not null) AS REAL) \n/ (SELECT COUNT(*) FROM schools WHERE DOC = '52' AND StatusType = 'Merged' AND school is not null) AS ratio;",
+  "gold_answer": [
+   [
+    0.010958904109589041
+   ]
+  ]
+ },
+ {
+  "id": "bird_480",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Look up the Italian flavorText for the Magic card whose English name is Ancestor's Chosen. The relevant tables are cards (with English card names and uuids) and foreign_data (with language and flavorText). Return only the flavorText value or a brief note if missing.",
+    "leaf_answer": "La volontà di tutti, eseguita per mano mia.; Sancito da generazioni di forza.",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT fd.flavorText FROM cards AS c INNER JOIN foreign_data AS fd ON c.uuid = fd.uuid WHERE c.name = 'Ancestor''s Chosen' AND fd.language = 'Italian'",
+  "predicted_answer": [
+   [
+    "\"La volontà di tutti, eseguita per mano mia.\""
+   ],
+   [
+    "Sancito da generazioni di forza."
+   ]
+  ],
+  "gold_sql": "SELECT T2.flavorText FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T2.uuid = T1.uuid WHERE T1.name = 'Ancestor''s Chosen' AND T2.language = 'Italian'",
+  "gold_answer": [
+   [
+    "\"La volontà di tutti, eseguita per mano mia.\""
+   ],
+   [
+    "Sancito da generazioni di forza."
+   ]
+  ]
+ },
+ {
+  "id": "bird_484",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Find the maximum convertedManaCost among cards in the set named Coldsnap, and list the cards in that set that have that maximum. Return the card names and their convertedManaCost.",
+    "leaf_answer": "Allosaurus Rider 7.0; Commandeer 7.0; Fury of the Horde 7.0; Garza Zol, Plague Queen 7.0; Herald of Leshrac 7.0; Jokulmorder 7.0; Panglacial Wurm 7.0; Rimefeather Owl 7.0; Rimescale Dragon 7.0; Soul Spike 7.0; Sunscour 7.0; Tresserhorn Skyknight 7.0",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT fd.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS fd ON fd.uuid = c.uuid WHERE s.name = 'Coldsnap' AND fd.language = 'Italian' AND c.convertedManaCost = (SELECT MAX(c2.convertedManaCost) FROM cards AS c2 INNER JOIN sets AS s2 ON c2.setCode = s2.code WHERE s2.name = 'Coldsnap')",
+  "predicted_answer": [
+   [
+    "Devastazione Solare"
+   ],
+   [
+    "Requisire"
+   ],
+   [
+    "Jokulmorder"
+   ],
+   [
+    "Gufo Gelopiuma"
+   ],
+   [
+    "Araldo di Leshrac"
+   ],
+   [
+    "Inchioda Anima"
+   ],
+   [
+    "Cavalcacieli di Tresserhorn"
+   ],
+   [
+    "Furia dell'Orda"
+   ],
+   [
+    "Drago Geloscaglia"
+   ],
+   [
+    "Cavalca Allosauro"
+   ],
+   [
+    "Wurm Panglaciale"
+   ],
+   [
+    "Garza Zol, Regina della Peste"
+   ]
+  ],
+  "gold_sql": "SELECT T1.name FROM foreign_data AS T1 INNER JOIN cards AS T2 ON T2.uuid = T1.uuid INNER JOIN sets AS T3 ON T3.code = T2.setCode WHERE T3.name = 'Coldsnap' AND T1.language = 'Italian' AND T2.convertedManaCost = (SELECT MAX(convertedManaCost) FROM cards JOIN sets ON cards.setCode = sets.code WHERE sets.name = 'Coldsnap')",
+  "gold_answer": [
+   [
+    "Devastazione Solare"
+   ],
+   [
+    "Requisire"
+   ],
+   [
+    "Jokulmorder"
+   ],
+   [
+    "Gufo Gelopiuma"
+   ],
+   [
+    "Araldo di Leshrac"
+   ],
+   [
+    "Inchioda Anima"
+   ],
+   [
+    "Cavalcacieli di Tresserhorn"
+   ],
+   [
+    "Furia dell'Orda"
+   ],
+   [
+    "Drago Geloscaglia"
+   ],
+   [
+    "Cavalca Allosauro"
+   ],
+   [
+    "Wurm Panglaciale"
+   ],
+   [
+    "Garza Zol, Regina della Peste"
+   ]
+  ]
+ },
+ {
+  "id": "bird_537",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "What is the number of posts owned by the user whose DisplayName is csgillespie? Use the users table to find the user id from DisplayName, then count matching rows in the posts table via posts.OwnerUserId.",
+    "leaf_answer": "121",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT COUNT(p.Id) FROM posts AS p JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'csgillespie';",
+  "predicted_answer": [
+   [
+    121
+   ]
+  ],
+  "gold_sql": "SELECT COUNT(T1.id) FROM posts AS T1 INNER JOIN users AS T2 ON T1.OwnerUserId = T2.Id WHERE T2.DisplayName = 'csgillespie'",
+  "gold_answer": [
+   [
+    121
+   ]
+  ]
+ },
+ {
+  "id": "bird_544",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find the display name of the user who last edited the post with Title exactly 'Examples for teaching: Correlation does not mean causation'. The relevant tables are posts (Title, LastEditorUserId) and users (Id, DisplayName).",
+    "leaf_answer": "Abhilash",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT u.DisplayName FROM posts AS p INNER JOIN users AS u ON p.LastEditorUserId = u.Id WHERE p.Title = 'Examples for teaching: Correlation does not mean causation'",
+  "predicted_answer": [
+   [
+    "Abhilash"
+   ]
+  ],
+  "gold_sql": "SELECT T2.DisplayName FROM posts AS T1 INNER JOIN users AS T2 ON T1.LastEditorUserId = T2.Id WHERE T1.Title = 'Examples for teaching: Correlation does not mean causation'",
+  "gold_answer": [
+   [
+    "Abhilash"
+   ]
+  ]
+ },
+ {
+  "id": "bird_549",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the body text of the post that the tag 'bayesian' is excerpted from. The tag table has TagName and ExcerptPostId; join ExcerptPostId to posts.Id and return the posts.Body.",
+    "leaf_answer": "Bayesian inference is a method of statistical inference which uses Bayes' theorem to find probability estimates of parameters or hypotheses.",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT posts.Body FROM tags INNER JOIN posts ON tags.ExcerptPostId = posts.Id WHERE tags.TagName = 'bayesian'",
+  "predicted_answer": [
+   [
+    "Bayesian inference is a method of statistical inference which uses Bayes' theorem to find probability estimates of parameters or hypotheses."
+   ]
+  ],
+  "gold_sql": "SELECT T2.Body FROM tags AS T1 INNER JOIN posts AS T2 ON T2.Id = T1.ExcerptPostId WHERE T1.TagName = 'bayesian'",
+  "gold_answer": [
+   [
+    "Bayesian inference is a method of statistical inference which uses Bayes' theorem to find probability estimates of parameters or hypotheses."
+   ]
+  ]
+ },
+ {
+  "id": "bird_565",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "In a Stack Exchange-style database, find the comment made by UserId 23853 at CreationDate '2013-07-12 09:08:18.0'. Report the PostId of that comment and whether the corresponding post's ClosedDate is NULL or not NULL.",
+    "leaf_answer": "PostId 64117; ClosedDate is NOT NULL",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT CASE WHEN p.ClosedDate IS NOT NULL THEN 'YES' ELSE 'NO' END FROM comments AS c INNER JOIN posts AS p ON c.PostId = p.Id WHERE c.UserId = 23853 AND c.CreationDate = '2013-07-12 09:08:18.0' LIMIT 1;",
+  "predicted_answer": [
+   [
+    "YES"
+   ]
+  ],
+  "gold_sql": "SELECT IIF(T2.ClosedDate IS NULL, 'NO', 'YES') AS resylt FROM comments AS T1 INNER JOIN posts AS T2 ON T1.PostId = T2.Id WHERE T1.UserId = 23853 AND T1.CreationDate = '2013-07-12 09:08:18.0'",
+  "gold_answer": [
+   [
+    "YES"
+   ]
+  ]
+ },
+ {
+  "id": "bird_572",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the ViewCount for the post with the exact title 'Integration of Weka and/or RapidMiner into Informatica PowerCenter/Developer'. Return only the number.",
+    "leaf_answer": "60",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT ViewCount FROM posts WHERE Title = 'Integration of Weka and/or RapidMiner into Informatica PowerCenter/Developer'",
+  "predicted_answer": [
+   [
+    60
+   ]
+  ],
+  "gold_sql": "SELECT ViewCount FROM posts WHERE Title = 'Integration of Weka and/or RapidMiner into Informatica PowerCenter/Developer'",
+  "gold_answer": [
+   [
+    60
+   ]
+  ]
+ },
+ {
+  "id": "bird_592",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Count how many distinct users have more than 5 badges.",
+    "leaf_answer": "2875",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT COUNT(*) FROM (SELECT UserId FROM badges GROUP BY UserId HAVING COUNT(Name) > 5) AS t",
+  "predicted_answer": [
+   [
+    2875
+   ]
+  ],
+  "gold_sql": "SELECT COUNT(UserId) FROM ( SELECT UserId, COUNT(Name) AS num FROM badges GROUP BY UserId ) T WHERE T.num > 5",
+  "gold_answer": [
+   [
+    2875
+   ]
+  ]
+ },
+ {
+  "id": "bird_671",
+  "correct": false,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find the display name of the user who acquired the earliest 'Autobiographer' badge in the database. The relevant tables are badges(UserId, Name, Date) and users(Id, DisplayName). Return just the display name and mention the badge date if helpful.",
+    "leaf_answer": "Geoff Dalgas",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT u.DisplayName FROM badges b JOIN users u ON b.UserId = u.Id WHERE b.Name = 'Autobiographer' ORDER BY b.Date ASC LIMIT 1",
+  "predicted_answer": [
+   [
+    "Geoff Dalgas"
+   ]
+  ],
+  "gold_sql": "SELECT DISTINCT u.DisplayName FROM users AS u JOIN badges AS b ON u.Id = b.UserId WHERE b.Name = 'Autobiographer' AND b.Date = ( SELECT MIN(Date) FROM badges WHERE Name = 'Autobiographer')",
+  "gold_answer": [
+   [
+    "Geoff Dalgas"
+   ],
+   [
+    "Jarrod Dixon"
+   ],
+   [
+    "Vince"
+   ],
+   [
+    "csgillespie"
+   ],
+   [
+    "Pierre"
+   ],
+   [
+    "wahalulu"
+   ],
+   [
+    "Jin"
+   ],
+   [
+    "Sharpie"
+   ],
+   [
+    "grokus"
+   ],
+   [
+    "Noah Snyder"
+   ],
+   [
+    "balpha"
+   ],
+   [
+    "JD Long"
+   ]
+  ]
+ },
+ {
+  "id": "bird_687",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Using the StackOverflow-like database with table posts(Id, Score, CommentCount), what is the maximum value of Score in posts, and how many posts have that exact score?",
+    "leaf_answer": "192; 1 post",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT CommentCount FROM posts ORDER BY Score DESC LIMIT 1;",
+  "predicted_answer": [
+   [
+    3
+   ]
+  ],
+  "gold_sql": "SELECT COUNT(T2.Id) FROM posts AS T1 INNER JOIN comments AS T2 ON T1.Id = T2.PostId GROUP BY T1.Id ORDER BY T1.Score DESC LIMIT 1",
+  "gold_answer": [
+   [
+    3
+   ]
+  ]
+ },
+ {
+  "id": "bird_732",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "In a SQLite database with tables superhero(id, publisher_id, superhero_name), publisher(id, publisher_name), hero_attribute(hero_id, attribute_id, attribute_value), and attribute(id, attribute_name), find the publisher_name of the superhero with the minimum attribute_value for attribute_name = 'Speed'. If there are ties, tell me which publisher_name comes first when ordering by attribute_value ascending and limiting to 1. Return just the publisher name if you can determine it.",
+    "leaf_answer": "Marvel Comics",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT P.publisher_name FROM superhero AS S INNER JOIN hero_attribute AS HA ON HA.hero_id = S.id INNER JOIN attribute AS A ON A.id = HA.attribute_id INNER JOIN publisher AS P ON P.id = S.publisher_id WHERE A.attribute_name = 'Speed' ORDER BY HA.attribute_value ASC LIMIT 1",
+  "predicted_answer": [
+   [
+    "Marvel Comics"
+   ]
+  ],
+  "gold_sql": "SELECT T2.publisher_name FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN hero_attribute AS T3 ON T1.id = T3.hero_id INNER JOIN attribute AS T4 ON T3.attribute_id = T4.id WHERE T4.attribute_name = 'Speed' ORDER BY T3.attribute_value LIMIT 1",
+  "gold_answer": [
+   [
+    "Marvel Comics"
+   ]
+  ]
+ },
+ {
+  "id": "bird_736",
+  "correct": false,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the superhero_name with the lowest Intelligence attribute.",
+    "leaf_answer": "Bizarro",
+    "leaf_turns": 3,
+    "leaf_terminated": "final_without_query"
+   }
+  ],
+  "predicted_sql": "SELECT s.superhero_name FROM hero_attribute AS ha INNER JOIN superhero AS s ON ha.hero_id = s.id INNER JOIN attribute AS a ON ha.attribute_id = a.id WHERE a.attribute_name = 'Intelligence' ORDER BY ha.attribute_value ASC LIMIT 1",
+  "predicted_answer": [
+   [
+    "Ammo"
+   ]
+  ],
+  "gold_sql": "SELECT s.superhero_name FROM superhero AS s JOIN hero_attribute AS ha ON s.id = ha.hero_id JOIN attribute AS a ON ha.attribute_id = a.id WHERE a.attribute_name = 'Intelligence' AND ha.attribute_value = ( SELECT MIN(attribute_value) FROM hero_attribute WHERE attribute_id = ( SELECT id FROM attribute WHERE attribute_name = 'Intelligence' ) )",
+  "gold_answer": [
+   [
+    "Ammo"
+   ],
+   [
+    "Ando Masahashi"
+   ],
+   [
+    "Jack-Jack"
+   ]
+  ]
+ },
+ {
+  "id": "bird_786",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "In a SQLite database with tables hero_attribute(attribute_id, hero_id, attribute_value) and attribute(id, attribute_name), please find the number of distinct heroes whose Strength attribute_value equals the maximum attribute_value among rows where attribute_name = 'Strength'. Return just the count.",
+    "leaf_answer": "63",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT COUNT(DISTINCT ha.hero_id) FROM hero_attribute ha JOIN attribute a ON ha.attribute_id = a.id WHERE a.attribute_name = 'Strength' AND ha.attribute_value = (SELECT MAX(ha2.attribute_value) FROM hero_attribute ha2 JOIN attribute a2 ON ha2.attribute_id = a2.id WHERE a2.attribute_name = 'Strength')",
+  "predicted_answer": [
+   [
+    63
+   ]
+  ],
+  "gold_sql": "SELECT COUNT(DISTINCT ha.`hero_id`)\nFROM `hero_attribute` AS ha\nJOIN `attribute` AS a ON ha.`attribute_id` = a.`id`\nWHERE a.`attribute_name` = 'Strength'\n  AND ha.`attribute_value` = (\n        SELECT MAX(ha2.`attribute_value`)\n        FROM `hero_attribute` ha2\n        JOIN `attribute` a2 ON ha2.`attribute_id` = a2.`id`\n        WHERE a2.`attribute_name` = 'Strength'\n      );",
+  "gold_answer": [
+   [
+    63
+   ]
+  ]
+ },
+ {
+  "id": "bird_792",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the power_name values for the superhero named Abomination.",
+    "leaf_answer": "Accelerated Healing, Animation, Intelligence, Invulnerability, Stamina, Super Breath, Super Speed, Super Strength",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT sp.power_name FROM superhero AS s INNER JOIN hero_power AS hp ON s.id = hp.hero_id INNER JOIN superpower AS sp ON hp.power_id = sp.id WHERE s.superhero_name = 'Abomination'",
+  "predicted_answer": [
+   [
+    "Accelerated Healing"
+   ],
+   [
+    "Intelligence"
+   ],
+   [
+    "Super Strength"
+   ],
+   [
+    "Stamina"
+   ],
+   [
+    "Super Speed"
+   ],
+   [
+    "Invulnerability"
+   ],
+   [
+    "Animation"
+   ],
+   [
+    "Super Breath"
+   ]
+  ],
+  "gold_sql": "SELECT T3.power_name FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id WHERE T1.superhero_name = 'Abomination'",
+  "gold_answer": [
+   [
+    "Accelerated Healing"
+   ],
+   [
+    "Intelligence"
+   ],
+   [
+    "Super Strength"
+   ],
+   [
+    "Stamina"
+   ],
+   [
+    "Super Speed"
+   ],
+   [
+    "Invulnerability"
+   ],
+   [
+    "Animation"
+   ],
+   [
+    "Super Breath"
+   ]
+  ]
+ },
+ {
+  "id": "bird_82",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "Find the school row in the schools table with the maximum absolute longitude value, and report its school name and GSoffered value.",
+    "leaf_answer": "Mattole Union Elementary, GSoffered K-8",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT GSoffered FROM schools WHERE Longitude IS NOT NULL ORDER BY ABS(Longitude) DESC LIMIT 1",
+  "predicted_answer": [
+   [
+    "K-8"
+   ]
+  ],
+  "gold_sql": "SELECT GSoffered FROM schools WHERE school is not null ORDER BY ABS(longitude) DESC LIMIT 1",
+  "gold_answer": [
+   [
+    "K-8"
+   ]
+  ]
+ },
+ {
+  "id": "bird_825",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Find the superhero_name and gender for any rows where superpower.power_name = 'Phoenix Force'. Use the tables superhero, hero_power, superpower, and gender. Return the matching superhero names and genders, and say whether there is only one matching superhero.",
+    "leaf_answer": "Phoenix — Female; only one matching superhero",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT g.gender FROM superhero AS s INNER JOIN hero_power AS hp ON s.id = hp.hero_id INNER JOIN superpower AS sp ON hp.power_id = sp.id INNER JOIN gender AS g ON s.gender_id = g.id WHERE sp.power_name = 'Phoenix Force'",
+  "predicted_answer": [
+   [
+    "Female"
+   ]
+  ],
+  "gold_sql": "SELECT T4.gender FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id INNER JOIN gender AS T4 ON T1.gender_id = T4.id WHERE T3.power_name = 'Phoenix Force'",
+  "gold_answer": [
+   [
+    "Female"
+   ]
+  ]
+ },
+ {
+  "id": "bird_847",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "In the qualifying table, for raceId=19 and q2 not null, which driver surname corresponds to the smallest q2 value? Use the schema: qualifying(driverId, raceId, q2) joined to drivers(driverId, surname). Return just the surname if you can infer it from the database.",
+    "leaf_answer": "Räikkönen",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT T2.surname FROM qualifying AS T1 INNER JOIN drivers AS T2 ON T1.driverId = T2.driverId WHERE T1.raceId = 19 AND T1.q2 IS NOT NULL ORDER BY T1.q2 ASC LIMIT 1",
+  "predicted_answer": [
+   [
+    "Räikkönen"
+   ]
+  ],
+  "gold_sql": "SELECT T2.surname FROM qualifying AS T1 INNER JOIN drivers AS T2 ON T2.driverId = T1.driverId WHERE T1.raceId = 19 ORDER BY T1.q2 ASC NULLS LAST LIMIT 1",
+  "gold_answer": [
+   [
+    "Räikkönen"
+   ]
+  ]
+ },
+ {
+  "id": "bird_854",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find which circuit names are linked to races with name 'Australian Grand Prix', and give their lat/lng coordinates if possible.",
+    "leaf_answer": "Adelaide Street Circuit (-34.9272, 138.617), 11 races",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT circuits.lat, circuits.lng FROM races INNER JOIN circuits ON races.circuitId = circuits.circuitId WHERE races.name = 'Australian Grand Prix'",
+  "predicted_answer": [
+   [
+    -34.9272,
+    138.617
+   ]
+  ],
+  "gold_sql": "SELECT DISTINCT T1.lat, T1.lng FROM circuits AS T1 INNER JOIN races AS T2 ON T2.circuitID = T1.circuitId WHERE T2.name = 'Australian Grand Prix'",
+  "gold_answer": [
+   [
+    -34.9272,
+    138.617
+   ]
+  ]
+ },
+ {
+  "id": "bird_859",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "What is the q1 value for Bruno Senna in qualifying for raceId 354? Use the drivers and qualifying tables and return only the q1 value if possible.",
+    "leaf_answer": "1:23.796",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT qualifying.q1 FROM qualifying INNER JOIN drivers ON qualifying.driverId = drivers.driverId WHERE qualifying.raceId = 354 AND drivers.forename = 'Bruno' AND drivers.surname = 'Senna';",
+  "predicted_answer": [
+   [
+    "1:23.796"
+   ]
+  ],
+  "gold_sql": "SELECT T1.q1 FROM qualifying AS T1 INNER JOIN drivers AS T2 ON T2.driverId = T1.driverId WHERE T1.raceId = 354 AND T2.forename = 'Bruno' AND T2.surname = 'Senna'",
+  "gold_answer": [
+   [
+    "1:23.796"
+   ]
+  ]
+ },
+ {
+  "id": "bird_872",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the driver code for raceId 45 where qualifying q3 starts with '1:33'. Return the driver's code only if possible, otherwise say no match.",
+    "leaf_answer": "HAM",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT d.code FROM qualifying AS q JOIN drivers AS d ON q.driverId = d.driverId WHERE q.raceId = 45 AND q.q3 LIKE '1:33%'",
+  "predicted_answer": [
+   [
+    "HAM"
+   ]
+  ],
+  "gold_sql": "SELECT T2.code FROM qualifying AS T1 INNER JOIN drivers AS T2 ON T2.driverId = T1.driverId WHERE T1.raceId = 45 AND T1.q3 LIKE '1:33%'",
+  "gold_answer": [
+   [
+    "HAM"
+   ]
+  ]
+ },
+ {
+  "id": "bird_880",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Find the driverId for the driver whose forename is Paul and surname is di Resta in the drivers table, and then report that driver's fastestLapSpeed values in results for raceId 853 and raceId 854. Give the values plainly.",
+    "leaf_answer": "814; 236.841 for raceId 853; 159.864 for raceId 854",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT ((MAX(CASE WHEN raceId = 853 THEN CAST(fastestLapSpeed AS REAL) END) - MAX(CASE WHEN raceId = 854 THEN CAST(fastestLapSpeed AS REAL) END)) * 100.0) / MAX(CASE WHEN raceId = 854 THEN CAST(fastestLapSpeed AS REAL) END) AS percentage FROM results WHERE driverId = (SELECT driverId FROM drivers WHERE forename = 'Paul' AND surname = 'di Resta') AND raceId IN (853, 854)",
+  "predicted_answer": [
+   [
+    48.15155382074764
+   ]
+  ],
+  "gold_sql": "SELECT ((MAX(CASE WHEN r.`raceId` = 853 THEN CAST(r.`fastestLapSpeed` AS REAL) END) -\n         MAX(CASE WHEN r.`raceId` = 854 THEN CAST(r.`fastestLapSpeed` AS REAL) END)) * 100.0) /\n       MAX(CASE WHEN r.`raceId` = 854 THEN CAST(r.`fastestLapSpeed` AS REAL) END) AS percent_faster\nFROM `drivers` d\nJOIN `results`  r ON d.`driverId` = r.`driverId`\nWHERE d.`forename` = 'Paul'\n  AND d.`surname`  = 'di Resta';\n  ",
+  "gold_answer": [
+   [
+    48.15155382074764
+   ]
+  ]
+ },
+ {
+  "id": "bird_89",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "What exact text value is used in district.A3 for the East Bohemia region? The district table's A3 column stores the region name; sample values include Prague and central Bohemia. Return the exact stored value if it corresponds to East Bohemia.",
+    "leaf_answer": "east Bohemia",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A3 = 'east Bohemia' AND T1.frequency = 'POPLATEK PO OBRATU'",
+  "predicted_answer": [
+   [
+    13
+   ]
+  ],
+  "gold_sql": "SELECT COUNT(T2.account_id) FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id WHERE T1.A3 = 'east Bohemia' AND T2.frequency = 'POPLATEK PO OBRATU'",
+  "gold_answer": [
+   [
+    13
+   ]
+  ]
+ },
+ {
+  "id": "bird_902",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 3,
+  "leaf_capture_entries": 2,
+  "calls": [
+   {
+    "sub_query": "In the Formula 1 database with tables drivers, driverStandings, races: for driver Alex Yoong (drivers.forename='Alex', drivers.surname='Yoong'), which race names appear in driverStandings rows where driverStandings.position < 20? Please list the distinct race names if there are multiple, and mention whether there are many rows.",
+    "leaf_answer": "15 distinct race names: Austrian, Belgian, Brazilian, British, Canadian, European, French, German, Hungarian, Italian, Malaysian, Monaco, San Marino, Spanish, and United States Grand Prix; each appears 15 times, so there are many rows.",
+    "leaf_turns": 2,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT DISTINCT r.name FROM driverStandings AS ds INNER JOIN drivers AS d ON ds.driverId = d.driverId INNER JOIN races AS r ON ds.raceId = r.raceId WHERE d.forename = 'Alex' AND d.surname = 'Yoong' AND ds.position < 20 ORDER BY 1",
+  "predicted_answer": [
+   [
+    "Austrian Grand Prix"
+   ],
+   [
+    "Belgian Grand Prix"
+   ],
+   [
+    "Brazilian Grand Prix"
+   ],
+   [
+    "British Grand Prix"
+   ],
+   [
+    "Canadian Grand Prix"
+   ],
+   [
+    "European Grand Prix"
+   ],
+   [
+    "French Grand Prix"
+   ],
+   [
+    "German Grand Prix"
+   ],
+   [
+    "Hungarian Grand Prix"
+   ],
+   [
+    "Italian Grand Prix"
+   ],
+   [
+    "Malaysian Grand Prix"
+   ],
+   [
+    "Monaco Grand Prix"
+   ],
+   [
+    "San Marino Grand Prix"
+   ],
+   [
+    "Spanish Grand Prix"
+   ],
+   [
+    "United States Grand Prix"
+   ]
+  ],
+  "gold_sql": "SELECT T1.name FROM races AS T1 INNER JOIN driverStandings AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.forename = 'Alex' AND T3.surname = 'Yoong' AND T2.position < 20",
+  "gold_answer": [
+   [
+    "Malaysian Grand Prix"
+   ],
+   [
+    "Brazilian Grand Prix"
+   ],
+   [
+    "San Marino Grand Prix"
+   ],
+   [
+    "Spanish Grand Prix"
+   ],
+   [
+    "Austrian Grand Prix"
+   ],
+   [
+    "Monaco Grand Prix"
+   ],
+   [
+    "Canadian Grand Prix"
+   ],
+   [
+    "European Grand Prix"
+   ],
+   [
+    "British Grand Prix"
+   ],
+   [
+    "French Grand Prix"
+   ],
+   [
+    "German Grand Prix"
+   ],
+   [
+    "Hungarian Grand Prix"
+   ],
+   [
+    "Belgian Grand Prix"
+   ],
+   [
+    "Italian Grand Prix"
+   ],
+   [
+    "United States Grand Prix"
+   ]
+  ]
+ },
+ {
+  "id": "bird_937",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the finish time in the results table for the driver who finished in position 2 in the race named Chinese Grand Prix in year 2008. Return only the time value.",
+    "leaf_answer": "+14.925",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT r.time FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2008 AND ra.name = 'Chinese Grand Prix' AND r.position = 2",
+  "predicted_answer": [
+   [
+    "+14.925"
+   ]
+  ],
+  "gold_sql": "SELECT r.time FROM results r JOIN races ra ON r.raceId = ra.raceId WHERE ra.year = 2008 AND ra.name = 'Chinese Grand Prix' AND r.position = 2;",
+  "gold_answer": [
+   [
+    "+14.925"
+   ]
+  ]
+ },
+ {
+  "id": "bird_971",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Find the driverRef of the oldest driver among drivers where nationality = 'German'. Oldest means MIN(dob). Reference names are in driverRef. Return only the driverRef value.",
+    "leaf_answer": "brudes",
+    "leaf_turns": 3,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT driverRef FROM drivers WHERE nationality = 'German' AND dob IS NOT NULL ORDER BY dob ASC LIMIT 1",
+  "predicted_answer": [
+   [
+    "brudes"
+   ]
+  ],
+  "gold_sql": "SELECT driverRef FROM drivers WHERE nationality = 'German' ORDER BY JULIANDAY(dob) ASC LIMIT 1",
+  "gold_answer": [
+   [
+    "brudes"
+   ]
+  ]
+ },
+ {
+  "id": "bird_981",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 3,
+  "calls": [
+   {
+    "sub_query": "Identify the youngest driver by the maximum value of drivers.dob, then find that driver's first qualifying race using MIN(races.date). Return the race year, race name, race date, and race time.",
+    "leaf_answer": "2017 | Australian Grand Prix | 2017-03-26 | 05:00:00",
+    "leaf_turns": 3,
+    "leaf_terminated": "final_without_query"
+   }
+  ],
+  "predicted_sql": "SELECT r.year, r.name, r.date, r.time FROM drivers AS d INNER JOIN qualifying AS q ON d.driverId = q.driverId INNER JOIN races AS r ON q.raceId = r.raceId WHERE d.dob = (SELECT MAX(dob) FROM drivers) ORDER BY r.date ASC LIMIT 1",
+  "predicted_answer": [
+   [
+    2017,
+    "Chinese Grand Prix",
+    "2017-04-09",
+    "06:00:00"
+   ]
+  ],
+  "gold_sql": "SELECT T3.year, T3.name, T3.date, T3.time FROM qualifying AS T1 INNER JOIN drivers AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 on T1.raceId = T3.raceId WHERE T1.driverId = ( SELECT driverId FROM drivers ORDER BY dob DESC LIMIT 1 ) ORDER BY T3.date ASC LIMIT 1",
+  "gold_answer": [
+   [
+    2017,
+    "Chinese Grand Prix",
+    "2017-04-09",
+    "06:00:00"
+   ]
+  ]
+ },
+ {
+  "id": "bird_994",
+  "correct": true,
+  "n_recursive_calls": 1,
+  "root_capture_entries": 2,
+  "leaf_capture_entries": 4,
+  "calls": [
+   {
+    "sub_query": "Find the constructor with the highest total constructorResults.points for Monaco Grand Prix races from 1980 through 2010 inclusive. Use races.name = 'Monaco Grand Prix' and races.year between 1980 and 2010, join constructorResults to races and constructors, sum constructorResults.points by constructor, and return the constructor name, nationality, and total score.",
+    "leaf_answer": "McLaren, British, 218.5",
+    "leaf_turns": 4,
+    "leaf_terminated": "final"
+   }
+  ],
+  "predicted_sql": "SELECT SUM(cr.points) AS score, c.name, c.nationality FROM constructorResults AS cr JOIN races AS r ON cr.raceId = r.raceId JOIN constructors AS c ON cr.constructorId = c.constructorId WHERE r.name = 'Monaco Grand Prix' AND r.year BETWEEN 1980 AND 2010 GROUP BY c.constructorId, c.name, c.nationality ORDER BY score DESC LIMIT 1",
+  "predicted_answer": [
+   [
+    218.5,
+    "McLaren",
+    "British"
+   ]
+  ],
+  "gold_sql": "SELECT SUM(T1.points), T2.name, T2.nationality FROM constructorResults AS T1 INNER JOIN constructors AS T2 ON T1.constructorId = T2.constructorId INNER JOIN races AS T3 ON T3.raceid = T1.raceid WHERE T3.name = 'Monaco Grand Prix' AND T3.year BETWEEN 1980 AND 2010 GROUP BY T2.name ORDER BY SUM(T1.points) DESC LIMIT 1",
+  "gold_answer": [
+   [
+    218.5,
+    "McLaren",
+    "British"
+   ]
+  ]
+ }
+]
