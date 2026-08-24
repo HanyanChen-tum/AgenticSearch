@@ -740683,11 +740683,17 @@
   ],
   "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.Score > 50 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.Id) FROM users T1 INNER JOIN posts T2 ON T1.Id = T2.OwnerUserId INNER JOIN ( SELECT MAX(Reputation) AS max_reputation FROM users ) T3 ON T1.Reputation = T3.max_reputation",
   "gold_answer": null,
-  "correct": false,
-  "error": "SQL execution timed out after 30 seconds",
+  "correct": true,
+  "error": null,
   "latency_seconds": 32.2942,
   "termination": "final",
-  "scored": true
+  "scored": true,
+  "timeout_repair": {
+   "original_error": "SQL execution timed out after 30 seconds",
+   "original_correct": false,
+   "method": "indexed_reexecution",
+   "via": "original+gold_indexed"
+  }
  },
  {
   "id": "bird_704",

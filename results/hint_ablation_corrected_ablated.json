@@ -3150,15 +3150,19 @@
   "question": "Calculate the percentage of the cards availabe in Chinese Simplified.",
   "difficulty": "moderate",
   "predicted_sql": "SELECT CAST(COUNT(CASE WHEN EXISTS (SELECT 1 FROM foreign_data fd WHERE fd.uuid = cards.uuid AND fd.language = 'Chinese Simplified') THEN 1 END) AS REAL) * 100 / COUNT(*) FROM cards",
-  "predicted_answer": null,
+  "predicted_answer": [
+   [
+    35.384182182957304
+   ]
+  ],
   "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T2.language = 'Chinese Simplified' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T1.id) FROM cards AS T1 LEFT JOIN foreign_data AS T2 ON T1.uuid = T2.uuid",
   "gold_answer": [
    [
     35.384182182957304
    ]
   ],
-  "correct": false,
-  "error": "SQL execution timed out after 30 seconds",
+  "correct": true,
+  "error": null,
   "latency_seconds": 81.8429,
   "llm_calls": 2,
   "prompt_tokens": 6334,
@@ -3173,7 +3177,13 @@
   "termination": "final",
   "run_id": "20260820T040537Z-2c79f1d0",
   "trace_schema_version": 3,
-  "scored": true
+  "scored": true,
+  "timeout_repair": {
+   "original_error": "SQL execution timed out after 30 seconds",
+   "original_correct": false,
+   "method": "indexed_reexecution",
+   "via": "indexed"
+  }
  },
  {
   "id": "bird_368",
@@ -3903,8 +3913,8 @@
   ],
   "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.Score > 50 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.Id) FROM users T1 INNER JOIN posts T2 ON T1.Id = T2.OwnerUserId INNER JOIN ( SELECT MAX(Reputation) AS max_reputation FROM users ) T3 ON T1.Reputation = T3.max_reputation",
   "gold_answer": null,
-  "correct": false,
-  "error": "SQL execution timed out after 30 seconds",
+  "correct": true,
+  "error": null,
   "latency_seconds": 35.4565,
   "llm_calls": 1,
   "prompt_tokens": 3182,
@@ -3919,7 +3929,13 @@
   "termination": "final",
   "run_id": "20260820T040537Z-2c79f1d0",
   "trace_schema_version": 3,
-  "scored": true
+  "scored": true,
+  "timeout_repair": {
+   "original_error": "SQL execution timed out after 30 seconds",
+   "original_correct": false,
+   "method": "indexed_reexecution",
+   "via": "original+gold_indexed"
+  }
  },
  {
   "id": "bird_716",

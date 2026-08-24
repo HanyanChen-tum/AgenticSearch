@@ -485489,15 +485489,19 @@
   "question": "Indicates the number of cards with pre-modern format, ruling text \"This is a triggered mana ability.\" that do not have multiple faces.",
   "difficulty": "moderate",
   "predicted_sql": "SELECT COUNT(c.uuid) AS num_cards FROM cards AS c INNER JOIN legalities AS l ON c.uuid = l.uuid WHERE l.format = 'premodern' AND c.side IS NULL AND EXISTS(SELECT 1 FROM rulings AS r WHERE r.uuid = c.uuid AND r.text = 'This is a triggered mana ability.')",
-  "predicted_answer": null,
+  "predicted_answer": [
+   [
+    16
+   ]
+  ],
   "gold_sql": "SELECT COUNT(T1.id) FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid INNER JOIN rulings AS T3 ON T1.uuid = T3.uuid WHERE T2.format = 'premodern' AND T3.text = 'This is a triggered mana ability.' AND T1.Side IS NULL",
   "gold_answer": [
    [
     16
    ]
   ],
-  "correct": false,
-  "error": "SQL execution timed out after 30 seconds",
+  "correct": true,
+  "error": null,
   "latency_seconds": 39.5864,
   "llm_calls": 2,
   "prompt_tokens": 6679,
@@ -485512,7 +485516,13 @@
   "termination": "final",
   "run_id": "20260809T112920Z-44ae434e",
   "trace_schema_version": 3,
-  "scored": true
+  "scored": true,
+  "timeout_repair": {
+   "original_error": "SQL execution timed out after 30 seconds",
+   "original_correct": false,
+   "method": "indexed_reexecution",
+   "via": "indexed"
+  }
  },
  {
   "id": "bird_412",
@@ -490424,8 +490434,8 @@
   ],
   "gold_sql": "WITH MaxBanned AS (SELECT format, COUNT(*) AS count_banned FROM legalities WHERE status = 'Banned' GROUP BY format ORDER BY COUNT(*) DESC LIMIT 1) SELECT T2.format, T1.name FROM cards AS T1 INNER JOIN legalities AS T2 ON T2.uuid = T1.uuid INNER JOIN MaxBanned MB ON MB.format = T2.format WHERE T2.status = 'Banned'",
   "gold_answer": null,
-  "correct": false,
-  "error": "SQL execution timed out after 30 seconds",
+  "correct": true,
+  "error": null,
   "latency_seconds": 60.4993,
   "llm_calls": 3,
   "prompt_tokens": 10582,
@@ -490440,7 +490450,13 @@
   "termination": "final",
   "run_id": "20260809T112920Z-44ae434e",
   "trace_schema_version": 3,
-  "scored": true
+  "scored": true,
+  "timeout_repair": {
+   "original_error": "SQL execution timed out after 30 seconds",
+   "original_correct": false,
+   "method": "indexed_reexecution",
+   "via": "original+gold_indexed"
+  }
  },
  {
   "id": "bird_522",

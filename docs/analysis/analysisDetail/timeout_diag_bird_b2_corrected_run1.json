@@ -1,0 +1,21 @@
+[
+ {
+  "id": "bird_518",
+  "db_id": "card_games",
+  "elapsed_seconds": 0.2,
+  "diagnosis": "slow_and_wrong"
+ },
+ {
+  "id": "bird_529",
+  "db_id": "card_games",
+  "elapsed_seconds": 180.0,
+  "diagnosis": "still_times_out_or_errors",
+  "error": "SQL execution timed out after 180 seconds"
+ },
+ {
+  "id": "bird_701",
+  "db_id": "codebase_community",
+  "elapsed_seconds": 0.4,
+  "diagnosis": "slow_and_wrong"
+ }
+]

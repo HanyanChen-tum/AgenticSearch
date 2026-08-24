@@ -291623,8 +291623,8 @@
   ],
   "gold_sql": "WITH MaxBanned AS (SELECT format, COUNT(*) AS count_banned FROM legalities WHERE status = 'Banned' GROUP BY format ORDER BY COUNT(*) DESC LIMIT 1) SELECT T2.format, T1.name FROM cards AS T1 INNER JOIN legalities AS T2 ON T2.uuid = T1.uuid INNER JOIN MaxBanned MB ON MB.format = T2.format WHERE T2.status = 'Banned'",
   "gold_answer": null,
-  "correct": false,
-  "error": "SQL execution timed out after 30 seconds",
+  "correct": true,
+  "error": null,
   "latency_seconds": 59.9998,
   "llm_calls": 2,
   "prompt_tokens": 7199,
@@ -291639,7 +291639,13 @@
   "termination": "final",
   "run_id": "20260808T102030Z-60174986",
   "trace_schema_version": 3,
-  "scored": true
+  "scored": true,
+  "timeout_repair": {
+   "original_error": "SQL execution timed out after 30 seconds",
+   "original_correct": false,
+   "method": "indexed_reexecution",
+   "via": "original+gold_indexed"
+  }
  },
  {
   "id": "bird_529",

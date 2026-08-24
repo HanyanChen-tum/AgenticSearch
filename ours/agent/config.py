@@ -47,6 +47,16 @@ class AgentConfig:
     # captured alongside the answer they produced. Diagnostic only: it changes
     # the API path, so accuracy is not comparable to Chat Completions runs.
     reasoning_capture: str = "none"
+    # Controller executes the exact FINAL SQL itself (once, no extra model
+    # turn on the success path) and blocks only on ERROR/EMPTY, telling the
+    # model to redesign -- not resubmit -- on a timeout. Distinct from
+    # verified_final (rejected in E1: required the *model* to have already
+    # run the identical string, which mostly blocked on harmless revisions
+    # rather than real problems -- see docs/analysis/analysisDetail/
+    # e1_verified_summary.md). See also shared/timeout_recovery.py, which
+    # covers the same missing-index timeout class at scoring time; this flag
+    # is the corresponding fix on the agent side.
+    final_execution_gate: bool = False
 
     def __post_init__(self) -> None:
         if self.few_shot_mode not in {"train-retrieval", "none"}:
@@ -81,6 +91,11 @@ class AgentConfig:
             raise ValueError(f"Unknown planner mode: {self.planner_mode!r}")
         if self.planner_mode == QUERY_PLAN_MODE and self.prompt_profile != "query-plan-v1":
             raise ValueError("root-query-plan-v1 requires prompt_profile='query-plan-v1'")
+        if self.final_execution_gate and self.verified_final:
+            raise ValueError(
+                "final_execution_gate and verified_final are two different FINAL "
+                "gates (controller-executed vs model-executed) -- pick one"
+            )
 
     def capability_manifest(self) -> dict:
         manifest = {
@@ -239,6 +254,31 @@ _PROFILES = {
         offline_metadata_mode="e3-f-schema-v4",
         schema_context_mode="offline-retrieval",
         sql_convention_mode=SQL_CONVENTION_VERSION,
+    ),
+    # Single variable against e3-c-conv-rules: the controller executes the exact
+    # FINAL SQL itself and blocks on ERROR/EMPTY (ExecutionStatus, same criteria
+    # AgentExecutionState.validate_final already used), telling the model to
+    # redesign rather than resubmit on a timeout. Exists to test whether closing
+    # the "the model never ran the query it actually submits" gap (see
+    # docs/analysis/week_2026-08-18/sql_timeout_correction_2026-08-23.md) catches
+    # inefficient SQL (correlated subquery instead of JOIN) before it reaches
+    # scoring, without repeating E1's rejected mechanism (clean-e1,
+    # e1_verified_summary.md): that one required the *model* to have pre-executed
+    # the identical string and blocked on any revision, which fired on 90% of
+    # questions for reasons unrelated to real problems. Here the controller does
+    # the one execution itself at FINAL time -- no extra model turn on the
+    # success path, and a block only fires on a genuine execution failure.
+    "e3-c-conv-rules-final-gate": AgentConfig(
+        profile="e3-c-conv-rules-final-gate",
+        experiment_variant="e3-c-conv-rules-final-gate",
+        prompt_profile="basic-conventions-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        final_execution_gate=True,
     ),
     # Single variable against e3-c-conv-rules: the prompt says the tool calls are
     # really executed and their output comes back. Reading the captured reasoning for

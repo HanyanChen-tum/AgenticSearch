@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class TracePipelineTests(unittest.TestCase):
     def test_evaluation_timeout_is_part_of_the_experiment_config(self):
-        self.assertEqual(DEFAULT_QUERY_TIMEOUT_SECONDS, 30.0)
+        self.assertEqual(DEFAULT_QUERY_TIMEOUT_SECONDS, 180.0)
 
     def test_run_manifest_is_reused_only_for_same_config(self):
         with tempfile.TemporaryDirectory() as directory:

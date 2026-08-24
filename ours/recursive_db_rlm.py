@@ -539,9 +539,20 @@ class DBRLM(RLM):
             if is_final(response) and not has_code:
                 answer = parse_response(response, repl_env)
                 if answer is not None:
+                    if self.agent_config.final_execution_gate:
+                        # Controller executes the exact submitted SQL itself --
+                        # one execution, no extra model turn on the success
+                        # path -- so validate_final's string-match check is
+                        # trivially satisfied by construction, and its
+                        # ERROR/EMPTY criteria now reflect this exact answer
+                        # rather than whatever the model last happened to run.
+                        self._db.execute(answer)
+                        require_verified = True
+                    else:
+                        require_verified = self.agent_config.verified_final
                     valid, reason = self._execution_state.validate_final(
                         answer,
-                        require_verified=self.agent_config.verified_final,
+                        require_verified=require_verified,
                     )
                     if valid:
                         messages.append({"role": "assistant", "content": response})
@@ -552,11 +563,36 @@ class DBRLM(RLM):
                         {"allowed": False, "reason": reason},
                     )
                     messages.append({"role": "assistant", "content": response})
-                    messages.append({"role": "user", "content": (
-                        f"BLOCKED FINAL: {reason}. "
-                        "Execute the exact SQL you intend to submit, inspect the result, "
-                        "then call FINAL with that same SQL."
-                    )})
+                    if self.agent_config.final_execution_gate:
+                        last = self._execution_state.last_execution
+                        last_error = ((last.result.get("error") if last else None) or "")
+                        if "timed out" in last_error.lower() or "interrupted" in last_error.lower():
+                            detail = (
+                                " Your submitted SQL did not finish in time "
+                                f"(execution was interrupted: {last_error})."
+                            )
+                            guidance = (
+                                "Do not resubmit the same query -- redesign it. These "
+                                "databases are largely unindexed on foreign-key-style "
+                                "columns, so a correlated subquery in WHERE (EXISTS/NOT "
+                                "EXISTS/a scalar subquery) can force a full scan of the "
+                                "inner table for every outer row; consider rewriting it "
+                                "as a JOIN, or reducing what the query needs to scan."
+                            )
+                        else:
+                            detail = f" The execution error was: {last_error}" if last_error else ""
+                            guidance = (
+                                "Fix the SQL based on that error, then call FINAL with "
+                                "the corrected query."
+                            )
+                        feedback = f"BLOCKED FINAL: {reason}.{detail} {guidance}"
+                    else:
+                        feedback = (
+                            f"BLOCKED FINAL: {reason}. "
+                            "Execute the exact SQL you intend to submit, inspect the result, "
+                            "then call FINAL with that same SQL."
+                        )
+                    messages.append({"role": "user", "content": feedback})
                     continue
 
             # Strip inline FINAL so REPL doesn't choke on it, then execute the code
@@ -651,7 +687,7 @@ def run_one(
     all three baselines + ours can be compared with the same evaluator.
     """
     from shared.evaluator import is_correct
-    from shared.sql_executor import execute_sql
+    from shared.timeout_recovery import execute_sql_with_recovery
 
     db_id = example["db_id"]
     db_path = get_db_path(database_dir, db_id)
@@ -679,11 +715,11 @@ def run_one(
         generation_error = str(e)
 
     predicted_exec = (
-        execute_sql(db_path, predicted_sql, read_only=True)
+        execute_sql_with_recovery(db_path, predicted_sql, read_only=True)
         if predicted_sql and generation_error is None
         else {"answer": None, "error": generation_error or "No SQL generated"}
     )
-    gold_exec = execute_sql(db_path, example["gold_sql"], read_only=True)
+    gold_exec = execute_sql_with_recovery(db_path, example["gold_sql"], read_only=True)
     latency = round(time.perf_counter() - started_at, 4)
     error = predicted_exec.get("error") or gold_exec.get("error")
 
@@ -702,6 +738,10 @@ def run_one(
             and is_correct(predicted_exec.get("answer"), gold_exec.get("answer"))
         ),
         "error": error,
+        "timeout_recovery": {
+            "predicted": predicted_exec.get("recovered_via_index", False),
+            "gold": gold_exec.get("recovered_via_index", False),
+        },
         "latency_seconds": latency,
         "llm_calls": agent.stats["llm_calls"],
         "prompt_tokens": agent.stats["prompt_tokens"],

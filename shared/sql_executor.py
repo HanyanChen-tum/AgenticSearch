@@ -9,7 +9,11 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_QUERY_TIMEOUT_SECONDS = 30.0
+# 30s silently miscounted correct-but-slow queries as wrong (some gold_sql
+# and some predicted_sql need 60-180s to finish); see
+# docs/analysis/week_2026-08-18/sql_timeout_correction_2026-08-23.md. 180s is
+# the budget that diagnosis already validated against re-execution.
+DEFAULT_QUERY_TIMEOUT_SECONDS = 180.0
 
 
 def execute_sql(

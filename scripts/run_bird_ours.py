@@ -22,7 +22,7 @@ from ours.recursive_db_rlm import DBRLM
 from ours.db_environment import get_db_path
 from ours.agent.config import agent_profile_names, get_agent_config
 from shared.evaluator import is_correct, is_scored
-from shared.sql_executor import execute_sql
+from shared.timeout_recovery import execute_sql_with_recovery
 from shared.console import force_utf8_console
 
 BIRD_DB_DIR  = PROJECT_ROOT / "data/raw/bird/minidev/MINIDEV/dev_databases"
@@ -51,10 +51,10 @@ def run_one(example: dict, database_dir: Path, agent: DBRLM) -> dict:
         termination = type(e).__name__
 
     predicted_exec = (
-        execute_sql(db_path, predicted_sql, read_only=True)
+        execute_sql_with_recovery(db_path, predicted_sql, read_only=True)
         if predicted_sql else {"answer": None, "error": error_msg or "No SQL generated"}
     )
-    gold_exec = execute_sql(db_path, example["gold_sql"], read_only=True)
+    gold_exec = execute_sql_with_recovery(db_path, example["gold_sql"], read_only=True)
 
     return {
         "id": example["id"],
@@ -72,6 +72,10 @@ def run_one(example: dict, database_dir: Path, agent: DBRLM) -> dict:
             and is_correct(predicted_exec.get("answer"), gold_exec.get("answer"))
         ),
         "error": predicted_exec.get("error") or gold_exec.get("error"),
+        "timeout_recovery": {
+            "predicted": predicted_exec.get("recovered_via_index", False),
+            "gold": gold_exec.get("recovered_via_index", False),
+        },
         "latency_seconds": round(time.perf_counter() - started, 4),
         "llm_calls": agent.stats["llm_calls"],
         "prompt_tokens": agent.stats["prompt_tokens"],

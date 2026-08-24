@@ -2425,15 +2425,19 @@
   "question": "Calculate the percentage of players who prefer the left foot at least once across all available season records and were born between 1987 and 1992.",
   "difficulty": "challenging",
   "predicted_sql": "WITH players AS (SELECT DISTINCT player_fifa_api_id, birthday FROM Player WHERE CAST(strftime('%Y', birthday) AS INTEGER) BETWEEN 1987 AND 1992) SELECT 100.0 * SUM(CASE WHEN EXISTS (SELECT 1 FROM Player_Attributes AS pa WHERE pa.player_fifa_api_id = players.player_fifa_api_id AND pa.preferred_foot = 'left') THEN 1 ELSE 0 END) / COUNT(player_fifa_api_id) AS percentage FROM players;",
-  "predicted_answer": null,
+  "predicted_answer": [
+   [
+    28.868144690781797
+   ]
+  ],
   "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN t2.preferred_foot = 'left' THEN t1.id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT t1.id) percent FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE SUBSTR(t1.birthday, 1, 4) BETWEEN '1987' AND '1992'",
   "gold_answer": [
    [
     28.868144690781797
    ]
   ],
-  "correct": false,
-  "error": "SQL execution timed out after 30 seconds",
+  "correct": true,
+  "error": null,
   "latency_seconds": 93.243,
   "llm_calls": 2,
   "prompt_tokens": 8492,
@@ -2448,7 +2452,13 @@
   "termination": "final",
   "run_id": "20260818T123323Z-2babc1a9",
   "trace_schema_version": 3,
-  "scored": true
+  "scored": true,
+  "timeout_repair": {
+   "original_error": "SQL execution timed out after 30 seconds",
+   "original_correct": false,
+   "method": "indexed_reexecution",
+   "via": "indexed"
+  }
  },
  {
   "id": "bird_1039",
@@ -78239,15 +78249,19 @@
   "question": "What percentage of players under 180 cm have at least one record with an overall rating greater than 70?",
   "difficulty": "moderate",
   "predicted_sql": "SELECT CAST(COUNT(CASE WHEN p.height < 180 AND EXISTS (SELECT 1 FROM Player_Attributes AS pa WHERE pa.player_api_id = p.player_api_id AND pa.overall_rating > 70) THEN p.id END) AS REAL) * 100.0 / COUNT(CASE WHEN p.height < 180 THEN p.id END) FROM Player AS p",
-  "predicted_answer": null,
+  "predicted_answer": [
+   [
+    51.1572856391373
+   ]
+  ],
   "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN t2.overall_rating > 70 AND t1.height < 180 THEN t1.id END) AS REAL) * 100 / COUNT(DISTINCT t1.id) percent FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t1.height < 180",
   "gold_answer": [
    [
     51.1572856391373
    ]
   ],
-  "correct": false,
-  "error": "SQL execution timed out after 30 seconds",
+  "correct": true,
+  "error": null,
   "latency_seconds": 63.5931,
   "llm_calls": 2,
   "prompt_tokens": 8263,
@@ -78262,7 +78276,13 @@
   "termination": "final",
   "run_id": "20260818T123323Z-2babc1a9",
   "trace_schema_version": 3,
-  "scored": true
+  "scored": true,
+  "timeout_repair": {
+   "original_error": "SQL execution timed out after 30 seconds",
+   "original_correct": false,
+   "method": "indexed_reexecution",
+   "via": "indexed"
+  }
  },
  {
   "id": "bird_1149",
@@ -724584,8 +724604,8 @@
   ],
   "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.Score > 50 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.Id) FROM users T1 INNER JOIN posts T2 ON T1.Id = T2.OwnerUserId INNER JOIN ( SELECT MAX(Reputation) AS max_reputation FROM users ) T3 ON T1.Reputation = T3.max_reputation",
   "gold_answer": null,
-  "correct": false,
-  "error": "SQL execution timed out after 30 seconds",
+  "correct": true,
+  "error": null,
   "latency_seconds": 59.0065,
   "llm_calls": 3,
   "prompt_tokens": 10863,
@@ -724600,7 +724620,13 @@
   "termination": "final",
   "run_id": "20260818T123323Z-2babc1a9",
   "trace_schema_version": 3,
-  "scored": true
+  "scored": true,
+  "timeout_repair": {
+   "original_error": "SQL execution timed out after 30 seconds",
+   "original_correct": false,
+   "method": "indexed_reexecution",
+   "via": "original+gold_indexed"
+  }
  },
  {
   "id": "bird_704",
