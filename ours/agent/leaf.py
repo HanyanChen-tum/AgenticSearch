@@ -10,6 +10,16 @@ The one delegation that worked was the one where the parent pasted real column
 values into the sub-context. So the leaf here gets the parent's gated database
 handle and answers in plain text. It is deliberately not a DBRLM: the leaf
 answers a question, it does not produce the final SQL.
+
+Context isolation (`open_context=False`) is inherited from RLM, where the point
+of a sub-call is to work in a *small* context so the parent's does not overflow.
+That premise does not hold here: measured context utilisation on this task is
+about 4% (analysisDetail/e5_a_context_store_smoke1.md), so isolation buys nothing
+and costs two measured things -- the leaf cannot notice when the parent asked the
+wrong sub-question (bird_173, bird_758), and its findings reach the parent only as
+one sentence, losing the rows it actually saw (11 of 15 traced failures had a leaf
+that was right; see week_2026-08-18/recursion_failure_traces_2026-08-24.md).
+`open_context=True` drops both halves of the isolation.
 """
 
 from __future__ import annotations
@@ -67,10 +77,21 @@ class LeafAgent:
         self._repl = REPLExecutor(timeout=repl_timeout)
 
     async def answer(
-        self, sub_query: str, sub_context: str, schema: str = ""
+        self, sub_query: str, sub_context: str, schema: str = "",
+        root_question: str = "", open_context: bool = False,
     ) -> dict[str, Any]:
         env: dict[str, Any] = {"db": self._db, "context": sub_context}
         user = f"QUESTION: {sub_query}"
+        # With isolation dropped, the leaf is told what the parent is ultimately
+        # trying to answer, so a sub-question that does not serve it can be
+        # called out instead of answered faithfully and uselessly.
+        if open_context and (root_question or "").strip():
+            header = "\n\nTHE CALLER IS ULTIMATELY TRYING TO ANSWER:\n"
+            nudge = (
+                "\n\nIf the question you were asked does not actually help answer "
+                "that, say so plainly in your answer instead of only answering as asked."
+            )
+            user += header + root_question + nudge
         # Without the schema the leaf knows it has db.execute but not what to
         # execute it against; measured on 199 questions, all 30 leaves answered
         # "I can't determine this" without ever writing a query.
@@ -86,6 +107,7 @@ class LeafAgent:
         turns = 0
         queried = False
         refusals = 0
+        observations: list[str] = []
         for _ in range(self.max_iterations):
             response = await self._call_llm(messages)
             turns += 1
@@ -107,6 +129,7 @@ class LeafAgent:
                     "answer": parse_response(response, env) or "",
                     "turns": turns,
                     "queried": queried,
+                    "observations": observations,
                     "terminated": "final" if queried else "final_without_query",
                     # Without the leaf's own turns there is no way to see why it
                     # declines to query; four iterations were spent guessing at it.
@@ -124,6 +147,7 @@ class LeafAgent:
             "answer": "(no answer: the sub-agent ran out of turns)",
             "turns": turns,
             "queried": queried,
+            "observations": observations,
             "terminated": "max_iterations",
             "transcript": [m for m in messages if m["role"] != "system"],
         }
@@ -136,10 +160,12 @@ def run_leaf(
     sub_context: str,
     schema: str = "",
     max_iterations: int = 4,
+    root_question: str = "",
+    open_context: bool = False,
 ) -> dict[str, Any]:
     """Synchronous entry point, for use from inside the parent's REPL."""
     agent = LeafAgent(call_llm, db, max_iterations=max_iterations)
-    coro = agent.answer(sub_query, sub_context, schema)
+    coro = agent.answer(sub_query, sub_context, schema, root_question, open_context)
     try:
         asyncio.get_running_loop()
     except RuntimeError:

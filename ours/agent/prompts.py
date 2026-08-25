@@ -297,6 +297,30 @@ _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE = _SYSTEM_PROMPT_BASIC_CONVENTIONS.replace(
     'HOW THIS DATASET IS WRITTEN',
 )
 
+# leaf-open-v1: the sub-agent is no longer context-isolated, so the description
+# the root is given has to change with it -- telling the model the leaf "does not
+# see the question you were asked" while it does would invite exactly the vague
+# sub-questions this arm is meant to remove.
+_SYSTEM_PROMPT_CONVENTIONS_RECURSIVE_OPEN = _SYSTEM_PROMPT_BASIC_CONVENTIONS.replace(
+    '  db.sample_values("table", "column")\n',
+    '  db.sample_values("table", "column")\n'
+    '  recursive_llm("sub-question", "text to reason over")  -> str\n',
+).replace(
+    "HOW THIS DATASET IS WRITTEN",
+    'ABOUT recursive_llm:\n'
+    '  It starts a sub-agent that can query this same database and that is also\n'
+    '  shown the original question you are answering. It does not see the schema\n'
+    '  or your conversation, so still hand it the material it needs. It answers in\n'
+    '  plain text, returns the rows it actually observed alongside its answer, and\n'
+    '  cannot write your SQL. Delegate a lookup you have not settled: which values\n'
+    '  a column really holds, which join path connects two tables, how many rows a\n'
+    '  filter matches. Because it knows the original question, it may tell you your\n'
+    '  sub-question does not serve it -- take that seriously rather than reusing\n'
+    '  the answer as if it confirmed your plan.\n\n'
+    "HOW THIS DATASET IS WRITTEN",
+)
+
+
 # Same three conventions as basic-conventions-v1, but stated as semantic criteria
 # rather than as this dataset's habits. The earlier wording quoted its own support
 # rate ("used in under 10% of training answers"), which invites the model to play
@@ -368,6 +392,7 @@ _PROMPTS = {
     "basic-conventions-toolconfirm-v1": _SYSTEM_PROMPT_BASIC_CONVENTIONS_TOOLCONFIRM,
     "basic-semantic-v1": _SYSTEM_PROMPT_BASIC_SEMANTIC,
     "conventions-recursive-v1": _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE,
+    "conventions-recursive-v2-open": _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE_OPEN,
     "basic-join-minimal": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL,
     "basic-join-minimal-v2": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL_V2,
     "basic-conventions-v1": _SYSTEM_PROMPT_BASIC_CONVENTIONS,
@@ -422,6 +447,13 @@ _PROVENANCE = {
         # Same mined conventions as basic-conventions-v1; the added sentence only
         # states that the REPL really runs the call and hands back the output, which
         # is a fact about this harness, not anything read off eval.
+        "source": "train-mined-conventions",
+        "source_split": "train",
+        "contains_task_specific_sql_rules": True,
+        "contains_examples": False,
+    },
+    "conventions-recursive-v2-open": {
+        "prompt_id": "conventions-plus-recursive-leaf-v2-open",
         "source": "train-mined-conventions",
         "source_split": "train",
         "contains_task_specific_sql_rules": True,

@@ -75,17 +75,24 @@ class AgentConfig:
             raise ValueError(f"Unknown SQL convention mode: {self.sql_convention_mode!r}")
         if self.reasoning_capture not in {"none", REASONING_CAPTURE_MODE}:
             raise ValueError(f"Unknown reasoning capture mode: {self.reasoning_capture!r}")
-        if self.recursion_mode not in {"none", "leaf-v1", "leaf-db-v1"}:
+        if self.recursion_mode not in {"none", "leaf-v1", "leaf-db-v1", "leaf-open-v1"}:
             raise ValueError(f"Unknown recursion mode: {self.recursion_mode!r}")
         # The primitive was present in three earlier profiles but no prompt named
         # it, so it was never invoked. Requiring the prompt that documents it
         # prevents that silent no-op from recurring.
         if self.recursion_mode != "none" and self.prompt_profile not in {
-            "basic-recursive-v1", "conventions-recursive-v1"
+            "basic-recursive-v1", "conventions-recursive-v1", "conventions-recursive-v2-open"
         }:
             raise ValueError(
                 f"recursion_mode={self.recursion_mode!r} requires a prompt profile "
                 "that documents recursive_llm"
+            )
+        if (self.recursion_mode == "leaf-open-v1"
+                and self.prompt_profile != "conventions-recursive-v2-open"):
+            raise ValueError(
+                "leaf-open-v1 requires conventions-recursive-v2-open: the other "
+                "recursive prompts tell the model the sub-agent cannot see the "
+                "original question, which is no longer true under this mode"
             )
         if self.schema_context_mode == "offline-retrieval" and self.offline_metadata_mode == "none":
             raise ValueError("offline-retrieval requires an offline metadata artifact")
@@ -446,6 +453,32 @@ _PROFILES = {
         schema_context_mode="offline-retrieval",
         sql_convention_mode=SQL_CONVENTION_VERSION_TIES,
         recursion_mode="leaf-db-v1",
+    ),
+    # Single variable against e3-c-recursive-db: RLM's context isolation is
+    # dropped. Isolation exists so a sub-call runs in a small context and the
+    # parent's does not overflow; measured utilisation on this task is ~4%
+    # (analysisDetail/e5_a_context_store_smoke1.md), so the constraint it serves
+    # does not exist here while both of its costs are measured -- the leaf cannot
+    # notice a wrongly-framed sub-question (bird_173, bird_758), and its findings
+    # reach the root only as prose, losing the rows it read (11 of 15 traced
+    # failures had a leaf that was right; recursion_failure_traces_2026-08-24.md).
+    #
+    # Under leaf-open-v1 the leaf is shown the original question and returns its
+    # raw observations alongside its answer. The prompt changes with it, so this
+    # arm moves two things at once against e3-c-recursive-db -- deliberately: they
+    # are the two halves of one design decision, and a prompt that still promises
+    # isolation would misdescribe the tool. __post_init__ enforces the pairing.
+    "e3-c-recursive-db-open": AgentConfig(
+        profile="e3-c-recursive-db-open",
+        experiment_variant="e3-c-recursive-db-open",
+        prompt_profile="conventions-recursive-v2-open",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        recursion_mode="leaf-open-v1",
     ),
     # e3-c-recursive-db with reasoning_capture on, for causal tracing into *why*
     # depth-1 recursion doesn't move accuracy (five_layer_chain_results

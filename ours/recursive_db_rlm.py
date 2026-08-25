@@ -96,6 +96,7 @@ class DBRLM(RLM):
         self._context_store = None
         self._sql_convention_rewrite = None
         self._reasoning_capture = []
+        self._root_question = question
         self._trace_context = {
             "question": question,
             "db_path": str(Path(db_path).resolve()),
@@ -344,6 +345,12 @@ class DBRLM(RLM):
         """
         mode = self.agent_config.recursion_mode
         inner = self._make_recursive_fn() if mode == "leaf-v1" else None
+        # leaf-open-v1 drops RLM's context isolation. That isolation exists to
+        # keep a sub-call's context small so the parent's does not overflow;
+        # measured utilisation on this task is ~4%, so the constraint it serves
+        # does not exist here, while its two costs are measured -- see the module
+        # docstring in ours/agent/leaf.py.
+        open_context = mode == "leaf-open-v1"
 
         def recursive_llm(sub_query: str, sub_context: str) -> str:
             if inner is not None:
@@ -355,12 +362,35 @@ class DBRLM(RLM):
                     sub_query,
                     sub_context,
                     schema=getattr(self, "_leaf_schema", ""),
+                    root_question=getattr(self, "_root_question", "") if open_context else "",
+                    open_context=open_context,
                 )
                 answer = result["answer"]
+                if open_context:
+                    # Hand back what the leaf actually saw, not only its summary.
+                    # In 11 of 15 traced recursion failures the leaf was right and
+                    # the root still went wrong, because the rows it read never
+                    # crossed back (bird_263: the leaf computed both candidate
+                    # figures, returned prose, and the root picked the wrong one).
+                    seen = result.get("observations") or []
+                    if seen:
+                        rendered = "\n".join(
+                            f"  [{i + 1}] {obs}" for i, obs in enumerate(seen)
+                        )
+                        if len(rendered) > 4000:
+                            rendered = rendered[:4000] + "...[truncated; trace retains full result]"
+                        answer = (
+                            answer
+                            + "\n\nWHAT THE SUB-AGENT ACTUALLY OBSERVED "
+                            + "(authoritative, prefer this over the summary above):\n"
+                            + rendered
+                        )
                 detail = {
                     "turns": result["turns"],
                     "terminated": result["terminated"],
                     "queried": result.get("queried"),
+                    "observation_count": len(result.get("observations") or []),
+                    "open_context": open_context,
                     "transcript": result.get("transcript"),
                 }
             self._record_tool_event(

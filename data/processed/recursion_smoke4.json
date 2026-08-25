@@ -1,0 +1,46 @@
+[
+ {
+  "id": "bird_173",
+  "db_id": "financial",
+  "question": "How often does account number 3 request an account statement to be released? What was the aim of debiting 3539 in total?",
+  "evidence": "k_symbol refers to the purpose of payments",
+  "gold_sql": "SELECT T1.frequency, T2.k_symbol FROM account AS T1 INNER JOIN (SELECT account_id, k_symbol, SUM(amount) AS total_amount FROM \"order\" GROUP BY account_id, k_symbol) AS T2 ON T1.account_id = T2.account_id WHERE T1.account_id = 3 AND T2.total_amount = 3539",
+  "difficulty": "challenging",
+  "source": "arcwise-corrected:arcwise_full.json",
+  "question_unchanged": true,
+  "evidence_unchanged": true
+ },
+ {
+  "id": "bird_263",
+  "db_id": "toxicology",
+  "question": "What is the composition of element chlorine in percentage among the molecules that contain at least one single bond?",
+  "evidence": "element chlorine refers to element = 'cl'; single bond refers to bond_type = '-'; percentage = DIVIDE(SUM(element = 'cl'), COUNT(atom_id)) as percent where bond_type = '-'",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T.element = 'cl' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id) FROM atom AS T WHERE molecule_id IN (SELECT DISTINCT molecule.molecule_id FROM molecule JOIN bond ON molecule.molecule_id = bond.molecule_id AND bond.bond_type = '-')",
+  "difficulty": "challenging",
+  "source": "arcwise-corrected:arcwise_full.json",
+  "question_unchanged": false,
+  "evidence_unchanged": true
+ },
+ {
+  "id": "bird_758",
+  "db_id": "superhero",
+  "question": "Provide the hair colour of the human superhero who is 185 cm tall.",
+  "evidence": "185 cm tall refers to height_cm = 185; human superhero refers to race = 'human'; hair colour refers to colour where hair_colour_id = colour.id;",
+  "gold_sql": "SELECT DISTINCT T3.colour FROM superhero AS T1 INNER JOIN race AS T2 ON T1.race_id = T2.id INNER JOIN colour AS T3 ON T1.hair_colour_id = T3.id WHERE T1.height_cm = 185 AND T2.race = 'Human'",
+  "difficulty": "moderate",
+  "source": "arcwise-corrected:arcwise_full.json",
+  "question_unchanged": true,
+  "evidence_unchanged": true
+ },
+ {
+  "id": "bird_892",
+  "db_id": "formula_1",
+  "question": "State the driver with the most points scored. Find his full name and the number of points.",
+  "evidence": "the most points scored refers to max(SUM(points)); Full name of the driver refers to drivers.forename, drivers.surname;",
+  "gold_sql": "SELECT d.`forename`, d.`surname`, SUM(r.`points`) AS total_points\nFROM `results` r\nJOIN `drivers` d ON d.`driverId` = r.`driverId`\nGROUP BY r.`driverId`\nORDER BY total_points DESC\nLIMIT 1;",
+  "difficulty": "moderate",
+  "source": "arcwise-corrected:arcwise_full.json",
+  "question_unchanged": false,
+  "evidence_unchanged": false
+ }
+]
