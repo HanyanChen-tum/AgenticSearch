@@ -8,6 +8,8 @@ import json
 
 from .prompts import prompt_manifest
 from .query_plan import QUERY_PLAN_MODE, protocol_manifest
+from .question_analysis import QUESTION_ANALYSIS_MODE
+from .question_analysis import protocol_manifest as question_analysis_manifest
 from .reasoning_capture import CAPTURE_MODE as REASONING_CAPTURE_MODE
 from .sql_conventions import KNOWN_VERSIONS as SQL_CONVENTION_VERSIONS
 from .sql_conventions import VERSION as SQL_CONVENTION_VERSION
@@ -83,7 +85,8 @@ class AgentConfig:
         # it, so it was never invoked. Requiring the prompt that documents it
         # prevents that silent no-op from recurring.
         if self.recursion_mode != "none" and self.prompt_profile not in {
-            "basic-recursive-v1", "conventions-recursive-v1", "conventions-recursive-v2-open"
+            "basic-recursive-v1", "conventions-recursive-v1", "conventions-recursive-v2-open",
+            "conventions-qa-v1"
         }:
             raise ValueError(
                 f"recursion_mode={self.recursion_mode!r} requires a prompt profile "
@@ -98,10 +101,17 @@ class AgentConfig:
             )
         if self.schema_context_mode == "offline-retrieval" and self.offline_metadata_mode == "none":
             raise ValueError("offline-retrieval requires an offline metadata artifact")
-        if self.planner_mode not in {"none", QUERY_PLAN_MODE}:
+        if self.planner_mode not in {"none", QUERY_PLAN_MODE, QUESTION_ANALYSIS_MODE}:
             raise ValueError(f"Unknown planner mode: {self.planner_mode!r}")
         if self.planner_mode == QUERY_PLAN_MODE and self.prompt_profile != "query-plan-v1":
             raise ValueError("root-query-plan-v1 requires prompt_profile='query-plan-v1'")
+        if (self.planner_mode == QUESTION_ANALYSIS_MODE
+                and self.prompt_profile != "conventions-qa-v1"):
+            raise ValueError(
+                "question-analysis-v1 requires prompt_profile='conventions-qa-v1': "
+                "the other prompts never ask for the analysis block, so the gate "
+                "would reject every first reply"
+            )
         if self.final_execution_gate and self.verified_final:
             raise ValueError(
                 "final_execution_gate and verified_final are two different FINAL "
@@ -127,6 +137,10 @@ class AgentConfig:
         manifest["prompt"] = prompt_manifest(self.prompt_profile)
         manifest["query_plan"] = (
             protocol_manifest() if self.planner_mode == QUERY_PLAN_MODE else None
+        )
+        manifest["question_analysis"] = (
+            question_analysis_manifest()
+            if self.planner_mode == QUESTION_ANALYSIS_MODE else None
         )
         return manifest
 
@@ -516,6 +530,29 @@ _PROFILES = {
         schema_context_mode="offline-retrieval",
         sql_convention_mode=SQL_CONVENTION_VERSION_BOTH,
         recursion_mode="leaf-db-v1",
+    ),
+    # Single variable against e3-c-recursive-db in behaviour, two in config
+    # (planner_mode + the prompt that describes it, enforced as a pair below):
+    # the model must read the question before writing any SQL.
+    #
+    # Targets the 18 of 46 root-caused failures that the question states and the
+    # model did not act on -- entity-vs-row counting, filters named in the
+    # question, percentage scaling, multi-part questions
+    # (flatzero_23_root_causes_2026-08-25.md). Ceiling is 18-31 of 46, i.e.
+    # +3.6 to +6.2pp, the largest target found so far; the realistic figure will
+    # be well under that and stage one is there to find out.
+    "e3-c-recursive-db-qa": AgentConfig(
+        profile="e3-c-recursive-db-qa",
+        experiment_variant="e3-c-recursive-db-qa",
+        prompt_profile="conventions-qa-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        recursion_mode="leaf-db-v1",
+        planner_mode=QUESTION_ANALYSIS_MODE,
     ),
     # e3-c-recursive-db with reasoning_capture on, for causal tracing into *why*
     # depth-1 recursion doesn't move accuracy (five_layer_chain_results

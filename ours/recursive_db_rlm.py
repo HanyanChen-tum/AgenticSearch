@@ -38,6 +38,12 @@ from ours.agent.reasoning_capture import (
 )
 from ours.agent.sql_conventions import get_sql_convention_rewriter
 from ours.agent.state import AgentExecutionState, ExecutionStatus
+from ours.agent.question_analysis import (
+    QUESTION_ANALYSIS_MODE,
+    QuestionAnalysisState,
+    parse_analysis,
+    retry_instruction,
+)
 from ours.agent.query_plan import (
     QUERY_PLAN_MODE,
     QueryPlanState,
@@ -93,6 +99,7 @@ class DBRLM(RLM):
         self._trace_events: list[dict[str, Any]] = []
         self._execution_state = AgentExecutionState()
         self._query_plan_state = QueryPlanState()
+        self._question_analysis_state = QuestionAnalysisState()
         self._context_store = None
         self._sql_convention_rewrite = None
         self._reasoning_capture = []
@@ -535,6 +542,34 @@ class DBRLM(RLM):
             print('='*80)
 
             has_code = bool(re.search(r'```python', response))
+
+            if self.agent_config.planner_mode == QUESTION_ANALYSIS_MODE:
+                state = self._question_analysis_state
+                if state.analysis is None:
+                    analysis, errors = parse_analysis(response)
+                    self._record_tool_event(
+                        "question_analysis",
+                        {"attempt": state.attempts + 1},
+                        {"valid": not errors, "payload": analysis, "errors": errors},
+                    )
+                    state.attempts += 1
+                    if errors:
+                        # Two retries, then continue without it. A model that
+                        # cannot produce the block should still be allowed to
+                        # answer -- otherwise the arm measures block-formatting
+                        # ability rather than whether reading the question helps.
+                        if state.attempts <= 2:
+                            messages.append({"role": "assistant", "content": response})
+                            messages.append({"role": "user", "content": retry_instruction(errors)})
+                            continue
+                    else:
+                        state.analysis = analysis
+                        messages.append({"role": "assistant", "content": response})
+                        messages.append({"role": "user", "content": (
+                            "Analysis recorded. Now answer the question, following it. "
+                            "Use the tools as usual and submit with FINAL(...)."
+                        )})
+                        continue
 
             if self.agent_config.planner_mode == QUERY_PLAN_MODE:
                 if has_code:

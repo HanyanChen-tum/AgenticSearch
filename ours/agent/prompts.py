@@ -321,6 +321,36 @@ _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE_OPEN = _SYSTEM_PROMPT_BASIC_CONVENTIONS.rep
 )
 
 
+# question-analysis-v1. Deliberately unlike E4-A's query plan: five fields, all
+# about the question, none about tables/joins/SQL. E4-A asked for 20 fields
+# including joins and having, measured -3.05pp, and made its own target class
+# worse -- pre-committing an implementation is not reading a question.
+_SYSTEM_PROMPT_CONVENTIONS_QA = _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE.replace(
+    "PROTOCOL:",
+    """BEFORE ANY SQL -- read the question first:
+  Your FIRST reply must be only a fenced ```question-analysis block holding a
+  JSON object with exactly these five keys. No Python, no SQL in that reply.
+
+    "answer_shape"       how many columns to return and what each one is
+    "counting_unit"      are you counting entities (people, cards, players) or
+                         table rows? A phrase like "at least once" or "at least
+                         one record" means entities, so identical rows collapse
+                         to one
+    "stated_conditions"  list every condition the question states outright,
+                         including ones that sound incidental
+    "unit_and_scale"     the unit of the answer. If it is a percentage, say so
+                         and say whether a x100 is required
+    "ambiguities"        list what the question genuinely leaves open; [] if none
+
+  "stated_conditions" and "ambiguities" are lists. The other three are strings.
+  Describe the QUESTION, not your query plan: no table names, no joins, no SQL.
+
+  From your second reply onward, work normally and follow your own analysis.
+
+PROTOCOL:""",
+)
+
+
 # Same three conventions as basic-conventions-v1, but stated as semantic criteria
 # rather than as this dataset's habits. The earlier wording quoted its own support
 # rate ("used in under 10% of training answers"), which invites the model to play
@@ -392,6 +422,7 @@ _PROMPTS = {
     "basic-conventions-toolconfirm-v1": _SYSTEM_PROMPT_BASIC_CONVENTIONS_TOOLCONFIRM,
     "basic-semantic-v1": _SYSTEM_PROMPT_BASIC_SEMANTIC,
     "conventions-recursive-v1": _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE,
+    "conventions-qa-v1": _SYSTEM_PROMPT_CONVENTIONS_QA,
     "conventions-recursive-v2-open": _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE_OPEN,
     "basic-join-minimal": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL,
     "basic-join-minimal-v2": _SYSTEM_PROMPT_BASIC_JOIN_MINIMAL_V2,
@@ -454,6 +485,13 @@ _PROVENANCE = {
     },
     "conventions-recursive-v2-open": {
         "prompt_id": "conventions-plus-recursive-leaf-v2-open",
+        "source": "train-mined-conventions",
+        "source_split": "train",
+        "contains_task_specific_sql_rules": True,
+        "contains_examples": False,
+    },
+    "conventions-qa-v1": {
+        "prompt_id": "conventions-plus-question-analysis-v1",
         "source": "train-mined-conventions",
         "source_split": "train",
         "contains_task_specific_sql_rules": True,
