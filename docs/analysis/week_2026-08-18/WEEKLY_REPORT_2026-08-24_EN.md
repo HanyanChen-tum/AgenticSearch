@@ -18,9 +18,10 @@ budget can touch it.**
 > 3. **The recommended default profile's full run finished** (§7): 87.50%, −0.6pp against the
 >    88.10% mean on the same convention — inside the noise band; and **zero records needed
 >    scoring-side timeout recovery**, so its recurrence-prevention purpose is met.
-> 4. **The tie-convention conclusion changed** (P1.5): both earlier grounds for rejection were
->    wrong, and the rule measures net +1 to +3 questions. It still does not ship, but **on a
->    different ground**, and the paper's wording has to change with it.
+> 4. **The tie convention: I changed my mind, the rule should ship** (P1.5). I rejected it three
+>    times and **all three grounds were wrong** (the last was a bug in my own rewriter). Fixed, it
+>    measures **+6 / +6 / +5 across three runs, about +1.0–1.2pp** — larger than layers 3 and 4
+>    combined.
 
 ---
 
@@ -572,28 +573,54 @@ not the real agent's full trajectory (§4.5, boundary 1).
 
 ---
 
-## P1.5 — The tie convention: the conclusion changed, the rule still does not ship
+## P1.5 — The tie convention: I changed my mind, this rule should ship
 
-See [`tie_rule_counterfactual_2026-08-25.md`](tie_rule_counterfactual_2026-08-25.md). Both earlier
-grounds for rejecting it **do not hold** (one measured the wrong object — gold's *syntax* never
-reaches the scorer, since BIRD scores by set comparison; the other was a script bug — the extremum
-direction ignored `ASC`/`DESC`). Measured after the fix:
+See [`tie_rule_counterfactual_2026-08-25.md`](tie_rule_counterfactual_2026-08-25.md). I rejected
+this rule three times, and **all three grounds were wrong**:
 
-| Run | Recovered | Broken | Net |
-|---|---:|---:|---:|
-| `recursive_db` run1 / run2 | 4 / 4 | 3 / 3 | **+1 / +1** |
-| `final_gate` run1 | 6 | 3 | **+3** |
+| | Ground for rejection | Why it was wrong |
+|---|---|---|
+| A | Conflicts with 90% of train gold | **Measured the wrong object** — 90:10 describes gold's *syntax*, and BIRD scores by set comparison, so syntax never reaches the scorer |
+| B | Net zero | **Script bug** — the probe took `MAX` unconditionally, so every `ORDER BY … ASC` question was measured at the wrong end |
+| C | Net +1~+3, too small | **Rewriter bug** — no projection-alias resolution and no NULL-extremum guard inflated the cost by 2 questions |
 
-**Decision: the rule still does not ship, but on a third and different ground — the effect is too
-small (+0.2~0.6pp, inside the noise band) for a mechanical rewrite that has to handle NULL
-semantics, projection-alias binding and multi-key ORDER BY.** The risk/benefit does not clear the
-same bar that disabled `count_no_distinct` and `superlative_order_limit`.
+With the rewriter fixed (alias resolution + empty-result fallback) and the trigger widened to
+**every prediction containing `LIMIT 1`**:
 
-**But the paper's wording must change**: not "model error", and not merely "two coexisting
-conventions", but — **BIRD's majority style silently drops answers when the data ties, and which
-one it drops depends on execution order** (`bird_1002`: 13 tied rows, 13 different answers, gold
-recorded one of them). That is a stronger claim than the original, and it does not depend on
-whether the rule ships.
+| Run | Pool | Recovered | Broken | Net |
+|---|---:|---:|---:|---:|
+| `recursive_db` run1 | 93 | 7 | 1 | **+6 (+1.21pp)** |
+| `recursive_db` run2 | 97 | 7 | 1 | **+6 (+1.21pp)** |
+| `final_gate` run1 | 100 | 9 | 4 | **+5 (+1.00pp)** |
+
+**That is larger than layers 3 (+0.4) and 4 (+0.3) combined**, and comparable to the entire
+theoretical ceiling of `final_execution_gate` (~1pp) — which we shipped as the recommended default.
+
+**The noise band is the wrong yardstick here**: it measures the randomness of rerunning the model,
+while this is a **deterministic post-processing rewrite** — the same transform on the same
+predictions gives the same answer every time. The question is whether it holds on a *different*
+set of predictions, and across three runs it does: **+6 / +6 / +5.**
+
+### How to land it
+
+1. Implement it as an **ablatable** rule in `sql_postprocessing_rules` with a profile flag, at the
+   same level as `no_select_concat`. **Do not flip it on `e3-c-recursive-db` itself** —
+   `agent_config_sha256` would change and break the existing eight-arm comparison.
+2. **Both guards are mandatory**: projection-alias resolution, and falling back to the original
+   query when keeping ties returns an empty set. Drop either and the cost goes from 1 to 3.
+3. `bird_82` is a **known, acceptable cost** (the same question in all three runs; the cause is
+   clear — the model's `WHERE` differs from gold's).
+4. **The train-validation step is blocked and must be stated as such**: there is no local train
+   database, only gold syntax to read, and syntax does not reach the scorer. Until a train
+   database is available this rule is validated on dev only, and that has to be recorded honestly
+   rather than passed off as having cleared the train gate.
+
+**The paper's wording still has to change** (independent of whether the rule ships): not "model
+error", and not merely "two coexisting conventions", but — **BIRD's majority style silently drops
+answers when the data ties, and which one it drops depends on execution order** (`bird_1002`: 13
+tied rows, 13 different answers, gold recorded one of them).
+
+---
 
 ## P2 — Settle the paper's structure (three blocks, all on existing data)
 
