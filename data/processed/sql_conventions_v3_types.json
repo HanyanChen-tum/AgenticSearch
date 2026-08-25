@@ -81,7 +81,7 @@
   },
   "printf_to_round": {
    "choice": "printf('%.Nf', x) vs ROUND(x, N) for a rounded numeric answer",
-   "enabled": false,
+   "enabled": true,
    "gold_preference": "ROUND (returns REAL)",
    "rewrite": "rewrite printf('%.Nf', x) to ROUND(x, N); only a lone %.Nf format with exactly two arguments",
    "measured": {
@@ -95,7 +95,7 @@
     "source": "docs/analysis/week_2026-08-18/flatzero_23_root_causes_2026-08-25.md -- type/format is the largest single failure class at 24% of 46",
     "validated_on": "dev500 only"
    },
-   "disabled_reason": "off in v1; enabled in v3-types and v4-ties-types so it stays ablatable"
+   "disabled_reason": null
   }
  },
  "dialect": "sqlite",
@@ -105,5 +105,10 @@
  "source": "data\\train_pool.json",
  "source_sha256": "80c0326216d775eff04ae46d5656a452d741d09993d93d527b02848451ee443f",
  "train_example_count": 9428,
- "version": "train-conventions-v1"
+ "version": "train-conventions-v3-types",
+ "derived_from": {
+  "version": "train-conventions-v1",
+  "sha256": "e13aee4ab648ebdfe89331c204bbd23b0428eb5ef2557909bda870dc53044889",
+  "difference": "printf_to_round enabled"
+ }
 }

@@ -78,6 +78,24 @@
     "validated_on": "dev500 only -- no local train database, see docs/analysis/week_2026-08-18/tie_rule_counterfactual_2026-08-25.md"
    },
    "disabled_reason": null
+  },
+  "printf_to_round": {
+   "choice": "printf('%.Nf', x) vs ROUND(x, N) for a rounded numeric answer",
+   "enabled": false,
+   "gold_preference": "ROUND (returns REAL)",
+   "rewrite": "rewrite printf('%.Nf', x) to ROUND(x, N); only a lone %.Nf format with exactly two arguments",
+   "measured": {
+    "note": "a type fix, not a style preference: printf returns TEXT and ROUND returns REAL, and BIRD compares result tuples, so '3.84615' != 3.84615",
+    "targets": [
+     "bird_226",
+     "bird_227",
+     "bird_228",
+     "bird_255"
+    ],
+    "source": "docs/analysis/week_2026-08-18/flatzero_23_root_causes_2026-08-25.md -- type/format is the largest single failure class at 24% of 46",
+    "validated_on": "dev500 only"
+   },
+   "disabled_reason": "off in v1; enabled in v3-types and v4-ties-types so it stays ablatable"
   }
  },
  "dialect": "sqlite",
@@ -90,7 +108,7 @@
  "version": "train-conventions-v2-ties",
  "derived_from": {
   "version": "train-conventions-v1",
-  "sha256": "f5b17b86ea4f39a65ce48cd5762f86006a7c9374c57ce59a6c79d652b9efbcfd",
+  "sha256": "e13aee4ab648ebdfe89331c204bbd23b0428eb5ef2557909bda870dc53044889",
   "difference": "keep_ties enabled"
  }
 }

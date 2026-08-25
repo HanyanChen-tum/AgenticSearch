@@ -11,7 +11,9 @@ from .query_plan import QUERY_PLAN_MODE, protocol_manifest
 from .reasoning_capture import CAPTURE_MODE as REASONING_CAPTURE_MODE
 from .sql_conventions import KNOWN_VERSIONS as SQL_CONVENTION_VERSIONS
 from .sql_conventions import VERSION as SQL_CONVENTION_VERSION
+from .sql_conventions import VERSION_BOTH as SQL_CONVENTION_VERSION_BOTH
 from .sql_conventions import VERSION_TIES as SQL_CONVENTION_VERSION_TIES
+from .sql_conventions import VERSION_TYPES as SQL_CONVENTION_VERSION_TYPES
 
 
 AGENT_CONFIG_SCHEMA_VERSION = 1
@@ -479,6 +481,41 @@ _PROFILES = {
         schema_context_mode="offline-retrieval",
         sql_convention_mode=SQL_CONVENTION_VERSION,
         recursion_mode="leaf-open-v1",
+    ),
+    # printf('%.Nf', x) -> ROUND(x, N). A type fix, not a style one: printf
+    # returns TEXT, ROUND returns REAL, and BIRD compares result tuples, so a
+    # numerically perfect answer is scored wrong. Replayed over five completed
+    # runs it fires 2-4 times and costs nothing at all -- 0 questions broken in
+    # any run, which is rare here and follows from the rewrite changing only the
+    # returned type, never the computation.
+    "e3-c-recursive-db-types": AgentConfig(
+        profile="e3-c-recursive-db-types",
+        experiment_variant="e3-c-recursive-db-types",
+        prompt_profile="conventions-recursive-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION_TYPES,
+        recursion_mode="leaf-db-v1",
+    ),
+    # Both post-processing fixes together: the shipping candidate. Offline replay
+    # over five runs gives +7 to +13 questions (+1.4 to +2.6pp) with the same two
+    # costs every time (bird_633's all-NULL extremum, bird_82's WHERE differing
+    # from gold's). Kept separate from the single-rule profiles so each rule's
+    # contribution stays attributable.
+    "e3-c-recursive-db-conv2": AgentConfig(
+        profile="e3-c-recursive-db-conv2",
+        experiment_variant="e3-c-recursive-db-conv2",
+        prompt_profile="conventions-recursive-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION_BOTH,
+        recursion_mode="leaf-db-v1",
     ),
     # e3-c-recursive-db with reasoning_capture on, for causal tracing into *why*
     # depth-1 recursion doesn't move accuracy (five_layer_chain_results

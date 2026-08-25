@@ -125,7 +125,11 @@ class ArtifactWiringTests(unittest.TestCase):
         self.assertIn("keep_ties", get_sql_convention_rewriter(VERSION_TIES).enabled_conventions)
 
     def test_both_versions_are_known(self):
-        self.assertEqual(KNOWN_VERSIONS, {VERSION, VERSION_TIES})
+        # More artifact versions have since been added (v3-types, v4-ties-types),
+        # so assert membership rather than an exact set -- the point of this test
+        # is that the two this module covers are registered, not that they are
+        # the only ones.
+        self.assertLessEqual({VERSION, VERSION_TIES}, KNOWN_VERSIONS)
 
     def test_unknown_mode_is_rejected(self):
         with self.assertRaises(ValueError):

@@ -17,6 +17,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import hashlib
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -32,11 +33,17 @@ VERSION = "train-conventions-v1"
 # final_execution_gate was added (see docs/analysis/week_2026-08-18/
 # tie_rule_counterfactual_2026-08-25.md).
 VERSION_TIES = "train-conventions-v2-ties"
+# v3 isolates printf_to_round so the type fix and the tie fix can be
+# attributed separately; v4 is the two together, for the shipping profile.
+VERSION_TYPES = "train-conventions-v3-types"
+VERSION_BOTH = "train-conventions-v4-ties-types"
 DIALECT = "sqlite"
 _ARTIFACT_ROOT = Path(__file__).resolve().parents[2] / "data" / "processed"
 _PATHS = {
     VERSION: _ARTIFACT_ROOT / "sql_conventions_v1.json",
     VERSION_TIES: _ARTIFACT_ROOT / "sql_conventions_v2_ties.json",
+    VERSION_TYPES: _ARTIFACT_ROOT / "sql_conventions_v3_types.json",
+    VERSION_BOTH: _ARTIFACT_ROOT / "sql_conventions_v4_ties_types.json",
 }
 KNOWN_VERSIONS = frozenset(_PATHS)
 _DEFAULT_PATH = _PATHS[VERSION]
@@ -295,11 +302,57 @@ def _rule_keep_ties(tree: exp.Expression) -> bool:
     return True
 
 
+_PRINTF_FLOAT_FORMAT = re.compile(r"^%\.(\d+)f$")
+
+
+def _rule_printf_to_round(tree: exp.Expression) -> bool:
+    """`printf('%.Nf', x)` -> `ROUND(x, N)`.
+
+    Not a style preference -- a type fix. In SQLite `printf` returns TEXT while
+    `ROUND` returns REAL, and BIRD scores by comparing result tuples, so
+    `'3.84615' != 3.84615` and an otherwise perfect answer is marked wrong.
+
+    The trigger is the model doing exactly what the question asks: four dev
+    questions say "provide your answer as a percentage with N decimal places"
+    and the model reaches for printf, which is the most direct reading of that
+    instruction (bird_226/227/228/255 -- see
+    docs/analysis/week_2026-08-18/flatzero_23_root_causes_2026-08-25.md, where
+    type/format is the single largest failure class at 24%).
+
+    Deliberately narrow: only a lone `%.Nf` format with exactly two arguments.
+    A format string carrying any other literal text is a genuine string result
+    the model meant to build, and rewriting it would change the answer rather
+    than its type.
+    """
+    if not isinstance(tree, exp.Expression):
+        return False
+    fired = False
+    for node in list(tree.find_all(exp.Anonymous)):
+        if (node.name or "").lower() != "printf":
+            continue
+        args = node.expressions
+        if len(args) != 2:
+            continue
+        fmt = args[0]
+        if not (isinstance(fmt, exp.Literal) and fmt.is_string):
+            continue
+        match = _PRINTF_FLOAT_FORMAT.match(fmt.this or "")
+        if not match:
+            continue
+        node.replace(exp.Round(
+            this=args[1].copy(),
+            decimals=exp.Literal.number(match.group(1)),
+        ))
+        fired = True
+    return fired
+
+
 _RULES = {
     "count_no_distinct": _rule_count_no_distinct,
     "no_select_concat": _rule_no_select_concat,
     "superlative_order_limit": _rule_superlative_order_limit,
     "keep_ties": _rule_keep_ties,
+    "printf_to_round": _rule_printf_to_round,
 }
 
 # These two are exact inverses; enabling both would make the pipeline's output

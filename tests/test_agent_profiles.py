@@ -73,16 +73,21 @@ class AgentProfileTests(unittest.TestCase):
         self.assertEqual(
             agent_profile_names(),
             (
-                "clean-e0", "clean-e1", "e3-a", "e3-ac", "e3-c", "e3-c-conv",
+                
+                "clean-e0", "clean-e1",
+                "e3-a", "e3-ac",
+                "e3-c", "e3-c-conv",
                 "e3-c-conv-rules", "e3-c-conv-rules-final-gate",
                 "e3-c-conv-rules-toolconfirm", "e3-c-join-minimal",
-                "e3-c-join-minimal-v2", "e3-c-literal-check", "e3-c-noconv",
-                "e3-c-recursive", "e3-c-recursive-db",
-                "e3-c-recursive-db-final-gate",
-                "e3-c-recursive-db-keepties",
+                "e3-c-join-minimal-v2", "e3-c-literal-check",
+                "e3-c-noconv", "e3-c-recursive",
+                "e3-c-recursive-db", "e3-c-recursive-db-conv2",
+                "e3-c-recursive-db-final-gate", "e3-c-recursive-db-keepties",
                 "e3-c-recursive-db-open", "e3-c-recursive-db-reasoning",
-                "e3-c-rules-reasoning", "e3-c-semantic",
-                "e3-c-toolconfirm-reasoning", "e3-f", "e3-rf", "e4-a", "e4-r0",
+                "e3-c-recursive-db-types", "e3-c-rules-reasoning",
+                "e3-c-semantic", "e3-c-toolconfirm-reasoning",
+                "e3-f", "e3-rf",
+                "e4-a", "e4-r0",
                 "e5-a", "legacy-e0",
             ),
         )
