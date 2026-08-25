@@ -18,10 +18,11 @@ budget can touch it.**
 > 3. **The recommended default profile's full run finished** (§7): 87.50%, −0.6pp against the
 >    88.10% mean on the same convention — inside the noise band; and **zero records needed
 >    scoring-side timeout recovery**, so its recurrence-prevention purpose is met.
-> 4. **The tie convention: I changed my mind, the rule should ship** (P1.5). I rejected it three
->    times and **all three grounds were wrong** (the last was a bug in my own rewriter). Fixed, it
->    measures **+6 / +6 / +5 across three runs, about +1.0–1.2pp** — larger than layers 3 and 4
->    combined.
+> 4. **The tie convention: I changed my mind, and the rule is now implemented** (P1.5). I rejected
+>    it three times and **all three grounds were wrong** (the last was a bug in my own rewriter).
+>    Replaying the production implementation measures **+5 / +5 / +7 across three runs, about
+>    +1.0–1.4pp** — larger than layers 3 and 4 combined. Shipped as an ablatable rule with a
+>    single-variable profile; the full run is queued.
 
 ---
 
@@ -587,11 +588,16 @@ this rule three times, and **all three grounds were wrong**:
 With the rewriter fixed (alias resolution + empty-result fallback) and the trigger widened to
 **every prediction containing `LIMIT 1`**:
 
-| Run | Pool | Recovered | Broken | Net |
+| Run | Fired | Recovered | Broken | Net |
 |---|---:|---:|---:|---:|
-| `recursive_db` run1 | 93 | 7 | 1 | **+6 (+1.21pp)** |
-| `recursive_db` run2 | 97 | 7 | 1 | **+6 (+1.21pp)** |
-| `final_gate` run1 | 100 | 9 | 4 | **+5 (+1.00pp)** |
+| `recursive_db` run1 | 67 | 7 | 2 | **+5 (+1.01pp)** |
+| `recursive_db` run2 | 77 | 7 | 2 | **+5 (+1.01pp)** |
+| `final_gate` run1 | 70 | 9 | 2 | **+7 (+1.41pp)** |
+
+(That table is the replay of the **production implementation**, which does slightly better than my
+prototype — the shipped rule declines more conservatively on a few shapes. The same two costs in
+all three runs: `bird_633`, where every candidate value is NULL, and `bird_82`, where the model's
+`WHERE` differs from gold's. No parse failures.)
 
 **That is larger than layers 3 (+0.4) and 4 (+0.3) combined**, and comparable to the entire
 theoretical ceiling of `final_execution_gate` (~1pp) — which we shipped as the recommended default.
@@ -601,7 +607,23 @@ while this is a **deterministic post-processing rewrite** — the same transform
 predictions gives the same answer every time. The question is whether it holds on a *different*
 set of predictions, and across three runs it does: **+6 / +6 / +5.**
 
-### How to land it
+### Implemented (2026-08-25)
+
+| | |
+|---|---|
+| Rule | `_rule_keep_ties` in `ours/agent/sql_conventions.py` — pure AST, resolves projection aliases, grouped/aggregate keys go to `HAVING` |
+| Switch | New `sql_convention_mode` value `train-conventions-v2-ties` plus its own artifact; **v1 keeps it `enabled: false`, so existing profiles are unchanged** |
+| Profile | `e3-c-recursive-db-keepties`, with a test pinning that only three fields differ from the base |
+| Exclusion | Enabling it together with `superlative_order_limit` (its inverse) raises `ValueError` |
+| Tests | `tests/test_keep_ties_convention.py`, 21 of them, all passing |
+| Full run | **Queued** — starts automatically once the running `resample_turn.py` batch finishes |
+
+**No `AgentConfig` field was added.** A field adds a key to every profile's `asdict()` and moves
+every sha at once — which is exactly what `final_execution_gate` did: `e3-c-recursive-db`'s
+historical manifest says `656e7cb1…` while the current code computes `cefc33be…`. Per the 08-25
+decision that breakage is accepted and re-baselined rather than reverted.
+
+### The four rules followed while landing it
 
 1. Implement it as an **ablatable** rule in `sql_postprocessing_rules` with a profile flag, at the
    same level as `no_select_concat`. **Do not flip it on `e3-c-recursive-db` itself** —
