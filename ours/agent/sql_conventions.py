@@ -25,11 +25,21 @@ from sqlglot import exp
 
 
 VERSION = "train-conventions-v1"
+# v2 differs from v1 in exactly one enabled rule: keep_ties. It is a separate
+# artifact rather than a flag on the profile because enablement lives in the
+# artifact, and a new AgentConfig field would change agent_config_sha256 for
+# every profile at once -- which is how the sha compatibility was lost when
+# final_execution_gate was added (see docs/analysis/week_2026-08-18/
+# tie_rule_counterfactual_2026-08-25.md).
+VERSION_TIES = "train-conventions-v2-ties"
 DIALECT = "sqlite"
-_DEFAULT_PATH = (
-    Path(__file__).resolve().parents[2]
-    / "data" / "processed" / "sql_conventions_v1.json"
-)
+_ARTIFACT_ROOT = Path(__file__).resolve().parents[2] / "data" / "processed"
+_PATHS = {
+    VERSION: _ARTIFACT_ROOT / "sql_conventions_v1.json",
+    VERSION_TIES: _ARTIFACT_ROOT / "sql_conventions_v2_ties.json",
+}
+KNOWN_VERSIONS = frozenset(_PATHS)
+_DEFAULT_PATH = _PATHS[VERSION]
 
 
 def _sha256(path: Path) -> str:
@@ -218,11 +228,83 @@ def _rule_superlative_order_limit(tree: exp.Expression) -> bool:
     return True
 
 
+def _resolve_projection_alias(tree: exp.Select, key: exp.Expression) -> exp.Expression:
+    """`ORDER BY some_alias` -> the expression that alias was defined as.
+
+    SQLite lets ORDER BY name a projection alias, and the rewrite below lifts the
+    sort key into a subquery where that alias does not exist. Without this the
+    generated condition silently binds to nothing (measured: bird_12 returned 749
+    rows instead of 1).
+    """
+    if isinstance(key, exp.Column) and not key.table:
+        for projection in tree.args.get("expressions", []):
+            if isinstance(projection, exp.Alias) and projection.alias == key.name:
+                return projection.this.copy()
+    return key
+
+
+def _rule_keep_ties(tree: exp.Expression) -> bool:
+    """`ORDER BY x DESC LIMIT 1` -> `WHERE x = (SELECT MAX(x) FROM <same query>)`.
+
+    The exact inverse of `superlative_order_limit`, and mutually exclusive with it.
+    Rationale: BIRD scores by set comparison (shared/evaluator.py), so when the
+    extremum is unique both forms return the same set and this rewrite is free;
+    when the data ties, `LIMIT 1` keeps one arbitrary row and loses the rest.
+    Measured on three runs: +5 / +5 / +4 questions.
+
+    Known cost: when every candidate value is NULL, MAX returns NULL and the
+    rewritten `x = NULL` matches nothing, while `LIMIT 1` still returned a row
+    (bird_633). Detecting that needs execution, which this layer deliberately
+    does not do, so the rule accepts it.
+    """
+    if not isinstance(tree, exp.Select):
+        return False
+    limit = tree.args.get("limit")
+    order = tree.args.get("order")
+    if not limit or not order or tree.args.get("offset"):
+        return False
+    if not isinstance(limit.expression, exp.Literal) or limit.expression.this != "1":
+        return False
+    if len(order.expressions) != 1:
+        # A second sort key means the query already breaks ties deliberately.
+        return False
+
+    ordered = order.expressions[0]
+    key = _resolve_projection_alias(tree, ordered.this)
+    aggregate = exp.Max if ordered.args.get("desc") else exp.Min
+
+    inner = tree.copy()
+    inner.set("order", None)
+    inner.set("limit", None)
+    inner.set("expressions", [exp.alias_(key.copy(), "k")])
+    extremum = exp.select(aggregate(this=exp.column("k"))).from_(
+        exp.Subquery(this=inner, alias=exp.TableAlias(this=exp.to_identifier("t")))
+    )
+    condition = exp.EQ(this=key.copy(), expression=exp.Subquery(this=extremum))
+
+    # An extremum over groups is a property of the group, so it belongs in
+    # HAVING; gold writes it that way too (HAVING COUNT(x) = (SELECT MAX(...))).
+    grouped = tree.args.get("group") is not None or bool(list(key.find_all(exp.AggFunc)))
+    clause = "having" if grouped else "where"
+    existing = tree.args.get(clause)
+    merged = exp.And(this=existing.this, expression=condition) if existing else condition
+    tree.set(clause, (exp.Having if grouped else exp.Where)(this=merged))
+
+    tree.set("order", None)
+    tree.set("limit", None)
+    return True
+
+
 _RULES = {
     "count_no_distinct": _rule_count_no_distinct,
     "no_select_concat": _rule_no_select_concat,
     "superlative_order_limit": _rule_superlative_order_limit,
+    "keep_ties": _rule_keep_ties,
 }
+
+# These two are exact inverses; enabling both would make the pipeline's output
+# depend on rule ordering rather than on the conventions.
+_MUTUALLY_EXCLUSIVE = (("superlative_order_limit", "keep_ties"),)
 
 
 class SqlConventionRewriter:
@@ -231,13 +313,17 @@ class SqlConventionRewriter:
     def __init__(self, path: Path = _DEFAULT_PATH) -> None:
         self.path = Path(path).resolve()
         payload = json.loads(self.path.read_text(encoding="utf-8"))
-        if payload.get("version") != VERSION:
+        if payload.get("version") not in KNOWN_VERSIONS:
             raise ValueError(f"Unsupported convention artifact: {payload.get('version')!r}")
         self._payload = payload
         self._conventions: dict[str, dict[str, Any]] = payload.get("conventions", {})
         unknown = set(self._conventions) - set(_RULES)
         if unknown:
             raise ValueError(f"Artifact declares conventions with no rewrite rule: {sorted(unknown)}")
+        enabled = set(self.enabled_conventions)
+        for pair in _MUTUALLY_EXCLUSIVE:
+            if enabled.issuperset(pair):
+                raise ValueError(f"Conventions {pair} are inverses and cannot both be enabled")
 
     @property
     def enabled_conventions(self) -> tuple[str, ...]:
@@ -314,5 +400,9 @@ class SqlConventionRewriter:
         }
 
 
-def get_sql_convention_rewriter(path: Path = _DEFAULT_PATH) -> SqlConventionRewriter:
-    return SqlConventionRewriter(path)
+def get_sql_convention_rewriter(mode: str = VERSION) -> SqlConventionRewriter:
+    """Resolve a convention artifact by the profile's `sql_convention_mode`."""
+    try:
+        return SqlConventionRewriter(_PATHS[mode])
+    except KeyError:
+        raise ValueError(f"Unknown SQL convention mode: {mode!r}") from None

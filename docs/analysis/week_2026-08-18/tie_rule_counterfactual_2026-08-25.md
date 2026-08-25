@@ -121,7 +121,30 @@ return {tuple(row) for row in pred_answer} == {tuple(row) for row in gold_answer
 这条规则是**确定性后处理**：同一批预测施加同一个变换，结果每次都一样，不存在抖动。
 该问的是「换一批预测还成不成立」——**三个不同运行上分别 +6 / +6 / +5，成立。**
 
-### 结论：做，但按项目规矩落地
+### 已实现（2026-08-25）
+
+规则已落地，按下面第 1~4 条做的：
+
+| | |
+|---|---|
+| 规则 | `ours/agent/sql_conventions.py` 的 `_rule_keep_ties`，纯 AST，解析投影别名，分组/聚合键走 `HAVING` |
+| 开关 | 新增 `sql_convention_mode` 取值 `train-conventions-v2-ties` + 独立 artifact `data/processed/sql_conventions_v2_ties.json`；**v1 里该规则 `enabled: false`，现有 profile 行为不变** |
+| profile | `e3-c-recursive-db-keepties`，测试固定「与基线只差 `profile`/`experiment_variant`/`sql_convention_mode`」 |
+| 互斥 | `keep_ties` 与 `superlative_order_limit` 是逆变换，同时启用抛 `ValueError` |
+| 测试 | `tests/test_keep_ties_convention.py`，21 个，含并列/唯一最值的语义对照 |
+
+**走正式代码路径的离线回放**（比原型更好，因为正式规则拒绝得更保守）：
+
+| 运行 | 触发 | 救回 | 打坏 | 净 |
+|---|---:|---:|---:|---:|
+| `recursive_db` run1 | 67 | 7 | 2 | **+5（+1.01pp）** |
+| `recursive_db` run2 | 77 | 7 | 2 | **+5（+1.01pp）** |
+| `final_gate` run1 | 70 | 9 | 2 | **+7（+1.41pp）** |
+
+三轮打坏的都是同样 2 道（`bird_633`、`bird_82`），解析失败 0 道。
+全量单变量对照已排队，等在跑的 `resample_turn.py` 结束后自动启动。
+
+### 落地时遵循的四条
 
 1. **实现成 `sql_postprocessing_rules` 里一条可消融的规则**，配 profile 开关，
    与 `no_select_concat` 同级别；不要直接改 `e3-c-recursive-db`

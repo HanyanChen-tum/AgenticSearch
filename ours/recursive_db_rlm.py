@@ -81,7 +81,7 @@ class DBRLM(RLM):
         self._execution_state = AgentExecutionState()
         self._query_plan_state = QueryPlanState()
         self._sql_conventions = (
-            get_sql_convention_rewriter()
+            get_sql_convention_rewriter(self.agent_config.sql_convention_mode)
             if self.agent_config.sql_convention_mode != "none"
             else None
         )

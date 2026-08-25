@@ -64,7 +64,7 @@
   },
   "keep_ties": {
    "choice": "ORDER BY ... LIMIT 1 vs WHERE x = (SELECT MAX(x) ...) when the data ties",
-   "enabled": false,
+   "enabled": true,
    "gold_preference": "keep every tied row",
    "rewrite": "rewrite `ORDER BY x DESC LIMIT 1` to `WHERE x = (SELECT MAX(x) ...)`, resolving a projection alias used as the sort key; grouped or aggregate keys go to HAVING",
    "measured": {
@@ -77,7 +77,7 @@
     "known_cost": "all-NULL extremum (bird_633); model WHERE differing from gold (bird_82)",
     "validated_on": "dev500 only -- no local train database, see docs/analysis/week_2026-08-18/tie_rule_counterfactual_2026-08-25.md"
    },
-   "disabled_reason": "off in v1; enabled in the v2-ties artifact so it stays ablatable"
+   "disabled_reason": null
   }
  },
  "dialect": "sqlite",
@@ -87,5 +87,10 @@
  "source": "data\\train_pool.json",
  "source_sha256": "80c0326216d775eff04ae46d5656a452d741d09993d93d527b02848451ee443f",
  "train_example_count": 9428,
- "version": "train-conventions-v1"
+ "version": "train-conventions-v2-ties",
+ "derived_from": {
+  "version": "train-conventions-v1",
+  "sha256": "f5b17b86ea4f39a65ce48cd5762f86006a7c9374c57ce59a6c79d652b9efbcfd",
+  "difference": "keep_ties enabled"
+ }
 }

@@ -9,7 +9,9 @@ import json
 from .prompts import prompt_manifest
 from .query_plan import QUERY_PLAN_MODE, protocol_manifest
 from .reasoning_capture import CAPTURE_MODE as REASONING_CAPTURE_MODE
+from .sql_conventions import KNOWN_VERSIONS as SQL_CONVENTION_VERSIONS
 from .sql_conventions import VERSION as SQL_CONVENTION_VERSION
+from .sql_conventions import VERSION_TIES as SQL_CONVENTION_VERSION_TIES
 
 
 AGENT_CONFIG_SCHEMA_VERSION = 1
@@ -69,7 +71,7 @@ class AgentConfig:
             raise ValueError(f"Unknown schema context mode: {self.schema_context_mode!r}")
         if self.context_mode not in {"direct", "store-readonly"}:
             raise ValueError(f"Unknown context mode: {self.context_mode!r}")
-        if self.sql_convention_mode not in {"none", SQL_CONVENTION_VERSION}:
+        if self.sql_convention_mode not in {"none", *SQL_CONVENTION_VERSIONS}:
             raise ValueError(f"Unknown SQL convention mode: {self.sql_convention_mode!r}")
         if self.reasoning_capture not in {"none", REASONING_CAPTURE_MODE}:
             raise ValueError(f"Unknown reasoning capture mode: {self.reasoning_capture!r}")
@@ -419,6 +421,31 @@ _PROFILES = {
         sql_convention_mode=SQL_CONVENTION_VERSION,
         recursion_mode="leaf-db-v1",
         final_execution_gate=True,
+    ),
+    # Single variable against e3-c-recursive-db: the convention artifact gains
+    # keep_ties, which rewrites `ORDER BY x DESC LIMIT 1` into a form that keeps
+    # every tied row. BIRD scores by set comparison, so the two forms agree
+    # whenever the extremum is unique and diverge only on real ties -- where
+    # LIMIT 1 keeps one arbitrary row and the rest of the answer is lost.
+    #
+    # Replaying the rewrite over three completed runs and rescoring measures
+    # +5 / +5 / +4 questions (about +0.8 to +1.0pp), larger than layers 3 and 4
+    # of the chain combined. Rejected three times before that on grounds that all
+    # turned out to be wrong -- see docs/analysis/week_2026-08-18/
+    # tie_rule_counterfactual_2026-08-25.md, which also records that this is
+    # validated on dev only: there is no local train database, and reading train
+    # gold *syntax* cannot settle a question about scored outcomes.
+    "e3-c-recursive-db-keepties": AgentConfig(
+        profile="e3-c-recursive-db-keepties",
+        experiment_variant="e3-c-recursive-db-keepties",
+        prompt_profile="conventions-recursive-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION_TIES,
+        recursion_mode="leaf-db-v1",
     ),
     # e3-c-recursive-db with reasoning_capture on, for causal tracing into *why*
     # depth-1 recursion doesn't move accuracy (five_layer_chain_results
