@@ -1,0 +1,290 @@
+{
+ "bird_928": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 2
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 6
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 2
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 4
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 4
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 2
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 2
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 1
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 1
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 1
+  }
+ ],
+ "bird_931": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 6
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 3
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 8
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 0
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 8
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 5
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 3
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 2
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 1
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 1
+  }
+ ],
+ "bird_1479": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 5
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 7
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 5
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 9
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 7
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 7
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 6
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 18
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 4
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 7
+  }
+ ],
+ "bird_1080": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 6
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 30
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 12
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 19
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 5
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 14
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "section_count": 4
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 38
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 9
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "draft FINAL discarded (response also had ```python; real harness runs the code and continues instead)",
+   "section_count": 20
+  }
+ ]
+}

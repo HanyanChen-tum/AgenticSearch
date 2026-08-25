@@ -6,12 +6,21 @@ mutually independent lines of evidence to pin down one and the same bottleneck: 
 is almost all semantic and convention failure, and neither the method stack nor the reasoning
 budget can touch it.**
 
-> **Update, evening of 08-24.** Three more things happened in the last half-day and are folded
-> in below: Phase A resampling was scaled to all 28 questions (**61% are flat-zero**, and a
-> fourth shape — "high-band" — showed up); the few-shot two-arm experiment ran and **came out
-> opposite to the hypothesis, which is now retracted** (§4) — its residual explanation lands
-> back on format/convention, making it a fifth line of evidence; and the full run of the
-> recommended default profile **is in progress** (§7).
+> **Update, 08-25.** Four more things happened after 08-24 and are folded in below:
+>
+> 1. **Phase A resampling finished across 28 questions, and the measurement itself needed two
+>    rounds of repair** (§4.1). The most valuable statistic is §4.3: **58% of deep-failure
+>    questions are genuinely out of reach; 24% are just runs that went astray.** The latter points
+>    at a new direction — **sample and vote** — worth roughly 1–3pp, now the new P1.
+> 2. **The few-shot two-arm experiment ran and came out opposite to the hypothesis, which is now
+>    retracted** (§4.4); its residual explanation lands back on format/convention as a fifth line
+>    of evidence.
+> 3. **The recommended default profile's full run finished** (§7): 87.50%, −0.6pp against the
+>    88.10% mean on the same convention — inside the noise band; and **zero records needed
+>    scoring-side timeout recovery**, so its recurrence-prevention purpose is met.
+> 4. **The tie-convention conclusion changed** (P1.5): both earlier grounds for rejection were
+>    wrong, and the rule measures net +1 to +3 questions. It still does not ship, but **on a
+>    different ground**, and the paper's wording has to change with it.
 
 ---
 
@@ -221,51 +230,82 @@ Mechanism closed: of the 7 questions where gold used `MAX-subquery` and the mode
 
 ---
 
-## 4. New direction: Phase A upgraded from LLM judgement to measurement
+## 4. Phase A and turn-level resampling: the numbers, and what they mean
 
 Phase A's first-pass localisation was a single LLM judgement — observational evidence. This week
-we began replacing judgement with **counterfactual resampling**: truncate at each turn boundary,
+judgement was replaced with **counterfactual resampling**: truncate at each turn boundary,
 resample N=10, and watch how P(correct | first k turns fixed) moves (Thought Anchors' resampling
 importance, at turn granularity).
 
-Now scaled to all **28** Phase A questions (24 from run1 + 4 from run2, N=10 per question per k),
-written to `analysisDetail/phaseA_resample/all28_{run}_turn{k}.json`. I recomputed the
-classification independently and it agrees question by question with
-[`phase_a_turn_resampling_2026-08-24.md`](phase_a_turn_resampling_2026-08-24.md):
+### 4.1 The measurement itself was fixed twice; only the third version is trustworthy
 
-| Shape | Criterion | n | Share |
+| Version | What it did | Result |
+|---|---|---|
+| v1 | Scored anything a regex matched as `FINAL("…")` | **Systematic overestimate** — counted drafts the harness would discard as submissions |
+| v2 | Copied the harness's `is_final and not has_code`; drafts invalidated | **Overcorrected** — **40% of 680 samples** came back as drafts and the median k=1 valid-sample count fell to **0**; the whole tier became unmeasurable |
+| **v3** | Do not discard a draft: **actually execute its code, feed the observation back in the real format, and let the model continue** (reusing `ours/recursive_db_rlm.py`'s own REPL and formatting), up to 2 continuations | **Measurable** — median k=1 valid samples back to **6** |
+
+What v2 exposed is itself a finding: **at k=1 (no context at all) the model almost never submits a
+clean FINAL — it probes first and writes a draft answer alongside.** That is not specific to
+`bird_637`; it is general behaviour. v1 scored those drafts, v2 threw them away; both are wrong,
+and v3 does what the harness actually does.
+
+**All three versions' files are kept** (`all28_*` / `all28v2_*` / `all28v3_*`) for per-question,
+per-k comparison.
+
+### 4.2 Shape distribution (v3, independently recomputed)
+
+28 deep-failure questions from the "other" class, N=10 per question per k:
+
+| Shape | Criterion | v1 (buggy) | **v3 (trustworthy)** |
 |---|---|---:|---:|
-| **Flat-zero** | every k below 15% | **17** | **61%** |
-| **Locked-in** | k=1 ≥30%, then collapses below 15% and stays there | 5 | 18% |
-| **Non-monotonic** | rises then falls, or oscillates | 3 | 11% |
-| **High-band** | every k at or above 50% | 3 | 11% |
+| **Flat-zero** | every k below 15% | 17 (61%) | **15 (54%)** |
+| **Non-monotonic** | rises then falls, or oscillates | 3 (11%) | **7 (25%)** |
+| **Locked-in** | k=1 ≥30%, then collapses below 15% and stays | 5 (18%) | **3 (11%)** |
+| **High-band** | every k at or above 50% | 3 (11%) | **3 (11%)** |
 
-> **⚠️ This table is on v1 scoring and is being recomputed.** The classification above runs on the
-> `all28_*` data, which was scored **before `would_be_discarded()`** (see §5's third overturn).
-> The v2 recompute started at 19:59 (`all28v2_run1_turn1.json`, an in-progress snapshot at 5
-> questions): **37 of 50 samples come back as "draft FINAL, the harness would discard it"**, and
-> per-question valid-sample counts fall from 8~10 to 0~1.
->
-> Flat-zero questions were zero anyway, so their classification will most likely survive.
-> **But "locked-in" is defined precisely by an elevated k=1** (`bird_1480` 7/10, `bird_383` 4/6,
-> `bird_85` 3/8, `bird_1080` 5/10, `bird_637` 2/6) — and most of those "correct" samples are
-> plausibly the discardable drafts. **So the 18% share is the one most likely to shrink, and
-> locked-in may not survive as a category at all.** Settle it when v2 finishes; until then treat
-> this table as a rough distribution only.
+**v1's headline (flat-zero is the majority) survives, but some details were genuinely wrong**:
+`bird_85` was recorded as locked-in at 37.5% in v1; v3 shows k=1 at **0/6** — that 37.5% was
+entirely draft contamination. Conversely v1's three high-band questions (`bird_931`, `bird_928`,
+`bird_1479`) survive v3 unchanged, so they are real.
 
-Three points:
+### 4.3 The statistic that actually matters: half unreachable, a quarter just unlucky
 
-1. **61% are flat-zero** — independent resampling from scratch gets them wrong everywhere.
-   These questions **have no commitment point at all**: resampling measures nothing on them,
-   and **an intervention arm cannot rescue them either**. They need a different method.
-   The first batch of 5 got the direction of "three shapes" right, but the proportions are new.
-2. **"High-band" is a fourth shape the first batch never showed**: `bird_931` (9/9, 8/9),
-   `bird_928` (2/2, 6/7), `bird_1479` (4/8) are usually *correct* under independent resampling —
-   **the recorded run went astray; the question itself is not hard.** But this number cannot be
-   read as "agent accuracy" for the reason in the third overturn below.
-3. `bird_637` is still locked-in, **but its attribution has been retracted** — see below.
+Taking **k=1** (starting over from the question, the closest thing to "rerun this question") as the
+per-question resampling accuracy, and folding in this week's ratio-formula batch:
 
-### ⚠️ The few-shot hypothesis was overturned by its own experiment
+| | "Other" class | Ratio-formula | **Total** |
+|---|---:|---:|---:|
+| Questions | 28 | 10 | **38** |
+| **Out of reach** (k=1 <15%) | 18 (64%) | 4 (40%) | **22 (58%)** |
+| Marginal (15~50%) | 3 (11%) | 4 (40%) | **7 (18%)** |
+| **Usually gets it right** (≥50%) | 7 (25%) | 2 (20%) | **9 (24%)** |
+
+**This is the most valuable result in this section**: the questions we have been lumping together
+as "deep failures" are two completely different things.
+
+1. **58% are genuinely out of reach** — resampled ten times from scratch, still wrong almost
+   every time. These have **no "first wrong commitment" to find**: the localisation script's
+   premise simply does not hold for them, and an intervention arm cannot rescue them.
+2. **24% are runs that happened to go astray** — the model had a 50%–100% chance of getting them
+   right:
+
+   | Question | k=1 accuracy |
+   |---|---:|
+   | `bird_383` | 5/5 (100%) |
+   | `bird_637`, `bird_928` | 86% |
+   | `bird_1531` (ratio-formula) | 80% |
+   | `bird_1479`, `bird_931`, `bird_1080` | 75% |
+   | `bird_1480` | 71% |
+   | `bird_1243` (ratio-formula) | 50% |
+
+**That 24% points at a direction nobody has considered here**: it needs no new method layer and no
+extra reasoning budget — just **sampling more than once and voting** (self-consistency /
+best-of-n). Extrapolated over the 61 failures the best profile has on the full set, the magnitude
+is roughly 1–3pp — **comparable to layers 3 and 4 combined, at the cost of repeated sampling.**
+This has not been tested; it is a **new testable hypothesis** this report proposes, not a result.
+
+### 4.4 ⚠️ The few-shot hypothesis was overturned by its own experiment
 
 The previous version of this report proposed, from `bird_637`'s trace, that the causal source of
 the failure was the retrieved few-shot example (a "tags live in their own table, one row each"
@@ -277,14 +317,14 @@ opposite of the hypothesis** (`--drop-fewshot`, N=15 each):
 | Arm A (few-shot present, as recorded) | **10/13 (77%)** | 2 |
 | Arm B (few-shot removed) | **2/13 (15%)** | **9** |
 
-Deleting the example does not help — it drops the question from 77% to 15%. And the errors in
-both arms are almost all `WITH RECURSIVE` splitting, **not** the JOIN shape that example
-demonstrates; removing it makes that error class go *up*, from 2 to 9. The direction does not fit.
+Deleting the example does not help — it drops the question from 77% to 15%. And the errors in both
+arms are almost all `WITH RECURSIVE` splitting, **not** the JOIN shape that example demonstrates;
+removing it makes that error class go *up*, from 2 to 9. The direction does not fit.
 
 **The better-supported explanation**: seeing an angle-bracket delimited string like
 `<bayesian><prior><elicitation>` is itself what triggers the urge to split, largely independent of
-which few-shot example was retrieved. If that example did anything, it supplied a simple
-"just select the column" pattern and acted as a **stabiliser**, not a distractor.
+which example was retrieved. If that example did anything, it supplied a simple "just select the
+column" pattern and acted as a **stabiliser**, not a distractor.
 
 **Two conclusions**:
 
@@ -295,14 +335,21 @@ which few-shot example was retrieved. If that example did anything, it supplied 
 
 **Methodological value**: a causal story derived from reading a trace once has to survive a
 counterfactual test before it can be believed. This is the causal-inference version of "mechanical
-adjudication falsified" — except this time what got overturned was a hypothesis I wrote in the
+adjudication falsified" — except this time what got overturned was a hypothesis written in the
 previous version of this very report.
 
-`locate_first_wrong_sentence.py` assumes "a first wrongly-committing sentence exists."
-**That premise should be tested per question, not assumed.** The turn curve is exactly the tool
-for testing it.
+### 4.5 Boundaries
 
----
+1. **v3's k=1 is not "the agent's real accuracy"**: it starts from the question and allows at most
+   2 continuations, where the real agent gets up to 8 turns. It approximates "what would happen if
+   this question were rerun", which is not the same measurement.
+2. **N=10 (4~9 on questions where it gave up) — a small sample.** Questions sitting near the
+   15%/50% classification thresholds (`bird_383`, `bird_85`) swinging between versions is expected;
+   what is stable is the **direction**: most are out of reach, a minority are usually right.
+3. **The ratio-formula batch covers only turn 1 of 10 questions** (of 18); run2 not done. Its share
+   is preliminary.
+4. **The Phase A pool has grown from 29 to 46** (`phase_a_source_map_v2_46.json`); the 28+10 here
+   are the part with completed resampling, not the whole pool.
 
 ## 5. Methodology: mechanical shortcuts were overturned three times this week
 
@@ -409,17 +456,31 @@ python scripts/run_bird_train_fewshot.py \
   --output results/<name>.json
 ```
 
-### Full run of the recommended default profile: in progress
+### Full run of the recommended default profile: finished
 
-`e3-c-recursive-db-final-gate` is running its first full pass over the corrected dev500
-(`results/chain_e3_c_recursive_db_final_gate_corrected_run1.json`, `agent_config_sha256`
-`316263c67080…`, `max_iterations=8` / `k=1` / `effort=high` / scoring timeout 180s).
-**As of 2026-08-24 19:53 it has completed 78 of 498.**
+`e3-c-recursive-db-final-gate` completed its first full pass over the corrected dev500 overnight
+on 08-24 (`agent_config_sha256` `316263c67080…`, `max_iterations=8` / `k=1` / `effort=high` /
+scoring timeout 180s):
 
-**The accuracy at this point must not be cited** — it covers the first 78 questions of the
-dataset, a prefix rather than a random subset, and is not comparable to the 88.10% full-set mean.
-Only when it finishes is there a first full-set data point for "recommended default = best arm +
-gate"; per the ceiling analysis in §3, Evidence 3, expect it within ±1pp of `e3-c-recursive-db`.
+| | final-gate | control `e3-c-recursive-db` |
+|---|---:|---:|
+| Scorable | **498 / 498** | 496 / 498 |
+| Correct | 436 | 435 / 439 |
+| Accuracy (same 496 convention) | **87.50%** | 87.70% / 88.51% (mean 88.10%) |
+| **Scoring-side timeout recoveries** | **0** | 121 backfills were needed repo-wide |
+
+**Two readings**:
+
+1. **−0.6pp, inside the noise band (0.2~1.4pp)** — matching the ±1pp predicted by §3, Evidence 3.
+   **It does not raise accuracy, and that now rests on a full run rather than a 24-question
+   sample.**
+2. **Its recurrence-prevention purpose is met**: across all 498 questions, **not one** record
+   needed scoring-side timeout recovery. That is exactly why it was added — so a query that errors
+   or times out inside the loop returns to the model with its real error instead of reaching
+   scoring as a `no_answer`.
+
+Incidentally, **all 498 were scorable** this time, with `bird_1507`/`bird_1528` participating and
+both correct — confirming the `evidence=None` defect is genuinely fixed (see point 3 below).
 
 ### Three things that must be stated whenever this number is cited
 
@@ -429,9 +490,11 @@ gate"; per the ceiling analysis in §3, Evidence 3, expect it within ±1pp of `e
    Responses API and are not accuracy-comparable (`e3-c-recursive-db-reasoning`'s 87.9% / 87.3%
    belong to the latter).
 3. **2 of the 498 are not scorable** — the denominator is 496. They are `bird_1507` and
-   `bird_1528`: the `evidence=None` `AttributeError` from `harness_defects_2026-08-18.md` §2,
-   which `WEEK_PLAN` scheduled for repair and which is **still not fixed** (both runs lose the
-   same two).
+   `bird_1528`: the `evidence=None` `AttributeError` from `harness_defects_2026-08-18.md` §2.
+   **Correction: that defect is fixed** (`(evidence or "").strip()` at
+   `ours/recursive_db_rlm.py:102,123`); the eight-arm runs simply predate the fix, so their
+   denominator is permanently 496. **New runs score both questions** — the final-gate full run
+   that finished overnight on 08-24 is 498/498 scorable, with both of them correct.
 
 ---
 
@@ -466,36 +529,71 @@ still be used for causal analysis.
 
 ---
 
-## P1 — The intervention arm is done, and it overturned its own hypothesis; change the question
+## P1 — Resampling has said what it has to say; the next move is sampling, not another layer
 
-The planned P1 was "run the few-shot two-arm test." **It ran the same day, and the result is
-negative** (see §4): removing the example took `bird_637` from 77% to 15%, so the retriever is not
-the causal source. The shape proportions across 28 also came in: **61% flat-zero.**
+The planned P1 ("run the few-shot two-arm test") ran on 08-24 and **came out negative** (§4.4).
+The measurement itself then needed two more rounds of repair (§4.1); only the third is
+trustworthy. The line has now converged on one result:
 
-Together those close the original route. **An intervention arm only means anything on questions
-that have a commitment point to intervene on — and those are 18% of the Phase A corpus (5
-locked-in questions).** Adding more arms there is multiple comparisons on 5 questions, which this
-project has already listed as something it does not do.
+**58% of deep-failure questions are genuinely out of the model's reach; 24% are just runs that
+went astray** (§4.3).
 
-So the next step is not "run another arm," but **three better-founded questions**:
+That formally closes the intervention-arm route: it only means anything on questions with a
+commitment point to intervene on, and locked-in is down to **3 of 28 (11%)** under v3. Adding arms
+across 3 questions is multiple comparisons, which this project does not do.
 
-| # | What | Why it is worth it |
+### Do this one first: test "sample more than once and vote"
+
+| | |
+|---|---|
+| **Hypothesis** | The 24% in §4.3 (k=1 accuracy 50%–100%) need no new method layer — only self-consistency / best-of-n |
+| **How to test** | N=5 on the full 498 with the best profile, majority vote, against the single-sample baseline |
+| **Expected magnitude** | Roughly 1–3pp — **comparable to layers 3 and 4 combined**, with no new component |
+| **Why it is worth it** | The only **new, positive, testable** direction this week produced; every other lead says "do not invest there" |
+| **Risk** | 5× cost; and if the failures are *consistent* (the model errs the same way every time) voting gains nothing — which is exactly what the test settles |
+
+**This is a hypothesis, not a result.** The 24% is computed at k=1 over 38 questions, and k=1 is
+not the real agent's full trajectory (§4.5, boundary 1).
+
+### Then two cheap ones, in parallel
+
+| # | What | Why |
 |---|---|---|
-| 1 | **Fix what k=1 means**: use `resample_full_trajectory.py` instead of single-turn resampling, and measure the accuracy distribution over the real agent's full trajectory | Today's k=1 captures "the model's first-turn draft, including the kind the harness discards." `would_be_discarded()` fixed the scoring, but **the semantics are still not "the probability the agent gets it right."** The three high-band questions in particular cannot be read without this |
-| 2 | **Investigate the three high-band questions** (`bird_931`, `bird_928`, `bird_1479`): usually correct under independent resampling, yet the recorded run got them wrong | This is the **only class where resampling measures something that points at a fixable cause** — the question is not hard, that run went astray. Finding where it went astray beats chiselling at flat-zero questions |
-| 3 | **Chase the delimiter-splitting urge**: on how many questions does a packed `<a><b><c>` string trigger a `WITH RECURSIVE` / `split`-style rewrite? | The **one positive lead** the two-arm experiment left behind, and it lands on the §3 bottleneck (format / convention), so it feeds track C directly |
+| 2 | **Chase the delimiter-splitting urge**: on how many questions does a packed `<a><b><c>` string trigger a `WITH RECURSIVE` / `split`-style rewrite? | The **one positive lead** the two-arm experiment left, landing on the §3 bottleneck (format/convention) — feeds track C directly |
+| 3 | **Finish the ratio-formula resampling**: currently only turn 1 of 10 of 18 questions, run2 not done | Its "marginal" share is 40% against 11% in the "other" class — worth confirming the classes really differ |
 
-**Status update on the two known budget-destroying problems**:
+**Known-issue status**:
 
-1. ~~`resample_turn.py` needs a per-sample fallback~~ — **fixed and committed** (each sample is
-   wrapped individually).
-2. Backfill `gold_answer` for `bird_518` and `bird_701` (currently `None`) — **still not fixed.**
-   The 30-second timeout correction went through `indexed_reexecution` without backfilling, and
-   `shared/evaluator.py:46` returns `False` for `None` unconditionally, so a run would produce a
-   beautiful-looking 0/10 that is really the scoring function comparing against `None`.
-   (`bird_518` has since been excluded from the 28-question corpus, but the trap itself remains.)
+1. ~~`resample_turn.py` needs a per-sample fallback~~ — **fixed and committed**.
+2. ~~k=1 semantics are wrong~~ — **resolved by v3's execute-draft-and-continue** (§4.1).
+3. Backfill `gold_answer` for `bird_518` and `bird_701` (currently `None`) — **still not fixed.**
+   `shared/evaluator.py:46` returns `False` for `None` unconditionally, so a run yields a
+   beautiful-looking 0/10 that is really the scorer comparing against `None`.
 
 ---
+
+## P1.5 — The tie convention: the conclusion changed, the rule still does not ship
+
+See [`tie_rule_counterfactual_2026-08-25.md`](tie_rule_counterfactual_2026-08-25.md). Both earlier
+grounds for rejecting it **do not hold** (one measured the wrong object — gold's *syntax* never
+reaches the scorer, since BIRD scores by set comparison; the other was a script bug — the extremum
+direction ignored `ASC`/`DESC`). Measured after the fix:
+
+| Run | Recovered | Broken | Net |
+|---|---:|---:|---:|
+| `recursive_db` run1 / run2 | 4 / 4 | 3 / 3 | **+1 / +1** |
+| `final_gate` run1 | 6 | 3 | **+3** |
+
+**Decision: the rule still does not ship, but on a third and different ground — the effect is too
+small (+0.2~0.6pp, inside the noise band) for a mechanical rewrite that has to handle NULL
+semantics, projection-alias binding and multi-key ORDER BY.** The risk/benefit does not clear the
+same bar that disabled `count_no_distinct` and `superlative_order_limit`.
+
+**But the paper's wording must change**: not "model error", and not merely "two coexisting
+conventions", but — **BIRD's majority style silently drops answers when the data ties, and which
+one it drops depends on execution order** (`bird_1002`: 13 tied rows, 13 different answers, gold
+recorded one of them). That is a stronger claim than the original, and it does not depend on
+whether the rule ships.
 
 ## P2 — Settle the paper's structure (three blocks, all on existing data)
 

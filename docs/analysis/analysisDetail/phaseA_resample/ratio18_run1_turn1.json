@@ -1,0 +1,1068 @@
+{
+ "bird_226": [
+  {
+   "sample": 0,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(bond_type = '=') / COUNT(bond_id)) AS percentage FROM bond WHERE molecule_id = 'TR008';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 10
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT printf('%.5f', SUM(bond_type = '=') * 100.0 / COUNT(bond_id)) AS percentage FROM bond WHERE molecule_id = 'TR008'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 14
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 12
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT printf('%.5f', CAST(SUM(bond_type = '=') AS REAL) * 100.0 / COUNT(bond_id)) FROM bond WHERE molecule_id = 'TR008';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT printf('%.5f', CAST(SUM(bond_type = '=') AS REAL) * 100.0 / COUNT(bond_id)) FROM bond WHERE molecule_id = 'TR008';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT printf('%.5f', CAST(SUM(bond_type = '=') AS REAL) * 100.0 / COUNT(bond_id)) AS pct FROM bond WHERE molecule_id = 'TR008';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12
+  }
+ ],
+ "bird_1149": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT (COUNT(CASE WHEN SEX = 'M' AND Admission = '+' THEN ID END) * 1.0) / COUNT(CASE WHEN SEX = 'M' AND Admission = '-' THEN ID END) FROM Patient",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT 1.0 * COUNT(CASE WHEN SEX = 'M' AND Admission = '+' THEN ID END) / COUNT(CASE WHEN SEX = 'M' AND Admission = '-' THEN ID END) FROM Patient",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT CAST(COUNT(CASE WHEN SEX = 'M' AND Admission = '+' THEN ID END) AS REAL) / NULLIF(COUNT(CASE WHEN SEX = 'M' AND Admission = '-' THEN ID END), 0) AS ratio FROM Patient",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT 1.0 * COUNT(CASE WHEN SEX = 'M' AND Admission = '+' THEN ID END) / COUNT(CASE WHEN SEX = 'M' AND Admission = '-' THEN ID END) AS ratio FROM Patient",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT 1.0 * (SELECT COUNT(ID) FROM Patient WHERE SEX = 'M' AND Admission = '+') / (SELECT COUNT(ID) FROM Patient WHERE SEX = 'M' AND Admission = '-') AS ratio",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 8
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT 1.0 * COUNT(ID) FILTER (WHERE SEX = 'M' AND Admission = '+') / COUNT(ID) FILTER (WHERE SEX = 'M' AND Admission = '-') AS ratio FROM Patient",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4
+  }
+ ],
+ "bird_1531": [
+  {
+   "sample": 0,
+   "sql": "SELECT t.CustomerID, SUM(t.Price) / SUM(t.Amount) AS average_price_per_single_item, c.Currency FROM transactions_1k AS t INNER JOIN customers AS c ON t.CustomerID = c.CustomerID GROUP BY t.CustomerID, c.Currency ORDER BY SUM(t.Amount * t.Price) DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 15
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT t.CustomerID, SUM(t.Amount * t.Price) / SUM(t.Amount) AS average_price_per_single_item, c.Currency FROM transactions_1k AS t JOIN customers AS c ON t.CustomerID = c.CustomerID GROUP BY t.CustomerID, c.Currency ORDER BY SUM(t.Amount * t.Price) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT t.CustomerID, SUM(t.Amount * t.Price) / NULLIF(SUM(t.Amount), 0) AS average_price_per_single_item, c.Currency FROM transactions_1k AS t INNER JOIN customers AS c ON t.CustomerID = c.CustomerID GROUP BY t.CustomerID, c.Currency ORDER BY SUM(t.Amount * t.Price) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT t.CustomerID, SUM(t.Amount * t.Price) / NULLIF(SUM(t.Amount), 0) AS average_price_per_single_item, c.Currency FROM transactions_1k AS t INNER JOIN customers AS c ON t.CustomerID = c.CustomerID GROUP BY t.CustomerID, c.Currency ORDER BY SUM(t.Amount * t.Price) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 11
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 16
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 9
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT x.CustomerID, x.average_price_per_single_item, c.Currency FROM (SELECT CustomerID, 1.0 * SUM(Amount * Price) / SUM(Amount) AS average_price_per_single_item, SUM(Amount * Price) AS total_spending FROM transactions_1k GROUP BY CustomerID ORDER BY total_spending DESC LIMIT 1) AS x JOIN customers AS c ON x.CustomerID = c.CustomerID;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7
+  }
+ ],
+ "bird_227": [
+  {
+   "sample": 0,
+   "sql": "SELECT printf('%.3f', 100.0 * SUM(label = '+') / COUNT(molecule_id)) AS percent FROM molecule;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT printf('%.3f', 100.0 * SUM(label = '+') / COUNT(molecule_id)) AS percent FROM molecule;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 8
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT printf('%.3f', 100.0 * SUM(CASE WHEN label = '+' THEN 1 ELSE 0 END) / COUNT(molecule_id)) AS percent FROM molecule;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 12
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT printf('%.3f', CAST(SUM(label = '+') AS REAL) * 100.0 / COUNT(molecule_id)) AS percent FROM molecule;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT printf('%.3f', 100.0 * SUM(label = '+') / COUNT(molecule_id)) AS percent FROM molecule;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT ROUND(100.0 * SUM(label = '+') / COUNT(molecule_id), 3) AS percent FROM molecule;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT ROUND(100.0 * SUM(label = '+') / COUNT(molecule_id), 3) AS percent FROM molecule;",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 11
+  }
+ ],
+ "bird_228": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 10
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 6
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 6
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 8
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT printf('%.4f', 100.0 * SUM(CASE WHEN element = 'h' THEN 1 ELSE 0 END) / COUNT(atom_id)) AS hydrogen_percentage FROM atom WHERE molecule_id = 'TR206';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT printf('%.4f', 100.0 * SUM(element = 'h') / COUNT(atom_id)) FROM atom WHERE molecule_id = 'TR206';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT printf('%.4f', CAST(SUM(element = 'h') AS REAL) * 100.0 / COUNT(atom_id)) AS percent FROM atom WHERE molecule_id = 'TR206'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT ROUND(CAST(COUNT(CASE WHEN element = 'h' THEN 1 END) AS REAL) * 100.0 / COUNT(atom_id), 4) AS percentage FROM atom WHERE molecule_id = 'TR206'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 6
+  }
+ ],
+ "bird_1169": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(SUM(CASE WHEN P.SEX = 'M' AND L.UA <= 8.0 THEN 1 ELSE 0 END) AS REAL) / NULLIF(SUM(CASE WHEN P.SEX = 'F' AND L.UA <= 6.5 THEN 1 ELSE 0 END), 0) AS ratio FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 15
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 30
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 11
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(CASE WHEN L.UA <= 8.0 AND P.SEX = 'M' THEN 1 ELSE 0 END) * 1.0 / NULLIF(SUM(CASE WHEN L.UA <= 6.5 AND P.SEX = 'F' THEN 1 ELSE 0 END), 0) AS Ratio FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT 1.0 * COUNT(DISTINCT CASE WHEN P.SEX = 'M' AND L.UA <= 8.0 THEN P.ID END) / COUNT(DISTINCT CASE WHEN P.SEX = 'F' AND L.UA <= 6.5 THEN P.ID END) AS ratio FROM Laboratory AS L JOIN Patient AS P ON L.ID = P.ID",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 29
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT 1.0 * SUM(CASE WHEN T2.SEX = 'M' AND T1.UA <= 8.0 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN T2.SEX = 'F' AND T1.UA <= 6.5 THEN 1 ELSE 0 END), 0) AS Ratio FROM Laboratory AS T1 INNER JOIN Patient AS T2 ON T1.ID = T2.ID;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT COUNT(DISTINCT CASE WHEN P.SEX = 'M' AND L.UA <= 8.0 THEN P.ID END) * 1.0 / NULLIF(COUNT(DISTINCT CASE WHEN P.SEX = 'F' AND L.UA <= 6.5 THEN P.ID END), 0) AS Ratio FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 34
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 12
+  }
+ ],
+ "bird_1243": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(SUM(CASE WHEN p.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / NULLIF(COUNT(*), 0) FROM Patient AS p WHERE datetime(p.Birthday, '+55 years') < current_timestamp AND EXISTS (SELECT 1 FROM Laboratory AS l WHERE l.ID = p.ID AND l.PT >= 14)",
+   "correct": true,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 32
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT CAST(SUM(CASE WHEN L.PT >= 14 AND P.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / SUM(CASE WHEN L.PT >= 14 THEN 1 ELSE 0 END) FROM Laboratory AS L JOIN Patient AS P ON L.ID = P.ID WHERE datetime(P.Birthday, '+55 years') < current_timestamp",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 18
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT 100.0 * SUM(CASE WHEN p.SEX = 'F' THEN 1 ELSE 0 END) / COUNT(*) FROM Patient AS p WHERE datetime(p.Birthday, '+55 years') < current_timestamp AND EXISTS (SELECT 1 FROM Laboratory AS l WHERE l.ID = p.ID AND l.PT >= 14)",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 40
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 19
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 23
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT CAST(SUM(CASE WHEN P.SEX='F' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(*) FROM Patient AS P INNER JOIN (SELECT DISTINCT ID FROM Laboratory WHERE PT >= 14) AS L ON P.ID = L.ID WHERE datetime(P.Birthday, '+55 years') < current_timestamp",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 19
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 9
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT CAST(SUM(CASE WHEN L.PT >= 14 AND P.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / NULLIF(SUM(CASE WHEN L.PT >= 14 THEN 1 ELSE 0 END), 0) FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID WHERE datetime(P.Birthday, '+55 years') < current_timestamp",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 27
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT CAST(SUM(CASE WHEN L.PT >= 14 AND P.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / SUM(CASE WHEN L.PT >= 14 THEN 1 ELSE 0 END) FROM Laboratory AS L JOIN Patient AS P ON L.ID = P.ID WHERE datetime(P.Birthday, '+55 years') < CURRENT_TIMESTAMP",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 27
+  }
+ ],
+ "bird_255": [
+  {
+   "sample": 0,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(b.bond_id)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT printf('%.5f', 100.0 * COUNT(CASE WHEN m.label = '+' THEN b.bond_id END) / COUNT(b.bond_id)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT ROUND(100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*), 5) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10
+  }
+ ],
+ "bird_273": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(SUM(CASE WHEN a.element = 'cl' THEN 1 ELSE 0 END) AS REAL) / COUNT(a.element) AS percentage FROM atom AS a INNER JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE m.label = '+';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT CAST(SUM(CASE WHEN a.element = 'cl' THEN 1 ELSE 0 END) AS REAL) / COUNT(a.element) AS percentage FROM atom AS a INNER JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE m.label = '+';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(SUM(CASE WHEN a.element = 'cl' THEN 1 ELSE 0 END) AS REAL) / COUNT(a.element) AS percentage FROM atom AS a JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE m.label = '+';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 6
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT CAST(SUM(atom.element = 'cl') AS REAL) / COUNT(atom.element) AS percentage FROM atom JOIN molecule ON atom.molecule_id = molecule.molecule_id WHERE molecule.label = '+';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT CAST(SUM(CASE WHEN a.element = 'cl' THEN 1 ELSE 0 END) AS REAL) / COUNT(a.element) FROM atom AS a INNER JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE m.label = '+';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(SUM(CASE WHEN atom.element = 'cl' THEN 1 ELSE 0 END) AS REAL) / COUNT(atom.element) AS percentage FROM atom JOIN molecule ON atom.molecule_id = molecule.molecule_id WHERE molecule.label = '+'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 5
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT CAST(SUM(CASE WHEN a.element = 'cl' THEN 1 ELSE 0 END) AS REAL) / COUNT(a.element) AS percentage FROM molecule AS m INNER JOIN atom AS a ON m.molecule_id = a.molecule_id WHERE m.label = '+';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2
+  }
+ ],
+ "bird_1482": [
+  {
+   "sample": 0,
+   "sql": "WITH yearly AS ( SELECT c.Segment, substr(y.Date, 1, 4) AS yr, SUM(y.Consumption) AS cons FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') AND substr(y.Date, 1, 4) IN ('2012', '2013') GROUP BY c.Segment, substr(y.Date, 1, 4) ) SELECT ROUND(100.0 * (MAX(CASE WHEN Segment = 'SME' AND yr = '2013' THEN cons END) - MAX(CASE WHEN Segment = 'SME' AND yr = '2012' THEN cons END)) / MAX(CASE WHEN Segment = 'SME' AND yr = '2012' THEN cons END), 2) AS SME, ROUND(100.0 * (MAX(CASE WHEN Segment = 'LAM' AND yr = '2013' THEN cons END) - MAX(CASE WHEN Segment = 'LAM' AND yr = '2012' THEN cons END)) / MAX(CASE WHEN Segment = 'LAM' AND yr = '2012' THEN cons END), 2) AS LAM, ROUND(100.0 * (MAX(CASE WHEN Segment = 'KAM' AND yr = '2013' THEN cons END) - MAX(CASE WHEN Segment = 'KAM' AND yr = '2012' THEN cons END)) / MAX(CASE WHEN Segment = 'KAM' AND yr = '2012' THEN cons END), 2) AS KAM FROM yearly;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 32
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT c.Segment, (SUM(CASE WHEN substr(y.Date, 1, 4) = '2013' THEN y.Consumption ELSE 0 END) - SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END)) * 100.0 / NULLIF(SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END), 0) AS PercentageIncrease FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') AND substr(y.Date, 1, 4) IN ('2012', '2013') GROUP BY c.Segment ORDER BY CASE c.Segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 15
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT c.Segment, (SUM(CASE WHEN substr(y.Date, 1, 4) = '2013' THEN y.Consumption ELSE 0 END) - SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END)) * 100.0 / SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END) AS PercentageIncrease FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') AND substr(y.Date, 1, 4) IN ('2012', '2013') GROUP BY c.Segment ORDER BY CASE c.Segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 25
+  },
+  {
+   "sample": 3,
+   "sql": "WITH pct AS (SELECT c.Segment AS segment, ((SUM(CASE WHEN substr(y.Date,1,4)='2013' THEN y.Consumption ELSE 0 END) - SUM(CASE WHEN substr(y.Date,1,4)='2012' THEN y.Consumption ELSE 0 END)) / NULLIF(SUM(CASE WHEN substr(y.Date,1,4)='2012' THEN y.Consumption ELSE 0 END), 0)) * 100.0 AS percentage_increase FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') AND substr(y.Date,1,4) IN ('2012', '2013') GROUP BY c.Segment) SELECT percentage_increase FROM pct ORDER BY CASE segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT c.Segment, ((SUM(CASE WHEN substr(y.Date, 1, 4) = '2013' THEN y.Consumption ELSE 0 END) - SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END)) * 100.0) / NULLIF(SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END), 0) AS pct_increase FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') GROUP BY c.Segment ORDER BY CASE c.Segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT ((SUM(CASE WHEN substr(y.Date,1,4) = '2013' THEN y.Consumption ELSE 0 END) - SUM(CASE WHEN substr(y.Date,1,4) = '2012' THEN y.Consumption ELSE 0 END)) / NULLIF(SUM(CASE WHEN substr(y.Date,1,4) = '2012' THEN y.Consumption ELSE 0 END), 0)) * 100.0 AS percentage_increase FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') AND substr(y.Date, 1, 4) IN ('2012', '2013') GROUP BY c.Segment ORDER BY CASE c.Segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 45
+  },
+  {
+   "sample": 6,
+   "sql": "WITH agg AS (SELECT c.Segment, SUM(CASE WHEN substr(y.Date,1,4)='2012' THEN y.Consumption ELSE 0 END) AS c2012, SUM(CASE WHEN substr(y.Date,1,4)='2013' THEN y.Consumption ELSE 0 END) AS c2013 FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') AND substr(y.Date,1,4) IN ('2012', '2013') GROUP BY c.Segment) SELECT (c2013 - c2012) * 100.0 / NULLIF(c2012, 0) AS PercentageIncrease FROM agg ORDER BY CASE Segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 43
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT c.Segment, (SUM(CASE WHEN substr(y.Date, 1, 4) = '2013' THEN y.Consumption ELSE 0 END) - SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END)) * 100.0 / NULLIF(SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END), 0) AS percentage_increase FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') AND substr(y.Date, 1, 4) IN ('2012', '2013') GROUP BY c.Segment ORDER BY CASE c.Segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 33
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 12
+  }
+ ],
+ "bird_263": [
+  {
+   "sample": 0,
+   "sql": "SELECT 1.0 * SUM(T2.element = 'cl') / COUNT(T2.atom_id) AS percent FROM bond AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 28
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 6
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(SUM(atom.element = 'cl') AS FLOAT) / COUNT(atom.atom_id) AS percent FROM atom INNER JOIN bond ON atom.molecule_id = bond.molecule_id WHERE bond.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 23
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 16
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT CAST(SUM(a.element = 'cl') AS FLOAT) / COUNT(a.atom_id) AS percent FROM atom AS a JOIN bond AS b ON a.molecule_id = b.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT 100.0 * SUM(CASE WHEN a.element = 'cl' THEN 1 ELSE 0 END) / COUNT(a.atom_id) AS percent FROM atom AS a WHERE EXISTS (SELECT 1 FROM bond AS b WHERE b.molecule_id = a.molecule_id AND b.bond_type = '-')",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 12
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(SUM(element = 'cl') AS FLOAT) / COUNT(atom_id) AS percent FROM atom WHERE molecule_id IN (SELECT DISTINCT molecule_id FROM bond WHERE bond_type = '-')",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 29
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT CAST(SUM(atom.element = 'cl') AS FLOAT) * 100.0 / COUNT(atom.atom_id) AS percent FROM atom WHERE EXISTS (SELECT 1 FROM bond WHERE bond.molecule_id = atom.molecule_id AND bond.bond_type = '-')",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 18
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT CAST(SUM(a.element = 'cl') AS FLOAT) / COUNT(a.atom_id) AS percent FROM atom AS a WHERE a.molecule_id IN (SELECT DISTINCT molecule_id FROM bond WHERE bond_type = '-')",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 20
+  }
+ ],
+ "bird_352": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(SUM(CASE WHEN language = 'Chinese Simplified' THEN id ELSE 0 END) AS REAL) * 100.0 / COUNT(id) FROM set_translations",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 9
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(CASE WHEN language = 'Chinese Simplified' THEN id END) * 100.0 / COUNT(id) FROM set_translations",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 17
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT CAST(SUM(CASE WHEN language = 'Chinese Simplified' THEN id ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM set_translations",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(SUM(CASE WHEN language = 'Chinese Simplified' THEN id ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM set_translations",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT SUM(CASE WHEN language = 'Chinese Simplified' THEN id ELSE 0 END) * 100.0 / COUNT(id) FROM set_translations;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT CAST(COUNT(CASE WHEN language = 'Chinese Simplified' THEN id ELSE NULL END) AS REAL) * 100.0 / COUNT(id) FROM set_translations",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 17
+  }
+ ],
+ "bird_881": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 12
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 6
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT CAST(COUNT(CASE WHEN status.status = 'Finished' OR status.status LIKE '+% Lap%' THEN results.driverId END) AS REAL) / COUNT(results.driverId) * 100 AS percentage FROM results INNER JOIN races ON results.raceId = races.raceId INNER JOIN status ON results.statusId = status.statusId WHERE races.date = '1983-07-16'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 11
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT CAST(COUNT(CASE WHEN s.status = 'Finished' OR s.status LIKE '+% Lap%' THEN r.driverId ELSE NULL END) AS REAL) * 100.0 / COUNT(r.driverId) FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId INNER JOIN status AS s ON r.statusId = s.statusId WHERE ra.date = '1983-07-16'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT CAST(COUNT(CASE WHEN s.status = 'Finished' OR s.status LIKE '+% Lap%' THEN r.driverId END) AS REAL) * 100.0 / COUNT(r.driverId) AS percentage FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId INNER JOIN status AS s ON r.statusId = s.statusId WHERE ra.date = '1983-07-16';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(COUNT(CASE WHEN s.status = 'Finished' OR s.status LIKE '+% Lap%' THEN res.driverId END) AS REAL) * 100.0 / COUNT(res.driverId) AS percentage FROM results AS res INNER JOIN races AS r ON res.raceId = r.raceId INNER JOIN status AS s ON res.statusId = s.statusId WHERE r.date = '1983-07-16'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 8
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT CAST(COUNT(CASE WHEN s.status = 'Finished' OR s.status LIKE '+% Lap%' THEN re.driverId END) AS REAL) * 100.0 / COUNT(re.driverId) AS percentage FROM results AS re INNER JOIN races AS ra ON re.raceId = ra.raceId INNER JOIN status AS s ON re.statusId = s.statusId WHERE ra.date = '1983-07-16'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2
+  }
+ ]
+}

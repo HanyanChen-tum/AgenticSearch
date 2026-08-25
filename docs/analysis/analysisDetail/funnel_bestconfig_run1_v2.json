@@ -1,0 +1,126 @@
+{
+ "results_file": "results/chain_e3_c_recursive_db_corrected_run1.json",
+ "total_questions": 498,
+ "unscored_harness_fault": 2,
+ "unscored_ids": [
+  "bird_1507",
+  "bird_1528"
+ ],
+ "scored": 496,
+ "correct": 435,
+ "wrong": 61,
+ "by_category": {
+  "other": {
+   "n": 29,
+   "ids": [
+    "bird_1011",
+    "bird_1068",
+    "bird_1179",
+    "bird_1241",
+    "bird_125",
+    "bird_1339",
+    "bird_1387",
+    "bird_1472",
+    "bird_1486",
+    "bird_1498",
+    "bird_1529",
+    "bird_173",
+    "bird_26",
+    "bird_36",
+    "bird_407",
+    "bird_465",
+    "bird_50",
+    "bird_587",
+    "bird_604",
+    "bird_637",
+    "bird_640",
+    "bird_750",
+    "bird_769",
+    "bird_791",
+    "bird_85",
+    "bird_892",
+    "bird_894",
+    "bird_931",
+    "bird_955"
+   ]
+  },
+  "confident_miss": {
+   "n": 11,
+   "ids": [
+    "bird_1028",
+    "bird_1032",
+    "bird_1376",
+    "bird_212",
+    "bird_349",
+    "bird_37",
+    "bird_671",
+    "bird_736",
+    "bird_744",
+    "bird_794",
+    "bird_829"
+   ]
+  },
+  "ratio_formula": {
+   "n": 17,
+   "ids": [
+    "bird_1037",
+    "bird_1149",
+    "bird_1169",
+    "bird_1243",
+    "bird_1482",
+    "bird_1526",
+    "bird_168",
+    "bird_228",
+    "bird_24",
+    "bird_255",
+    "bird_273",
+    "bird_32",
+    "bird_352",
+    "bird_416",
+    "bird_48",
+    "bird_598",
+    "bird_944"
+   ]
+  },
+  "rowset": {
+   "n": 4,
+   "ids": [
+    "bird_11",
+    "bird_23",
+    "bird_41",
+    "bird_584"
+   ]
+  }
+ },
+ "other_ids": [
+  "bird_1011",
+  "bird_1068",
+  "bird_1179",
+  "bird_1241",
+  "bird_125",
+  "bird_1339",
+  "bird_1387",
+  "bird_1472",
+  "bird_1486",
+  "bird_1498",
+  "bird_1529",
+  "bird_173",
+  "bird_26",
+  "bird_36",
+  "bird_407",
+  "bird_465",
+  "bird_50",
+  "bird_587",
+  "bird_604",
+  "bird_637",
+  "bird_640",
+  "bird_750",
+  "bird_769",
+  "bird_791",
+  "bird_85",
+  "bird_892",
+  "bird_894",
+  "bird_931",
+  "bird_955"
+ ]
+}

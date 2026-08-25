@@ -1,0 +1,330 @@
+{
+ "bird_928": [
+  {
+   "sample": 0,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId INNER JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 0
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 4
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM races AS r JOIN results AS rs ON r.raceId = rs.raceId JOIN drivers AS d ON rs.driverId = d.driverId WHERE r.name = 'Canadian Grand Prix' AND r.year = 2007 AND rs.position = 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId INNER JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId INNER JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 ORDER BY r.position ASC LIMIT 1;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM races AS r JOIN results AS res ON r.raceId = res.raceId JOIN drivers AS d ON res.driverId = d.driverId WHERE r.name = 'Canadian Grand Prix' AND r.year = 2007 AND res.position = 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId INNER JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 0
+  }
+ ],
+ "bird_1479": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 13
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 20
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT substr(Y.Date, 1, 4) AS year FROM yearmonth AS Y INNER JOIN customers AS C ON Y.CustomerID = C.CustomerID WHERE C.Currency = 'CZK' GROUP BY substr(Y.Date, 1, 4) ORDER BY SUM(Y.Consumption) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 6
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT substr(y.Date, 1, 4) FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY substr(y.Date, 1, 4) ORDER BY SUM(y.Consumption) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 12
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT substr(T1.Date, 1, 4) AS Year FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Currency = 'CZK' GROUP BY substr(T1.Date, 1, 4) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT CAST(substr(yearmonth.Date, 1, 4) AS INTEGER) AS year FROM yearmonth INNER JOIN customers ON yearmonth.CustomerID = customers.CustomerID WHERE customers.Currency = 'CZK' GROUP BY CAST(substr(yearmonth.Date, 1, 4) AS INTEGER) ORDER BY SUM(yearmonth.Consumption) DESC LIMIT 1;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8
+  }
+ ],
+ "bird_931": [
+  {
+   "sample": 0,
+   "sql": "SELECT results.fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND races.name = 'Spanish Grand Prix' AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 14
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT results.fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.name = 'Spanish Grand Prix' AND races.year = 2009 AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT results.fastestLapSpeed FROM results JOIN races ON results.raceId = races.raceId WHERE races.name = 'Spanish Grand Prix' AND races.year = 2009 AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS s ON r.raceId = s.raceId WHERE s.year = 2009 AND s.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT MAX(CAST(results.fastestLapSpeed AS REAL)) AS fastest_lap_speed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND races.name = 'Spanish Grand Prix'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT results.fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.name = 'Spanish Grand Prix' AND races.year = 2009 AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT CAST(r.fastestLapSpeed AS REAL) AS fastestLapSpeed FROM results AS r INNER JOIN races AS c ON r.raceId = c.raceId WHERE c.year = 2009 AND c.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3
+  }
+ ],
+ "bird_1080": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 19
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 24
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 2
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 33
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 32
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 6
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes WHERE preferred_foot = 'left' INTERSECT SELECT player_api_id FROM Player_Attributes WHERE attacking_work_rate = 'low') AS t",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 32
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 13
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 21
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4
+  }
+ ]
+}

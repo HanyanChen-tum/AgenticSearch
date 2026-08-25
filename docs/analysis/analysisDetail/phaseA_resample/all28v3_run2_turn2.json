@@ -1,0 +1,248 @@
+{
+ "bird_931": [
+  {
+   "sample": 0,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT CAST(r.fastestLapSpeed AS REAL) FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT r.fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  }
+ ],
+ "bird_928": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS res INNER JOIN races AS r ON res.raceId = r.raceId INNER JOIN drivers AS d ON res.driverId = d.driverId WHERE r.name = 'Canadian Grand Prix' AND r.year = 2007 ORDER BY res.positionOrder ASC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS res INNER JOIN races AS r ON res.raceId = r.raceId INNER JOIN drivers AS d ON res.driverId = d.driverId WHERE r.name = 'Canadian Grand Prix' AND r.year = 2007 ORDER BY res.position ASC LIMIT 1;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS res INNER JOIN races AS r ON res.raceId = r.raceId INNER JOIN drivers AS d ON res.driverId = d.driverId WHERE r.name = 'Canadian Grand Prix' AND r.year = 2007 ORDER BY res.positionOrder ASC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS res INNER JOIN races AS r ON res.raceId = r.raceId INNER JOIN drivers AS d ON res.driverId = d.driverId WHERE r.name = 'Canadian Grand Prix' AND r.year = 2007 AND res.position = 1;",
+   "correct": true,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  }
+ ],
+ "bird_1080": [
+  {
+   "sample": 0,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) AS t;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) AS t;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) AS t;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) AS t;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) AS t;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 7
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) AS t;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) AS t;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 4
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 13
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 6
+  }
+ ]
+}

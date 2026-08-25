@@ -40,9 +40,13 @@ import litellm
 litellm.drop_params = True
 litellm.suppress_debug_info = True
 
-from ours.db_environment import get_db_path
+from ours.agent.config import get_agent_config
+from ours.agent.query_plan import QueryPlanState
+from ours.agent.state import AgentExecutionState
+from ours.db_environment import DBEnvironment, get_db_path
+from ours.recursive_db_rlm import _format_structured_observations
 from scripts.capture_reasoning import RESPONSES_API_VERSION, as_responses_input, load_turns
-from scripts.run_bird_indomain_fewshot import BIRD_DB_DIR
+from scripts.run_bird_indomain_fewshot import BIRD_DB_DIR, InDomainFewShotDBRLM
 from shared.evaluator import is_correct
 from shared.llm_config import resolve_llm_config
 from shared.sql_executor import execute_sql
@@ -62,6 +66,65 @@ _HAS_CODE_RE = re.compile(r"```python")
 def would_be_discarded(response_text: str) -> bool:
     is_final = "FINAL(" in (response_text or "") or "FINAL_VAR(" in (response_text or "")
     return is_final and bool(_HAS_CODE_RE.search(response_text or ""))
+
+
+# 2026-08-24 v2 finding: marking drafts invalid (above) instead of scoring them
+# was correct but exposed something bigger than bird_637 -- at k=1 (no prior
+# context) the model almost never submits a clean FINAL-only response; 5-10 of
+# 10 resamples across nearly all 28 Phase A questions are drafts. Discarding
+# them left k=1 with 0-1 valid samples per question, nowhere near enough to
+# measure anything (see the "二次更正" section of phase_a_turn_resampling_
+# 2026-08-24.md). A draft is a real, informative event; the fix is not to
+# throw it away but to do what the real harness does with it: execute the
+# code, feed the observation back, and let the model take its real next
+# turn -- then score *that*.
+#
+# This reuses the harness's own REPL/observation-formatting code (not a
+# reimplementation): a bare InDomainFewShotDBRLM instance is built, wired with
+# just enough trace state (_db, _trace_events, _execution_state,
+# _query_plan_state) for `_build_repl_env` and `self.repl.execute` to behave
+# exactly as ours/recursive_db_rlm.py:598-622 does mid-loop, then the same
+# `_format_structured_observations` renders the feedback text. Everything
+# outside that -- the LLM call itself -- still goes through one_sample(), so
+# the generation path is unchanged.
+_DISCARD_CONTINUE_CAP = 2  # extra LLM calls to spend chasing a clean FINAL before giving up
+
+
+def _make_repl_agent(cfg, agent_config) -> InDomainFewShotDBRLM:
+    return InDomainFewShotDBRLM(
+        model=cfg.model, api_key=cfg.api_key, api_base=cfg.api_base,
+        max_iterations=1, temperature=0, retriever=None, k=0,
+        agent_config=agent_config,
+    )
+
+
+def execute_draft(agent: InDomainFewShotDBRLM, db_path, response_text: str) -> str:
+    """Run a discarded draft's code for real and return the same structured
+    observation text the real harness would feed back next turn."""
+    agent._trace_turn = 0
+    agent._trace_events = []
+    agent._execution_state = AgentExecutionState()
+    agent._query_plan_state = QueryPlanState()
+    agent._db = DBEnvironment(str(db_path), event_sink=agent._record_tool_event)
+
+    response_for_repl = re.sub(r'FINAL\s*\(.*?\)', '', response_text, flags=re.DOTALL).strip()
+    repl_env = agent._build_repl_env(query="", context="")
+    event_start = len(agent._trace_events)
+    try:
+        exec_result = agent.repl.execute(response_for_repl, repl_env)
+    except Exception as exc:  # matches the bare except in the real loop
+        exec_result = f"Unexpected error: {exc}"
+
+    structured_events = [e for e in agent._trace_events[event_start:]
+                         if str(e.get("tool", "")).startswith("db.")]
+    if structured_events:
+        observation = _format_structured_observations(structured_events)
+        if exec_result in {"Code executed successfully (no output)", "No code to execute"}:
+            exec_result = observation
+        else:
+            exec_result = f"{exec_result}\n\n{observation}"
+    return exec_result
+
 
 # The few-shot block runs from its own header to whichever section header
 # follows it. Matched by exact known header text, not a generic ALL-CAPS
@@ -104,6 +167,33 @@ def extract_sql(output_text: str) -> str | None:
     return m.group(1).replace('\\"', '"').replace("\\n", "\n")
 
 
+def generate_with_continuation(cfg, agent_config, db_path, instructions, body, summary):
+    """One resample, continuing past discarded drafts instead of throwing them
+    away. Returns (text_or_None, total_section_count, n_drafts_seen,
+    gave_up_after_cap). `text` is None only when the model never produced any
+    FINAL at all, or when the cap was hit while still drafting -- the caller
+    tells the two apart via `gave_up_after_cap`."""
+    agent = None
+    total_sections, n_drafts = 0, 0
+    local_body = list(body)
+    for attempt in range(_DISCARD_CONTINUE_CAP + 1):
+        text, sections = one_sample(cfg, instructions, local_body, summary)
+        total_sections += sections
+        if not would_be_discarded(text):
+            return text, total_sections, n_drafts, False
+        n_drafts += 1
+        if attempt == _DISCARD_CONTINUE_CAP:
+            return None, total_sections, n_drafts, True
+        if agent is None:
+            agent = _make_repl_agent(cfg, agent_config)
+        observation = execute_draft(agent, db_path, text)
+        local_body = local_body + [
+            {"role": "assistant", "content": text},
+            {"role": "user", "content": observation},
+        ]
+    return None, total_sections, n_drafts, True  # unreachable, keeps type checkers happy
+
+
 def one_sample(cfg, instructions: str, body: list[dict], summary: str) -> tuple[str, int]:
     response = litellm.responses(
         model=cfg.model, api_key=cfg.api_key, api_base=cfg.api_base,
@@ -134,11 +224,13 @@ def resample_one_question(cfg, trace_path, row, resume_turn, n, summary, existin
     instructions, body = as_responses_input(messages, resume_turn)
     if drop_fewshot:
         body = strip_fewshot(body)
+    agent_config = get_agent_config(row["agent_profile"])
 
     samples = list(existing)
     for i in range(len(samples), n):
         try:
-            text, section_count = one_sample(cfg, instructions, body, summary)
+            text, section_count, n_drafts, gave_up = generate_with_continuation(
+                cfg, agent_config, db_path, instructions, body, summary)
         except Exception as exc:
             # A single refused or failed call must not take the batch down with it:
             # Azure's content filter rejects some BIRD prompts outright
@@ -150,25 +242,24 @@ def resample_one_question(cfg, trace_path, row, resume_turn, n, summary, existin
                             "error": f"{type(exc).__name__}: {exc}"[:200],
                             "section_count": 0})
             continue
-        if would_be_discarded(text):
-            # Same shape as "no FINAL() found" -- neither is a real submission --
-            # but recorded under a distinct reason so the two can be told apart
-            # when reading results: this one *did* commit to an answer, the real
-            # harness just never would have accepted it this turn.
-            record = {"sample": i, "sql": None, "correct": None,
-                      "error": "draft FINAL discarded (response also had ```python; "
-                               "real harness runs the code and continues instead)",
+        if gave_up:
+            # Real harness would keep looping past max_iterations; this script
+            # caps continuations at _DISCARD_CONTINUE_CAP to bound cost. Distinct
+            # from "no FINAL() found" -- the model did keep drafting, it just
+            # never reached a clean submission within the cap.
+            record = {"sample": i, "sql": None, "correct": None, "n_drafts": n_drafts,
+                      "error": f"draft persisted after {_DISCARD_CONTINUE_CAP} continuations, gave up",
                       "section_count": section_count}
             samples.append(record)
             continue
         sql = extract_sql(text)
         if sql is None:
             record = {"sample": i, "sql": None, "correct": None, "error": "no FINAL() found",
-                      "section_count": section_count}
+                      "n_drafts": n_drafts, "section_count": section_count}
         else:
             ex = execute_sql(db_path, sql, read_only=True)
             ok = ex.get("error") is None and is_correct(ex.get("answer"), row.get("gold_answer"))
-            record = {"sample": i, "sql": sql, "correct": bool(ok),
+            record = {"sample": i, "sql": sql, "correct": bool(ok), "n_drafts": n_drafts,
                       "exec_error": ex.get("error"), "section_count": section_count}
         samples.append(record)
     n_ok = sum(1 for s in samples if s.get("correct"))

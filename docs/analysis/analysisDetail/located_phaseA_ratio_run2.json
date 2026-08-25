@@ -1,0 +1,14 @@
+[
+ {
+  "id": "bird_1037",
+  "sentence_count": 58,
+  "index": 35,
+  "commitment": "It settles on counting season records with COUNT(pa.player_fifa_api_id) rather than distinct players, which drops the 'at least once across all available season records' interpretation.",
+  "claim": "COUNT(pa.player_fifa_api_id) is the right approach without grouping because each row represents a season record.",
+  "check_sql": "SELECT COUNT(*) AS rows_per_player FROM Player_Attributes GROUP BY player_fifa_api_id ORDER BY rows_per_player DESC LIMIT 10;",
+  "confidence": "high",
+  "sentence_text": "Since each row represents a season record, using `COUNT(pa.player_fifa_api_id)` seems like the right approach without grouping.",
+  "sentence_label": "RC",
+  "position_pct": 60.3
+ }
+]

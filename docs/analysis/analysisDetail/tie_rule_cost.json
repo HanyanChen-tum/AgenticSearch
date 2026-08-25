@@ -1,0 +1,467 @@
+{
+ "results_file": "results/e3_c_rules_reasoning_corrected_run1.json",
+ "pool": 55,
+ "tally": {
+  "would break (ties > 1)": 4,
+  "unaffected (unique extremum)": 40,
+  "skipped: no ORDER BY": 6,
+  "skipped: multi-key ORDER BY (ties already broken)": 4,
+  "skipped: probe failed": 1
+ },
+ "measured": 44,
+ "would_break": 4,
+ "share_of_measured_that_would_break": 0.0909,
+ "questions": [
+  {
+   "id": "bird_1002",
+   "db_id": "formula_1",
+   "question": "As of the present, what is the full name of the youngest racer? Indicate her nationality and the name of the race to which he/she first joined.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T1.forename, T1.surname, T1.nationality, T3.name FROM drivers AS T1 INNER JOIN driverStandings AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 on T2.raceId = T3.raceId ORDER BY JULIANDAY(T1.dob) DESC LIMIT 1",
+   "ties": 13
+  },
+  {
+   "id": "bird_1003",
+   "db_id": "formula_1",
+   "question": "How many accidents did the driver who had the highest number accidents in the Canadian Grand Prix have?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT COUNT(T1.driverId) FROM results AS T1 INNER JOIN races AS T2 on T1.raceId = T2.raceId INNER JOIN status AS T3 on T1.statusId = T3.statusId WHERE T3.statusId = 3 AND T2.name = 'Canadian Grand Prix' GROUP BY T1.driverId ORDER BY COUNT(T1.driverId) DESC LIMIT 1",
+   "ties": 8
+  },
+  {
+   "id": "bird_1025",
+   "db_id": "european_football_2",
+   "question": "Give the name of the league had the most goals in the 2016 season?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT t2.name FROM Match AS t1 INNER JOIN League AS t2 ON t1.league_id = t2.id WHERE t1.season = '2015/2016' GROUP BY t2.name ORDER BY SUM(t1.home_team_goal + t1.away_team_goal) DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1030",
+   "db_id": "european_football_2",
+   "question": "Give the name of the league had the most matches end as draw in the 2016 season?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT t2.name FROM Match AS t1 INNER JOIN League AS t2 ON t1.league_id = t2.id WHERE t1.season = '2015/2016' AND t1.home_team_goal = t1.away_team_goal GROUP BY t2.name ORDER BY COUNT(t1.id) DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1094",
+   "db_id": "european_football_2",
+   "question": "How much higher in percentage is Ariel Borysiuk's overall rating than that of Paulin Puel in their latest records? ",
+   "model_was_correct": true,
+   "gold_sql": "with ab as (select t2.overall_rating  as rating from  Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id where t1.player_name = 'Ariel Borysiuk'  order by date desc limit 1),\npp as (select t2.overall_rating  as rating from  Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id where  t1.player_name = 'Paulin Puel' order by date desc limit 1)\nselect (t3.rating - t4.rating) * 100.0 / t4.rating from ab t3 cross  join pp t4",
+   "ties": null,
+   "skipped": "no ORDER BY"
+  },
+  {
+   "id": "bird_1098",
+   "db_id": "european_football_2",
+   "question": "What is Ajax's highest chance creation passing score and what is it classified as?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT t2.chanceCreationPassing, t2.chanceCreationPassingClass FROM Team AS t1 INNER JOIN Team_Attributes AS t2 ON t1.team_api_id = t2.team_api_id WHERE t1.team_long_name = 'Ajax' ORDER BY t2.chanceCreationPassing DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1102",
+   "db_id": "european_football_2",
+   "question": "For the players who had a 77 points overall rating on 2016/6/23, who was the oldest? Give the name of the player.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT t1.player_name FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE SUBSTR(t2.\"date\", 1, 10) = '2016-06-23' AND t2.overall_rating = 77 ORDER BY t1.birthday ASC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1107",
+   "db_id": "european_football_2",
+   "question": "When was the first time did Kevin Constant have his highest crossing score? Give the date.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT t2.`date` FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_fifa_api_id = t2.player_fifa_api_id WHERE t1.player_name = 'Kevin Constant' ORDER BY t2.crossing DESC, t2.`date` ASC LIMIT 1",
+   "ties": null,
+   "skipped": "multi-key ORDER BY (ties already broken)"
+  },
+  {
+   "id": "bird_1146",
+   "db_id": "european_football_2",
+   "question": "Please provide the full name of the away team that scored the most goals in one match.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT t2.team_long_name FROM Match AS t1 INNER JOIN Team AS t2 ON t1.away_team_api_id = t2.team_api_id ORDER BY t1.away_team_goal DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_115",
+   "db_id": "financial",
+   "question": "For the branch which located in the south Bohemia with biggest number of inhabitants, what is the percentage of the male clients?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT CAST(SUM(T1.gender = 'M') AS REAL) * 100 / COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A3 = 'south Bohemia' GROUP BY T2.A4 ORDER BY CAST(T2.A4 AS INTEGER) DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1168",
+   "db_id": "thrombosis_prediction",
+   "question": "For the oldest SJS patient, on what date was their medical laboratory work last completed, and what age was the patient when they initially arrived at the hospital?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T1.Date, STRFTIME('%Y', \"First Date\") - STRFTIME('%Y', Birthday) - CASE\n    WHEN strftime('%m-%d',\"First Date\") < strftime('%m-%d', Birthday) THEN 1\n    ELSE 0\n  END AS age\nFROM Laboratory AS T1 INNER JOIN Patient AS T2 ON T1.ID = T2.ID WHERE T2.Diagnosis = 'SJS' AND T2.Birthday IS NOT NULL ORDER BY T2.Birthday ASC, T1.Date DESC LIMIT 1",
+   "ties": null,
+   "skipped": "multi-key ORDER BY (ties already broken)"
+  },
+  {
+   "id": "bird_1175",
+   "db_id": "thrombosis_prediction",
+   "question": "How old was the patient who had the highest hemoglobin count at the time of the laboratory test, and what is the doctor's diagnosis?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT STRFTIME('%Y', T2.Date) - STRFTIME('%Y', T1.Birthday) - CASE\n    WHEN strftime('%m-%d',T2.Date) < strftime('%m-%d', Birthday) THEN 1\n    ELSE 0\n  END AS age ,T1.Diagnosis   FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID ORDER BY T2.HGB DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1238",
+   "db_id": "thrombosis_prediction",
+   "question": "Among the patients who were diagnosed with SLE, who is the oldest with normal hemoglobin level. Provide the ID and sex.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T1.ID, T1.SEX FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T1.Diagnosis = 'SLE' AND T2.HGB > 10 AND T2.HGB < 17 ORDER BY T1.Birthday ASC LIMIT 1",
+   "ties": 3
+  },
+  {
+   "id": "bird_1255",
+   "db_id": "thrombosis_prediction",
+   "question": "For the patients with at least one record indicating an abnormal Ig M level, what is the most common disease they are diagnosed with?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT Diagnosis FROM (SELECT DISTINCT T1.ID, T1.Diagnosis FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.IGM <= 40 OR T2.IGM >= 400) GROUP BY Diagnosis ORDER BY COUNT(*) DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1281",
+   "db_id": "thrombosis_prediction",
+   "question": "Among the patients who have an abnormal level of glutamic oxaloacetic transaminase, when was the youngest of them born?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T1.Birthday FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE T2.GOT >= 60 ORDER BY T1.Birthday DESC LIMIT 1",
+   "ties": 7
+  },
+  {
+   "id": "bird_138",
+   "db_id": "financial",
+   "question": "In the branch where the second-highest number of crimes were committed in 1995 occurred, how many male clients are there?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'M' AND T2.A15 = (SELECT T3.A15 FROM district AS T3 ORDER BY T3.A15 DESC LIMIT 1, 1)",
+   "ties": null,
+   "skipped": "no ORDER BY"
+  },
+  {
+   "id": "bird_1392",
+   "db_id": "student_club",
+   "question": "Indicate the top source of funds received in September 2019 based on their amount.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT `source`\nFROM `Income`\nWHERE `date_received` BETWEEN '2019-09-01' AND '2019-09-30'\nGROUP BY `source`\nORDER BY SUM(`amount`) DESC\nLIMIT 1;",
+   "ties": 1
+  },
+  {
+   "id": "bird_1398",
+   "db_id": "student_club",
+   "question": "Name the event with the highest amount spent on advertisement.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T2.event_name FROM budget AS T1 INNER JOIN event AS T2 ON T1.link_to_event = T2.event_id WHERE T1.category = 'Advertisement' ORDER BY T1.spent DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1403",
+   "db_id": "student_club",
+   "question": "Indicate the name of the closed event whose cost has exceeded the budget the most.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT e.`event_name`\nFROM `Event`  AS e\nJOIN `Budget` AS b\n     ON b.`link_to_event` = e.`event_id`\nWHERE e.`status` = 'Closed'\nGROUP BY e.`event_id`\nHAVING SUM(b.`remaining`) < 0        \nORDER BY SUM(b.`remaining`)            \nLIMIT 1;",
+   "ties": 1
+  },
+  {
+   "id": "bird_1472",
+   "db_id": "debit_card_specializing",
+   "question": "In 2012, who had the least consumption in LAM?",
+   "model_was_correct": false,
+   "gold_sql": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1479",
+   "db_id": "debit_card_specializing",
+   "question": "Which year recorded the most consumption of gas paid in CZK?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT SUBSTR(T2.Date, 1, 4) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'CZK' GROUP BY SUBSTR(T2.Date, 1, 4) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1498",
+   "db_id": "debit_card_specializing",
+   "question": "What is the highest monthly consumption in the year 2012?",
+   "model_was_correct": false,
+   "gold_sql": "SELECT SUM(Consumption) FROM yearmonth WHERE SUBSTR(Date, 1, 4) = '2012' GROUP BY SUBSTR(Date, 5, 2) ORDER BY SUM(Consumption) DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_1531",
+   "db_id": "debit_card_specializing",
+   "question": "Who is the top spending customer and how much is the average price per single item purchased by this customer? What currency was being used?",
+   "model_was_correct": false,
+   "gold_sql": "SELECT c.CustomerID, SUM(t.Price * t.Amount) / SUM(t.Amount) AS average_price_per_item, c.Currency FROM transactions_1k AS t JOIN customers AS c ON t.CustomerID = c.CustomerID WHERE t.CustomerID = ( SELECT CustomerID FROM transactions_1k GROUP BY CustomerID ORDER BY SUM(Amount * Price) DESC LIMIT 1 ) GROUP BY c.CustomerID, c.Currency;",
+   "ties": null,
+   "skipped": "no ORDER BY"
+  },
+  {
+   "id": "bird_189",
+   "db_id": "financial",
+   "question": "Name the account number of the oldest female client, with ties broken by the client’s district average salary in ascending order.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T3.account_id FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN account AS T3 ON T2.district_id = T3.district_id INNER JOIN disp AS T4 ON T1.client_id = T4.client_id AND T4.account_id = T3.account_id  WHERE T1.gender = 'F' ORDER BY T1.birth_date ASC, T2.A11 ASC LIMIT 1",
+   "ties": null,
+   "skipped": "multi-key ORDER BY (ties already broken)"
+  },
+  {
+   "id": "bird_195",
+   "db_id": "toxicology",
+   "question": "What is the most common bond type?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T.bond_type FROM ( SELECT bond_type, COUNT(bond_id) FROM bond GROUP BY bond_type ORDER BY COUNT(bond_id) DESC LIMIT 1 ) AS T",
+   "ties": null,
+   "skipped": "no ORDER BY"
+  },
+  {
+   "id": "bird_208",
+   "db_id": "toxicology",
+   "question": "Which type of label is the most numerous in molecules with hydrogen?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T.label FROM ( SELECT T2.label, COUNT(T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'h' GROUP BY T2.label ORDER BY COUNT(T2.molecule_id) DESC LIMIT 1 ) t",
+   "ties": null,
+   "skipped": "no ORDER BY"
+  },
+  {
+   "id": "bird_36",
+   "db_id": "california_schools",
+   "question": "Under whose administration is the school with the highest number of students scoring 1500 or more on the SAT? Indicate their full names.",
+   "model_was_correct": false,
+   "gold_sql": "SELECT s.AdmFName1,\n       s.AdmLName1,\n       s.AdmFName2,\n       s.AdmLName2,\n       s.AdmFName3,\n       s.AdmLName3\nFROM satscores t\nJOIN schools  s ON t.cds = s.CDSCode\nWHERE t.rtype = 'S'    \nORDER BY t.NumGE1500 DESC\nLIMIT 1;",
+   "ties": 1
+  },
+  {
+   "id": "bird_40",
+   "db_id": "california_schools",
+   "question": "What is the telephone number for the school with the lowest average score in reading in Fresno Unified?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T2.Phone FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.District = 'Fresno Unified' AND T1.AvgScrRead IS NOT NULL AND rtype = 'S'  ORDER BY T1.AvgScrRead ASC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_46",
+   "db_id": "california_schools",
+   "question": "Which state special schools have the highest number of enrollees from K-12?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T2.School \nFROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode \nWHERE T2.DOC = 31 AND T2.school is not NULL ORDER BY T1.\"Enrollment (K-12)\" DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_633",
+   "db_id": "codebase_community",
+   "question": "Which post by slashnick has the most answers count? State the post ID.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT p.Id\nFROM posts AS p\nJOIN users AS u ON p.OwnerUserId = u.Id\nWHERE u.DisplayName = 'slashnick'\nORDER BY p.AnswerCount DESC\nLIMIT 1;",
+   "ties": 0
+  },
+  {
+   "id": "bird_678",
+   "db_id": "codebase_community",
+   "question": "Which post by Harvey Motulsky has the most views? Please give the id and title of this post.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T2.Id, T2.Title FROM users AS T1 INNER JOIN posts AS T2 ON T1.Id = T2.OwnerUserId WHERE T1.DisplayName = 'Harvey Motulsky' ORDER BY T2.ViewCount DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_682",
+   "db_id": "codebase_community",
+   "question": "Which is the most valuable post in 2010? Please give its id and the owner's display name.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT p.`Id`,\n       u.`DisplayName`\nFROM `posts` AS p\nJOIN `users` AS u ON u.`Id` = p.`OwnerUserId`\nWHERE STRFTIME('%Y', p.`CreaionDate`) = '2010'\nORDER BY p.`FavoriteCount` DESC\nLIMIT 1;",
+   "ties": 1
+  },
+  {
+   "id": "bird_687",
+   "db_id": "codebase_community",
+   "question": "How many comments were added to the post with the highest score?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT COUNT(T2.Id) FROM posts AS T1 INNER JOIN comments AS T2 ON T1.Id = T2.PostId GROUP BY T1.Id ORDER BY T1.Score DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_707",
+   "db_id": "codebase_community",
+   "question": "Among the posts with views ranging from 100 to 150, what is the comment with the highest score?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT Text FROM comments WHERE PostId IN ( SELECT Id FROM posts WHERE ViewCount BETWEEN 100 AND 150 ) ORDER BY Score DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_769",
+   "db_id": "superhero",
+   "question": "Which superhero has the most durability published by Dark Horse Comics?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T3.id = T2.attribute_id INNER JOIN publisher AS T4 ON T4.id = T1.publisher_id WHERE T4.publisher_name = 'Dark Horse Comics' AND T3.attribute_name = 'Durability' ORDER BY T2.attribute_value DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_79",
+   "db_id": "california_schools",
+   "question": "Between San Diego and Santa Barbara, which county offers the most number of schools that does not offer physical building? Indicate the amount.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT County, COUNT(Virtual) FROM schools WHERE (County = 'San Diego' OR County = 'Santa Barbara') AND Virtual = 'F' GROUP BY County ORDER BY COUNT(Virtual) DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_82",
+   "db_id": "california_schools",
+   "question": "What is the grade span offered in the school with the highest longitude?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT GSoffered FROM schools WHERE school is not null ORDER BY ABS(longitude) DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_847",
+   "db_id": "formula_1",
+   "question": "What is the surname of the driver with the best lap time in race number 19 in the second qualifying period?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T2.surname FROM qualifying AS T1 INNER JOIN drivers AS T2 ON T2.driverId = T1.driverId WHERE T1.raceId = 19 ORDER BY T1.q2 ASC NULLS LAST LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_869",
+   "db_id": "formula_1",
+   "question": "For the constructor which got the highest point in the race No. 9 , what is its introduction website?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T2.url FROM constructorResults AS T1 INNER JOIN constructors AS T2 ON T2.constructorId = T1.constructorId WHERE T1.raceId = 9 ORDER BY T1.points DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_879",
+   "db_id": "formula_1",
+   "question": "For the driver who set the fastest lap speed, what is his nationality?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T1.nationality FROM drivers AS T1 INNER JOIN results AS T2 ON T2.driverId = T1.driverId ORDER BY CAST(T2.fastestLapSpeed AS REAL) DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_884",
+   "db_id": "formula_1",
+   "question": "List the names of all races that occurred in the earliest recorded year and month.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT name FROM races WHERE STRFTIME('%Y', date) = ( SELECT STRFTIME('%Y', date) FROM races ORDER BY date ASC LIMIT 1 ) AND STRFTIME('%m', date) = ( SELECT STRFTIME('%m', date) FROM races ORDER BY date ASC LIMIT 1 )",
+   "ties": null,
+   "skipped": "no ORDER BY"
+  },
+  {
+   "id": "bird_892",
+   "db_id": "formula_1",
+   "question": "State the driver with the most points scored. Find his full name and the number of points.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT d.`forename`, d.`surname`, SUM(r.`points`) AS total_points\nFROM `results` r\nJOIN `drivers` d ON d.`driverId` = r.`driverId`\nGROUP BY r.`driverId`\nORDER BY total_points DESC\nLIMIT 1;",
+   "ties": null,
+   "skipped": "probe failed: no such column: total_points"
+  },
+  {
+   "id": "bird_894",
+   "db_id": "formula_1",
+   "question": "What is the best lap time recorded? List the recorded lap time, driver, and race.",
+   "model_was_correct": false,
+   "gold_sql": "SELECT T2.milliseconds, T1.forename, T1.surname, T3.name FROM drivers AS T1 INNER JOIN lapTimes AS T2 ON T1.driverId = T2.driverId INNER JOIN races AS T3 ON T2.raceId = T3.raceId ORDER BY T2.milliseconds ASC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_897",
+   "db_id": "formula_1",
+   "question": "Name the driver with the most winning. Mention his nationality and what is his maximum point scores.",
+   "model_was_correct": false,
+   "gold_sql": "SELECT T1.forename, T1.surname, T1.nationality, MAX(T2.points) FROM drivers AS T1 INNER JOIN driverStandings AS T2 ON T2.driverId = T1.driverId WHERE T2.wins >= 1 GROUP BY T1.forename, T1.surname, T1.nationality ORDER BY COUNT(T2.wins) DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_898",
+   "db_id": "formula_1",
+   "question": "How old is the youngest Japanese driver? What is his name?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', dob) - CASE\n    WHEN strftime('%m-%d','now') < strftime('%m-%d', dob) THEN 1\n    ELSE 0\n  END AS age, forename, surname FROM drivers WHERE nationality = 'Japanese' ORDER BY dob DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_904",
+   "db_id": "formula_1",
+   "question": "State the race and year of race in which Michael Schumacher had his fastest lap.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T1.name, T1.year FROM races AS T1 INNER JOIN lapTimes AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.forename = 'Michael' AND T3.surname = 'Schumacher' ORDER BY T2.milliseconds ASC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_915",
+   "db_id": "formula_1",
+   "question": "Which country is the oldest driver from?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT nationality FROM drivers WHERE dob IS NOT NULL ORDER BY dob ASC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_931",
+   "db_id": "formula_1",
+   "question": "What was the fastest lap speed among all drivers in the 2009 Spanish Grand Prix?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T2.fastestLapSpeed FROM races AS T1 INNER JOIN results AS T2 ON T2.raceId = T1.raceId WHERE T1.name = 'Spanish Grand Prix' AND T1.year = 2009 AND T2.fastestLapSpeed IS NOT NULL ORDER BY T2.fastestLapSpeed DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_94",
+   "db_id": "financial",
+   "question": "What is (1) the account number of the oldest female client and (2) the gap between the highest average salary and the lowest average salary?",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T1.account_id , ( SELECT MAX(A11) - MIN(A11) FROM district ) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T3 ON T1.account_id = T3.account_id INNER JOIN client AS T4 ON T3.client_id = T4.client_id WHERE T4.client_id = ( SELECT client_id FROM client WHERE gender = 'F' ORDER BY birth_date ASC LIMIT 1 ) ORDER BY T2.A11 DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_95",
+   "db_id": "financial",
+   "question": "Find the account number of the youngest client, breaking ties by choosing the highest average salary of their district.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT a.`account_id`\nFROM   `account`   AS a\nJOIN   `disp`      AS d    ON d.`account_id` = a.`account_id`\nJOIN   `client`    AS c    ON c.`client_id`  = d.`client_id`\nJOIN   `district`  AS dist ON dist.`district_id` = a.`district_id`\nORDER BY c.`birth_date` DESC,\n         dist.`A11`      DESC\nLIMIT 1;",
+   "ties": null,
+   "skipped": "multi-key ORDER BY (ties already broken)"
+  },
+  {
+   "id": "bird_971",
+   "db_id": "formula_1",
+   "question": "Please state the reference name of the oldest German driver.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT driverRef FROM drivers WHERE nationality = 'German' ORDER BY JULIANDAY(dob) ASC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_98",
+   "db_id": "financial",
+   "question": "Among the accounts who have approved loan date in 1997, list out the accounts that have the lowest approved amount and choose weekly issuance statement.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T2.account_id FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE STRFTIME('%Y', T1.date) = '1997' AND T2.frequency = 'POPLATEK TYDNE' ORDER BY T1.amount LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_981",
+   "db_id": "formula_1",
+   "question": "On what year did the youngest driver had his first qualifying race? Also state the name, date and time of the race.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T3.year, T3.name, T3.date, T3.time FROM qualifying AS T1 INNER JOIN drivers AS T2 on T1.driverId = T2.driverId INNER JOIN races AS T3 on T1.raceId = T3.raceId WHERE T1.driverId = ( SELECT driverId FROM drivers ORDER BY dob DESC LIMIT 1 ) ORDER BY T3.date ASC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_99",
+   "db_id": "financial",
+   "question": "Among the accounts who have loan validity more than 12 months, list out the accounts that have the highest approved amount and have account opening date in 1993.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT T1.account_id FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE STRFTIME('%Y', T2.date) = '1993' AND T1.duration > 12 ORDER BY T1.amount DESC LIMIT 1",
+   "ties": 1
+  },
+  {
+   "id": "bird_994",
+   "db_id": "formula_1",
+   "question": "Which constructor scored most points from Monaco Grand Prix between 1980 and 2010? List the score, name and nationality of this team.",
+   "model_was_correct": true,
+   "gold_sql": "SELECT SUM(T1.points), T2.name, T2.nationality FROM constructorResults AS T1 INNER JOIN constructors AS T2 ON T1.constructorId = T2.constructorId INNER JOIN races AS T3 ON T3.raceid = T1.raceid WHERE T3.name = 'Monaco Grand Prix' AND T3.year BETWEEN 1980 AND 2010 GROUP BY T2.name ORDER BY SUM(T1.points) DESC LIMIT 1",
+   "ties": 1
+  }
+ ]
+}
