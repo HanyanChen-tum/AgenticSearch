@@ -38,7 +38,9 @@ from ours.agent.reasoning_capture import (
 )
 from ours.agent.sql_conventions import get_sql_convention_rewriter
 from ours.agent.state import AgentExecutionState, ExecutionStatus
+from ours.agent.analysis_gate import contradicts_analysis
 from ours.agent.question_analysis import (
+    QUESTION_ANALYSIS_GATED_MODE,
     QUESTION_ANALYSIS_MODE,
     QuestionAnalysisState,
     parse_analysis,
@@ -100,6 +102,7 @@ class DBRLM(RLM):
         self._execution_state = AgentExecutionState()
         self._query_plan_state = QueryPlanState()
         self._question_analysis_state = QuestionAnalysisState()
+        self._analysis_gate_fired = False
         self._context_store = None
         self._sql_convention_rewrite = None
         self._reasoning_capture = []
@@ -543,7 +546,9 @@ class DBRLM(RLM):
 
             has_code = bool(re.search(r'```python', response))
 
-            if self.agent_config.planner_mode == QUESTION_ANALYSIS_MODE:
+            if self.agent_config.planner_mode in (
+                QUESTION_ANALYSIS_MODE, QUESTION_ANALYSIS_GATED_MODE
+            ):
                 state = self._question_analysis_state
                 if state.analysis is None:
                     analysis, errors = parse_analysis(response)
@@ -603,6 +608,25 @@ class DBRLM(RLM):
             # FINAL is a state transition, not a string-only parser action.
             if is_final(response) and not has_code:
                 answer = parse_response(response, repl_env)
+                if (answer is not None
+                        and self.agent_config.planner_mode == QUESTION_ANALYSIS_GATED_MODE
+                        and not getattr(self, "_analysis_gate_fired", False)):
+                    reason = contradicts_analysis(
+                        answer, self._question_analysis_state.analysis
+                    )
+                    if reason is not None:
+                        # Once per question: the message invites resubmitting the
+                        # same query with a justification, so blocking twice would
+                        # refuse the answer the model was told it could give.
+                        self._analysis_gate_fired = True
+                        self._record_tool_event(
+                            "analysis_gate.blocked",
+                            {"sql": answer},
+                            {"reason": reason},
+                        )
+                        messages.append({"role": "assistant", "content": response})
+                        messages.append({"role": "user", "content": reason})
+                        continue
                 if answer is not None:
                     if self.agent_config.final_execution_gate:
                         # Controller executes the exact submitted SQL itself --

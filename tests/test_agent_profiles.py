@@ -74,6 +74,7 @@ class AgentProfileTests(unittest.TestCase):
             agent_profile_names(),
             (
                 
+                
                 "clean-e0", "clean-e1",
                 "e3-a", "e3-ac",
                 "e3-c", "e3-c-conv",
@@ -83,7 +84,8 @@ class AgentProfileTests(unittest.TestCase):
                 "e3-c-noconv", "e3-c-recursive",
                 "e3-c-recursive-db", "e3-c-recursive-db-conv2",
                 "e3-c-recursive-db-final-gate", "e3-c-recursive-db-keepties",
-                "e3-c-recursive-db-open", "e3-c-recursive-db-reasoning",
+                "e3-c-recursive-db-open", "e3-c-recursive-db-qa",
+                "e3-c-recursive-db-qa-gated", "e3-c-recursive-db-reasoning",
                 "e3-c-recursive-db-types", "e3-c-rules-reasoning",
                 "e3-c-semantic", "e3-c-toolconfirm-reasoning",
                 "e3-f", "e3-rf",

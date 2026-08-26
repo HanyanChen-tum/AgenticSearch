@@ -33,6 +33,10 @@ from dataclasses import dataclass, field
 from typing import Any
 
 QUESTION_ANALYSIS_MODE = "question-analysis-v1"
+# Same analysis block, but the SQL is checked against it at FINAL. Stage one
+# showed the analysis alone is inert (-3.3pp): nothing connects it to the
+# generation that follows. See ours/agent/analysis_gate.py.
+QUESTION_ANALYSIS_GATED_MODE = "question-analysis-gated-v1"
 QUESTION_ANALYSIS_SCHEMA_VERSION = 1
 
 _BLOCK_PATTERN = re.compile(
@@ -60,13 +64,14 @@ class QuestionAnalysisState:
     events: list[dict[str, Any]] = field(default_factory=list)
 
 
-def protocol_manifest() -> dict[str, Any]:
+def protocol_manifest(mode: str = QUESTION_ANALYSIS_MODE) -> dict[str, Any]:
     return {
         "schema_version": QUESTION_ANALYSIS_SCHEMA_VERSION,
-        "mode": QUESTION_ANALYSIS_MODE,
+        "mode": mode,
         "required_fields": sorted(REQUIRED_FIELDS),
         "stage": "before-first-query",
         "describes": "the question only; no tables, joins or SQL",
+        "gated": mode == QUESTION_ANALYSIS_GATED_MODE,
     }
 
 

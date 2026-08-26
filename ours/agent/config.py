@@ -8,7 +8,7 @@ import json
 
 from .prompts import prompt_manifest
 from .query_plan import QUERY_PLAN_MODE, protocol_manifest
-from .question_analysis import QUESTION_ANALYSIS_MODE
+from .question_analysis import QUESTION_ANALYSIS_GATED_MODE, QUESTION_ANALYSIS_MODE
 from .question_analysis import protocol_manifest as question_analysis_manifest
 from .reasoning_capture import CAPTURE_MODE as REASONING_CAPTURE_MODE
 from .sql_conventions import KNOWN_VERSIONS as SQL_CONVENTION_VERSIONS
@@ -101,11 +101,11 @@ class AgentConfig:
             )
         if self.schema_context_mode == "offline-retrieval" and self.offline_metadata_mode == "none":
             raise ValueError("offline-retrieval requires an offline metadata artifact")
-        if self.planner_mode not in {"none", QUERY_PLAN_MODE, QUESTION_ANALYSIS_MODE}:
+        if self.planner_mode not in {"none", QUERY_PLAN_MODE, QUESTION_ANALYSIS_MODE, QUESTION_ANALYSIS_GATED_MODE}:
             raise ValueError(f"Unknown planner mode: {self.planner_mode!r}")
         if self.planner_mode == QUERY_PLAN_MODE and self.prompt_profile != "query-plan-v1":
             raise ValueError("root-query-plan-v1 requires prompt_profile='query-plan-v1'")
-        if (self.planner_mode == QUESTION_ANALYSIS_MODE
+        if (self.planner_mode in {QUESTION_ANALYSIS_MODE, QUESTION_ANALYSIS_GATED_MODE}
                 and self.prompt_profile != "conventions-qa-v1"):
             raise ValueError(
                 "question-analysis-v1 requires prompt_profile='conventions-qa-v1': "
@@ -139,8 +139,9 @@ class AgentConfig:
             protocol_manifest() if self.planner_mode == QUERY_PLAN_MODE else None
         )
         manifest["question_analysis"] = (
-            question_analysis_manifest()
-            if self.planner_mode == QUESTION_ANALYSIS_MODE else None
+            question_analysis_manifest(self.planner_mode)
+            if self.planner_mode in {QUESTION_ANALYSIS_MODE, QUESTION_ANALYSIS_GATED_MODE}
+            else None
         )
         return manifest
 
@@ -553,6 +554,26 @@ _PROFILES = {
         sql_convention_mode=SQL_CONVENTION_VERSION,
         recursion_mode="leaf-db-v1",
         planner_mode=QUESTION_ANALYSIS_MODE,
+    ),
+    # Stage two: the analysis stops being preamble and becomes a check. Stage
+    # one established that asking for the analysis alone costs 3.3pp because
+    # nothing connects it to the SQL -- the model goes question -> FINAL in one
+    # turn, 38 of 46 without querying at all. Here the model's own
+    # counting_unit claim is checked against the submitted SQL at FINAL, which
+    # is where keep_ties and printf_to_round act; those are the two changes that
+    # measured positive this week.
+    "e3-c-recursive-db-qa-gated": AgentConfig(
+        profile="e3-c-recursive-db-qa-gated",
+        experiment_variant="e3-c-recursive-db-qa-gated",
+        prompt_profile="conventions-qa-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        recursion_mode="leaf-db-v1",
+        planner_mode=QUESTION_ANALYSIS_GATED_MODE,
     ),
     # e3-c-recursive-db with reasoning_capture on, for causal tracing into *why*
     # depth-1 recursion doesn't move accuracy (five_layer_chain_results
