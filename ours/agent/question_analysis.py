@@ -50,6 +50,10 @@ _BLOCK_PATTERN = re.compile(
 REQUIRED_FIELDS: dict[str, str] = {
     "answer_shape": "how many columns to return and what each one is",
     "counting_unit": "whether the question counts entities or table rows",
+    "entity_key": (
+        "if counting entities, the column that identifies one -- "
+        "'table.column', or 'n/a' when the question counts rows or counts nothing"
+    ),
     "stated_conditions": "conditions the question states outright",
     "unit_and_scale": "units, percentage, and whether a x100 is required",
     "ambiguities": "what the question leaves genuinely open",

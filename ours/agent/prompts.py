@@ -336,6 +336,9 @@ _SYSTEM_PROMPT_CONVENTIONS_QA = _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE.replace(
                          table rows? A phrase like "at least once" or "at least
                          one record" means entities, so identical rows collapse
                          to one
+    "entity_key"         if you are counting entities, the column that identifies
+                         one of them, as "table.column". Write "n/a" if the
+                         question counts rows, or counts nothing at all
     "stated_conditions"  list every condition the question states outright,
                          including ones that sound incidental
     "unit_and_scale"     the unit of the answer. If it is a percentage, say so
