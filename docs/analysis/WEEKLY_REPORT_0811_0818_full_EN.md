@@ -6,7 +6,7 @@ conclusion.** Two changes actually raised accuracy. Six conclusions were withdra
 the withdrawals are the larger part of the week's output.
 
 A results-only cut of this report, for readers who want what held rather than how it was
-arrived at, is in [`WEEKLY_REPORT_0811_0818_EN.md`](WEEKLY_REPORT_0811_0818_EN.md).
+arrived at, is in [`week_2026-08-11/README.md`](week_2026-08-11/README.md).
 
 ---
 

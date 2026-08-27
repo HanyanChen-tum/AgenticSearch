@@ -1064,5 +1064,333 @@
    "exec_error": null,
    "section_count": 2
   }
+ ],
+ "bird_32": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 29
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "n_drafts": 3,
+   "error": "draft persisted after 2 continuations, gave up",
+   "section_count": 57
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT frpm.\"FRPM Count (K-12)\" * 1.0 / frpm.\"Enrollment (K-12)\" AS eligible_free_or_reduced_price_meal_rate FROM frpm INNER JOIN schools ON frpm.CDSCode = schools.CDSCode WHERE schools.SOC = '66' AND schools.GSserved = 'K-12' AND frpm.\"FRPM Count (K-12)\" IS NOT NULL AND frpm.\"Enrollment (K-12)\" IS NOT NULL ORDER BY frpm.\"FRPM Count (K-12)\" DESC LIMIT 5",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT T1.\"FRPM Count (K-12)\" / T1.\"Enrollment (K-12)\" AS eligible_free_or_reduced_price_meal_rate FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.SOC = '66' AND T1.\"School Type\" = 'K-12 Schools (Public)' ORDER BY T1.\"FRPM Count (K-12)\" DESC LIMIT 5",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 38
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT T1.\"FRPM Count (K-12)\" * 1.0 / T1.\"Enrollment (K-12)\" AS eligible_free_or_reduced_price_meal_rate FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.SOC = '66' AND T1.\"School Type\" = 'K-12 Schools (Public)' AND T1.\"FRPM Count (K-12)\" IS NOT NULL AND T1.\"Enrollment (K-12)\" IS NOT NULL ORDER BY T1.\"FRPM Count (K-12)\" DESC LIMIT 5",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 40
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT 1.0 * frpm.\"FRPM Count (K-12)\" / frpm.\"Enrollment (K-12)\" AS eligible_free_or_reduced_price_meal_rate FROM frpm INNER JOIN schools ON frpm.\"CDSCode\" = schools.\"CDSCode\" WHERE schools.\"SOC\" = '66' AND schools.\"GSserved\" = 'K-12' ORDER BY frpm.\"FRPM Count (K-12)\" DESC LIMIT 5",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 50
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT (f.[FRPM Count (K-12)] * 1.0) / f.[Enrollment (K-12)] AS eligible_free_or_reduced_price_meal_rate FROM frpm AS f INNER JOIN schools AS s ON f.CDSCode = s.CDSCode WHERE s.SOC = '66' AND f.[School Type] = 'K-12 Schools (Public)' ORDER BY f.[FRPM Count (K-12)] DESC LIMIT 5",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 20
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT frpm.\"FRPM Count (K-12)\" * 1.0 / frpm.\"Enrollment (K-12)\" AS eligible_free_or_reduced_price_meal_rate FROM frpm JOIN schools ON frpm.CDSCode = schools.CDSCode WHERE schools.SOC = '66' ORDER BY frpm.\"FRPM Count (K-12)\" DESC LIMIT 5",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 24
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 11
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT 1.0 * f.\"FRPM Count (K-12)\" / NULLIF(f.\"Enrollment (K-12)\", 0) AS eligible_free_or_reduced_price_meal_rate FROM frpm AS f INNER JOIN schools AS s ON f.CDSCode = s.CDSCode WHERE s.SOC = '66' ORDER BY f.\"FRPM Count (K-12)\" DESC LIMIT 5",
+   "correct": true,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 23
+  }
+ ],
+ "bird_48": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 20
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT CAST((SELECT COUNT(*) FROM schools WHERE County = 'Orange' AND DOC = '54' AND StatusType = 'Merged') AS REAL) / NULLIF((SELECT COUNT(*) FROM schools WHERE DOC = '52' AND StatusType = 'Merged'), 0) AS ratio",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 16
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 34
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT 1.0 * (SELECT COUNT(*) FROM schools WHERE County = 'Orange' AND DOC = '54') / (SELECT COUNT(*) FROM schools WHERE DOC = '52') AS ratio",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 46
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT 1.0 * (SELECT COUNT(*) FROM schools WHERE DOC = '54' AND County = 'Orange') / (SELECT COUNT(*) FROM schools WHERE DOC = '52')",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 33
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT 1.0 * SUM(CASE WHEN s.County = 'Orange' AND s.DOC = '54' THEN 1 ELSE 0 END) / SUM(CASE WHEN s.DOC = '52' THEN 1 ELSE 0 END) AS ratio FROM schools AS s JOIN frpm AS f ON s.CDSCode = f.CDSCode",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 20
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(COUNT(*) AS REAL) / NULLIF((SELECT COUNT(*) FROM schools WHERE DOC = '52'), 0) AS ratio FROM schools WHERE County = 'Orange' AND DOC = '54';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 15
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT 1.0 * (SELECT COUNT(*) FROM schools WHERE County = 'Orange' AND DOC = '54') / (SELECT COUNT(*) FROM schools WHERE DOC = '52')",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 17
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 9
+  }
+ ],
+ "bird_24": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT frpm.\"School Name\" FROM frpm INNER JOIN satscores ON frpm.CDSCode = satscores.cds WHERE 1.0 * frpm.\"Free Meal Count (K-12)\" / frpm.\"Enrollment (K-12)\" > 0.1 AND satscores.NumGE1500 > 0",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 49
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 72
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 40
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT DISTINCT COALESCE(sch.[School], f.[School Name], s.sname) AS school_name FROM frpm AS f INNER JOIN satscores AS s ON s.cds = f.CDSCode INNER JOIN schools AS sch ON sch.CDSCode = f.CDSCode WHERE f.[Free Meal Count (K-12)] / f.[Enrollment (K-12)] > 0.1 AND s.NumGE1500 > 0",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 71
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT DISTINCT F.[School Name] FROM frpm AS F JOIN schools AS Sch ON Sch.CDSCode = F.CDSCode JOIN satscores AS S ON S.cds = Sch.CDSCode WHERE F.[Free Meal Count (K-12)] / F.[Enrollment (K-12)] > 0.1 AND S.NumGE1500 >= 1500",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 74
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 2,
+   "section_count": 89
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 24
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 27
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT DISTINCT sch.School FROM schools AS sch INNER JOIN frpm AS f ON f.CDSCode = sch.CDSCode INNER JOIN satscores AS s ON s.cds = sch.CDSCode WHERE 1.0 * f.`Free Meal Count (K-12)` / f.`Enrollment (K-12)` > 0.1 AND s.`NumGE1500` > 0",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 80
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 2,
+   "section_count": 38
+  }
+ ],
+ "bird_416": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(COUNT(CASE WHEN EXISTS (SELECT 1 FROM foreign_data f WHERE f.uuid = c.uuid AND f.language = 'French') THEN 1 END) AS REAL) * 100.0 / COUNT(*) FROM cards c WHERE c.power IS NULL OR c.power = '*'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": "SQL execution timed out after 180 seconds",
+   "section_count": 43
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT CAST(COUNT(CASE WHEN f.language = 'French' AND (c.power IS NULL OR c.power = '*') THEN 1 END) AS REAL) * 100 / COUNT(CASE WHEN c.power IS NULL OR c.power = '*' THEN 1 END) FROM cards AS c JOIN foreign_data AS f ON f.uuid = c.uuid",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(COUNT(CASE WHEN foreign_data.language = 'French' AND (cards.power IS NULL OR cards.power = '*') THEN 1 END) AS REAL) * 100 / COUNT(CASE WHEN cards.power IS NULL OR cards.power = '*' THEN 1 END) FROM cards JOIN foreign_data ON cards.uuid = foreign_data.uuid",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 48
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT CAST(COUNT(CASE WHEN f.language = 'French' AND (c.power IS NULL OR c.power = '*') THEN 1 END) AS REAL) * 100.0 / COUNT(CASE WHEN c.power IS NULL OR c.power = '*' THEN 1 END) FROM cards AS c JOIN foreign_data AS f ON c.uuid = f.uuid",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 43
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT CAST(COUNT(CASE WHEN f.language = 'French' AND (c.power IS NULL OR c.power = '*') THEN 1 END) AS REAL) * 100.0 / COUNT(CASE WHEN c.power IS NULL OR c.power = '*' THEN 1 END) FROM cards AS c JOIN foreign_data AS f ON f.uuid = c.uuid",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 22
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT CAST(COUNT(CASE WHEN fd.language = 'French' AND (c.power IS NULL OR c.power = '*') THEN c.id END) AS REAL) * 100.0 / COUNT(CASE WHEN c.power IS NULL OR c.power = '*' THEN c.id END) FROM cards AS c JOIN foreign_data AS fd ON c.uuid = fd.uuid",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 39
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT CAST(SUM(CASE WHEN EXISTS (SELECT 1 FROM foreign_data f WHERE f.uuid = c.uuid AND f.language = 'French') THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) FROM cards c WHERE c.power IS NULL OR c.power = '*'",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": "SQL execution timed out after 180 seconds",
+   "section_count": 33
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(COUNT(CASE WHEN fd.language = 'French' AND (c.power IS NULL OR c.power = '*') THEN 1 END) AS REAL) * 100.0 / COUNT(CASE WHEN c.power IS NULL OR c.power = '*' THEN 1 END) FROM cards AS c JOIN foreign_data AS fd ON fd.uuid = c.uuid",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 32
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT CAST(COUNT(CASE WHEN foreign_data.language = 'French' AND (cards.power IS NULL OR cards.power = '*') THEN cards.id END) AS REAL) * 100 / COUNT(CASE WHEN cards.power IS NULL OR cards.power = '*' THEN cards.id END) FROM cards JOIN foreign_data ON foreign_data.uuid = cards.uuid",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12
+  }
  ]
 }

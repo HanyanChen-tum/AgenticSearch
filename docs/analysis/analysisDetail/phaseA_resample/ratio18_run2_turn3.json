@@ -1,0 +1,84 @@
+{
+ "bird_1037": [
+  {
+   "sample": 0,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992';",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT (SUM(pa.preferred_foot = 'left') * 100.0) / COUNT(pa.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE CAST(strftime('%Y', p.birthday) AS INTEGER) BETWEEN 1987 AND 1992",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 13
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992';",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992';",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992'",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992';",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992'",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992';",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992'",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE CAST(strftime('%Y', p.birthday) AS INTEGER) BETWEEN 1987 AND 1992",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 3
+  }
+ ]
+}

@@ -1,0 +1,84 @@
+{
+ "bird_1037": [
+  {
+   "sample": 0,
+   "sql": "SELECT (SUM(pa.preferred_foot = 'left') * 100.0) / COUNT(pa.player_fifa_api_id) FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 22
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage FROM Player_Attributes AS pa JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 39
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 34
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT (SUM(pa.preferred_foot = 'left') * 100.0) / COUNT(pa.player_fifa_api_id) AS percentage FROM Player_Attributes pa JOIN Player p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE CAST(strftime('%Y', p.birthday) AS INTEGER) BETWEEN 1987 AND 1992;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 25
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT (SUM(PA.preferred_foot = 'left') * 100.0) / COUNT(PA.player_fifa_api_id) AS percentage FROM Player_Attributes AS PA INNER JOIN Player AS P ON PA.player_fifa_api_id = P.player_fifa_api_id WHERE strftime('%Y', P.birthday) BETWEEN '1987' AND '1992';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 16
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT 100.0 * SUM(pa.preferred_foot = 'left') / COUNT(pa.player_fifa_api_id) AS percentage FROM Player_Attributes AS pa JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE CAST(strftime('%Y', p.birthday) AS INTEGER) BETWEEN 1987 AND 1992;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 22
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT 100.0 * SUM(pa.preferred_foot = 'left') / COUNT(pa.player_fifa_api_id) FROM Player_Attributes AS pa JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT 100.0 * SUM(left_flag) / COUNT(*) AS percentage_left_foot FROM (SELECT p.player_fifa_api_id, MAX(CASE WHEN pa.preferred_foot = 'left' THEN 1 ELSE 0 END) AS left_flag FROM Player AS p JOIN Player_Attributes AS pa ON p.player_fifa_api_id = pa.player_fifa_api_id WHERE CAST(substr(p.birthday, 1, 4) AS INTEGER) BETWEEN 1987 AND 1992 GROUP BY p.player_fifa_api_id) AS t;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 22
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 20
+  }
+ ]
+}

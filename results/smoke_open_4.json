@@ -1,0 +1,176 @@
+[
+  {
+    "id": "bird_173",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "How often does account number 3 request an account statement to be released? What was the aim of debiting 3539 in total?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT (SELECT COUNT(T1.trans_id) FROM trans AS T1 WHERE T1.account_id = 3 AND T1.k_symbol = 'SLUZBY') AS statement_count, (SELECT T2.k_symbol FROM [order] AS T2 WHERE T2.amount = 3539 GROUP BY T2.k_symbol ORDER BY COUNT(*) DESC, T2.k_symbol LIMIT 1) AS aim;",
+    "predicted_answer": [
+      [
+        13,
+        "POJISTNE"
+      ]
+    ],
+    "gold_sql": "SELECT T1.frequency, T2.k_symbol FROM account AS T1 INNER JOIN (SELECT account_id, k_symbol, SUM(amount) AS total_amount FROM \"order\" GROUP BY account_id, k_symbol) AS T2 ON T1.account_id = T2.account_id WHERE T1.account_id = 3 AND T2.total_amount = 3539",
+    "gold_answer": [
+      [
+        "POPLATEK MESICNE",
+        "POJISTNE"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 49.9592,
+    "llm_calls": 1,
+    "prompt_tokens": 2130,
+    "completion_tokens": 10809,
+    "reasoning_tokens": 10523,
+    "total_tokens": 12939,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db-open",
+    "agent_config_sha256": "3d858926c86b1c8958fe19842a9d4e07fb7b58f9e2058c1a1d2ec00537e8a151",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260825T043422Z-a350aeaa",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_263",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "toxicology",
+    "question": "What is the composition of element chlorine in percentage among the molecules that contain at least one single bond?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT CAST(SUM(a.element = 'cl') AS FLOAT) / COUNT(a.atom_id) AS percent FROM atom AS a WHERE EXISTS (SELECT 1 FROM bond AS b WHERE b.molecule_id = a.molecule_id AND b.bond_type = '-')",
+    "predicted_answer": [
+      [
+        0.03482368449961551
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T.element = 'cl' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id) FROM atom AS T WHERE molecule_id IN (SELECT DISTINCT molecule.molecule_id FROM molecule JOIN bond ON molecule.molecule_id = bond.molecule_id AND bond.bond_type = '-')",
+    "gold_answer": [
+      [
+        3.4823684499615513
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 30.9165,
+    "llm_calls": 1,
+    "prompt_tokens": 1545,
+    "completion_tokens": 5455,
+    "reasoning_tokens": 5311,
+    "total_tokens": 7000,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db-open",
+    "agent_config_sha256": "3d858926c86b1c8958fe19842a9d4e07fb7b58f9e2058c1a1d2ec00537e8a151",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260825T043422Z-a350aeaa",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_758",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "superhero",
+    "question": "Provide the hair colour of the human superhero who is 185 cm tall.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT c.colour FROM superhero AS s INNER JOIN race AS r ON s.race_id = r.id INNER JOIN colour AS c ON s.hair_colour_id = c.id WHERE s.height_cm = 185 AND r.race = 'human'",
+    "predicted_answer": [],
+    "gold_sql": "SELECT DISTINCT T3.colour FROM superhero AS T1 INNER JOIN race AS T2 ON T1.race_id = T2.id INNER JOIN colour AS T3 ON T1.hair_colour_id = T3.id WHERE T1.height_cm = 185 AND T2.race = 'Human'",
+    "gold_answer": [
+      [
+        "Blond"
+      ],
+      [
+        "Brown"
+      ],
+      [
+        "Black"
+      ],
+      [
+        "Brown/White"
+      ],
+      [
+        "No Colour"
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 17.1094,
+    "llm_calls": 1,
+    "prompt_tokens": 1909,
+    "completion_tokens": 3424,
+    "reasoning_tokens": 3283,
+    "total_tokens": 5333,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db-open",
+    "agent_config_sha256": "3d858926c86b1c8958fe19842a9d4e07fb7b58f9e2058c1a1d2ec00537e8a151",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260825T043422Z-a350aeaa",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_892",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "formula_1",
+    "question": "State the driver with the most points scored. Find his full name and the number of points.",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT d.forename, d.surname, SUM(r.points) AS points FROM results AS r INNER JOIN drivers AS d ON r.driverId = d.driverId GROUP BY d.driverId, d.forename, d.surname ORDER BY SUM(r.points) DESC LIMIT 1",
+    "predicted_answer": [
+      [
+        "Lewis",
+        "Hamilton",
+        2382.0
+      ]
+    ],
+    "gold_sql": "SELECT d.`forename`, d.`surname`, SUM(r.`points`) AS total_points\nFROM `results` r\nJOIN `drivers` d ON d.`driverId` = r.`driverId`\nGROUP BY r.`driverId`\nORDER BY total_points DESC\nLIMIT 1;",
+    "gold_answer": [
+      [
+        "Lewis",
+        "Hamilton",
+        2382.0
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 21.0136,
+    "llm_calls": 1,
+    "prompt_tokens": 3221,
+    "completion_tokens": 4052,
+    "reasoning_tokens": 3906,
+    "total_tokens": 7273,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db-open",
+    "agent_config_sha256": "3d858926c86b1c8958fe19842a9d4e07fb7b58f9e2058c1a1d2ec00537e8a151",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260825T043422Z-a350aeaa",
+    "trace_schema_version": 3
+  }
+]

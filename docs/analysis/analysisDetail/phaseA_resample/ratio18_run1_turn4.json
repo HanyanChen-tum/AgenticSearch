@@ -1,0 +1,84 @@
+{
+ "bird_255": [
+  {
+   "sample": 0,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-';",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(b.bond_id)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 6
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(b.bond_id)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-';",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 0
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 2
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 5
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT printf('%.5f', CAST(SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(CASE WHEN b.bond_type = '-' THEN b.bond_id END)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-';",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 3
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 1
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-';",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 2
+  }
+ ]
+}

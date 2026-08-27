@@ -1,5 +1,12 @@
 # Phase A 首轮定位：29 道，及一个验证方法的教训（2026-08-23）
 
+> **候选池已扩大，本文数字部分过期（2026-08-25）。** `ratio_formula` 并入候选池后，
+> 池子从 29 道涨到 **46 道**（原 29 道剔除因超时修正翻正确的 `bird_518` 变 28 道，
+> 新增 18 道），完整过程和重采样结果见
+> [`phase_a_turn_resampling_2026-08-24.md`](phase_a_turn_resampling_2026-08-24.md)
+> 「候选池扩至 46 道」一节。本文记录的分诊方法、"非空即真"验证教训、10 道人工抽检
+> 8/10 命中的机制验证，均不受影响，仍然成立。
+
 ## 产出链条
 
 用 `e3-c-rules-reasoning` 在修正数据集上跑的两次运行（[`reruns_2026-08-20.md`](reruns_2026-08-20.md)
@@ -25,19 +32,19 @@
 [`scripts/build_phase_a_funnel.py`](../../../scripts/build_phase_a_funnel.py) 固定下来，
 逐题 id 存在 `phase_a_funnel_run{1,2}.json` 里：
 
-| | run1 | run2 |
-|---|---:|---:|
-| 总题数 | 498 | 498 |
-| − harness/接口故障（`scored=False`，不计分） | 3 | 0 |
-| = 可计分 | 495 | 498 |
-| − 答对 | 432 | 442 |
-| = 答错 | **63** | **56** |
-| 　`no_answer`（模型没给出可执行答案） | 2 | 2 |
-| 　`confident_miss`（`ties`/`under_projection`/`distinct_repair`，可执行验证） | 14 | 14 |
-| 　`shape_miss`（`column_permutation`/`concat_columns`，可执行验证） | 0 | 0 |
-| 　`rowset`（`row_superset`/`row_subset`，可执行验证） | 4 | 4 |
-| 　`ratio_formula`（**正则文本匹配，非执行验证**，判定不机械化） | 18 | 11 |
-| 　`other`（进 Phase A 候选池） | **25** | **25** |
+|                                                                                     |         run1 |         run2 |
+| ----------------------------------------------------------------------------------- | -----------: | -----------: |
+| 总题数                                                                              |          498 |          498 |
+| − harness/接口故障（`scored=False`，不计分）                                     |            3 |            0 |
+| = 可计分                                                                            |          495 |          498 |
+| − 答对                                                                             |          432 |          442 |
+| = 答错                                                                              | **63** | **56** |
+| `no_answer`（模型没给出可执行答案）                                               |            2 |            2 |
+| `confident_miss`（`ties`/`under_projection`/`distinct_repair`，可执行验证） |           14 |           14 |
+| `shape_miss`（`column_permutation`/`concat_columns`，可执行验证）             |            0 |            0 |
+| `rowset`（`row_superset`/`row_subset`，可执行验证）                           |            4 |            4 |
+| `ratio_formula`（**正则文本匹配，非执行验证**，判定不机械化）               |           18 |           11 |
+| `other`（进 Phase A 候选池）                                                      | **25** | **25** |
 
 分类优先级固定、按顺序匹配（先 `no_answer` → `confident_miss` → `shape_miss` → `rowset` →
 `ratio_formula` → 剩下才是 `other`），跟 `triage_failure_causes.py` 本身的检查顺序一致。
@@ -47,11 +54,11 @@
 
 ## 结果
 
-| 指标 | 值 |
-|---|---|
-| 定位到的句子位置（相对推理长度百分比） | 中位 20.4%，均值 27.9% |
-| 标签分布 | FR 12、AC 11、PS 2、RC 2、PG 1、FAE 1 |
-| 带可执行断言的 | 28/29 |
+| 指标                                   | 值                                    |
+| -------------------------------------- | ------------------------------------- |
+| 定位到的句子位置（相对推理长度百分比） | 中位 20.4%，均值 27.9%                |
+| 标签分布                               | FR 12、AC 11、PS 2、RC 2、PG 1、FAE 1 |
+| 带可执行断言的                         | 28/29                                 |
 
 ## 一个必须记录的方法教训：自动"非空即真"验证是错的
 
