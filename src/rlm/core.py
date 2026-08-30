@@ -93,6 +93,7 @@ class RLM:
         latency_seconds: float,
         usage: dict[str, int | bool] | None = None,
         error: str | None = None,
+        served_model: str | None = None,
     ) -> None:
         normalized = usage or {
             "usage_available": False,
@@ -103,6 +104,13 @@ class RLM:
             "sequence": len(self._llm_call_usage) + 1,
             "depth": self._current_depth,
             "model": model,
+            # What the deployment actually served, e.g. gpt-5.4-mini-2026-03-17.
+            # `model` is only what we asked for, and a deployment name is stable
+            # across version changes underneath it -- so without this there is no
+            # way to tell afterwards whether a behaviour shift came with a new
+            # model version. That question was unanswerable for every run before
+            # 2026-08-30 when the tool loop started dying on unchanged config.
+            "served_model": served_model,
             "latency_seconds": round(latency_seconds, 4),
             **normalized,
         }
@@ -305,6 +313,7 @@ class RLM:
             model=model,
             latency_seconds=time.perf_counter() - started_at,
             usage=extract_response_usage(response),
+            served_model=getattr(response, "model", None),
         )
 
         # Extract text

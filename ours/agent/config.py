@@ -63,6 +63,14 @@ class AgentConfig:
     # covers the same missing-index timeout class at scoring time; this flag
     # is the corresponding fix on the agent side.
     final_execution_gate: bool = False
+    # Repair model output the REPL would reject on formatting alone: an
+    # unfenced SQL-only response, and a db.execute() argument spanning lines
+    # (Python cannot put a newline in a "..." literal). Both are the model
+    # writing reasonable SQL in a shape our parser does not take, and both
+    # silently turn the agent into a single-shot generator. Off by default:
+    # it rewrites the response, so it changes predictions and stays ablatable.
+    # See _recover_repl_input in recursive_db_rlm.py.
+    repl_input_recovery: bool = False
 
     def __post_init__(self) -> None:
         if self.few_shot_mode not in {"train-retrieval", "none"}:
@@ -322,6 +330,29 @@ _PROFILES = {
         offline_metadata_mode="e3-f-schema-v4",
         schema_context_mode="offline-retrieval",
         sql_convention_mode=SQL_CONVENTION_VERSION,
+    ),
+    # e3-c-conv-rules with both halves of the dead-loop repair, because the two
+    # models fail differently and one fix does not cover both. On a 16-question
+    # smoke on 2026-08-30, against the plain profile at exec/q 0.00 and 75%
+    # submitting on turn 1: the toolconfirm prompt alone took gpt-5.4 to exec/q
+    # 0.94 with no bare SQL at all, but left gpt-5.4-mini at 0.19 because it
+    # still emitted unfenced SQL on 5 of 16 -- it had stopped refusing to look
+    # and could not phrase the lookup. repl_input_recovery covers that half.
+    #
+    # Not a control for anything on its own: it moves two variables off
+    # e3-c-conv-rules at once. It exists to get the loop running so the model
+    # comparison measures agents; ablate the two flags separately to attribute.
+    "e3-c-conv-rules-liveloop": AgentConfig(
+        profile="e3-c-conv-rules-liveloop",
+        experiment_variant="e3-c-conv-rules-liveloop",
+        prompt_profile="basic-conventions-toolconfirm-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        repl_input_recovery=True,
     ),
     # e3-c-conv-rules with the conventions restated as semantic criteria, and the
     # deterministic rewriting switched off: the model decides per question whether

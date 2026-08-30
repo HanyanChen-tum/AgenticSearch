@@ -329,6 +329,7 @@ class DBRLM(RLM):
         self._record_llm_call(
             model=self.model, latency_seconds=time.perf_counter() - started,
             usage=extract_response_usage(response),
+            served_model=payload.get("model"),
         )
         if not hasattr(self, "_reasoning_capture"):
             self._reasoning_capture = []
@@ -538,6 +539,14 @@ class DBRLM(RLM):
             response = await self._call_llm(messages, **kwargs)
             response = _truncate_at_fake_turn(response)
             response = _convert_sql_blocks(response)
+            if self.agent_config.repl_input_recovery:
+                recovered = _recover_repl_input(response)
+                if recovered != response:
+                    self._record_tool_event(
+                        "repl_input.recovered", {"turn": iteration + 1},
+                        {"original": response[:2000]},
+                    )
+                    response = recovered
 
             print(f"\n{'='*80}")
             print(f"DB-RLM ITERATION {iteration}")
@@ -865,6 +874,11 @@ def _truncate_at_fake_turn(text: str) -> str:
     return text.strip()
 
 
+def _sql_to_python_block(sql: str) -> str:
+    escaped = sql.strip().replace('\\', '\\\\').replace('"', '\\"')
+    return f'```python\nprint(db.execute("{escaped}"))\n```'
+
+
 def _convert_sql_blocks(text: str) -> str:
     """Convert ```sql blocks into db.execute() Python calls.
 
@@ -872,11 +886,62 @@ def _convert_sql_blocks(text: str) -> str:
     wrap it so it actually runs and the model sees the result.
     """
     def to_python(m: re.Match) -> str:
-        sql = m.group(1).strip()
-        escaped = sql.replace('\\', '\\\\').replace('"', '\\"')
-        return f'```python\nprint(db.execute("{escaped}"))\n```'
+        return _sql_to_python_block(m.group(1))
 
     return re.sub(r'```sql\s*\n(.*?)\n```', to_python, text, flags=re.DOTALL)
+
+
+def _recover_bare_sql(text: str) -> str:
+    """Wrap an unfenced SQL-only response so the REPL can run it.
+
+    Same intent as `_convert_sql_blocks`, one step further out: there the model
+    fenced its SQL as ```sql, here it emitted the statement with no fence at
+    all. The REPL parses that as Python, raises SyntaxError, and the query never
+    runs -- so the agent silently degrades into a single-shot generator while
+    every config field still says it is an agent. Six full-set runs after
+    2026-08-20 died exactly this way on byte-identical prompts.
+
+    Deliberately narrow, because this rewrites what the model said: only when
+    the whole response is one SELECT/WITH statement, with no fence anywhere and
+    no FINAL( in it. A response that already carries a code block or a
+    submission is left alone.
+    """
+    stripped = text.strip()
+    if '```' in stripped or 'FINAL(' in stripped or 'FINAL_VAR(' in stripped:
+        return text
+    if not re.match(r'(?is)^(SELECT|WITH)\b', stripped):
+        return text
+    return _sql_to_python_block(stripped.rstrip(';'))
+
+
+def _recover_multiline_execute(text: str) -> str:
+    """Triple-quote a db.execute() argument that spans lines.
+
+    The model writes the call correctly and formats the SQL across several
+    lines, which is how SQL is normally written -- but a Python "..." literal
+    cannot contain a raw newline, so the REPL answers `SyntaxError: unterminated
+    string literal` and the query never runs. Nothing about the query is wrong;
+    only the quoting is, and only by Python's rules rather than the model's.
+
+    Rare historically (0-1 per full run through 2026-08-18) and then 3 in 16
+    questions once the model started writing multi-line SQL, which is the same
+    formatting shift behind the other two recovery paths here.
+    """
+    def promote(m: re.Match) -> str:
+        quote, body = m.group(1), m.group(2)
+        if '\n' not in body or quote * 3 in body:
+            return m.group(0)
+        return f'db.execute({quote * 3}{body}{quote * 3})'
+
+    # Body must not contain its own delimiter, so the match ends at the real
+    # closing quote rather than running into a later one.
+    return re.sub(r'db\.execute\(\s*(["\'])((?:(?!\1).)*?)\1\s*\)',
+                  promote, text, flags=re.DOTALL)
+
+
+def _recover_repl_input(text: str) -> str:
+    """Make runnable what the model plainly meant, or return it untouched."""
+    return _recover_multiline_execute(_recover_bare_sql(text))
 
 
 def _format_structured_observations(events: list[dict[str, Any]]) -> str:

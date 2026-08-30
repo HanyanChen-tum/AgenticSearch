@@ -79,6 +79,7 @@ class AgentProfileTests(unittest.TestCase):
                 "e3-a", "e3-ac",
                 "e3-c", "e3-c-conv",
                 "e3-c-conv-rules", "e3-c-conv-rules-final-gate",
+                "e3-c-conv-rules-liveloop",
                 "e3-c-conv-rules-toolconfirm", "e3-c-join-minimal",
                 "e3-c-join-minimal-v2", "e3-c-literal-check",
                 "e3-c-noconv", "e3-c-recursive",
@@ -741,6 +742,71 @@ class ReasoningCaptureTests(unittest.TestCase):
         self.assertEqual(parsed["section_count"], 2)
         self.assertIn("SELECT 1", parsed["text"])
         self.assertEqual(parsed["reasoning_tokens"], 80)
+
+
+class ReplInputRecoveryTests(unittest.TestCase):
+    """The rewrite must fire on the dead-loop shape and on nothing else."""
+
+    def test_unfenced_select_becomes_an_execute_call(self):
+        from ours.recursive_db_rlm import _recover_bare_sql
+        out = _recover_bare_sql("SELECT COUNT(*) FROM client WHERE gender = 'F';")
+        self.assertIn("```python", out)
+        self.assertIn('db.execute("SELECT COUNT(*) FROM client', out)
+        self.assertNotIn(';"', out)          # trailing semicolon dropped
+
+    def test_unfenced_with_clause_is_recovered(self):
+        from ours.recursive_db_rlm import _recover_bare_sql
+        self.assertIn("```python", _recover_bare_sql("WITH t AS (SELECT 1) SELECT * FROM t"))
+
+    def test_embedded_quotes_survive_the_wrap(self):
+        from ours.recursive_db_rlm import _recover_bare_sql
+        out = _recover_bare_sql('SELECT a FROM t WHERE n = "x"')
+        self.assertIn(r'\"x\"', out)
+
+    def test_leaves_final_and_existing_blocks_alone(self):
+        from ours.recursive_db_rlm import _recover_bare_sql
+        for untouched in (
+            'FINAL("SELECT 1")',
+            "```python\nprint(db.execute('SELECT 1'))\n```",
+            "I will check the schema first.",
+            "SELECT 1 -- then\nFINAL(\"SELECT 1\")",
+        ):
+            self.assertEqual(_recover_bare_sql(untouched), untouched)
+
+    def test_flag_is_off_for_the_established_profiles(self):
+        from ours.agent.config import get_agent_config
+        for name in ("clean-e0", "e3-c", "e3-c-conv-rules",
+                     "e3-c-conv-rules-toolconfirm"):
+            self.assertFalse(get_agent_config(name).repl_input_recovery, name)
+        self.assertTrue(get_agent_config("e3-c-conv-rules-liveloop").repl_input_recovery)
+
+    def test_multiline_execute_argument_is_triple_quoted(self):
+        from ours.recursive_db_rlm import _recover_multiline_execute
+        out = _recover_multiline_execute(
+            '```python\nprint(db.execute("SELECT a\nFROM t\nWHERE b = \'x\'"))\n```'
+        )
+        self.assertIn('db.execute("""SELECT a\nFROM t', out)
+        compile(out.split('```python\n')[1].split('\n```')[0], "<t>", "exec")
+
+    def test_single_line_execute_is_left_alone(self):
+        from ours.recursive_db_rlm import _recover_multiline_execute
+        src = 'print(db.execute("SELECT 1"))'
+        self.assertEqual(_recover_multiline_execute(src), src)
+
+    def test_two_execute_calls_do_not_merge_across_their_quotes(self):
+        from ours.recursive_db_rlm import _recover_multiline_execute
+        out = _recover_multiline_execute(
+            'print(db.execute("SELECT a\nFROM t"))\nprint(db.execute("SELECT 1"))'
+        )
+        self.assertIn('db.execute("""SELECT a\nFROM t""")', out)
+        self.assertIn('db.execute("SELECT 1")', out)
+
+    def test_recovery_composes_both_repairs(self):
+        from ours.recursive_db_rlm import _recover_repl_input
+        # bare, unfenced, and multi-line: the shape that killed the loop
+        out = _recover_repl_input("SELECT a\nFROM t\nWHERE b = 1")
+        self.assertIn("```python", out)
+        compile(out.split('```python\n')[1].split('\n```')[0], "<t>", "exec")
 
 
 if __name__ == "__main__":

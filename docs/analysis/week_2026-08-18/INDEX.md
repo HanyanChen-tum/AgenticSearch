@@ -24,6 +24,7 @@
 | 15 | [`grammar_framework_design_2026-08-27.md`](grammar_framework_design_2026-08-27.md) | 用因果推断抽取可执行 grammar 的设计；§1.4 首次记录响应格式漂移 |
 | 16 | [`reasoning_cost_2026-08-28.md`](reasoning_cost_2026-08-28.md) | **推理成本台账**：每层/每档的推理量（全部/答对/答错）与「每 +1pp 的 token 单价」；§四 查出 11 个运行工具循环已死，作废 1 的 §四末节 |
 | 17 | [`model_ceiling_2x2_2026-08-28.md`](model_ceiling_2x2_2026-08-28.md) | **模型 × 推理强度 2×2**：换成完整 `gpt-5.4` 在 high 档只 +0.61pp（p=0.68）——**天花板不是模型能力**；附带测出工具循环在 L3 配置下贡献 +0.40pp（p=0.86） |
+| 18 | [`dead_loop_root_cause_2026-08-30.md`](dead_loop_root_cause_2026-08-30.md) | **循环为什么会死 + 修好它**：排除换模型/换 effort/prompt 改动（prompt 逐字节相同），根因是我们的解析对模型格式变化零容错；`repl_input_recovery` 修复后 `exec/q` 0.00→0.81。**改写 16 的 §四结论** |
 
 只想看一个的话，看 14；只想知道下一步做什么，看 14 的「后面的计划」。
 **引用任何跨时间的运行对比之前，先跑 [`scripts/tool_loop_health.py`](../../../scripts/tool_loop_health.py)**（理由见 16 的 §四）。
