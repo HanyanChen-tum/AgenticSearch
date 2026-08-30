@@ -21,8 +21,12 @@
 | 13 | [`phase_a_turn_resampling_2026-08-24.md`](phase_a_turn_resampling_2026-08-24.md) | Phase A 轮次级反事实重采样首批 5 道：三种形态，`bird_637` 给出 few-shot 介入臂的设计 |
 | 14 | [`WEEKLY_REPORT_2026-08-24.md`](WEEKLY_REPORT_2026-08-24.md) | **本周报告**：1~13 的汇总 + 目前最好配置的完整规格 + 下一阶段计划 |
 | 14' | [`WEEKLY_REPORT_2026-08-24_EN.md`](WEEKLY_REPORT_2026-08-24_EN.md) | 同上的英文版（内容一一对应） |
+| 15 | [`grammar_framework_design_2026-08-27.md`](grammar_framework_design_2026-08-27.md) | 用因果推断抽取可执行 grammar 的设计；§1.4 首次记录响应格式漂移 |
+| 16 | [`reasoning_cost_2026-08-28.md`](reasoning_cost_2026-08-28.md) | **推理成本台账**：每层/每档的推理量（全部/答对/答错）与「每 +1pp 的 token 单价」；§四 查出 11 个运行工具循环已死，作废 1 的 §四末节 |
+| 17 | [`model_ceiling_2x2_2026-08-28.md`](model_ceiling_2x2_2026-08-28.md) | **模型 × 推理强度 2×2**：换成完整 `gpt-5.4` 在 high 档只 +0.61pp（p=0.68）——**天花板不是模型能力**；附带测出工具循环在 L3 配置下贡献 +0.40pp（p=0.86） |
 
 只想看一个的话，看 14；只想知道下一步做什么，看 14 的「后面的计划」。
+**引用任何跨时间的运行对比之前，先跑 [`scripts/tool_loop_health.py`](../../../scripts/tool_loop_health.py)**（理由见 16 的 §四）。
 
 ## 本周的三个主要结论
 
