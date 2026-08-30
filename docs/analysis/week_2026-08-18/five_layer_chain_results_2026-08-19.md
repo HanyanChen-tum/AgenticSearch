@@ -158,6 +158,17 @@ simple/moderate 上效应在控制难度后仍在，但 challenging 层在一个
 
 ## 四、推理强度扫描
 
+> **2026-08-28 作废：本节末尾"四档全部补了重复"整节不成立。**
+> 2026-08-21 补跑的 `effort_low_run2`、`effort_medium_run2`、`effort_minimal_run2`
+> 三次运行**工具循环是死的**（模型输出裸 SQL，REPL 全部 `SyntaxError`，
+> `db.execute` 分别为 2 / 0 / 5 次，对照 run1 的 520 / 571 / 322）。
+> 那张"噪声随强度单调下降"表量的是循环死活，不是采样噪声；
+> 用两次均值重算的收益曲线（`medium → high +2.2pp`）同样作废。
+> **当前有效数字是单次口径的 `medium → high +1.01pp`**，
+> 见 [`reasoning_cost_2026-08-28.md`](reasoning_cost_2026-08-28.md) §三、§四。
+> 下表 run1 各档不受影响（体检通过），可继续引用。
+> 体检脚本：[`scripts/tool_loop_health.py`](../../../scripts/tool_loop_health.py)。
+
 同一配置（`e3-c-conv-rules`）、同一修正数据集，只有 `reasoning_effort` 变化。
 选这个臂是因为它两次 high 只差 0.2pp，是链中最紧的重复。
 
