@@ -79,14 +79,17 @@ class AgentProfileTests(unittest.TestCase):
                 "e3-a", "e3-ac",
                 "e3-c", "e3-c-conv",
                 "e3-c-conv-rules", "e3-c-conv-rules-final-gate",
-                "e3-c-conv-rules-liveloop",
+                "e3-c-conv-rules-liveloop", "e3-c-conv-rules-recovery",
                 "e3-c-conv-rules-toolconfirm", "e3-c-join-minimal",
                 "e3-c-join-minimal-v2", "e3-c-literal-check",
                 "e3-c-noconv", "e3-c-recursive",
                 "e3-c-recursive-db", "e3-c-recursive-db-conv2",
                 "e3-c-recursive-db-final-gate", "e3-c-recursive-db-keepties",
+                "e3-c-recursive-db-live",
                 "e3-c-recursive-db-open", "e3-c-recursive-db-qa",
-                "e3-c-recursive-db-qa-gated", "e3-c-recursive-db-reasoning",
+                "e3-c-recursive-db-qa-checks-live",
+                "e3-c-recursive-db-qa-gated", "e3-c-recursive-db-qa-gated-live",
+                "e3-c-recursive-db-qa-live", "e3-c-recursive-db-reasoning",
                 "e3-c-recursive-db-types", "e3-c-rules-reasoning",
                 "e3-c-semantic", "e3-c-toolconfirm-reasoning",
                 "e3-f", "e3-rf",
@@ -780,6 +783,23 @@ class ReplInputRecoveryTests(unittest.TestCase):
             self.assertFalse(get_agent_config(name).repl_input_recovery, name)
         self.assertTrue(get_agent_config("e3-c-conv-rules-liveloop").repl_input_recovery)
 
+    def test_recovery_profile_differs_from_layer_3_by_the_flag_alone(self):
+        # What makes a number from this profile comparable to layer 3's 87.58%:
+        # the prompt and every mechanism field are the layer-3 ones, and the only
+        # change is the harness repair. e3-c-conv-rules-liveloop cannot make that
+        # claim -- it swaps the prompt too.
+        from ours.agent.config import get_agent_config
+        l3 = get_agent_config("e3-c-conv-rules")
+        rec = get_agent_config("e3-c-conv-rules-recovery")
+        differing = [f for f in vars(l3) if getattr(l3, f) != getattr(rec, f)]
+        self.assertEqual(sorted(differing),
+                         ["experiment_variant", "profile", "repl_input_recovery"])
+        self.assertEqual(rec.prompt_profile, "basic-conventions-v1")
+        self.assertNotEqual(
+            rec.prompt_profile,
+            get_agent_config("e3-c-conv-rules-liveloop").prompt_profile,
+        )
+
     def test_multiline_execute_argument_is_triple_quoted(self):
         from ours.recursive_db_rlm import _recover_multiline_execute
         out = _recover_multiline_execute(
@@ -792,6 +812,19 @@ class ReplInputRecoveryTests(unittest.TestCase):
         from ours.recursive_db_rlm import _recover_multiline_execute
         src = 'print(db.execute("SELECT 1"))'
         self.assertEqual(_recover_multiline_execute(src), src)
+
+    def test_escaped_quote_inside_the_sql_does_not_end_the_match(self):
+        # A column name with a space is quoted as \" inside the Python string;
+        # treating that as the closing delimiter left the whole call unrecovered
+        # and cost mini ~4% of its questions on the first liveloop run.
+        from ours.recursive_db_rlm import _recover_multiline_execute
+        out = _recover_multiline_execute(
+            'print(db.execute("SELECT COUNT(*)\nFROM Examination AS e\n'
+            'WHERE e.\\"Examination Date\\" LIKE \'1997%\'"))'
+        )
+        self.assertIn('db.execute("""SELECT COUNT(*)', out)
+        self.assertIn('Examination Date', out)
+        compile(out, "<t>", "exec")
 
     def test_two_execute_calls_do_not_merge_across_their_quotes(self):
         from ours.recursive_db_rlm import _recover_multiline_execute

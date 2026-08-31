@@ -41,6 +41,7 @@ litellm.drop_params = True
 litellm.suppress_debug_info = True
 
 from ours.agent.config import get_agent_config
+from ours.agent.question_analysis import parse_analysis
 from ours.agent.query_plan import QueryPlanState
 from ours.agent.state import AgentExecutionState
 from ours.db_environment import DBEnvironment, get_db_path
@@ -87,7 +88,7 @@ def would_be_discarded(response_text: str) -> bool:
 # `_format_structured_observations` renders the feedback text. Everything
 # outside that -- the LLM call itself -- still goes through one_sample(), so
 # the generation path is unchanged.
-_DISCARD_CONTINUE_CAP = 2  # extra LLM calls to spend chasing a clean FINAL before giving up
+_DISCARD_CONTINUE_CAP = 3  # extra LLM calls chasing a clean FINAL; the QA protocol spends one on the analysis turn
 
 
 def _make_repl_agent(cfg, agent_config) -> InDomainFewShotDBRLM:
@@ -175,15 +176,53 @@ def generate_with_continuation(cfg, agent_config, db_path, instructions, body, s
     tells the two apart via `gave_up_after_cap`."""
     agent = None
     total_sections, n_drafts = 0, 0
+    turn1_had_code = None
+    analysis = None
     local_body = list(body)
     for attempt in range(_DISCARD_CONTINUE_CAP + 1):
         text, sections = one_sample(cfg, instructions, local_body, summary)
         total_sections += sections
+        if turn1_had_code is None:
+            # Health of the loop at the point this experiment intervenes: the
+            # health-era traces put a python block in 93.9-95.8% of turn-1
+            # messages, the dead ones in 0%. Under the question-analysis
+            # protocol turn 1 is the analysis block by design, so this is only
+            # comparable to those traces on arms without that protocol.
+            turn1_had_code = bool(_HAS_CODE_RE.search(text or ""))
+
+        # An analysis-only reply is not a failure to answer -- the QA protocol
+        # requires turn 1 to be the fenced block and nothing else ("No Python,
+        # no SQL in that reply"). Scoring it as "no FINAL() found" is what made
+        # arm B return 9 valid samples out of 460. Feed it back the way the real
+        # loop does and let the model take the turn it was told to take next.
+        parsed, _errors = parse_analysis(text or "")
+        if parsed is not None and analysis is None:
+            analysis = parsed
+        # Deliberately not conditioned on the analysis parsing cleanly: a reply
+        # with neither code nor FINAL has not answered, whatever it contains, so
+        # continuing is right either way and a malformed block does not silently
+        # become "no FINAL() found".
+        incomplete = (
+            not _HAS_CODE_RE.search(text or "")
+            and "FINAL(" not in (text or "")
+            and "FINAL_VAR(" not in (text or "")
+        )
+        if incomplete:
+            if attempt == _DISCARD_CONTINUE_CAP:
+                return None, total_sections, n_drafts, True, turn1_had_code, analysis
+            local_body = local_body + [
+                {"role": "assistant", "content": text},
+                {"role": "user", "content":
+                 "Analysis accepted. Now work normally: use the tools if you need "
+                 "database evidence, then submit with FINAL(\"your sql\")."},
+            ]
+            continue
+
         if not would_be_discarded(text):
-            return text, total_sections, n_drafts, False
+            return text, total_sections, n_drafts, False, turn1_had_code, analysis
         n_drafts += 1
         if attempt == _DISCARD_CONTINUE_CAP:
-            return None, total_sections, n_drafts, True
+            return None, total_sections, n_drafts, True, turn1_had_code, analysis
         if agent is None:
             agent = _make_repl_agent(cfg, agent_config)
         observation = execute_draft(agent, db_path, text)
@@ -191,7 +230,7 @@ def generate_with_continuation(cfg, agent_config, db_path, instructions, body, s
             {"role": "assistant", "content": text},
             {"role": "user", "content": observation},
         ]
-    return None, total_sections, n_drafts, True  # unreachable, keeps type checkers happy
+    return None, total_sections, n_drafts, True, turn1_had_code, analysis  # unreachable
 
 
 def one_sample(cfg, instructions: str, body: list[dict], summary: str) -> tuple[str, int]:
@@ -214,7 +253,7 @@ def one_sample(cfg, instructions: str, body: list[dict], summary: str) -> tuple[
 
 
 def resample_one_question(cfg, trace_path, row, resume_turn, n, summary, existing,
-                           drop_fewshot=False):
+                           drop_fewshot=False, system_prompt=None):
     """Resample one question up to n times, resuming from `existing` samples."""
     db_path = get_db_path(BIRD_DB_DIR, row["db_id"])
     messages = load_turns(trace_path, row["id"])
@@ -224,12 +263,24 @@ def resample_one_question(cfg, trace_path, row, resume_turn, n, summary, existin
     instructions, body = as_responses_input(messages, resume_turn)
     if drop_fewshot:
         body = strip_fewshot(body)
+    if system_prompt is not None:
+        # Swapping the system prompt is only a clean intervention at
+        # resume_turn=1, where the prefix is system+user and carries no
+        # assistant turn generated under the *other* prompt. Past that the
+        # recorded turns were produced by the trace's own prompt, so the arms
+        # would differ by prompt and by history at once.
+        if resume_turn != 1:
+            raise ValueError(
+                f"--system-prompt needs --resume-turn 1 (got {resume_turn}): later "
+                "turns replay assistant messages written under the recorded prompt"
+            )
+        instructions = system_prompt
     agent_config = get_agent_config(row["agent_profile"])
 
     samples = list(existing)
     for i in range(len(samples), n):
         try:
-            text, section_count, n_drafts, gave_up = generate_with_continuation(
+            text, section_count, n_drafts, gave_up, turn1_had_code, analysis = generate_with_continuation(
                 cfg, agent_config, db_path, instructions, body, summary)
         except Exception as exc:
             # A single refused or failed call must not take the batch down with it:
@@ -249,18 +300,20 @@ def resample_one_question(cfg, trace_path, row, resume_turn, n, summary, existin
             # never reached a clean submission within the cap.
             record = {"sample": i, "sql": None, "correct": None, "n_drafts": n_drafts,
                       "error": f"draft persisted after {_DISCARD_CONTINUE_CAP} continuations, gave up",
-                      "section_count": section_count}
+                      "section_count": section_count, "turn1_had_code": turn1_had_code}
             samples.append(record)
             continue
         sql = extract_sql(text)
         if sql is None:
             record = {"sample": i, "sql": None, "correct": None, "error": "no FINAL() found",
-                      "n_drafts": n_drafts, "section_count": section_count}
+                      "n_drafts": n_drafts, "section_count": section_count,
+                      "analysis": analysis, "turn1_had_code": turn1_had_code}
         else:
             ex = execute_sql(db_path, sql, read_only=True)
             ok = ex.get("error") is None and is_correct(ex.get("answer"), row.get("gold_answer"))
             record = {"sample": i, "sql": sql, "correct": bool(ok), "n_drafts": n_drafts,
-                      "exec_error": ex.get("error"), "section_count": section_count}
+                      "exec_error": ex.get("error"), "section_count": section_count,
+                      "analysis": analysis, "turn1_had_code": turn1_had_code}
         samples.append(record)
     n_ok = sum(1 for s in samples if s.get("correct"))
     n_valid = sum(1 for s in samples if s.get("correct") is not None)
@@ -287,10 +340,17 @@ if __name__ == "__main__":
                         help="strip the retrieved SIMILAR SOLVED EXAMPLES block before resampling "
                              "(arm B of the few-shot counterfactual; see bird_637 in "
                              "phase_a_turn_resampling_2026-08-24.md)")
+    parser.add_argument("--system-prompt", default=None,
+                        help="replace the trace's system prompt with this prompt profile "
+                             "(requires --resume-turn 1; the contract-vs-plain arm)")
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
     rows = {r["id"]: r for r in json.loads(Path(args.results).read_text(encoding="utf-8"))}
+    system_prompt = None
+    if args.system_prompt:
+        from ours.agent.prompts import get_system_prompt
+        system_prompt = get_system_prompt(args.system_prompt)
     cfg = resolve_llm_config("azure/seminar-gpt-5.4-mini")
     trace_path = Path(args.trace).resolve()
     out = Path(args.output).resolve()
@@ -302,7 +362,8 @@ if __name__ == "__main__":
         print(f"{args.id}: resampling turn {args.resume_turn}, already have {len(samples)}, target {args.n}")
         samples = resample_one_question(cfg, trace_path, rows[args.id], args.resume_turn,
                                          args.n, args.summary, samples,
-                                         drop_fewshot=args.drop_fewshot)
+                                         drop_fewshot=args.drop_fewshot,
+                                         system_prompt=system_prompt)
         out.write_text(json.dumps(samples, ensure_ascii=False, indent=1), encoding="utf-8")
     else:
         # Batch mode: one dict keyed by id, resumable and written after every question.
@@ -314,7 +375,8 @@ if __name__ == "__main__":
         def run_and_save(qid: str):
             samples = resample_one_question(cfg, trace_path, rows[qid], args.resume_turn,
                                              args.n, args.summary, all_samples.get(qid, []),
-                                             drop_fewshot=args.drop_fewshot)
+                                             drop_fewshot=args.drop_fewshot,
+                                             system_prompt=system_prompt)
             with lock:
                 all_samples[qid] = samples
                 out.write_text(json.dumps(all_samples, ensure_ascii=False, indent=1), encoding="utf-8")

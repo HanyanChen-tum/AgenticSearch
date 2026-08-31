@@ -21,6 +21,7 @@ from src.rlm.types import Message
 
 from ours.db_environment import DBEnvironment, get_db_path
 from ours.agent.capabilities import GatedDBEnvironment
+from ours.agent.contract_checks import printf_to_round, violations
 from ours.agent.config import AgentConfig, get_agent_config
 from ours.agent.context_store import (
     ContextStore,
@@ -105,6 +106,7 @@ class DBRLM(RLM):
         self._analysis_gate_fired = False
         self._context_store = None
         self._sql_convention_rewrite = None
+        self._contract_check_result = None
         self._reasoning_capture = []
         self._root_question = question
         self._trace_context = {
@@ -184,6 +186,9 @@ class DBRLM(RLM):
             "sql_convention_rewrite": copy.deepcopy(
                 getattr(self, "_sql_convention_rewrite", None)
             ),
+            "contract_check": copy.deepcopy(
+                getattr(self, "_contract_check_result", None)
+            ),
             "reasoning_capture": copy.deepcopy(
                 getattr(self, "_reasoning_capture", None) or None
             ),
@@ -256,7 +261,9 @@ class DBRLM(RLM):
         evidence: BIRD-style hint string (definitions of column values, formulas, etc.)
         """
         self._prepare_trace(question, db_path, evidence)
-        return self._apply_sql_conventions(self.complete(query=question))
+        return self._apply_contract_checks(
+            self._apply_sql_conventions(self.complete(query=question))
+        )
 
     def _apply_sql_conventions(self, sql: str) -> str:
         """Post-process the model's final SQL toward BIRD's mined conventions.
@@ -278,6 +285,49 @@ class DBRLM(RLM):
             "rewritten_sql": result.sql,
         }
         return result.sql
+
+    def _apply_contract_checks(self, sql: str) -> str:
+        """Rewrite the final SQL where it contradicts the model's own contract.
+
+        Distinct from _apply_sql_conventions above, which rewrites on SQL shape
+        alone: this fires only when the analysis the model itself wrote says one
+        thing and the executed result says another. Measured offline on 385
+        contract-arm resamples (contract_did_2026-08-30.json): the output-type
+        check fired on 15, repairing 13 of them from wrong to right and breaking
+        none. That 13/0 is why this is a rewrite rather than a gate -- handing it
+        back to the model is the shape that measured 1 rescue against 9 breakages
+        in verify_before_limit.
+
+        PERCENT_SCALE is detected and recorded but deliberately not repaired:
+        where the x100 belongs depends on the expression, and this project's own
+        history says a rewrite that has to guess is where the damage comes from.
+        """
+        analysis = self._question_analysis_state.analysis
+        if not self.agent_config.contract_checks or not analysis or not hasattr(self, "_db"):
+            return sql
+        executed = self._db.execute(sql)
+        hits = violations(analysis, sql, executed,
+                          execute=lambda probe: self._db.execute(probe))
+        if not hits:
+            return sql
+        rewritten, applied = sql, []
+        for hit in hits:
+            if hit["type"] != "OUTPUT_TYPE":
+                continue  # recorded below, repaired only where a repair is safe
+            candidate, changed = printf_to_round(rewritten)
+            if changed:
+                rewritten, _ = candidate, applied.append(hit["type"])
+        self._contract_check_result = {
+            "violations": hits,
+            "repaired": applied,
+            "original_sql": sql,
+            "rewritten_sql": rewritten,
+        }
+        self._record_tool_event(
+            "contract_check", {"sql": sql},
+            {"violations": [h["type"] for h in hits], "repaired": applied},
+        )
+        return rewritten
 
     async def _call_llm(self, messages: list[Message], **kwargs: Any) -> str:
         """Route through the Responses API when reasoning capture is on.
@@ -934,8 +984,10 @@ def _recover_multiline_execute(text: str) -> str:
         return f'db.execute({quote * 3}{body}{quote * 3})'
 
     # Body must not contain its own delimiter, so the match ends at the real
-    # closing quote rather than running into a later one.
-    return re.sub(r'db\.execute\(\s*(["\'])((?:(?!\1).)*?)\1\s*\)',
+    # closing quote rather than running into a later one -- but `\"` inside the
+    # SQL (quoting a column name with a space) is an escape, not the end of the
+    # string, so consume escape pairs first or the match dies on the backslash.
+    return re.sub(r'db\.execute\(\s*(["\'])((?:\\.|(?!\1).)*?)\1\s*\)',
                   promote, text, flags=re.DOTALL)
 
 

@@ -1,0 +1,84 @@
+{
+ "shared_question_count": 498,
+ "contrasts": {
+  "model_effect_at_low": {
+   "delta_accuracy_pp": 2.2088353413654715,
+   "a_only": 22,
+   "b_only": 33,
+   "mcnemar_p": 0.17700136477035816,
+   "delta_reasoning_tokens": -95.68072289156623
+  },
+  "model_effect_at_high": {
+   "delta_accuracy_pp": 3.815261044176708,
+   "a_only": 8,
+   "b_only": 27,
+   "mcnemar_p": 0.001878225477412343,
+   "delta_reasoning_tokens": -762.3734939759036
+  },
+  "effort_effect_at_mini": {
+   "delta_accuracy_pp": 2.2088353413654715,
+   "a_only": 22,
+   "b_only": 33,
+   "mcnemar_p": 0.17700136477035816,
+   "delta_reasoning_tokens": 1258.9718875502008
+  },
+  "effort_effect_at_normal": {
+   "delta_accuracy_pp": 3.815261044176708,
+   "a_only": 8,
+   "b_only": 27,
+   "mcnemar_p": 0.001878225477412343,
+   "delta_reasoning_tokens": 592.2791164658635
+  }
+ },
+ "cells": {
+  "mini_x_low": {
+   "accuracy": 83.73493975903614,
+   "n_correct": 417,
+   "n": 498,
+   "llm_calls": 3.1987951807228914,
+   "tool_actions": 2.1606425702811247,
+   "reasoning_tokens": 257.9477911646586,
+   "reasoning_tokens_median": 202.0,
+   "total_tokens": 9563.164658634538,
+   "latency_seconds": 6.793456626506024
+  },
+  "mini_x_high": {
+   "accuracy": 85.94377510040161,
+   "n_correct": 428,
+   "n": 498,
+   "llm_calls": 2.0100401606425704,
+   "tool_actions": 0.7068273092369478,
+   "reasoning_tokens": 1516.9196787148594,
+   "reasoning_tokens_median": 1051.0,
+   "total_tokens": 6918.0642570281125,
+   "latency_seconds": 11.153323092369478
+  },
+  "normal_x_low": {
+   "accuracy": 85.94377510040161,
+   "n_correct": 428,
+   "n": 498,
+   "llm_calls": 1.5120481927710843,
+   "tool_actions": 0.3132530120481928,
+   "reasoning_tokens": 162.26706827309238,
+   "reasoning_tokens_median": 113.5,
+   "total_tokens": 4116.263052208836,
+   "latency_seconds": 5.561466666666667
+  },
+  "normal_x_high": {
+   "accuracy": 89.75903614457832,
+   "n_correct": 447,
+   "n": 498,
+   "llm_calls": 2.5120481927710845,
+   "tool_actions": 1.3152610441767068,
+   "reasoning_tokens": 754.5461847389558,
+   "reasoning_tokens_median": 479.0,
+   "total_tokens": 7677.309236947791,
+   "latency_seconds": 12.68846325301205
+  }
+ },
+ "interaction": {
+  "effort_gain_mini_pp": 2.2088353413654715,
+  "effort_gain_normal_pp": 3.815261044176708,
+  "difference_pp": 1.6064257028112365
+ }
+}

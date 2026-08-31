@@ -329,7 +329,7 @@ _SYSTEM_PROMPT_CONVENTIONS_QA = _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE.replace(
     "PROTOCOL:",
     """BEFORE ANY SQL -- read the question first:
   Your FIRST reply must be only a fenced ```question-analysis block holding a
-  JSON object with exactly these five keys. No Python, no SQL in that reply.
+  JSON object with exactly these seven keys. No Python, no SQL in that reply.
 
     "answer_shape"       how many columns to return and what each one is
     "counting_unit"      are you counting entities (people, cards, players) or
@@ -343,9 +343,15 @@ _SYSTEM_PROMPT_CONVENTIONS_QA = _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE.replace(
                          including ones that sound incidental
     "unit_and_scale"     the unit of the answer. If it is a percentage, say so
                          and say whether a x100 is required
+    "output_type"        "numeric" if the answer is a number, "text" if it is a
+                         string. printf() returns text and will not compare equal
+                         to a number, so say which one the question wants
+    "tie_policy"         for a superlative: "all" if every row tied at the extreme
+                         belongs in the answer, "one" if a single row is wanted.
+                         "n/a" if the question has no superlative
     "ambiguities"        list what the question genuinely leaves open; [] if none
 
-  "stated_conditions" and "ambiguities" are lists. The other three are strings.
+  "stated_conditions" and "ambiguities" are lists. The other five are strings.
   Describe the QUESTION, not your query plan: no table names, no joins, no SQL.
 
   From your second reply onward, work normally and follow your own analysis.
@@ -420,9 +426,40 @@ rows a filter matches -- instead of guessing at it.
 """,
 )
 
+# The same paragraph on the two recursive prompts, so the QA arm and its own
+# baseline can both run a live loop. Without it the six 08-25/26 QA runs reached
+# the REPL on 0-4.3% of questions and scored a single-shot generator
+# (dead_loop_root_cause_2026-08-30.md); with only repl_input_recovery the mini
+# model stayed at exec/q 0.19 on the 16-question smoke, so both halves are
+# needed. These two profiles carry the tool block that the recursive prompts
+# write with recursive_llm listed alongside db.*, so the anchor differs from the
+# basic one above and is spelled out per prompt rather than shared.
+_TOOLCONFIRM_NOTE = """
+These calls are really executed against the live database. Emit the Python block
+and the output is returned to you in the next message, so verify anything you are
+unsure of -- a literal's exact spelling and case, whether a column exists, how many
+rows a filter matches -- instead of guessing at it.
+"""
+
+
+def _with_toolconfirm(prompt: str, name: str) -> str:
+    anchor = """  recursive_llm("sub-question", "text to reason over")  -> str
+"""
+    if anchor not in prompt:
+        raise ValueError(f"{name}: tool block anchor not found; prompt changed shape")
+    return prompt.replace(anchor, anchor + _TOOLCONFIRM_NOTE, 1)
+
+
+_SYSTEM_PROMPT_CONVENTIONS_RECURSIVE_TOOLCONFIRM = _with_toolconfirm(
+    _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE, "conventions-recursive-v1")
+_SYSTEM_PROMPT_CONVENTIONS_QA_TOOLCONFIRM = _with_toolconfirm(
+    _SYSTEM_PROMPT_CONVENTIONS_QA, "conventions-qa-v1")
+
 _PROMPTS = {
     "basic": _SYSTEM_PROMPT_BASIC,
     "basic-conventions-toolconfirm-v1": _SYSTEM_PROMPT_BASIC_CONVENTIONS_TOOLCONFIRM,
+    "conventions-recursive-toolconfirm-v1": _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE_TOOLCONFIRM,
+    "conventions-qa-toolconfirm-v1": _SYSTEM_PROMPT_CONVENTIONS_QA_TOOLCONFIRM,
     "basic-semantic-v1": _SYSTEM_PROMPT_BASIC_SEMANTIC,
     "conventions-recursive-v1": _SYSTEM_PROMPT_CONVENTIONS_RECURSIVE,
     "conventions-qa-v1": _SYSTEM_PROMPT_CONVENTIONS_QA,
@@ -502,6 +539,20 @@ _PROVENANCE = {
     },
     "conventions-recursive-v1": {
         "prompt_id": "conventions-plus-recursive-leaf-v1",
+        "source": "train-mined-conventions",
+        "source_split": "train",
+        "contains_task_specific_sql_rules": True,
+        "contains_examples": False,
+    },
+    "conventions-recursive-toolconfirm-v1": {
+        "prompt_id": "conventions-plus-recursive-leaf-toolconfirm-v1",
+        "source": "train-mined-conventions",
+        "source_split": "train",
+        "contains_task_specific_sql_rules": True,
+        "contains_examples": False,
+    },
+    "conventions-qa-toolconfirm-v1": {
+        "prompt_id": "conventions-plus-question-analysis-toolconfirm-v1",
         "source": "train-mined-conventions",
         "source_split": "train",
         "contains_task_specific_sql_rules": True,

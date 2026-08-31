@@ -71,6 +71,14 @@ class AgentConfig:
     # it rewrites the response, so it changes predictions and stays ablatable.
     # See _recover_repl_input in recursive_db_rlm.py.
     repl_input_recovery: bool = False
+    # Rewrite the final SQL where it contradicts the model's own answer contract.
+    # Distinct from sql_convention_mode, which rewrites on SQL shape alone: this
+    # fires only on a self-contradiction (the analysis says the answer is numeric,
+    # the executed result is a string). Measured offline on 385 contract-arm
+    # resamples: fired on 15, repaired 13 wrong->right, broke 0
+    # (contract_did_2026-08-30.json). Needs an analysis to check against, so it
+    # is only meaningful with a question-analysis planner_mode.
+    contract_checks: bool = False
 
     def __post_init__(self) -> None:
         if self.few_shot_mode not in {"train-retrieval", "none"}:
@@ -94,7 +102,8 @@ class AgentConfig:
         # prevents that silent no-op from recurring.
         if self.recursion_mode != "none" and self.prompt_profile not in {
             "basic-recursive-v1", "conventions-recursive-v1", "conventions-recursive-v2-open",
-            "conventions-qa-v1"
+            "conventions-qa-v1", "conventions-recursive-toolconfirm-v1",
+            "conventions-qa-toolconfirm-v1",
         }:
             raise ValueError(
                 f"recursion_mode={self.recursion_mode!r} requires a prompt profile "
@@ -114,11 +123,19 @@ class AgentConfig:
         if self.planner_mode == QUERY_PLAN_MODE and self.prompt_profile != "query-plan-v1":
             raise ValueError("root-query-plan-v1 requires prompt_profile='query-plan-v1'")
         if (self.planner_mode in {QUESTION_ANALYSIS_MODE, QUESTION_ANALYSIS_GATED_MODE}
-                and self.prompt_profile != "conventions-qa-v1"):
+                and self.prompt_profile not in {
+                    "conventions-qa-v1", "conventions-qa-toolconfirm-v1"}):
             raise ValueError(
                 "question-analysis-v1 requires prompt_profile='conventions-qa-v1': "
                 "the other prompts never ask for the analysis block, so the gate "
                 "would reject every first reply"
+            )
+        if self.contract_checks and self.planner_mode not in {
+            QUESTION_ANALYSIS_MODE, QUESTION_ANALYSIS_GATED_MODE
+        }:
+            raise ValueError(
+                "contract_checks needs a question-analysis planner_mode: without "
+                "an analysis there is no contract to check the SQL against"
             )
         if self.final_execution_gate and self.verified_final:
             raise ValueError(
@@ -288,6 +305,33 @@ _PROFILES = {
         offline_metadata_mode="e3-f-schema-v4",
         schema_context_mode="offline-retrieval",
         sql_convention_mode=SQL_CONVENTION_VERSION,
+    ),
+    # Layer 3 of the causal chain with the REPL input repair and nothing else --
+    # same prompt, same knowledge, same conventions, same capability gate. The
+    # one changed field is a harness fix, not a mechanism: it accepts SQL the
+    # model wrote correctly but shaped in a way the REPL could not parse.
+    #
+    # This is the profile to run a model comparison on, in preference to
+    # e3-c-conv-rules-liveloop, which also swaps in the toolconfirm prompt and so
+    # is no longer the system every chain and causal-inference result was
+    # measured on. Keeping the prompt fixed is what makes a number here
+    # comparable to layer 3's 87.58%.
+    #
+    # Consequence to state when reporting it: the repair fixes the two shapes the
+    # REPL rejected, and does not touch the model's belief that the tools are not
+    # real -- that belief is what the toolconfirm prompt addresses. So the loop
+    # comes back only as far as the model chooses to use it.
+    "e3-c-conv-rules-recovery": AgentConfig(
+        profile="e3-c-conv-rules-recovery",
+        experiment_variant="e3-c-conv-rules-recovery",
+        prompt_profile="basic-conventions-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        repl_input_recovery=True,
     ),
     # Single variable against e3-c-conv-rules: the controller executes the exact
     # FINAL SQL itself and blocks on ERROR/EMPTY (ExecutionStatus, same criteria
@@ -605,6 +649,81 @@ _PROFILES = {
         sql_convention_mode=SQL_CONVENTION_VERSION,
         recursion_mode="leaf-db-v1",
         planner_mode=QUESTION_ANALYSIS_GATED_MODE,
+    ),
+    # The three QA arms again with a live tool loop. The 08-25/26 originals
+    # reached the REPL on 0-4.3% of questions and averaged 1.17 turns on the
+    # base arm -- they scored a single-shot generator, so they answer nothing
+    # about the analysis block and are invalid by the standard
+    # dead_loop_root_cause_2026-08-30.md sets. Both halves of that repair are
+    # on here, because on the 16-question smoke the toolconfirm prompt alone
+    # left gpt-5.4-mini at exec/q 0.19 and repl_input_recovery covers the
+    # unfenced-SQL half; these arms run mini.
+    #
+    # Each differs from its neighbour by one thing: -live is the baseline,
+    # -qa-live adds the analysis block, -qa-gated-live adds the FINAL check on
+    # top of the block. Compare only within this family: the toolconfirm
+    # paragraph and the recovery flag move them off e3-c-recursive-db, so none
+    # of the three is comparable to the pre-repair numbers.
+    "e3-c-recursive-db-live": AgentConfig(
+        profile="e3-c-recursive-db-live",
+        experiment_variant="e3-c-recursive-db-live",
+        prompt_profile="conventions-recursive-toolconfirm-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        recursion_mode="leaf-db-v1",
+        repl_input_recovery=True,
+    ),
+    "e3-c-recursive-db-qa-live": AgentConfig(
+        profile="e3-c-recursive-db-qa-live",
+        experiment_variant="e3-c-recursive-db-qa-live",
+        prompt_profile="conventions-qa-toolconfirm-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        recursion_mode="leaf-db-v1",
+        planner_mode=QUESTION_ANALYSIS_MODE,
+        repl_input_recovery=True,
+    ),
+    "e3-c-recursive-db-qa-gated-live": AgentConfig(
+        profile="e3-c-recursive-db-qa-gated-live",
+        experiment_variant="e3-c-recursive-db-qa-gated-live",
+        prompt_profile="conventions-qa-toolconfirm-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        recursion_mode="leaf-db-v1",
+        planner_mode=QUESTION_ANALYSIS_GATED_MODE,
+        repl_input_recovery=True,
+    ),
+    # -qa-live plus the contract checks, single variable against it. The offline
+    # measurement that motivates this is on that arm's own resamples, so this
+    # profile is the same intervention applied inside the loop rather than after
+    # it: contract_did_2026-08-30.json, 15 fires and 13 rescues with 0 breakages
+    # on 385 samples. Pairs with -qa-live as its control.
+    "e3-c-recursive-db-qa-checks-live": AgentConfig(
+        profile="e3-c-recursive-db-qa-checks-live",
+        experiment_variant="e3-c-recursive-db-qa-checks-live",
+        prompt_profile="conventions-qa-toolconfirm-v1",
+        use_db_hints=False,
+        verified_final=False,
+        capability_gate=True,
+        offline_metadata_mode="e3-f-schema-v4",
+        schema_context_mode="offline-retrieval",
+        sql_convention_mode=SQL_CONVENTION_VERSION,
+        recursion_mode="leaf-db-v1",
+        planner_mode=QUESTION_ANALYSIS_MODE,
+        repl_input_recovery=True,
+        contract_checks=True,
     ),
     # e3-c-recursive-db with reasoning_capture on, for causal tracing into *why*
     # depth-1 recursion doesn't move accuracy (five_layer_chain_results

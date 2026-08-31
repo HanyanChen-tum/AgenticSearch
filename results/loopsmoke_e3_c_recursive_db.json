@@ -1,0 +1,565 @@
+[
+  {
+    "id": "bird_1037",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "Calculate the percentage of players who prefer the left foot at least once across all available season records and were born between 1987 and 1992.",
+    "difficulty": "challenging",
+    "predicted_sql": "WITH player_left AS ( SELECT p.player_fifa_api_id, MAX(CASE WHEN pa.preferred_foot = 'left' THEN 1 ELSE 0 END) AS left_pref FROM Player AS p JOIN Player_Attributes AS pa ON p.player_fifa_api_id = pa.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992' GROUP BY p.player_fifa_api_id ) SELECT 100.0 * SUM(left_pref) / COUNT(player_fifa_api_id) AS percentage FROM player_left;",
+    "predicted_answer": [
+      [
+        28.868144690781797
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN t2.preferred_foot = 'left' THEN t1.id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT t1.id) percent FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE SUBSTR(t1.birthday, 1, 4) BETWEEN '1987' AND '1992'",
+    "gold_answer": [
+      [
+        28.868144690781797
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 31.7776,
+    "llm_calls": 2,
+    "prompt_tokens": 8062,
+    "completion_tokens": 7068,
+    "reasoning_tokens": 6846,
+    "total_tokens": 15130,
+    "cached_prompt_tokens": 3840,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db",
+    "agent_config_sha256": "8011f24d0279ce99aea17b413ed413d3f40b874910855a35f5ba9fdaa688c074",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260830T044930Z-0ade5307",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1068",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "From 2010 to 2015, what was the average overall rating of players who are higher than 170?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT SUM(t2.overall_rating)/COUNT(t2.id) FROM Player_Attributes AS t2 INNER JOIN Player AS t1 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+    "predicted_answer": [
+      [
+        68
+      ]
+    ],
+    "gold_sql": "SELECT AVG(t2.overall_rating) AS avg_rating\nFROM `Player` AS t1\nJOIN `Player_Attributes` AS t2 ON t1.player_api_id = t2.player_api_id\nWHERE t1.height > 170\n  AND strftime('%Y', t2.`date`) BETWEEN '2010' AND '2015';",
+    "gold_answer": [
+      [
+        68.90135724487692
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 7.4319,
+    "llm_calls": 1,
+    "prompt_tokens": 3889,
+    "completion_tokens": 960,
+    "reasoning_tokens": 842,
+    "total_tokens": 4849,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db",
+    "agent_config_sha256": "8011f24d0279ce99aea17b413ed413d3f40b874910855a35f5ba9fdaa688c074",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260830T044930Z-0ade5307",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1080",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "european_football_2",
+    "question": "Among players who prefer using their left foot when attacking, how many have at least one record indicating they would stay in their position while the team attacked?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low'",
+    "predicted_answer": [
+      [
+        189
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low'",
+    "gold_answer": [
+      [
+        189
+      ]
+    ],
+    "correct": true,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 20.7599,
+    "llm_calls": 1,
+    "prompt_tokens": 3855,
+    "completion_tokens": 4500,
+    "reasoning_tokens": 4374,
+    "total_tokens": 8355,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db",
+    "agent_config_sha256": "8011f24d0279ce99aea17b413ed413d3f40b874910855a35f5ba9fdaa688c074",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260830T044930Z-0ade5307",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1149",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "Among male patients, what is the ratio of in-patients to outpatients?",
+    "difficulty": "moderate",
+    "predicted_sql": "SELECT 1.0 * (SELECT COUNT(ID) FROM Patient WHERE SEX = 'M' AND Admission = '+') / (SELECT COUNT(ID) FROM Patient WHERE SEX = 'M' AND Admission = '-')",
+    "predicted_answer": [
+      [
+        0.8317757009345794
+      ]
+    ],
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN Admission = '+' THEN 1 ELSE 0 END) AS REAL) * 100 / SUM(CASE WHEN Admission = '-' THEN 1 ELSE 0 END) FROM Patient WHERE SEX = 'M'",
+    "gold_answer": [
+      [
+        83.17757009345794
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 14.6697,
+    "llm_calls": 1,
+    "prompt_tokens": 1999,
+    "completion_tokens": 2839,
+    "reasoning_tokens": 2742,
+    "total_tokens": 4838,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db",
+    "agent_config_sha256": "8011f24d0279ce99aea17b413ed413d3f40b874910855a35f5ba9fdaa688c074",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260830T044930Z-0ade5307",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1169",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "What is the ratio of male to female patients among all those with abnormal uric acid counts?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT 1.0 * SUM(CASE WHEN P.SEX = 'M' AND L.UA <= 8.0 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN P.SEX = 'F' AND L.UA <= 6.5 THEN 1 ELSE 0 END), 0) AS Ratio FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID",
+    "predicted_answer": [
+      [
+        0.20566810835419985
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T2.UA <= 8.0 AND T1.SEX = 'M' THEN T1.ID ELSE NULL END) AS REAL) / COUNT(DISTINCT CASE WHEN T2.UA <= 6.5 AND T1.SEX = 'F' THEN T1.ID ELSE NULL END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID",
+    "gold_answer": [
+      [
+        0.184
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 14.2336,
+    "llm_calls": 1,
+    "prompt_tokens": 2034,
+    "completion_tokens": 2559,
+    "reasoning_tokens": 2381,
+    "total_tokens": 4593,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db",
+    "agent_config_sha256": "8011f24d0279ce99aea17b413ed413d3f40b874910855a35f5ba9fdaa688c074",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260830T044930Z-0ade5307",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1241",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For patients with abnormal platelet level, what is the difference between the number of patients with lower than normal range and the number of patients with higher than normal range?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) AS difference FROM Laboratory WHERE PLT < 100 OR PLT > 400",
+    "predicted_answer": [
+      [
+        -555
+      ]
+    ],
+    "gold_sql": "SELECT COUNT(DISTINCT CASE WHEN T2.PLT < 100 THEN T1.id END) - COUNT(DISTINCT CASE WHEN T2.PLT > 400 THEN T1.id END) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID",
+    "gold_answer": [
+      [
+        -46
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 22.9171,
+    "llm_calls": 1,
+    "prompt_tokens": 2120,
+    "completion_tokens": 4509,
+    "reasoning_tokens": 4377,
+    "total_tokens": 6629,
+    "cached_prompt_tokens": 0,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db",
+    "agent_config_sha256": "8011f24d0279ce99aea17b413ed413d3f40b874910855a35f5ba9fdaa688c074",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260830T044930Z-0ade5307",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_1243",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "thrombosis_prediction",
+    "question": "For all patients who are older than 55 years old, what percentage of those with at least one record indicating an abnormal prothrombin time (PT) are female?",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT 100.0 * SUM(CASE WHEN L.PT >= 14 AND P.SEX = 'F' THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN L.PT >= 14 THEN 1 ELSE 0 END), 0) FROM Laboratory AS L JOIN Patient AS P ON L.ID = P.ID WHERE datetime(P.Birthday, '+55 years') < current_timestamp",
+    "predicted_answer": [
+      [
+        78.3625730994152
+      ]
+    ],
+    "gold_sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN T2.PT >= 14 AND T1.SEX = 'F' THEN T1.ID END) AS REAL) * 100 / COUNT(DISTINCT CASE WHEN T2.PT >= 14 THEN T1.ID END) \nFROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID WHERE date(Birthday, '+55 years') < date('now')",
+    "gold_answer": [
+      [
+        72.72727272727273
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 45.6399,
+    "llm_calls": 2,
+    "prompt_tokens": 4654,
+    "completion_tokens": 9938,
+    "reasoning_tokens": 9588,
+    "total_tokens": 14592,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db",
+    "agent_config_sha256": "8011f24d0279ce99aea17b413ed413d3f40b874910855a35f5ba9fdaa688c074",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260830T044930Z-0ade5307",
+    "trace_schema_version": 3
+  },
+  {
+    "id": "bird_125",
+    "method": "bird_indomain_fewshot_db_rlm",
+    "db_id": "financial",
+    "question": "For loans contracts which are still running where client are in debt, state their district percentage unemployment rate increment from year 1995 to 1996.",
+    "difficulty": "challenging",
+    "predicted_sql": "SELECT DISTINCT d.A2 AS district_name, 100.0 * (d.A13 - d.A12) / d.A12 AS unemployment_increment_rate FROM loan AS l JOIN account AS a ON l.account_id = a.account_id JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D' ORDER BY d.A2;",
+    "predicted_answer": [
+      [
+        "Beroun",
+        16.315789473684216
+      ],
+      [
+        "Blansko",
+        42.4
+      ],
+      [
+        "Brno - mesto",
+        22.49999999999999
+      ],
+      [
+        "Brno - venkov",
+        35.00000000000001
+      ],
+      [
+        "Bruntal",
+        14.91228070175438
+      ],
+      [
+        "Ceske Budejovice",
+        22.14285714285715
+      ],
+      [
+        "Chrudim",
+        39.25925925925924
+      ],
+      [
+        "Domazlice",
+        13.636363636363628
+      ],
+      [
+        "Havlickuv Brod",
+        22.5
+      ],
+      [
+        "Hl.m. Praha",
+        115.0
+      ],
+      [
+        "Hradec Kralove",
+        47.05882352941177
+      ],
+      [
+        "Jesenik",
+        null
+      ],
+      [
+        "Karvina",
+        17.42424242424243
+      ],
+      [
+        "Kladno",
+        9.782608695652177
+      ],
+      [
+        "Klatovy",
+        11.666666666666677
+      ],
+      [
+        "Kromeriz",
+        8.4375
+      ],
+      [
+        "Kutna Hora",
+        38.620689655172406
+      ],
+      [
+        "Mlada Boleslav",
+        20.0
+      ],
+      [
+        "Novy Jicin",
+        -5.593220338983052
+      ],
+      [
+        "Olomouc",
+        26.052631578947377
+      ],
+      [
+        "Opava",
+        13.333333333333346
+      ],
+      [
+        "Ostrava - mesto",
+        15.744680851063835
+      ],
+      [
+        "Plzen - mesto",
+        18.846153846153836
+      ],
+      [
+        "Prachatice",
+        28.387096774193544
+      ],
+      [
+        "Rokycany",
+        28.571428571428584
+      ],
+      [
+        "Rychnov nad Kneznou",
+        43.529411764705884
+      ],
+      [
+        "Strakonice",
+        40.0
+      ],
+      [
+        "Svitavy",
+        13.541666666666673
+      ],
+      [
+        "Usti nad Orlici",
+        39.60000000000001
+      ],
+      [
+        "Zlin",
+        44.375
+      ]
+    ],
+    "gold_sql": "SELECT (d.A13 - d.A12) / d.A12 * 100 FROM loan AS l JOIN account AS a ON l.account_id = a.account_id JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D' AND NOT d.A12 IS NULL AND NOT d.A13 IS NULL AND d.A12 > 0",
+    "gold_answer": [
+      [
+        40.0
+      ],
+      [
+        39.259259259259245
+      ],
+      [
+        114.99999999999999
+      ],
+      [
+        22.499999999999993
+      ],
+      [
+        20.0
+      ],
+      [
+        11.666666666666679
+      ],
+      [
+        44.375
+      ],
+      [
+        13.333333333333346
+      ],
+      [
+        17.42424242424243
+      ],
+      [
+        39.259259259259245
+      ],
+      [
+        8.4375
+      ],
+      [
+        -5.593220338983052
+      ],
+      [
+        28.57142857142858
+      ],
+      [
+        114.99999999999999
+      ],
+      [
+        16.315789473684212
+      ],
+      [
+        42.400000000000006
+      ],
+      [
+        22.499999999999993
+      ],
+      [
+        13.541666666666675
+      ],
+      [
+        16.315789473684212
+      ],
+      [
+        26.052631578947377
+      ],
+      [
+        14.91228070175438
+      ],
+      [
+        40.0
+      ],
+      [
+        114.99999999999999
+      ],
+      [
+        9.78260869565218
+      ],
+      [
+        22.500000000000004
+      ],
+      [
+        39.60000000000001
+      ],
+      [
+        28.387096774193544
+      ],
+      [
+        38.6206896551724
+      ],
+      [
+        14.91228070175438
+      ],
+      [
+        43.529411764705884
+      ],
+      [
+        35.0
+      ],
+      [
+        22.499999999999993
+      ],
+      [
+        13.333333333333346
+      ],
+      [
+        13.541666666666675
+      ],
+      [
+        22.142857142857146
+      ],
+      [
+        17.42424242424243
+      ],
+      [
+        47.05882352941177
+      ],
+      [
+        18.846153846153836
+      ],
+      [
+        17.42424242424243
+      ],
+      [
+        15.744680851063833
+      ],
+      [
+        13.636363636363628
+      ],
+      [
+        114.99999999999999
+      ],
+      [
+        13.541666666666675
+      ]
+    ],
+    "correct": false,
+    "error": null,
+    "timeout_recovery": {
+      "predicted": false,
+      "gold": false
+    },
+    "latency_seconds": 39.4175,
+    "llm_calls": 2,
+    "prompt_tokens": 4758,
+    "completion_tokens": 6338,
+    "reasoning_tokens": 6010,
+    "total_tokens": 11096,
+    "cached_prompt_tokens": 1792,
+    "usage_missing_calls": 0,
+    "reasoning_usage_missing_calls": 0,
+    "agent_profile": "e3-c-recursive-db",
+    "agent_config_sha256": "8011f24d0279ce99aea17b413ed413d3f40b874910855a35f5ba9fdaa688c074",
+    "termination": "final",
+    "scored": true,
+    "run_id": "20260830T044930Z-0ade5307",
+    "trace_schema_version": 3
+  }
+]

@@ -1,0 +1,52 @@
+{
+ "_source": "docs/analysis/week_2026-08-18/flatzero_23_root_causes_2026-08-25.md 三、按机制汇总",
+ "_purpose": "Per-question failure mechanism, and whether the question-analysis contract has a field that names it. Frozen before the contract arm runs, so the difference-in-differences split is not chosen after seeing the outcome.",
+ "_contract_fields": {
+  "answer_shape": "how many columns to return and what each one is",
+  "counting_unit": "whether the question counts entities or table rows",
+  "entity_key": "the column identifying one entity",
+  "stated_conditions": "conditions the question states outright",
+  "unit_and_scale": "units, percentage, and whether a x100 is required",
+  "ambiguities": "what the question leaves genuinely open"
+ },
+ "_matched_means": "a contract field names this mechanism directly, so the contract predicts a lift here",
+ "mechanism": {
+  "bird_226": "类型/格式", "bird_227": "类型/格式", "bird_228": "类型/格式",
+  "bird_255": "类型/格式", "bird_1479": "类型/格式", "bird_931": "类型/格式",
+  "bird_881": "类型/格式", "bird_85": "类型/格式", "bird_1482": "类型/格式",
+  "bird_1480": "类型/格式", "bird_637": "类型/格式",
+
+  "bird_1037": "去重粒度", "bird_1241": "去重粒度", "bird_416": "去重粒度",
+  "bird_1169": "去重粒度", "bird_1243": "去重粒度", "bird_383": "去重粒度",
+
+  "bird_1149": "少乘 100", "bird_273": "少乘 100", "bird_263": "少乘 100",
+
+  "bird_48": "漏或多加条件", "bird_36": "漏或多加条件",
+  "bird_50": "漏或多加条件", "bird_32": "漏或多加条件",
+
+  "bird_894": "选错列/表", "bird_407": "选错列/表", "bird_352": "选错列/表",
+  "bird_465": "选错列/表", "bird_640": "选错列/表", "bird_1486": "选错列/表",
+
+  "bird_604": "缺失值/NULL", "bird_750": "缺失值/NULL",
+  "bird_791": "缺失值/NULL", "bird_928": "缺失值/NULL",
+
+  "bird_1339": "公式/分母口径", "bird_1531": "公式/分母口径",
+  "bird_125": "公式/分母口径", "bird_1080": "公式/分母口径",
+
+  "bird_24": "语义误读", "bird_173": "语义误读", "bird_587": "语义误读",
+
+  "bird_1498": "缺聚合", "bird_1472": "缺聚合",
+
+  "bird_1068": "其它", "bird_1529": "其它", "bird_26": "其它"
+ },
+ "matched_mechanisms": ["类型/格式", "去重粒度", "少乘 100", "漏或多加条件"],
+ "unmatched_mechanisms": ["选错列/表", "缺失值/NULL", "公式/分母口径", "语义误读", "缺聚合", "其它"],
+ "_unmatched_rationale": {
+  "选错列/表": "the contract names no source/table field, so nothing in it constrains which column is read",
+  "缺失值/NULL": "no null_policy field; and gold's filter is often unstated in the question, so no contract derived from the question could recover it",
+  "公式/分母口径": "no numerator/denominator field",
+  "语义误读": "ambiguities can flag it but the contract does not resolve which reading gold took",
+  "缺聚合": "answer_shape constrains the output, not whether a GROUP BY precedes it; counted unmatched to keep the split conservative",
+  "其它": "integer division, a missing column plus a missing price factor, concat plus a wrong filter -- no single field covers these"
+ }
+}

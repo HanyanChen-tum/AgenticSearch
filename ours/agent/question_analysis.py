@@ -56,6 +56,19 @@ REQUIRED_FIELDS: dict[str, str] = {
     ),
     "stated_conditions": "conditions the question states outright",
     "unit_and_scale": "units, percentage, and whether a x100 is required",
+    # Added 2026-08-30 for the deterministic checks. The 46-question read
+    # (flatzero_23_root_causes_2026-08-25.md) puts type/format at 11 of 46, the
+    # largest single mechanism, and ties at 9 of the 38 no configuration moves.
+    # Both are checkable against the executed result rather than the SQL text,
+    # which is the standard the counting-grain gate already holds to.
+    "output_type": (
+        "'numeric' if the answer is a number, 'text' if it is a string -- "
+        "printf() returns text and will not compare equal to a number"
+    ),
+    "tie_policy": (
+        "for a superlative, 'all' if every row tied at the extreme belongs in "
+        "the answer, 'one' if a single row is wanted"
+    ),
     "ambiguities": "what the question leaves genuinely open",
 }
 _LIST_FIELDS = {"stated_conditions", "ambiguities"}

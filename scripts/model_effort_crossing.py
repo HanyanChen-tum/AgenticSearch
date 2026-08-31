@@ -14,10 +14,13 @@ Two arms landing on the same accuracy from opposite directions is the finding
 that matters. If normal-high and mini-high agree inside the noise band, the
 ceiling is not model capability, and the remaining suspects are all on our side.
 
-Everything except the varied factor is pinned: profile `e3-c-conv-rules`,
-`max_iterations=8`, `k=1`, the corrected 498, and the same wall-clock window --
-the last one because response-format behaviour drifts between days (see
-`scripts/tool_loop_health.py`), which would otherwise be confounded with model.
+Everything except the varied factor is pinned: one agent profile across all four
+cells, `max_iterations=8`, `k=1`, the corrected 498, and the same wall-clock
+window -- the last one because response-format behaviour drifts between days
+(see `scripts/tool_loop_health.py`), which would otherwise be confounded with
+model. The health block below the table is part of the result, not a footnote:
+read it before the accuracies, because a cell whose loop died was a different
+system from one whose loop ran.
 
 Reported per cell: accuracy, and the cost it took (`llm_calls`,
 `reasoning_tokens`, latency), because a bigger model that ties on accuracy while
@@ -47,12 +50,55 @@ from scripts.tool_loop_health import health
 HARNESS = {"UnicodeEncodeError", "AttributeError", "BadRequestError", "APIError",
            "TimeoutError", "NotFoundError", "ContentPolicyViolationError"}
 
-CELLS = {
-    ("mini", "low"): "modelcmp_mini_low_run1",
-    ("mini", "high"): "modelcmp_mini_run1",
-    ("normal", "low"): "modelcmp_normal_low_run1",
-    ("normal", "high"): "modelcmp_normal_run1",
+# Two crossings of the same 2x2. `single-shot` ran on 2026-08-28 with the tool
+# loop dead in every cell -- valid as a model comparison, but of generators, not
+# agents. `liveloop` re-runs it on the repaired loop (see
+# docs/analysis/week_2026-08-18/dead_loop_root_cause_2026-08-30.md). Pick with
+# --crossing; never mix cells across the two, the system under test differs.
+CROSSINGS = {
+    # The repaired loop: REPL input recovery plus the toolconfirm prompt, which
+    # is what it takes to get the model calling tools again. Three cells run as
+    # agents (mini x low 1.60, mini x high 0.81, normal x high 0.88 db.execute
+    # per question); normal x low sits at 0.19 with 81% submitting on turn 1
+    # under both prompts tried, so that cell is the model declining to explore
+    # on a low reasoning budget, not a harness failure. Read the health block.
+    #
+    # Not comparable to the chain's 87.58%: the prompt differs from layer 3.
+    "healthy": {
+        ("mini", "low"): "ll2_mini_low_run1",
+        ("mini", "high"): "ll2_mini_high_run1",
+        ("normal", "low"): "ll2_normal_low_run1",
+        ("normal", "high"): "ll2_normal_high_run1",
+    },
+    # Layer 3 plus the REPL repair and nothing else -- same prompt, so these
+    # would sit next to the chain's 87.58%. Abandoned mid-run on 2026-08-30:
+    # keeping layer 3's prompt leaves the loop dead in three of four cells
+    # (85%/59%/82% submitting on turn 1), because the repair fixes the shapes
+    # the REPL rejected and not the model's belief that the tools are not real.
+    # Chain-comparability and a live loop cannot both be had from this model.
+    "l3-recovery": {
+        ("mini", "low"): "l3rec_mini_low_run1",
+        ("mini", "high"): "l3rec_mini_high_run1",
+        ("normal", "low"): "l3rec_normal_low_run1",
+        ("normal", "high"): "l3rec_normal_high_run1",
+    },
+    # Abandoned: also swaps in the toolconfirm prompt, so it is a different
+    # system from layer 3 and not comparable to the chain. Kept only so the
+    # 2026-08-30 partial runs are explicable.
+    "liveloop": {
+        ("mini", "low"): "liveloop_mini_low_run1",
+        ("mini", "high"): "liveloop_mini_high_run1",
+        ("normal", "low"): "liveloop_normal_low_run1",
+        ("normal", "high"): "liveloop_normal_high_run1",
+    },
+    "single-shot": {
+        ("mini", "low"): "modelcmp_mini_low_run1",
+        ("mini", "high"): "modelcmp_mini_run1",
+        ("normal", "low"): "modelcmp_normal_low_run1",
+        ("normal", "high"): "modelcmp_normal_run1",
+    },
 }
+CELLS = CROSSINGS["healthy"]
 MODELS = ("mini", "normal")
 EFFORTS = ("low", "high")
 
@@ -96,8 +142,13 @@ def fmt(v, width, prec=1):
 def main() -> None:
     force_utf8_console()
     ap = argparse.ArgumentParser()
+    ap.add_argument("--crossing", choices=list(CROSSINGS), default="healthy")
     ap.add_argument("--output", default=None)
     args = ap.parse_args()
+
+    global CELLS
+    CELLS = CROSSINGS[args.crossing]
+    print(f"crossing: {args.crossing}")
 
     data, missing = {}, []
     for cell, stem in CELLS.items():

@@ -1,0 +1,161 @@
+{
+ "n_shared": 46,
+ "有对应字段": {
+  "a_ok": 40,
+  "a_valid": 123,
+  "b_ok": 97,
+  "b_valid": 206,
+  "a_rate": 0.3252032520325203,
+  "b_rate": 0.470873786407767,
+  "delta": 0.14567053437524669
+ },
+ "无对应字段": {
+  "a_ok": 10,
+  "a_valid": 94,
+  "b_ok": 41,
+  "b_valid": 179,
+  "a_rate": 0.10638297872340426,
+  "b_rate": 0.22905027932960895,
+  "delta": 0.12266730060620469
+ },
+ "全部": {
+  "a_ok": 50,
+  "a_valid": 217,
+  "b_ok": 138,
+  "b_valid": 385,
+  "a_rate": 0.2304147465437788,
+  "b_rate": 0.35844155844155845,
+  "delta": 0.12802681189777965
+ },
+ "did": 0.023003233769041995,
+ "checks": {
+  "fired": 30,
+  "scored": 385,
+  "by_type": {
+   "PERCENT_SCALE": 15,
+   "OUTPUT_TYPE": 15
+  },
+  "rescued": 13,
+  "damaged": 0,
+  "unrepairable": 17,
+  "detail": [
+   {
+    "id": "bird_226",
+    "sample": 1,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_226",
+    "sample": 3,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_226",
+    "sample": 6,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_226",
+    "sample": 8,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_227",
+    "sample": 0,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_227",
+    "sample": 5,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_227",
+    "sample": 8,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_228",
+    "sample": 1,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_228",
+    "sample": 4,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_228",
+    "sample": 6,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_228",
+    "sample": 7,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_228",
+    "sample": 8,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   },
+   {
+    "id": "bird_228",
+    "sample": 9,
+    "types": [
+     "OUTPUT_TYPE"
+    ],
+    "was": false,
+    "now": true
+   }
+  ]
+ }
+}

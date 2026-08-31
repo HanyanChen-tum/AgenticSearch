@@ -1,0 +1,4683 @@
+{
+ "bird_1149": [
+  {
+   "sample": 0,
+   "sql": "SELECT COUNT(CASE WHEN SEX = 'M' AND Admission = '+' THEN ID END) * 1.0 / COUNT(CASE WHEN SEX = 'M' AND Admission = '-' THEN ID END) AS ratio FROM Patient",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT 1.0 * SUM(CASE WHEN SEX = 'M' AND Admission = '+' THEN 1 ELSE 0 END) / SUM(CASE WHEN SEX = 'M' AND Admission = '-' THEN 1 ELSE 0 END) FROM Patient",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT CAST(COUNT(CASE WHEN SEX = 'M' AND Admission = '+' THEN ID END) AS REAL) / NULLIF(COUNT(CASE WHEN SEX = 'M' AND Admission = '-' THEN ID END), 0) AS ratio FROM Patient;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1479": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(substr(T1.Date, 1, 4) AS INTEGER) AS year FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Currency = 'CZK' GROUP BY CAST(substr(T1.Date, 1, 4) AS INTEGER) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT substr(ym.Date,1,4) AS year FROM yearmonth AS ym JOIN customers AS c ON ym.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY substr(ym.Date,1,4) ORDER BY SUM(ym.Consumption) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(substr(y.Date, 1, 4) AS INTEGER) AS year FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY CAST(substr(y.Date, 1, 4) AS INTEGER) ORDER BY SUM(y.Consumption) DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT substr(y.Date, 1, 4) AS year FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY substr(y.Date, 1, 4) ORDER BY SUM(y.Consumption) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT substr(ym.Date, 1, 4) AS year FROM yearmonth AS ym INNER JOIN customers AS c ON ym.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY substr(ym.Date, 1, 4) ORDER BY SUM(ym.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT substr(y.Date,1,4) FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY substr(y.Date,1,4) ORDER BY SUM(y.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT substr(y.Date, 1, 4) AS year FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'CZK' GROUP BY substr(y.Date, 1, 4) ORDER BY SUM(y.Consumption) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1169": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT 1.0 * COUNT(DISTINCT CASE WHEN P.SEX = 'M' AND L.UA <= 8.0 THEN P.ID END) / NULLIF(COUNT(DISTINCT CASE WHEN P.SEX = 'F' AND L.UA <= 6.5 THEN P.ID END), 0) AS Ratio FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 24,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT 1.0 * SUM(CASE WHEN P.SEX = 'M' AND L.UA <= 8.0 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN P.SEX = 'F' AND L.UA <= 6.5 THEN 1 ELSE 0 END), 0) AS Ratio FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT CAST(SUM(CASE WHEN P.SEX = 'M' AND L.UA <= 8.0 THEN 1 ELSE 0 END) AS REAL) / NULLIF(SUM(CASE WHEN P.SEX = 'F' AND L.UA <= 6.5 THEN 1 ELSE 0 END), 0) AS Ratio FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT CAST(SUM(CASE WHEN P.SEX = 'M' AND L.UA <= 8.0 THEN 1 ELSE 0 END) AS REAL) / NULLIF(SUM(CASE WHEN P.SEX = 'F' AND L.UA <= 6.5 THEN 1 ELSE 0 END), 0) AS ratio FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT 1.0 * SUM(CASE WHEN P.SEX = 'M' AND L.UA <= 8.0 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN P.SEX = 'F' AND L.UA <= 6.5 THEN 1 ELSE 0 END), 0) AS ratio FROM Laboratory AS L INNER JOIN Patient AS P ON L.ID = P.ID",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1241": [
+  {
+   "sample": 0,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) AS difference FROM Laboratory WHERE PLT < 100 OR PLT > 400;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) AS difference FROM Laboratory;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) AS difference FROM Laboratory WHERE PLT < 100 OR PLT > 400;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 16,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT COALESCE(SUM(PLT < 100), 0) - COALESCE(SUM(PLT > 400), 0) FROM Laboratory",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) FROM Laboratory;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 26,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT SUM(PLT < 100) - SUM(PLT > 400) AS difference FROM Laboratory",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 17,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT COALESCE(SUM(PLT < 100), 0) - COALESCE(SUM(PLT > 400), 0) AS difference FROM Laboratory",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1037": [
+  {
+   "sample": 0,
+   "sql": "WITH per_player AS ( SELECT pa.player_fifa_api_id, MAX(CASE WHEN pa.preferred_foot = 'left' THEN 1 ELSE 0 END) AS left_once FROM Player_Attributes AS pa JOIN Player AS p ON p.player_fifa_api_id = pa.player_fifa_api_id WHERE CAST(substr(p.birthday, 1, 4) AS INTEGER) BETWEEN 1987 AND 1992 GROUP BY pa.player_fifa_api_id ) SELECT SUM(left_once) * 100.0 / COUNT(player_fifa_api_id) AS percentage FROM per_player;",
+   "correct": true,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 49,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(SUM(PA.preferred_foot = 'left') AS REAL) * 100 / COUNT(PA.player_fifa_api_id) AS percentage_left_foot FROM Player_Attributes AS PA INNER JOIN Player AS P ON PA.player_fifa_api_id = P.player_fifa_api_id WHERE CAST(strftime('%Y', P.birthday) AS INTEGER) BETWEEN 1987 AND 1992;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": false
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT 100.0 * SUM(pa.preferred_foot = 'left') / COUNT(pa.player_fifa_api_id) AS percentage FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE strftime('%Y', p.birthday) BETWEEN '1987' AND '1992';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 18,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage FROM Player_Attributes AS pa INNER JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE substr(p.birthday, 1, 4) BETWEEN '1987' AND '1992'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 19,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(pa.preferred_foot = 'left') * 100.0 / COUNT(pa.player_fifa_api_id) AS percentage FROM Player_Attributes AS pa JOIN Player AS p ON pa.player_fifa_api_id = p.player_fifa_api_id WHERE substr(p.birthday, 1, 4) BETWEEN '1987' AND '1992';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_226": [
+  {
+   "sample": 0,
+   "sql": "SELECT ROUND(1.0 * SUM(CASE WHEN bond_type = '=' THEN 1 ELSE 0 END) * 100 / COUNT(bond_id), 5) AS percentage FROM bond WHERE molecule_id = 'TR008';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN bond_type = '=' THEN 1 ELSE 0 END) / COUNT(bond_id)) AS percentage FROM bond WHERE molecule_id = 'TR008';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT printf('%.5f', CAST(SUM(bond_type = '=') AS REAL) * 100.0 / COUNT(bond_id)) AS percent FROM bond WHERE molecule_id = 'TR008';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT ROUND(CAST(SUM(CASE WHEN bond_type = '=' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(bond_id), 5) AS percentage FROM bond WHERE molecule_id = 'TR008';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT printf('%.5f', CAST(SUM(CASE WHEN bond_type = '=' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(bond_id)) FROM bond WHERE molecule_id = 'TR008';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT printf('%.5f', CAST(SUM(IIF(bond_type = '=', 1, 0)) AS REAL) * 100.0 / COUNT(bond_id)) FROM bond WHERE molecule_id = 'TR008';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(bond_type = '=') / COUNT(bond_id)) AS percent FROM bond WHERE molecule_id = 'TR008';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN bond_type = '=' THEN 1 ELSE 0 END) / NULLIF(COUNT(bond_id), 0)) FROM bond WHERE molecule_id = 'TR008';",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": false
+  }
+ ],
+ "bird_1243": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(COUNT(DISTINCT CASE WHEN P.SEX = 'F' THEN P.ID END) AS REAL) * 100.0 / NULLIF(COUNT(DISTINCT P.ID), 0) FROM Patient AS P JOIN Laboratory AS L ON P.ID = L.ID WHERE datetime(P.Birthday, '+55 years') < current_timestamp AND L.PT >= 14;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT CAST(SUM(CASE WHEN P.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) AS percentage FROM Patient AS P WHERE datetime(P.Birthday, '+55 years') < CURRENT_TIMESTAMP AND EXISTS (SELECT 1 FROM Laboratory AS L WHERE L.ID = P.ID AND L.PT >= 14)",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 18,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(SUM(CASE WHEN P.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / NULLIF(COUNT(*), 0) FROM Patient AS P WHERE date(P.Birthday, '+55 years') < current_timestamp AND EXISTS (SELECT 1 FROM Laboratory AS L WHERE L.ID = P.ID AND L.PT >= 14)",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 45,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 26,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "WITH older_abnormal AS (SELECT DISTINCT P.ID, P.SEX FROM Patient AS P INNER JOIN Laboratory AS L ON P.ID = L.ID WHERE datetime(P.Birthday, '+55 years') < CURRENT_TIMESTAMP AND L.PT >= 14) SELECT 100.0 * SUM(CASE WHEN SEX = 'F' THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) AS percentage FROM older_abnormal",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 24,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT 100.0 * SUM(CASE WHEN Laboratory.PT >= 14 AND Patient.SEX = 'F' THEN 1 ELSE 0 END) / SUM(CASE WHEN Laboratory.PT >= 14 THEN 1 ELSE 0 END) FROM Laboratory INNER JOIN Patient ON Laboratory.ID = Patient.ID WHERE datetime(Patient.Birthday, '+55 years') < current_timestamp",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 15,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT CAST(SUM(CASE WHEN P.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) FROM Patient AS P WHERE datetime(P.Birthday, '+55 years') < current_timestamp AND EXISTS (SELECT 1 FROM Laboratory AS L WHERE L.ID = P.ID AND L.PT >= 14)",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT CAST(SUM(CASE WHEN p.SEX = 'F' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) AS percentage FROM Patient AS p WHERE date(p.Birthday, '+55 years') < current_timestamp AND EXISTS (SELECT 1 FROM Laboratory AS l WHERE l.ID = p.ID AND l.PT >= 14);",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_227": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT ROUND(100.0 * SUM(CASE WHEN label = '+' THEN 1 ELSE 0 END) / COUNT(molecule_id), 3) AS percent FROM molecule;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT ROUND(CAST(SUM(label = '+') AS REAL) * 100.0 / COUNT(molecule_id), 3) AS percent FROM molecule;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT printf('%.3f', 100.0 * SUM(label = '+') / COUNT(molecule_id)) AS percentage FROM molecule;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT printf('%.3f', 100.0 * SUM(CASE WHEN label = '+' THEN 1 ELSE 0 END) / COUNT(molecule_id)) AS percent FROM molecule",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT printf('%.3f', 100.0 * SUM(label = '+') / COUNT(molecule_id)) AS percent FROM molecule;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT printf('%.3f', 100.0 * SUM(label = '+') / COUNT(molecule_id)) AS percent FROM molecule;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT printf('%.3f', 100.0 * SUM(label = '+') / COUNT(molecule_id)) AS percent FROM molecule;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT ROUND(100.0 * SUM(label = '+') / COUNT(molecule_id), 3) AS percent FROM molecule;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1480": [
+  {
+   "sample": 0,
+   "sql": "SELECT SUBSTR(y.Date, 5, 2) FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Segment = 'SME' AND y.Date BETWEEN '201301' AND '201312' GROUP BY SUBSTR(y.Date, 5, 2) ORDER BY SUM(y.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT SUBSTR(T1.Date, 5, 2) AS month FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND T1.Date BETWEEN '201301' AND '201312' GROUP BY 1 ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT substr(y.Date, 5, 2) FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Segment = 'SME' AND y.Date BETWEEN '201301' AND '201312' GROUP BY substr(y.Date, 5, 2) ORDER BY SUM(y.Consumption) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT substr(T1.Date, 5, 2) AS month FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND T1.Date BETWEEN '201301' AND '201312' GROUP BY substr(T1.Date, 5, 2) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 17,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT ym.Date FROM yearmonth AS ym INNER JOIN customers AS c ON ym.CustomerID = c.CustomerID WHERE c.Segment = 'SME' AND ym.Date BETWEEN '201301' AND '201312' GROUP BY ym.Date ORDER BY SUM(ym.Consumption) DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 34,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 25,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT substr(T1.Date, 5, 2) FROM yearmonth AS T1 JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Segment = 'SME' AND T1.Date BETWEEN '201301' AND '201312' GROUP BY substr(T1.Date, 5, 2) ORDER BY SUM(T1.Consumption) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 37,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_255": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT ROUND(CAST(SUM(CASE WHEN molecule.label = '+' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(bond.bond_id), 5) AS percentage FROM bond JOIN molecule ON bond.molecule_id = molecule.molecule_id WHERE bond.bond_type = '-'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT printf('%.5f', CAST(SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(b.bond_id)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT printf('%.5f', 100.0 * SUM(CASE WHEN m.label = '+' THEN 1 ELSE 0 END) / COUNT(*)) AS percentage FROM bond AS b JOIN molecule AS m ON b.molecule_id = m.molecule_id WHERE b.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_228": [
+  {
+   "sample": 0,
+   "sql": "SELECT ROUND(CAST(SUM(CASE WHEN element = 'h' THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(atom_id), 4) AS percentage FROM atom WHERE molecule_id = 'TR206'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT ROUND(100.0 * SUM(CASE WHEN element = 'h' THEN 1 ELSE 0 END) / COUNT(atom_id), 4) AS percentage FROM atom WHERE molecule_id = 'TR206';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT ROUND(100.0 * SUM(element = 'h') / COUNT(atom_id), 4) AS percentage FROM atom WHERE molecule_id = 'TR206';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT printf('%.4f', CAST(SUM(element = 'h') AS REAL) * 100.0 / COUNT(atom_id)) FROM atom WHERE molecule_id = 'TR206'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT printf('%.4f', 100.0 * SUM(element = 'h') / COUNT(atom_id)) AS percentage FROM atom WHERE molecule_id = 'TR206';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT ROUND(100.0 * SUM(CASE WHEN element = 'h' THEN 1 ELSE 0 END) / COUNT(atom_id), 4) AS percentage FROM atom WHERE molecule_id = 'TR206';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_273": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(SUM(a.element = 'cl') AS REAL) / COUNT(a.element) AS percentage FROM atom AS a JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE m.label = '+';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT CAST(SUM(CASE WHEN atom.element = 'cl' THEN 1 ELSE 0 END) AS REAL) / COUNT(atom.element) AS percentage FROM atom INNER JOIN molecule ON atom.molecule_id = molecule.molecule_id WHERE molecule.label = '+';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT CAST(SUM(a.element = 'cl') AS REAL) / COUNT(a.element) AS percentage FROM atom AS a INNER JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE m.label = '+'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(SUM(CASE WHEN a.element = 'cl' THEN 1 ELSE 0 END) AS REAL) / COUNT(a.element) AS percentage FROM atom AS a JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE m.label = '+';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT CAST(SUM(CASE WHEN a.element = 'cl' THEN 1 ELSE 0 END) AS REAL) / COUNT(a.element) AS percentage FROM atom AS a INNER JOIN molecule AS m ON a.molecule_id = m.molecule_id WHERE m.label = '+'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1482": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 2,
+   "section_count": 35,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "WITH totals AS ( SELECT c.Segment AS Segment, SUM(CASE WHEN substr(y.Date,1,4)='2012' THEN y.Consumption ELSE 0 END) AS c2012, SUM(CASE WHEN substr(y.Date,1,4)='2013' THEN y.Consumption ELSE 0 END) AS c2013 FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME','LAM','KAM') AND substr(y.Date,1,4) IN ('2012','2013') GROUP BY c.Segment ) SELECT (c2013 - c2012) * 100.0 / c2012 AS pct_increase FROM totals ORDER BY CASE Segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "WITH yearly AS (SELECT c.Segment, SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END) AS cons_2012, SUM(CASE WHEN substr(y.Date, 1, 4) = '2013' THEN y.Consumption ELSE 0 END) AS cons_2013 FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') GROUP BY c.Segment) SELECT (cons_2013 - cons_2012) * 100.0 / cons_2012 AS PercentageIncrease FROM yearly ORDER BY CASE Segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END;",
+   "correct": false,
+   "n_drafts": 0,
+   "exec_error": null,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": false
+  },
+  {
+   "sample": 5,
+   "sql": "WITH agg AS (SELECT c.Segment AS seg, SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END) AS cons2012, SUM(CASE WHEN substr(y.Date, 1, 4) = '2013' THEN y.Consumption ELSE 0 END) AS cons2013 FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') AND substr(y.Date, 1, 4) IN ('2012', '2013') GROUP BY c.Segment) SELECT (cons2013 - cons2012) * 100.0 / NULLIF(cons2012, 0) AS percentage_increase FROM agg ORDER BY CASE seg WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 35,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "WITH agg AS ( SELECT c.Segment, SUM(CASE WHEN substr(y.Date, 1, 4) = '2012' THEN y.Consumption ELSE 0 END) AS c2012, SUM(CASE WHEN substr(y.Date, 1, 4) = '2013' THEN y.Consumption ELSE 0 END) AS c2013 FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') GROUP BY c.Segment ) SELECT Segment, (c2013 - c2012) * 100.0 / c2012 AS PercentageIncrease FROM agg ORDER BY CASE Segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "WITH yearly AS (SELECT c.Segment, substr(y.Date, 1, 4) AS yr, SUM(y.Consumption) AS total_consumption FROM yearmonth AS y INNER JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Currency = 'EUR' AND c.Segment IN ('SME', 'LAM', 'KAM') AND substr(y.Date, 1, 4) IN ('2012', '2013') GROUP BY c.Segment, substr(y.Date, 1, 4)) SELECT Segment, 100.0 * (SUM(CASE WHEN yr = '2013' THEN total_consumption ELSE 0 END) - SUM(CASE WHEN yr = '2012' THEN total_consumption ELSE 0 END)) / NULLIF(SUM(CASE WHEN yr = '2012' THEN total_consumption ELSE 0 END), 0) AS percentage_increase FROM yearly GROUP BY Segment ORDER BY CASE Segment WHEN 'SME' THEN 1 WHEN 'LAM' THEN 2 WHEN 'KAM' THEN 3 END;",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 18,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_32": [
+  {
+   "sample": 0,
+   "sql": "SELECT 1.0 * T1.\"FRPM Count (K-12)\" / T1.\"Enrollment (K-12)\" FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.SOC = '66' AND T1.\"School Type\" = 'K-12 Schools (Public)' ORDER BY T1.\"FRPM Count (K-12)\" DESC LIMIT 5",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 19,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT 1.0 * f.\"FRPM Count (K-12)\" / f.\"Enrollment (K-12)\" AS eligible_rate FROM frpm AS f INNER JOIN schools AS s ON f.CDSCode = s.CDSCode WHERE s.SOC = '66' AND f.\"School Type\" = 'K-12 Schools (Public)' AND f.\"FRPM Count (K-12)\" IS NOT NULL AND f.\"Enrollment (K-12)\" IS NOT NULL ORDER BY f.\"FRPM Count (K-12)\" DESC LIMIT 5",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 23,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 16,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(f.`FRPM Count (K-12)` AS REAL) / f.`Enrollment (K-12)` AS eligible_free_or_reduced_price_meal_rate FROM schools AS s JOIN frpm AS f ON s.CDSCode = f.CDSCode WHERE s.SOC = '66' AND f.`FRPM Count (K-12)` IS NOT NULL AND f.`Enrollment (K-12)` IS NOT NULL ORDER BY f.`FRPM Count (K-12)` DESC LIMIT 5",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT CAST(f.\"FRPM Count (K-12)\" AS REAL) / CAST(f.\"Enrollment (K-12)\" AS REAL) AS eligible_free_or_reduced_price_meal_rate FROM frpm AS f INNER JOIN schools AS s ON f.CDSCode = s.CDSCode WHERE s.SOC = '66' AND f.\"School Type\" = 'K-12 Schools (Public)' AND f.\"FRPM Count (K-12)\" IS NOT NULL AND f.\"Enrollment (K-12)\" IS NOT NULL ORDER BY f.\"FRPM Count (K-12)\" DESC LIMIT 5",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 20,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_263": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(SUM(T1.element = 'cl') AS FLOAT) / COUNT(T1.atom_id) AS percent FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.bond_type = '-'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(SUM(a.element = 'cl') AS FLOAT) / COUNT(a.atom_id) AS percent FROM atom AS a WHERE a.molecule_id IN (SELECT DISTINCT b.molecule_id FROM bond AS b WHERE b.bond_type = '-')",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT CAST(SUM(T1.element = 'cl') AS FLOAT) * 100.0 / COUNT(T1.atom_id) AS percent FROM atom AS T1 WHERE EXISTS (SELECT 1 FROM bond AS T2 WHERE T2.molecule_id = T1.molecule_id AND T2.bond_type = '-')",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT CAST(SUM(element = 'cl') AS FLOAT) * 100.0 / COUNT(atom_id) AS percent FROM atom WHERE molecule_id IN (SELECT molecule_id FROM bond WHERE bond_type = '-')",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 15,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT CAST(SUM(a.element = 'cl') AS FLOAT) * 100.0 / COUNT(a.atom_id) AS percent FROM atom AS a WHERE EXISTS (SELECT 1 FROM bond AS b WHERE b.molecule_id = a.molecule_id AND b.bond_type = '-')",
+   "correct": true,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 32,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(SUM(a.element = 'cl') AS FLOAT) / COUNT(a.atom_id) AS percent FROM atom AS a WHERE EXISTS (SELECT 1 FROM bond AS b WHERE b.molecule_id = a.molecule_id AND b.bond_type = '-')",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 23,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_383": [
+  {
+   "sample": 0,
+   "sql": "SELECT COUNT(DISTINCT c.uuid) FROM cards c JOIN legalities l ON c.uuid = l.uuid WHERE l.status = 'Banned' AND c.borderColor = 'white'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT COUNT(DISTINCT cards.uuid) FROM cards JOIN legalities ON legalities.uuid = cards.uuid WHERE legalities.status = 'Banned' AND cards.borderColor = 'white'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT COUNT(DISTINCT c.id) FROM cards c WHERE c.borderColor = 'white' AND EXISTS (SELECT 1 FROM legalities l WHERE l.uuid = c.uuid AND l.status = 'Banned');",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": "SQL execution timed out after 180 seconds",
+   "section_count": 18,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_416": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT 100.0 * COUNT(CASE WHEN f.language = 'French' THEN 1 END) / COUNT(*) FROM cards AS c JOIN foreign_data AS f ON f.uuid = c.uuid WHERE c.power IS NULL OR c.power = '*'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 33,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 23,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT CAST(COUNT(CASE WHEN foreign_data.language = 'French' AND (cards.power IS NULL OR cards.power = '*') THEN 1 END) AS REAL) * 100.0 / COUNT(CASE WHEN cards.power IS NULL OR cards.power = '*' THEN 1 END) FROM cards JOIN foreign_data ON foreign_data.uuid = cards.uuid",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 16,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_48": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 2,
+   "section_count": 20,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT 1.0 * SUM(CASE WHEN StatusType = 'Merged' AND County = 'Orange' AND DOC = '54' THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN StatusType = 'Merged' AND DOC = '52' THEN 1 ELSE 0 END), 0) AS ratio FROM schools;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 20,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 36,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 28,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 17,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT 1.0 * COUNT(CASE WHEN DOC = '54' AND County = 'Orange' AND StatusType = 'Merged' THEN 1 END) / NULLIF(COUNT(CASE WHEN DOC = '52' AND StatusType = 'Merged' THEN 1 END), 0) AS ratio FROM schools;",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 33,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_36": [
+  {
+   "sample": 0,
+   "sql": "SELECT sch.AdmFName1, sch.AdmLName1 FROM schools sch JOIN satscores s ON sch.CDSCode = s.cds ORDER BY s.NumGE1500 DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 30,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "WITH top_school AS ( SELECT cds FROM satscores ORDER BY NumGE1500 DESC LIMIT 1 ), admins AS ( SELECT 1 AS ord, sch.AdmFName1 AS first_name, sch.AdmLName1 AS last_name FROM schools AS sch JOIN top_school ON sch.CDSCode = top_school.cds UNION ALL SELECT 2, sch.AdmFName2, sch.AdmLName2 FROM schools AS sch JOIN top_school ON sch.CDSCode = top_school.cds UNION ALL SELECT 3, sch.AdmFName3, sch.AdmLName3 FROM schools AS sch JOIN top_school ON sch.CDSCode = top_school.cds ) SELECT first_name, last_name FROM admins WHERE first_name IS NOT NULL AND last_name IS NOT NULL ORDER BY ord",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 16,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT schools.AdmFName1, schools.AdmLName1, schools.AdmFName2, schools.AdmLName2, schools.AdmFName3, schools.AdmLName3 FROM schools JOIN satscores ON schools.CDSCode = satscores.cds ORDER BY satscores.NumGE1500 DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 20,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT AdmFName1, AdmLName1 FROM schools WHERE CDSCode = (SELECT cds FROM satscores ORDER BY NumGE1500 DESC LIMIT 1) AND AdmFName1 IS NOT NULL AND AdmLName1 IS NOT NULL UNION ALL SELECT AdmFName2, AdmLName2 FROM schools WHERE CDSCode = (SELECT cds FROM satscores ORDER BY NumGE1500 DESC LIMIT 1) AND AdmFName2 IS NOT NULL AND AdmLName2 IS NOT NULL UNION ALL SELECT AdmFName3, AdmLName3 FROM schools WHERE CDSCode = (SELECT cds FROM satscores ORDER BY NumGE1500 DESC LIMIT 1) AND AdmFName3 IS NOT NULL AND AdmLName3 IS NOT NULL",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 40,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT sch.AdmFName1 AS first_name, sch.AdmLName1 AS last_name FROM schools sch JOIN satscores s ON s.cds = sch.CDSCode ORDER BY s.NumGE1500 DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 23,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_881": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT 100.0 * COUNT(CASE WHEN s.status = 'Finished' OR s.status LIKE '+% Lap%' THEN r.driverId END) / COUNT(r.driverId) AS percentage FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId JOIN status AS s ON r.statusId = s.statusId WHERE ra.date = '1983-07-16';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT CAST(COUNT(CASE WHEN st.status = 'Finished' OR st.status LIKE '+% Lap%' THEN r.driverId END) AS REAL) / COUNT(r.driverId) * 100 AS percentage FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId INNER JOIN status AS st ON r.statusId = st.statusId WHERE ra.date = '1983-07-16';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT 100.0 * COUNT(CASE WHEN st.status = 'Finished' OR st.status LIKE '+% Lap%' THEN res.driverId END) / COUNT(res.driverId) AS percentage FROM races AS r JOIN results AS res ON r.raceId = res.raceId JOIN status AS st ON st.statusId = res.statusId WHERE r.date = '1983-07-16';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(COUNT(CASE WHEN s.status = 'Finished' OR s.status LIKE '+% Lap%' THEN res.driverId END) AS REAL) * 100.0 / COUNT(res.driverId) AS percentage FROM races AS r INNER JOIN results AS res ON r.raceId = res.raceId INNER JOIN status AS s ON res.statusId = s.statusId WHERE r.date = '1983-07-16'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT COUNT(CASE WHEN s.status = 'Finished' OR s.status LIKE '+% Lap%' THEN r.driverId END) * 100.0 / COUNT(r.driverId) AS percentage FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId JOIN status AS s ON r.statusId = s.statusId WHERE ra.date = '1983-07-16'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_85": [
+  {
+   "sample": 0,
+   "sql": "SELECT f.\"District Code\", f.\"Free Meal Count (K-12)\" * 100.0 / f.\"Enrollment (K-12)\" AS \"Percent (%) Eligible Free (K-12)\" FROM schools s JOIN frpm f ON s.CDSCode = f.CDSCode WHERE s.AdmFName1 = 'Alusine'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": false
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT frpm.[District Code], 100.0 * frpm.[Free Meal Count (K-12)] / frpm.[Enrollment (K-12)] AS [Percent (%) Eligible Free (K-12)] FROM frpm JOIN schools ON frpm.CDSCode = schools.CDSCode WHERE schools.AdmFName1 = 'Alusine'",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 24,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT f.\"District Code\", f.\"Free Meal Count (K-12)\" / f.\"Enrollment (K-12)\" * 100.0 AS \"Percent (%) Eligible Free (K-12)\" FROM schools s JOIN frpm f ON f.CDSCode = s.CDSCode WHERE s.AdmFName1 = 'Alusine';",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT f.`District Code`, f.`Percent (%) Eligible Free (K-12)` FROM schools s JOIN frpm f ON s.CDSCode = f.CDSCode WHERE s.AdmFName1 = 'Alusine'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 19,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT frpm.[District Code], frpm.[Free Meal Count (K-12)] / frpm.[Enrollment (K-12)] * 100 AS [Percent (%) Eligible Free (K-12)] FROM frpm JOIN schools ON frpm.CDSCode = schools.CDSCode WHERE schools.AdmFName1 = 'Alusine'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_931": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(r.fastestLapSpeed AS REAL) FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix' AND r.fastestLapSpeed IS NOT NULL ORDER BY CAST(r.fastestLapSpeed AS REAL) DESC LIMIT 1;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT MAX(CAST(r.fastestLapSpeed AS REAL)) AS fastest_lap_speed FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.name = 'Spanish Grand Prix' AND ra.year = 2009 AND r.fastestLapSpeed IS NOT NULL",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT MAX(CAST(results.fastestLapSpeed AS REAL)) AS fastestLapSpeed FROM results JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND races.name = 'Spanish Grand Prix'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 20,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT MAX(CAST(r.fastestLapSpeed AS REAL)) AS fastestLapSpeed FROM results AS r INNER JOIN races AS ra ON r.raceId = ra.raceId WHERE ra.year = 2009 AND ra.name = 'Spanish Grand Prix'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT results.fastestLapSpeed FROM results INNER JOIN races ON results.raceId = races.raceId WHERE races.year = 2009 AND races.name = 'Spanish Grand Prix' AND results.fastestLapSpeed IS NOT NULL ORDER BY CAST(results.fastestLapSpeed AS REAL) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_50": [
+  {
+   "sample": 0,
+   "sql": "SELECT sch.School, sch.MailStreet FROM satscores AS s INNER JOIN schools AS sch ON s.cds = sch.CDSCode WHERE s.AvgScrMath IS NOT NULL ORDER BY s.AvgScrMath DESC, s.sname ASC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT sc.School, sc.MailStreet FROM satscores AS s JOIN schools AS sc ON s.cds = sc.CDSCode WHERE s.AvgScrMath IS NOT NULL ORDER BY s.AvgScrMath DESC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 18,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 20,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT COALESCE(s.sname, sch.School) AS SchoolName, sch.MailStreet FROM satscores AS s INNER JOIN schools AS sch ON s.cds = sch.CDSCode WHERE s.AvgScrMath IS NOT NULL ORDER BY s.AvgScrMath DESC, s.cds ASC LIMIT 1 OFFSET 6",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 41,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "n_drafts": 3,
+   "error": "draft persisted after 2 continuations, gave up",
+   "section_count": 36,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 17,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1068": [
+  {
+   "sample": 0,
+   "sql": "SELECT SUM(t2.overall_rating) * 1.0 / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT 1.0 * SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT 1.0 * SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) AS average_overall_rating FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(t2.overall_rating) / COUNT(t2.id) FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE strftime('%Y', t2.date) >= '2010' AND strftime('%Y', t2.date) <= '2015' AND t1.height > 170",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1080": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low'",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING SUM(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) > 0) AS t",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 23,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT COUNT(*) FROM (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING MAX(CASE WHEN preferred_foot = 'left' THEN 1 ELSE 0 END) = 1 AND MAX(CASE WHEN attacking_work_rate = 'low' THEN 1 ELSE 0 END) = 1) AS t;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 31,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT COUNT(DISTINCT player_api_id) FROM Player_Attributes WHERE preferred_foot = 'left' AND attacking_work_rate = 'low';",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_637": [
+  {
+   "sample": 0,
+   "sql": "WITH RECURSIVE split(rest, tag) AS (SELECT p.Tags, NULL FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL UNION ALL SELECT substr(rest, instr(rest, '>') + 1), substr(rest, instr(rest, '<') + 1, instr(rest, '>') - instr(rest, '<') - 1) FROM split WHERE rest <> '') SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "WITH RECURSIVE filtered AS ( SELECT p.Tags FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '' ), split(tag, rest) AS ( SELECT substr(Tags, 2, instr(Tags, '>') - 2), substr(Tags, instr(Tags, '>') + 1) FROM filtered WHERE instr(Tags, '>') > 0 UNION ALL SELECT substr(rest, 2, instr(rest, '>') - 2), substr(rest, instr(rest, '>') + 1) FROM split WHERE rest <> '' AND instr(rest, '>') > 0 ) SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "WITH RECURSIVE split(rest, tag) AS (SELECT substr(p.Tags, 2, length(p.Tags) - 2), NULL FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '' UNION ALL SELECT CASE WHEN instr(rest, '><') > 0 THEN substr(rest, instr(rest, '><') + 2) ELSE '' END, CASE WHEN instr(rest, '><') > 0 THEN substr(rest, 1, instr(rest, '><') - 1) ELSE rest END FROM split WHERE rest <> '') SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 16,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "WITH RECURSIVE split(rest, tag) AS (SELECT substr(p.Tags, instr(p.Tags, '>') + 1), substr(p.Tags, 2, instr(p.Tags, '>') - 2) FROM posts p JOIN users u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags LIKE '<%>%' UNION ALL SELECT substr(rest, instr(rest, '>') + 1), substr(rest, 2, instr(rest, '>') - 2) FROM split WHERE rest LIKE '<%>%') SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "WITH RECURSIVE split(tag, rest) AS (SELECT substr(p.Tags, 2, instr(p.Tags, '>') - 2), substr(p.Tags, instr(p.Tags, '>') + 1) FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '' UNION ALL SELECT substr(rest, 2, instr(rest, '>') - 2), substr(rest, instr(rest, '>') + 1) FROM split WHERE rest <> '') SELECT DISTINCT tag FROM split WHERE tag <> '' ORDER BY tag",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "WITH RECURSIVE split(postid, rest, tag) AS (SELECT x.Id, substr(x.clean || ',', instr(x.clean || ',', ',') + 1), substr(x.clean || ',', 1, instr(x.clean || ',', ',') - 1) FROM (SELECT p.Id, REPLACE(REPLACE(REPLACE(p.Tags, '><', ','), '<', ''), '>', '') AS clean FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL AND p.Tags <> '') AS x UNION ALL SELECT postid, substr(rest, instr(rest, ',') + 1), substr(rest, 1, instr(rest, ',') - 1) FROM split WHERE rest <> '') SELECT DISTINCT tag FROM split WHERE tag IS NOT NULL AND tag <> '' ORDER BY tag;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 19,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT DISTINCT P.Tags FROM posts AS P INNER JOIN users AS U ON P.OwnerUserId = U.Id WHERE U.DisplayName = 'Mark Meckes' AND P.CommentCount = 0 AND P.Tags IS NOT NULL",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "WITH RECURSIVE tag_split(tag, rest) AS ( SELECT substr(p.Tags, 2, instr(p.Tags, '>') - 2) AS tag, substr(p.Tags, instr(p.Tags, '>') + 1) AS rest FROM posts AS p INNER JOIN users AS u ON p.OwnerUserId = u.Id WHERE u.DisplayName = 'Mark Meckes' AND p.CommentCount = 0 AND p.Tags IS NOT NULL UNION ALL SELECT substr(rest, 2, instr(rest, '>') - 2) AS tag, substr(rest, instr(rest, '>') + 1) AS rest FROM tag_split WHERE rest <> '' AND instr(rest, '>') > 0 ) SELECT DISTINCT tag FROM tag_split WHERE tag <> '' ORDER BY tag",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 22,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1486": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN t.Amount * t.Price ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN t.Amount * t.Price ELSE 0 END) FROM customers AS c INNER JOIN transactions_1k AS t ON c.CustomerID = t.CustomerID WHERE c.Segment = 'SME'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN t.Amount * t.Price ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN t.Amount * t.Price ELSE 0 END) FROM customers AS c INNER JOIN transactions_1k AS t ON c.CustomerID = t.CustomerID WHERE c.Segment = 'SME'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT SUM(CASE WHEN c.Currency = 'CZK' THEN t.Amount * t.Price ELSE 0 END) - SUM(CASE WHEN c.Currency = 'EUR' THEN t.Amount * t.Price ELSE 0 END) AS amount_more_smes_pay FROM customers AS c INNER JOIN transactions_1k AS t ON c.CustomerID = t.CustomerID WHERE c.Segment = 'SME';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1498": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT Consumption FROM yearmonth WHERE Date LIKE '2012%' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT Consumption FROM yearmonth WHERE substr(Date,1,4)='2012' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT Consumption FROM yearmonth WHERE Date LIKE '2012%' ORDER BY Consumption DESC LIMIT 1;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT Consumption FROM yearmonth WHERE substr(Date,1,4)='2012' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT Consumption FROM yearmonth WHERE substr(Date, 1, 4) = '2012' ORDER BY Consumption DESC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1339": [
+  {
+   "sample": 0,
+   "sql": "SELECT AVG(event_spend) FROM (SELECT b.link_to_event, SUM(e.cost) AS event_spend FROM expense e JOIN budget b ON e.link_to_budget = b.budget_id WHERE e.link_to_member = 'recro8T1MPMwRadVH' AND CAST(SUBSTR(e.expense_date, 6, 2) AS INTEGER) IN (9, 10) GROUP BY b.link_to_event) t",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 26,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1472": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT y.CustomerID FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Segment = 'LAM' AND y.Date BETWEEN '201201' AND '201212' ORDER BY y.Consumption ASC LIMIT 1;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 25,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT y.CustomerID FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE c.Segment = 'LAM' AND y.Date BETWEEN '201201' AND '201212' GROUP BY y.CustomerID ORDER BY SUM(y.Consumption) ASC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 29,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT y.CustomerID FROM yearmonth y JOIN customers c ON y.CustomerID = c.CustomerID WHERE y.Date BETWEEN '201201' AND '201212' AND c.Segment = 'LAM' ORDER BY y.Consumption ASC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT c.CustomerID FROM yearmonth AS y JOIN customers AS c ON y.CustomerID = c.CustomerID WHERE y.Date BETWEEN '201201' AND '201212' AND c.Segment = 'LAM' GROUP BY c.CustomerID ORDER BY SUM(y.Consumption) ASC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT ym.CustomerID FROM yearmonth AS ym JOIN customers AS c ON ym.CustomerID = c.CustomerID WHERE c.Segment = 'LAM' AND ym.Date BETWEEN '201201' AND '201212' ORDER BY ym.Consumption ASC LIMIT 1;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1531": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT t.CustomerID, SUM(t.Price * t.Amount) / SUM(t.Amount) AS average_price_per_single_item, c.Currency FROM transactions_1k AS t INNER JOIN customers AS c ON t.CustomerID = c.CustomerID GROUP BY t.CustomerID, c.Currency ORDER BY SUM(t.Price * t.Amount) DESC LIMIT 1;",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT t.CustomerID, SUM(t.Amount * t.Price) * 1.0 / NULLIF(SUM(t.Amount), 0) AS average_price_per_single_item, c.Currency FROM transactions_1k AS t INNER JOIN customers AS c ON t.CustomerID = c.CustomerID GROUP BY t.CustomerID, c.Currency ORDER BY SUM(t.Amount * t.Price) DESC LIMIT 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "BadRequestError: litellm.BadRequestError: AzureException BadRequestError - {\n  \"error\": {\n    \"message\": \"Invalid prompt: your prompt was flagged as potentially violating our usage policy. Please try ",
+   "section_count": 0
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 17,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_1529": [
+  {
+   "sample": 0,
+   "sql": "SELECT SUM(Amount) FROM transactions_1k WHERE CustomerID = 38508 AND Date LIKE '2012-08%'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT SUM(Amount) FROM transactions_1k WHERE CustomerID = 38508 AND Date LIKE '2012-08%'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 37,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUM(t.Amount) FROM transactions_1k t WHERE t.CustomerID = 38508 AND t.Date LIKE '2012-08%'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT SUM(Amount) FROM transactions_1k WHERE CustomerID = 38508 AND Date LIKE '2012-08%'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT SUM(Amount) FROM transactions_1k WHERE CustomerID = 38508 AND Date LIKE '2012-08%'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 30,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(t.Amount) FROM transactions_1k t WHERE t.CustomerID = '38508' AND t.Date LIKE '2012-08%'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_125": [
+  {
+   "sample": 0,
+   "sql": "SELECT 100.0 * (d.A13 - d.A12) / d.A12 FROM loan AS l JOIN account AS a ON l.account_id = a.account_id JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 64,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT 100.0 * (d.A13 - d.A12) / d.A12 AS unemployment_increment_percent FROM loan AS l JOIN account AS a ON l.account_id = a.account_id JOIN disp AS dp ON a.account_id = dp.account_id JOIN client AS c ON dp.client_id = c.client_id JOIN district AS d ON c.district_id = d.district_id WHERE l.status = 'D' GROUP BY d.district_id, d.A12, d.A13 ORDER BY d.district_id",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 74,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT DISTINCT d.A2 AS district, 100.0 * (d.A13 - d.A12) / d.A12 AS unemployment_rate_increment FROM loan AS l JOIN disp AS dp ON l.account_id = dp.account_id AND dp.type = 'OWNER' JOIN client AS c ON dp.client_id = c.client_id JOIN district AS d ON c.district_id = d.district_id WHERE l.status = 'D' ORDER BY d.A2",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 15,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 19,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT 100.0 * (d.A13 - d.A12) / d.A12 FROM loan AS l JOIN account AS a ON l.account_id = a.account_id JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 26,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT 100.0 * (d.A13 - d.A12) / d.A12 AS unemployment_rate_increment FROM loan AS l INNER JOIN account AS a ON l.account_id = a.account_id INNER JOIN district AS d ON a.district_id = d.district_id WHERE l.status = 'D' GROUP BY d.district_id ORDER BY d.district_id",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 46,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_352": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 18,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT CAST(SUM(CASE WHEN language = 'Chinese Simplified' THEN id ELSE 0 END) AS REAL) * 100.0 / COUNT(id) FROM set_translations",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT CAST(COUNT(CASE WHEN language = 'Chinese Simplified' THEN id ELSE NULL END) AS REAL) * 100.0 / COUNT(id) FROM set_translations",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 15,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_407": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT DISTINCT F.type FROM foreign_data AS F INNER JOIN cards AS C ON F.uuid = C.uuid WHERE F.language = 'German' AND C.subtypes IS NOT NULL AND C.supertypes IS NOT NULL ORDER BY F.type",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 29,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 28,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT T2.type FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'German' AND T1.subtypes IS NOT NULL AND T1.supertypes IS NOT NULL;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 39,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT DISTINCT F.type FROM foreign_data AS F INNER JOIN cards AS C ON F.uuid = C.uuid WHERE F.language = 'German' AND C.subtypes IS NOT NULL AND C.supertypes IS NOT NULL AND F.type IS NOT NULL AND F.type <> '' ORDER BY F.type;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 28,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT DISTINCT T1.subtypes, T1.supertypes FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'German' AND T1.subtypes IS NOT NULL AND T1.supertypes IS NOT NULL",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 26,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_465": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 2,
+   "section_count": 36,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON c.uuid = f.uuid WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean' ORDER BY s.name;",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 39,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 2,
+   "section_count": 19,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN sets AS s ON c.setCode = s.code INNER JOIN foreign_data AS f ON f.uuid = c.uuid WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean' ORDER BY s.name;",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 17,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN foreign_data AS f ON c.uuid = f.uuid INNER JOIN sets AS s ON s.code = c.setCode WHERE c.name = 'Ancestor''s Chosen' AND f.language = 'Korean' ORDER BY s.name;",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 29,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN foreign_data AS fd ON fd.uuid = c.uuid INNER JOIN sets AS s ON s.code = c.setCode WHERE c.name = 'Ancestor''s Chosen' AND fd.language = 'Korean' ORDER BY s.name;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 16,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT DISTINCT s.name FROM cards AS c INNER JOIN foreign_data AS fd ON fd.uuid = c.uuid INNER JOIN sets AS s ON s.code = c.setCode WHERE c.name = 'Ancestor''s Chosen' AND fd.language = 'Korean' ORDER BY s.name;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 23,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_24": [
+  {
+   "sample": 0,
+   "sql": "SELECT DISTINCT sch.\"School\" FROM frpm AS f INNER JOIN satscores AS s ON s.cds = f.CDSCode INNER JOIN schools AS sch ON sch.CDSCode = f.CDSCode WHERE f.\"Free Meal Count (K-12)\" / f.\"Enrollment (K-12)\" > 0.1 AND s.NumGE1500 > 0",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 51,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT DISTINCT sc.School FROM frpm AS f INNER JOIN satscores AS s ON s.cds = f.CDSCode INNER JOIN schools AS sc ON sc.CDSCode = f.CDSCode WHERE f.\"Free Meal Count (K-12)\" / f.\"Enrollment (K-12)\" > 0.1 AND s.NumGE1500 >= 1500",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 63,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 26,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 34,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT DISTINCT s.School FROM schools AS s INNER JOIN frpm AS f ON f.CDSCode = s.CDSCode INNER JOIN satscores AS t ON t.cds = s.CDSCode WHERE (f.`Free Meal Count (K-12)` / f.`Enrollment (K-12)`) > 0.1 AND t.NumGE1500 > 0 ORDER BY s.School",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 50,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 25,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT DISTINCT T1.School FROM schools AS T1 INNER JOIN frpm AS T2 ON T2.CDSCode = T1.CDSCode INNER JOIN satscores AS T3 ON T3.cds = T1.CDSCode WHERE T2.[Free Meal Count (K-12)] * 1.0 / T2.[Enrollment (K-12)] > 0.1 AND T3.NumGE1500 > 0",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 38,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT DISTINCT s.School AS School FROM schools AS s INNER JOIN frpm AS f ON f.CDSCode = s.CDSCode INNER JOIN satscores AS ss ON ss.cds = s.CDSCode WHERE f.`Free Meal Count (K-12)` / f.`Enrollment (K-12)` > 0.1 AND ss.NumGE1500 >= 1 AND s.School IS NOT NULL",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 31,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_26": [
+  {
+   "sample": 0,
+   "sql": "SELECT s.[School] AS school_name, TRIM(COALESCE(s.[Street], '') || ', ' || COALESCE(s.[City], '') || ', ' || COALESCE(s.[State], '') || CASE WHEN s.[Zip] IS NOT NULL AND s.[Zip] <> '' THEN ' ' || s.[Zip] ELSE '' END) AS full_communication_address FROM schools AS s JOIN frpm AS f ON f.[CDSCode] = s.[CDSCode] WHERE s.[County] = 'Monterey' AND s.[EILName] = 'High School' AND f.[FRPM Count (Ages 5-17)] > 800 ORDER BY s.[School]",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 50,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT s.School AS name, COALESCE(s.Street, '') || ', ' || COALESCE(s.City, '') || ', ' || COALESCE(s.State, '') || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END AS full_communication_address FROM schools AS s INNER JOIN frpm AS f ON s.CDSCode = f.CDSCode WHERE f.[County Name] = 'Monterey' AND f.[School Type] = 'High Schools (Public)' AND f.[FRPM Count (Ages 5-17)] > 800 ORDER BY s.School",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 24,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 26,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT s.School AS School, TRIM(COALESCE(s.Street, '') || ', ' || COALESCE(s.City, '') || ', ' || COALESCE(s.State, '') || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END) AS [Full Communication Address] FROM frpm AS f JOIN schools AS s ON f.CDSCode = s.CDSCode WHERE s.County = 'Monterey' AND s.EILName = 'High School' AND f.[FRPM Count (Ages 5-17)] > 800 ORDER BY s.School;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT s.School, COALESCE(s.Street, '') || ', ' || COALESCE(s.City, '') || ', ' || COALESCE(s.State, '') || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END AS full_communication_address FROM schools AS s JOIN frpm AS f ON s.CDSCode = f.CDSCode WHERE s.County = 'Monterey' AND s.EILCode = 'HS' AND f.\"FRPM Count (Ages 5-17)\" > 800 ORDER BY s.School;",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 34,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT s.[School], COALESCE(s.[Street], '') || ', ' || COALESCE(s.[City], '') || ', ' || COALESCE(s.[State], '') || CASE WHEN s.[Zip] IS NOT NULL AND s.[Zip] <> '' THEN ' ' || s.[Zip] ELSE '' END AS [full communication address] FROM schools AS s JOIN frpm AS f ON s.[CDSCode] = f.[CDSCode] WHERE s.[County] = 'Monterey' AND f.[School Type] = 'High Schools (Public)' AND f.[FRPM Count (Ages 5-17)] > 800 ORDER BY s.[School]",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 31,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT s.School AS name, s.Street || ', ' || s.City || ', ' || s.State || CASE WHEN s.Zip IS NOT NULL AND s.Zip <> '' THEN ' ' || s.Zip ELSE '' END AS [full communication address] FROM schools AS s JOIN frpm AS f ON s.CDSCode = f.CDSCode WHERE s.County = 'Monterey' AND s.EILCode = 'HS' AND f.\"FRPM Count (Ages 5-17)\" > 800 ORDER BY s.School",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 36,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT schools.School AS name, CASE WHEN schools.Zip IS NOT NULL AND schools.Zip <> '' THEN schools.Street || ', ' || schools.City || ', ' || schools.State || ' ' || schools.Zip ELSE schools.Street || ', ' || schools.City || ', ' || schools.State END AS full_communication_address FROM schools JOIN frpm ON schools.CDSCode = frpm.CDSCode WHERE schools.County = 'Monterey' AND schools.EILName = 'High School' AND frpm.[FRPM Count (Ages 5-17)] > 800 ORDER BY schools.School;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 33,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_750": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT AVG(s.weight_kg) FROM superhero AS s INNER JOIN gender AS g ON s.gender_id = g.id WHERE g.gender = 'Female'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT AVG(T1.weight_kg) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Female'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT AVG(weight_kg) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id WHERE T2.gender = 'Female'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT AVG(weight_kg) FROM superhero INNER JOIN gender ON superhero.gender_id = gender.id WHERE gender.gender = 'Female'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_604": [
+  {
+   "sample": 0,
+   "sql": "SELECT CAST(SUM(u.UpVotes) AS REAL) / COUNT(u.Id), CAST(SUM(u.Age) AS REAL) / COUNT(u.Id) FROM users AS u INNER JOIN ( SELECT p.OwnerUserId FROM posts AS p WHERE p.OwnerUserId IS NOT NULL GROUP BY p.OwnerUserId HAVING COUNT(p.OwnerUserId) > 10 ) AS t ON u.Id = t.OwnerUserId",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT CAST(SUM(users.UpVotes) AS REAL) / COUNT(users.Id), CAST(SUM(users.Age) AS REAL) / COUNT(users.Id) FROM users INNER JOIN ( SELECT OwnerUserId FROM posts WHERE OwnerUserId IS NOT NULL GROUP BY OwnerUserId HAVING COUNT(*) > 10 ) AS t ON users.Id = t.OwnerUserId",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 7,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id) AS avg_up_votes, CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) AS avg_user_age FROM users AS T1 INNER JOIN ( SELECT T2.OwnerUserId FROM posts AS T2 WHERE T2.OwnerUserId IS NOT NULL GROUP BY T2.OwnerUserId HAVING COUNT(*) > 10 ) AS T3 ON T1.Id = T3.OwnerUserId",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 22,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT CAST(SUM(U.UpVotes) AS REAL) / COUNT(U.Id) AS average_up_votes, CAST(SUM(U.Age) AS REAL) / COUNT(U.Id) AS average_user_age FROM users AS U INNER JOIN ( SELECT OwnerUserId FROM posts WHERE OwnerUserId IS NOT NULL GROUP BY OwnerUserId HAVING COUNT(OwnerUserId) > 10 ) AS T ON U.Id = T.OwnerUserId",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id), CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) FROM users AS T1 INNER JOIN ( SELECT T2.OwnerUserId FROM posts AS T2 WHERE T2.OwnerUserId IS NOT NULL GROUP BY T2.OwnerUserId HAVING COUNT(T2.OwnerUserId) > 10 ) AS T3 ON T1.Id = T3.OwnerUserId",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 11,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id), CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) FROM users AS T1 INNER JOIN ( SELECT OwnerUserId AS UserId FROM posts WHERE OwnerUserId IS NOT NULL GROUP BY OwnerUserId HAVING COUNT(OwnerUserId) > 10 ) AS T2 ON T1.Id = T2.UserId",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 18,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT CAST(SUM(T1.UpVotes) AS REAL) / COUNT(T1.Id), CAST(SUM(T1.Age) AS REAL) / COUNT(T1.Id) FROM users AS T1 INNER JOIN ( SELECT T2.OwnerUserId FROM posts AS T2 WHERE T2.OwnerUserId IS NOT NULL GROUP BY T2.OwnerUserId HAVING COUNT(T2.OwnerUserId) > 10 ) AS T3 ON T1.Id = T3.OwnerUserId",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": "SELECT CAST(SUM(U.UpVotes) AS REAL) / COUNT(U.Id), CAST(SUM(U.Age) AS REAL) / COUNT(U.Id) FROM users AS U INNER JOIN ( SELECT OwnerUserId FROM posts WHERE OwnerUserId IS NOT NULL GROUP BY OwnerUserId HAVING COUNT(OwnerUserId) > 10 ) AS P ON U.Id = P.OwnerUserId",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_894": [
+  {
+   "sample": 0,
+   "sql": "SELECT lapTimes.time, drivers.forename, drivers.surname, races.name FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT lapTimes.time, drivers.forename, drivers.surname, races.name FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 23,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT lapTimes.time, drivers.forename, drivers.surname, races.name FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 19,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT lapTimes.time, drivers.forename, drivers.surname, races.name FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 9,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 8,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT lapTimes.time, drivers.forename, drivers.surname, races.name FROM lapTimes JOIN drivers ON lapTimes.driverId = drivers.driverId JOIN races ON lapTimes.raceId = races.raceId ORDER BY lapTimes.milliseconds ASC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_640": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 4,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 2,
+   "section_count": 14,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 2,
+   "section_count": 13,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 2,
+   "section_count": 26,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_928": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS res INNER JOIN races AS r ON res.raceId = r.raceId INNER JOIN drivers AS d ON res.driverId = d.driverId WHERE r.name = 'Canadian Grand Prix' AND r.year = 2007 AND res.position = 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 10,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 ORDER BY r.position ASC LIMIT 1",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT d.forename, d.surname, d.driverRef FROM results AS r JOIN races AS ra ON r.raceId = ra.raceId JOIN drivers AS d ON r.driverId = d.driverId WHERE ra.name = 'Canadian Grand Prix' AND ra.year = 2007 AND r.position = 1",
+   "correct": true,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 3,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 1,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_791": [
+  {
+   "sample": 0,
+   "sql": "SELECT SUM(height_cm) * 1.0 / COUNT(*) FROM superhero;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 29,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": "SELECT AVG(height_cm) FROM superhero;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 21,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": "SELECT SUM(height_cm) * 1.0 / COUNT(*) AS average_height FROM superhero;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 25,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT AVG(height_cm) FROM superhero;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 6,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": "SELECT AVG(height_cm) FROM superhero;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 22,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": "SELECT AVG(height_cm) FROM superhero;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 2,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT SUM(height_cm) * 1.0 / COUNT(*) FROM superhero;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 37,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_587": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 27,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 0,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": "SELECT p.Title, c.Text AS Comment, a.AvgViewCount FROM posts AS p JOIN comments AS c ON c.PostId = p.Id CROSS JOIN (SELECT AVG(ViewCount) AS AvgViewCount FROM posts WHERE Tags LIKE '%<humor>%') AS a WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 20,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": "SELECT p.Title, c.Text, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS avg_view_count FROM posts p JOIN comments c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%';",
+   "correct": false,
+   "n_drafts": 2,
+   "exec_error": null,
+   "section_count": 22,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "error": "Timeout: litellm.Timeout: AzureException Timeout - litellm.Timeout: Connection timed out after 6000.0 seconds.",
+   "section_count": 0
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 5,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT p.Title, c.Text AS Comment, (SELECT AVG(ViewCount) FROM posts WHERE Tags LIKE '%<humor>%') AS AverageViewCount FROM posts AS p JOIN comments AS c ON c.PostId = p.Id WHERE p.Tags LIKE '%<humor>%'",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 12,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ],
+ "bird_173": [
+  {
+   "sample": 0,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 37,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 1,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 38,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 2,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 64,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 3,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 47,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 4,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 0,
+   "section_count": 43,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 5,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 1,
+   "section_count": 22,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 6,
+   "sql": null,
+   "correct": null,
+   "n_drafts": 3,
+   "error": "draft persisted after 2 continuations, gave up",
+   "section_count": 101,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 7,
+   "sql": null,
+   "correct": null,
+   "error": "no FINAL() found",
+   "n_drafts": 2,
+   "section_count": 68,
+   "analysis": null,
+   "turn1_had_code": true
+  },
+  {
+   "sample": 8,
+   "sql": null,
+   "correct": null,
+   "error": "Timeout: litellm.Timeout: AzureException Timeout - litellm.Timeout: Connection timed out after 6000.0 seconds.",
+   "section_count": 0
+  },
+  {
+   "sample": 9,
+   "sql": "SELECT (SELECT COUNT(*) FROM trans WHERE account_id = 3 AND k_symbol = 'SLUZBY') AS statement_release_count, (SELECT k_symbol FROM `order` WHERE amount = 3539 GROUP BY k_symbol ORDER BY COUNT(*) DESC, k_symbol LIMIT 1) AS aim;",
+   "correct": false,
+   "n_drafts": 1,
+   "exec_error": null,
+   "section_count": 22,
+   "analysis": null,
+   "turn1_had_code": true
+  }
+ ]
+}
