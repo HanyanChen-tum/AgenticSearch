@@ -1,0 +1,33 @@
+{
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "Tectonic (AIR presentation)",
+            "tools": [
+                "tectonic-air"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "tectonic-air",
+            "command": "/usr/local/bin/tectonic",
+            "args": [
+                "-Z",
+                "search-path=.",
+                "--synctex",
+                "--keep-logs",
+                "--outdir=%OUTDIR%",
+                "%DOC%.tex"
+            ],
+            "cwd": ".."
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "first",
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.latex.outDir": "%DIR%",
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    "latex-workshop.latex.search.rootFiles.include": [
+        "68efc86f93535996c66829b3/AIRStudentPresentation/main.tex"
+    ]
+}
