@@ -393,11 +393,11 @@ Counterfactual diagnosis → pre-commitment Answer Contract → full-agent A/B/C
 
 | Full-agent arm | 预测 accuracy | 相对 A | 预测 reasoning cost |
 |---|---:|---:|---:|
-| A — No pre-read | ≈ **87.9%** | — | baseline |
-| B — Generic pre-read | ≈ **88.1%** | ≈ +0.2pp | +5%～8% |
-| C — Structured Contract | ≈ **88.4%** | ≈ +0.5pp | +8%～12% |
+| A — No pre-read | ≈ **87.70%** | — | baseline |
+| B — Generic pre-read | ≈ **87.90%** | ≈ +0.20pp | +4%～7% |
+| C — Structured Contract | ≈ **88.31%** | ≈ +0.61pp | +7%～11% |
 
-**预测解释：** `A ≈ B ≈ C`；Contract 可能略高，但差异很可能仍在 1.4pp 噪声范围内，因此不应默认启用，只考虑针对性使用。
+**预测解释：** `B−A ≈ +0.20pp`，`C−B ≈ +0.41pp`；两者都远低于 1.4pp 噪声范围。现有 tool loop 可能已经覆盖了大部分 pre-reading 作用，因此预测不支持默认启用 Contract。
 
 **已经得到的参考证据**
 
@@ -405,13 +405,17 @@ Counterfactual diagnosis → pre-commitment Answer Contract → full-agent A/B/C
 |---:|---:|
 | **Net +5** | **Net +2～3** |
 
+**预测 takeaway：** 额外 pre-reading 没有稳定收益；结构只有变成可执行、可验证的规则时，才出现了明确的正净证据。
+
 **最终原则：** 预测不进入 final claim；完整 agent 的 accuracy、rescue/damage 和 cost 决定是否采用。
 
 ### 演讲稿
 
-> 前面的反事实分析说明，通用重试不是主要答案，所以我们把干预放在写 SQL 之前。Answer Contract 让模型先明确输出形式、数据来源、计数对象、NULL 处理和计算公式。完整实验比较直接生成、相同预算的普通分析，以及结构化 Contract；中间一组用来区分“多读一遍题”和 Contract 结构本身的效果。
+> 反事实实验表明，不是所有错题都能靠模型再试一次修好；有些错误会在早期决定后被锁死，所以我们把干预提前到写 SQL 之前。
 
-> 这里的数字目前只是排版预测，不能作为最终结论。如果实际结果接近这个形状，那么三组准确率没有稳定差异，而 Contract 增加了 reasoning cost，因此不应该默认用于所有题，只适合针对高风险的 early-commitment 情况。作为参考，两个定义清楚的输出规则已经取得净加 5 和净加 2 到 3。[规则双向重放](../analysis/week_2026-08-18/rootcause_58_2026-08-27.md) 最终是否采用，必须由完整 agent 的准确率和成本决定。
+> 三组 agent 分别是直接生成、相同预算的普通分析和结构化 Contract。A 到 B 测“多读一遍题”，B 到 C 测 Contract 结构本身。当前预测是 87.70%、87.90% 和 88.31%；两个增量只有 0.20 和 0.41 个百分点，都在 1.4 个百分点的噪声范围内，而 Contract 预计增加 7% 到 11% 的 reasoning cost。
+
+> 如果完整结果一致，就说明现有 tool loop 已经完成了大部分自我修正，Contract 不应默认启用。相比之下，两个可执行规则已经取得净加 5 和净加 2 到 3。[规则双向重放](../analysis/week_2026-08-18/rootcause_58_2026-08-27.md) 这提示我们，有价值的结构可能不是多写一段计划，而是让重复决定能够执行和验证。预测数字会在完整运行后替换。
 
 ## Slide 15 — Conclusion & Future Work（1:10）
 

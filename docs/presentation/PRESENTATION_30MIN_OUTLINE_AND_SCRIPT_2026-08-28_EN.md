@@ -394,11 +394,11 @@ Counterfactual diagnosis → pre-commitment Answer Contract → full-agent A/B/C
 
 | Full-agent arm | Forecast accuracy | vs. A | Forecast reasoning cost |
 |---|---:|---:|---:|
-| A — No pre-read | ≈ **87.9%** | — | baseline |
-| B — Generic pre-read | ≈ **88.1%** | ≈ +0.2pp | +5% to 8% |
-| C — Structured Contract | ≈ **88.4%** | ≈ +0.5pp | +8% to 12% |
+| A — No pre-read | ≈ **87.70%** | — | baseline |
+| B — Generic pre-read | ≈ **87.90%** | ≈ +0.20pp | +4% to 7% |
+| C — Structured Contract | ≈ **88.31%** | ≈ +0.61pp | +7% to 11% |
 
-**Forecast interpretation:** `A ≈ B ≈ C`. The Contract may be directionally higher, but likely remains within the 1.4pp noise bound; use it selectively rather than by default.
+**Forecast interpretation:** `B−A ≈ +0.20pp` and `C−B ≈ +0.41pp`; both are far below the 1.4pp noise bound. The existing tool loop may already provide most of the pre-reading benefit, so the forecast does not support enabling the Contract by default.
 
 **Existing supporting evidence**
 
@@ -406,13 +406,17 @@ Counterfactual diagnosis → pre-commitment Answer Contract → full-agent A/B/C
 |---:|---:|
 | **Net +5** | **Net +2 to +3** |
 
+**Forecast takeaway:** additional pre-reading has no stable gain; clear positive net evidence appears only when structure becomes executable and verifiable.
+
 **Final principle:** forecasts do not enter the final claim; full-agent accuracy, rescue/damage, and cost decide whether the intervention stays.
 
 ### Speaker script
 
-> The counterfactual analysis suggests that generic retry is not the main answer, so we move the intervention to before SQL generation. The Answer Contract asks the model to specify the output shape, data source, counting unit, NULL handling, and formula. The full experiment compares direct generation, a budget-matched generic analysis, and the structured Contract. The middle arm separates the effect of reading the question again from the effect of the Contract structure.
+> Counterfactual resampling showed that retry cannot fix every failure; some errors become locked in after an early decision. We therefore intervene before SQL generation.
 
-> These numbers are currently layout forecasts, not final results. If the completed experiment has this shape, the three accuracies are not stably different, while the Contract adds reasoning cost. It should therefore be selective rather than a default stage. As supporting evidence, two precise output rules already give net gains of five and two to three. [Bidirectional rule replay](../analysis/week_2026-08-18/rootcause_58_2026-08-27.md) The final decision must come from full-agent accuracy and cost.
+> The three agents use direct generation, budget-matched generic analysis, and the structured Contract. A to B measures the value of reading again; B to C measures the Contract structure. We forecast 87.70, 87.90, and 88.31 percent. The increments—0.20 and 0.41 points—are within the 1.4-point noise bound, while the Contract may add seven to eleven percent reasoning cost.
+
+> If confirmed, the existing tool loop already provides most self-correction, so the Contract should not be enabled by default. In contrast, two executable rules show net gains of five and two to three. [Bidirectional rule replay](../analysis/week_2026-08-18/rootcause_58_2026-08-27.md) Useful structure may therefore mean executable, verifiable decisions—not another written plan. These forecasts will be replaced by the completed results.
 
 ## Slide 15 — Conclusion & Future Work (1:10)
 
